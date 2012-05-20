@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+# XMonad
+sudo apt-get -y install xmonad
+
+mkdir -p ~/.xmonad
+ln -sf `dirname $0`/xmonad.hs ~/.xmonad
+
+# Taffybar
+sudo apt-get -y install cabal-install
+cabal update
+sudo apt-get -y install gtk2hs-buildtools libghc-cairo-dev libghc-gtk-dev \
+	libgtk-3-dev
+cabal install taffybar
+
+mkdir -p ~/.config/taffybar
+ln -sf `dirname $0`/taffybar.hs ~/.config/taffybar
+
+# Synapse
+sudo apt-get -y install synapse zeitgeist-extension-fts
+
+# IBus
+sudo apt-get -y install ibus ibus-pinyin ibus-table
+
+# Session script
+ln -sf `dirname $0`/.xsession ~
