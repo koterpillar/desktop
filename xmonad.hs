@@ -5,11 +5,12 @@ import DBus.Client.Simple
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.NoBorders
 import XMonad.Util.EZConfig (additionalKeys)
 
 import System.Taffybar.XMonadLog (dbusLogWithPP)
 
-layout = Full ||| tiled ||| Mirror tiled
+layout = noBorders Full ||| tiled ||| Mirror tiled
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
