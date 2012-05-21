@@ -5,7 +5,7 @@ import DBus.Client.Simple
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig (additionalKeys)
 
 import System.Taffybar.XMonadLog (dbusLogWithPP)
 
