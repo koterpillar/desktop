@@ -1,4 +1,5 @@
 import System.Taffybar
+import System.Taffybar.Battery
 import System.Taffybar.FreedesktopNotifications
 import System.Taffybar.SimpleClock
 import System.Taffybar.Systray
@@ -11,6 +12,7 @@ main = do
       log = xmonadLogNew
       tray = systrayNew
       note = notifyAreaNew defaultNotificationConfig
+      battery = batteryBarNew defaultBatteryConfig 10
   defaultTaffybar defaultTaffybarConfig { startWidgets = [ log, note ]
-                                        , endWidgets = [ tray, clock ]
+                                        , endWidgets = [ tray, clock, battery ]
                                         }
