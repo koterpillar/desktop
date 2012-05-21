@@ -20,6 +20,7 @@ layout = Full ||| tiled ||| Mirror tiled
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
+-- https://github.com/travitch/taffybar/issues/18
 escapeAmp :: String -> String
 escapeAmp = concat . map escape
             where escape '&' = "&amp;"
