@@ -9,7 +9,7 @@ import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeys)
 
-import System.Taffybar.XMonadLog (dbusLogWithPP)
+import System.Taffybar.XMonadLog (dbusLogWithPP, taffybarEscape)
 
 layout = noBorders Full ||| tiled ||| Mirror tiled
   where
@@ -22,15 +22,9 @@ layout = noBorders Full ||| tiled ||| Mirror tiled
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
--- https://github.com/travitch/taffybar/issues/18
-escapeAmp :: String -> String
-escapeAmp = concat . map escape
-            where escape '&' = "&amp;"
-                  escape c = [c]
-
 main = do
     client <- connectSession
-    let pp = defaultPP { ppTitle = escapeAmp . shorten 150
+    let pp = defaultPP { ppTitle = taffybarEscape . shorten 150
                        }
     xmonad $ defaultConfig
         { manageHook = manageDocks <+> manageHook defaultConfig
