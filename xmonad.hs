@@ -6,6 +6,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
+import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeys)
 
 import System.Taffybar.XMonadLog (dbusLogWithPP)
@@ -37,7 +38,9 @@ main = do
         , logHook = dbusLogWithPP client pp
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
         } `additionalKeys`
-        [ --((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+        [ ((mod1Mask,               xK_Tab   ), windows W.focusDown) -- Alt-Tab to switch windows
+        , ((mod1Mask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- Alt-Shift-Tab
+        --, ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
         --, ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
         --, ((0, xK_Print), spawn "scrot")
         ]
