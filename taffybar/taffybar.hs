@@ -18,7 +18,7 @@ widgetColor = rgb (242, 241, 240)
 batteryConfig = defaultBatteryConfig { barColor = batteryColor
                                      , barBackgroundColor = menuColor
                                      , barBorderColor = (0, 0, 0)
-                                     , barWidth = 14
+                                     , barPadding = 3
                                      } where batteryColor pct
                                                 | pct < 0.1 = (1, 0, 0)
                                                 | pct < 0.9 = (0.1, 0.1, 0.1)
