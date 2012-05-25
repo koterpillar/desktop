@@ -2,6 +2,9 @@
 
 DIR=`pwd`/`dirname $0`
 
+# XSession script
+sudo install default.desktop /usr/share/xsessions
+
 # XMonad
 sudo apt-get -y install xmonad
 
