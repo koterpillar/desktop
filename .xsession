@@ -2,6 +2,8 @@
 
 xcompmgr -s &
 
+gnome-session --autostart=/dev/null &
+
 gnome-settings-daemon &
 
 taffybar &

@@ -9,6 +9,8 @@ import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeys)
 
+import Graphics.X11.ExtraTypes.XF86
+
 import System.Taffybar.XMonadLog (dbusLogWithPP, taffybarEscape)
 
 layout = noBorders Full ||| tiled ||| Mirror tiled
@@ -34,6 +36,7 @@ main = do
         } `additionalKeys`
         [ ((mod1Mask,               xK_Tab   ), windows W.focusDown) -- Alt-Tab to switch windows
         , ((mod1Mask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- Alt-Shift-Tab
+        , ((0                     , xF86XK_PowerOff), spawn "gnome-session-quit --power-off")
         --, ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
         --, ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
         --, ((0, xK_Print), spawn "scrot")
