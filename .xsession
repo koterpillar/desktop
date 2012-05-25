@@ -6,7 +6,11 @@ gnome-settings-daemon &
 
 taffybar &
 
-nautilus -n &
+background=$(bash -c "printf $(
+    gconftool -g /desktop/gnome/background/picture_filename \
+    | sed 's#file://##;s/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\\\x\2/g'
+)")
+feh --bg-max "$background"
 
 xscreensaver -no-splash &
 
