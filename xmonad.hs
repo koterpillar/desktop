@@ -24,6 +24,9 @@ layout = noBorders Full ||| tiled ||| Mirror tiled
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
+-- For default configuration, see
+-- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
+
 main = do
     client <- connectSession
     let pp = defaultPP { ppTitle = taffybarEscape . shorten 150
