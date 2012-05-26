@@ -8,15 +8,28 @@ import System.Taffybar.Widgets.PollingBar
 
 import System.Information.CPU
 
+import Data.Char
+import Data.List
+import Data.Maybe
+
+import Numeric
+
+-- Hex colors
+hexColor :: (Fractional a, Eq a) => String -> (a, a, a)
+hexColor ['#', r1, r2, g1, g2, b1, b2] = rgb (hc [r1, r2], hc [g1, g2], hc [b1, b2]) where
+                                         hc = fst . head . readHex
+
 rgb :: Fractional a => (a, a, a) -> (a, a, a)
 rgb (x, y, z) = (norm x, norm y, norm z)
                 where norm a = a / 255
 
-menuColor = rgb (223, 215, 207)
-widgetColor = rgb (242, 241, 240)
+menuColor = hexColor "#DFD7CF"
+widgetColor = hexColor "#F2F1F0"
+
+bgColor = hexColor "#FFE8C9"
 
 batteryConfig = defaultBatteryConfig { barColor = batteryColor
-                                     , barBackgroundColor = menuColor
+                                     , barBackgroundColor = bgColor
                                      , barBorderColor = (0, 0, 0)
                                      , barPadding = 3
                                      } where batteryColor pct

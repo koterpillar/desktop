@@ -1,5 +1,7 @@
+pixmap_path "~/.config/taffybar"
+
 style "taffybar" {
-    bg[NORMAL] = "#DFD7CF"
+    bg_pixmap[NORMAL] = "background.jpeg"
     fg[NORMAL] = "#000000"
     text[NORMAL] = "#000000"
 }
