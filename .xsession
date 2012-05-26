@@ -6,6 +6,10 @@ gnome-session --autostart=/dev/null &
 
 gnome-settings-daemon &
 
+eval $(gnome-keyring-daemon --start)
+export GNOME_KEYRING_SOCKET
+export GNOME_KEYRING_PID
+
 taffybar &
 
 background=$(bash -c "printf $(
