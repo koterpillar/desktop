@@ -1,0 +1,8 @@
+#!/bin/sh
+
+BINARY=$(echo ~/.cache/taffybar/taffybar-linux-x86_64)
+
+pidof $BINARY >/dev/null && kill $(pidof $BINARY)
+rm -f $BINARY
+
+taffybar &
