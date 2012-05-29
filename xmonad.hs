@@ -31,6 +31,8 @@ layout = noBorders Full ||| tiled ||| Mirror tiled ||| simpleFloat
 main = do
     client <- connectSession
     let pp = defaultPP { ppTitle = taffybarEscape . shorten 150
+                       , ppCurrent = taffybarEscape . ppCurrent defaultPP
+                       , ppVisible = taffybarEscape . ppVisible defaultPP
                        }
     xmonad $ defaultConfig
         { manageHook = manageDocks <+> manageHook defaultConfig
