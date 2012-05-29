@@ -6,6 +6,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
+import XMonad.Layout.SimpleFloat
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeys)
 
@@ -13,7 +14,7 @@ import Graphics.X11.ExtraTypes.XF86
 
 import System.Taffybar.XMonadLog (dbusLogWithPP, taffybarEscape)
 
-layout = noBorders Full ||| tiled ||| Mirror tiled
+layout = noBorders Full ||| tiled ||| Mirror tiled ||| simpleFloat
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
