@@ -42,4 +42,6 @@ sudo apt-get -y install synapse zeitgeist-extension-fts
 sudo apt-get -y install ibus ibus-pinyin ibus-table
 
 # Session script
+sudo apt-get install feh
+
 ln -sf $DIR/.xsession ~
