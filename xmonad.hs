@@ -12,7 +12,7 @@ import XMonad.Util.EZConfig (additionalKeys)
 
 import Graphics.X11.ExtraTypes.XF86
 
-import System.Taffybar.XMonadLog (dbusLogWithPP, taffybarEscape)
+import System.Taffybar.XMonadLog
 
 layout = noBorders Full ||| tiled ||| Mirror tiled ||| simpleFloat
   where
@@ -28,12 +28,19 @@ layout = noBorders Full ||| tiled ||| Mirror tiled ||| simpleFloat
 -- For default configuration, see
 -- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
 
+pp :: PP
+pp = defaultPP { ppTitle = wrap "<b>" "</b>" . taffybarEscape
+               , ppCurrent = taffybarColor "black" "#ffc060" . pad
+               , ppVisible = taffybarColor "black" "#f0f0f0" . pad
+               , ppUrgent = taffybarColor "white" "red" . pad
+               , ppHidden = taffybarColor "#808080" ""
+               , ppOrder = spaceBefore
+               }
+     where
+        spaceBefore [ws, l, wt] = [' ':ws, l, wt]
+
 main = do
     client <- connectSession
-    let pp = defaultPP { ppTitle = taffybarEscape . shorten 150
-                       , ppCurrent = taffybarEscape . ppCurrent defaultPP
-                       , ppVisible = taffybarEscape . ppVisible defaultPP
-                       }
     xmonad $ defaultConfig
         { manageHook = manageDocks <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ layout
