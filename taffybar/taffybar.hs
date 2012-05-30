@@ -41,8 +41,7 @@ main = do
   let clock = textClockNew Nothing "%a %b %_d %H:%M" 1
       log = xmonadLogNew
       tray = systrayNew
-      note = notifyAreaNew defaultNotificationConfig
       battery = batteryBarNew batteryConfig 10
-  defaultTaffybar defaultTaffybarConfig { startWidgets = [ log, note ]
+  defaultTaffybar defaultTaffybarConfig { startWidgets = [ log ]
                                         , endWidgets = [ tray, clock, battery ]
                                         }
