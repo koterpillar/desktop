@@ -37,6 +37,7 @@ ln -sf $DIR/taffybar ~/.config
 
 # Synapse
 sudo apt-get -y install synapse zeitgeist-extension-fts
+ln -sf $DIR/synapse ~/.config
 
 # IBus
 sudo apt-get -y install ibus ibus-pinyin ibus-table
