@@ -5,6 +5,7 @@ import DBus.Client.Simple
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Tabbed
@@ -36,10 +37,10 @@ floatLayout = simpleFloat' shrinkText theme
 
 tabbedLayout = tabbed shrinkText theme
 
-layout = smartBorders tabbedLayout
-    ||| smartBorders tiledLayout
-    ||| smartBorders (Mirror tiledLayout)
-    ||| smartBorders floatLayout
+layout = named "Tabs" (smartBorders tabbedLayout)
+    ||| named "Vertical" (smartBorders tiledLayout)
+    ||| named "Horizontal" (smartBorders (Mirror tiledLayout))
+    ||| named "Float" (smartBorders floatLayout)
 
 -- For default configuration, see
 -- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
