@@ -45,21 +45,46 @@ layout = named "Tabs" (smartBorders tabbedLayout)
 -- For default configuration, see
 -- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
 
+-- For named workspaces, make the number a subscript
+subNumber :: String -> String
+subNumber [x] = [x]
+subNumber named = taffybarEscape (take lname named) ++ wrap smallFont "</span>" (drop lname named)
+    where lname = (length named) - 1
+          smallFont = "<span font_desc=\"7\">"
+
+taffybarColorUnsafe :: String -> String -> String -> String
+taffybarColorUnsafe fg bg = wrap t "</span>"
+    where t = concat ["<span fgcolor=\"", fg, if null bg then "" else "\" bgcolor=\"" ++ bg , "\">"]
+
+
 pp :: PP
 pp = defaultPP { ppTitle = wrap "<b>" "</b>" . taffybarEscape
-               , ppCurrent = taffybarColor "black" "#ffc060" . pad
-               , ppVisible = taffybarColor "black" "#f0f0f0" . pad
-               , ppUrgent = taffybarColor "white" "red" . pad
-               , ppHidden = taffybarColor "#808080" ""
+               , ppCurrent = taffybarColorUnsafe "black" "#ffc060" . pad . subNumber
+               , ppVisible = taffybarColorUnsafe "black" "#f0f0f0" . pad . subNumber
+               , ppUrgent = taffybarColorUnsafe "white" "red" . pad . subNumber
+               , ppHidden = taffybarColorUnsafe "black" "" . subNumber
+               , ppHiddenNoWindows = taffybarColorUnsafe "#A0A0A0" "" . subNumber
                , ppOrder = spaceBefore
                }
      where
         spaceBefore [ws, l, wt] = [' ':ws, l, wt]
 
+myWorkspaces = map maybeNamed [1..9 :: Int]
+    where maybeNamed x = wsName x ++ show x
+          wsName 6 = "Mail"
+          wsName 7 = "IM"
+          wsName _ = ""
+
+myManageHook = composeAll
+    [ className =? "Thunderbird" --> doShift "Mail6"
+    , className =? "Pidgin" <||> className =? "Skype" --> doShift "IM7"
+    ]
+
 main = do
     client <- connectSession
     xmonad $ defaultConfig
-        { manageHook = manageDocks <+> manageHook defaultConfig
+        { workspaces = myWorkspaces
+        , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ layout
         , logHook = dbusLogWithPP client pp
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
