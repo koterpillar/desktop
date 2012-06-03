@@ -37,7 +37,7 @@ floatLayout = simpleFloat' shrinkText theme
 
 tabbedLayout = tabbed shrinkText theme
 
-layout = named "Tabs" (smartBorders tabbedLayout)
+layout = named "Tabs" (noBorders tabbedLayout)
     ||| named "Vertical" (smartBorders tiledLayout)
     ||| named "Horizontal" (smartBorders (Mirror tiledLayout))
     ||| named "Float" (smartBorders floatLayout)
