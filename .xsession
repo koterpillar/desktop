@@ -34,4 +34,3 @@ ibus-daemon -d -x
 synapse -s &
 
 exec xmonad
-
