@@ -1,8 +1,5 @@
 {
   "ui" : {
-    "global" : {
-      "ui-type" : "default"
-    },
     "shortcuts" : {
       "activate" : "F12",
       "execute" : "Return",
@@ -23,6 +20,10 @@
       "paste" : "<Control>v",
       "alt-paste" : "<Shift>Insert",
       "exit" : "<Control>q"
+    },
+    "global" : {
+      "ui-type" : "default",
+      "show-indicator" : false
     }
   }
 }
