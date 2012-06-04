@@ -1,5 +1,9 @@
 import System.IO
 
+import Control.Monad
+
+import Data.List
+import Data.Maybe
 import DBus.Client.Simple
 
 import XMonad
@@ -10,6 +14,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Tabbed
 import qualified XMonad.StackSet as W
+import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig (additionalKeys)
 
 import Graphics.X11.ExtraTypes.XF86
@@ -80,6 +85,24 @@ myManageHook = composeAll
     , className =? "Pidgin" <||> className =? "Skype" --> doShift "IM7"
     ]
 
+doShutdown = consoleKit "Stop"
+doReboot = consoleKit "Restart"
+
+consoleKit :: String -> X ()
+consoleKit x = spawn $
+    "dbus-send --system --dest=org.freedesktop.ConsoleKit"
+    ++ " /org/freedesktop/ConsoleKit/Manager"
+    ++ " org.freedesktop.ConsoleKit.Manager." ++ x
+
+stringMenu :: [(String, X a)] -> X a
+stringMenu items = do
+    action <- dmenu $ map fst items
+    snd . fromJust $ find (((==) action) . fst) items
+
+shutdownMenu :: X ()
+shutdownMenu = stringMenu [ ("shutdown", doShutdown)
+                          , ("reboot", doReboot)
+                          ]
 main = do
     client <- connectSession
     xmonad $ defaultConfig
@@ -91,11 +114,9 @@ main = do
         } `additionalKeys`
         [ ((mod1Mask,               xK_Tab   ), windows W.focusDown) -- Alt-Tab to switch windows
         , ((mod1Mask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- Alt-Shift-Tab
-        , ((0                     , xF86XK_PowerOff), spawn "gnome-session-quit --power-off")
+        , ((0                     , xF86XK_PowerOff), shutdownMenu)
         , ((mod4Mask              , xK_Return), spawn $ XMonad.terminal defaultConfig)
-        , ((0                     , xF86XK_HomePage), spawn "x-www-browser" )
+        , ((0                     , xF86XK_HomePage), spawn "x-www-browser")
         , ((mod4Mask              , xK_b     ), sendMessage ToggleStruts)
-        --, ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
-        --, ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
-        --, ((0, xK_Print), spawn "scrot")
+        , ((mod4Mask              , xK_l), spawn "gnome-screensaver-command --lock")
         ]

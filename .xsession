@@ -2,8 +2,6 @@
 
 xcompmgr -s &
 
-gnome-session --autostart=/dev/null &
-
 gnome-settings-daemon &
 
 eval $(gnome-keyring-daemon --start)
