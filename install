@@ -52,4 +52,6 @@ sudo apt-get install feh notify-osd
 sudo apt-get purge notification-daemon
 killall -q notification-daemon
 
+gconftool -t bool /apps/nautilus/preferences/show_desktop -s false
+
 ln -sf $DIR/.xsession ~
