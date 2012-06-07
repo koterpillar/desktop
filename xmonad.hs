@@ -4,6 +4,8 @@ import Control.Monad
 
 import Data.List
 import Data.Maybe
+import Data.String.Utils
+
 import DBus.Client.Simple
 
 import XMonad
@@ -16,6 +18,8 @@ import XMonad.Layout.Tabbed
 import qualified XMonad.StackSet as W
 import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig (additionalKeys)
+
+import System.Gnome.GConf
 
 import Graphics.X11.ExtraTypes.XF86
 
@@ -103,8 +107,19 @@ shutdownMenu :: X ()
 shutdownMenu = stringMenu [ ("shutdown", doShutdown)
                           , ("reboot", doReboot)
                           ]
+
+getUrlHandler :: GConf -> String -> IO String
+getUrlHandler gconf scheme = do
+    handler <- gconf `gconfGet` ("/desktop/gnome/url-handlers/" ++ scheme ++ "/command")
+    handler <- return $ replace " %u" "" handler
+    handler <- return $ replace " %s" "" handler
+    return handler
+
 main = do
     client <- connectSession
+    gconf <- gconfGetDefault
+    browser <- getUrlHandler gconf "http"
+    email <- getUrlHandler gconf "mailto"
     xmonad $ defaultConfig
         { workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
@@ -116,7 +131,8 @@ main = do
         , ((mod1Mask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- Alt-Shift-Tab
         , ((0                     , xF86XK_PowerOff), shutdownMenu)
         , ((mod4Mask              , xK_Return), spawn $ XMonad.terminal defaultConfig)
-        , ((0                     , xF86XK_HomePage), spawn "x-www-browser")
+        , ((0                     , xF86XK_HomePage), spawn $ browser)
+        , ((0                     , xF86XK_Mail), spawn $ email)
         , ((mod4Mask              , xK_b     ), sendMessage ToggleStruts)
         , ((mod4Mask              , xK_l), spawn "gnome-screensaver-command --lock")
         ]

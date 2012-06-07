@@ -6,7 +6,8 @@ DIR=`pwd`/`dirname $0`
 sudo install default.desktop /usr/share/xsessions
 
 # XMonad
-sudo apt-get -y install xmonad
+sudo apt-get -y install cabal-install xmonad \
+	libghc-gconf-dev libghc-missingh-dev
 
 mkdir -p ~/.xmonad
 ln -sf $DIR/xmonad.hs ~/.xmonad
@@ -16,7 +17,6 @@ if ghc -e 'System.Taffybar.screenNumber System.Taffybar.defaultTaffybarConfig' >
 then
 	echo -n
 else
-	sudo apt-get -y install cabal-install
 	cabal update
 	sudo apt-get -y install gtk2hs-buildtools libghc-cairo-dev libghc-gtk-dev \
 		libgtk-3-dev
@@ -51,5 +51,8 @@ sudo apt-get purge feh
 sudo apt-get install notify-osd
 sudo apt-get purge notification-daemon
 killall -q notification-daemon
+
+gconftool -s /apps/gnome_settings_daemon/keybindings/www -t string ''
+gconftool -s /apps/gnome_settings_daemon/keybindings/email -t string ''
 
 ln -sf $DIR/.xsession ~
