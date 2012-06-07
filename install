@@ -13,10 +13,8 @@ mkdir -p ~/.xmonad
 ln -sf $DIR/xmonad.hs ~/.xmonad
 
 # Taffybar
-if ghc -e 'System.Taffybar.screenNumber System.Taffybar.defaultTaffybarConfig' >/dev/null 2>&1 | grep -q Failed
+if ghc -e 'System.Taffybar.screenNumber System.Taffybar.defaultTaffybarConfig' 2>&1 | grep -q Failed
 then
-	echo -n
-else
 	cabal update
 	sudo apt-get -y install gtk2hs-buildtools libghc-cairo-dev libghc-gtk-dev \
 		libgtk-3-dev
@@ -47,12 +45,14 @@ ln -sf $DIR/synapse ~/.config
 sudo apt-get -y install ibus ibus-pinyin ibus-table
 
 # Session script
-sudo apt-get purge feh
-sudo apt-get install notify-osd
-sudo apt-get purge notification-daemon
+sudo apt-get -y purge feh
+sudo apt-get -y install notify-osd
+sudo apt-get -y purge notification-daemon
 killall -q notification-daemon
 
 gconftool -s /apps/gnome_settings_daemon/keybindings/www -t string ''
 gconftool -s /apps/gnome_settings_daemon/keybindings/email -t string ''
 
 ln -sf $DIR/.xsession ~
+
+sudo apt-get -y autoremove
