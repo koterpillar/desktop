@@ -48,10 +48,9 @@ ln -sf $DIR/synapse ~/.config
 sudo apt-get -y install ibus ibus-pinyin ibus-table
 
 # Session script
-sudo apt-get install feh notify-osd
+sudo apt-get purge feh
+sudo apt-get install notify-osd
 sudo apt-get purge notification-daemon
 killall -q notification-daemon
-
-gconftool -t bool /apps/nautilus/preferences/show_desktop -s false
 
 ln -sf $DIR/.xsession ~

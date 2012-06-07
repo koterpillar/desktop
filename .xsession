@@ -10,11 +10,7 @@ export GNOME_KEYRING_PID
 
 taffybar &
 
-background=$(bash -c "printf $(
-    gconftool -g /desktop/gnome/background/picture_filename \
-    | sed 's#file://##;s/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\\\x\2/g'
-)")
-feh --bg-max "$background"
+nautilus --no-default-window &
 
 xscreensaver -no-splash &
 
