@@ -12,8 +12,6 @@ taffybar &
 
 nautilus --no-default-window &
 
-xscreensaver -no-splash &
-
 nm-applet --sm-disable &
 
 if [ -x /usr/bin/gnome-power-manager ] ; then
