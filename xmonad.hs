@@ -133,6 +133,7 @@ main = do
         , ((mod4Mask              , xK_Return), spawn $ XMonad.terminal defaultConfig)
         , ((0                     , xF86XK_HomePage), spawn $ browser)
         , ((0                     , xF86XK_Mail), spawn $ email)
+        , ((0                     , xF86XK_Messenger), spawn "pidgin")
         , ((mod4Mask              , xK_b     ), sendMessage ToggleStruts)
         , ((mod4Mask              , xK_l), spawn "gnome-screensaver-command --lock")
         ]
