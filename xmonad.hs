@@ -11,6 +11,7 @@ import DBus.Client.Simple
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.ComboP
 import XMonad.Layout.Grid
 import XMonad.Layout.Named
@@ -43,6 +44,9 @@ theme :: Theme
 theme = defaultTheme { activeColor = "#FFE8C9"
                      , activeTextColor = "#000000"
                      , activeBorderColor = "#FFE8C9"
+                     , urgentColor = "#FF0000"
+                     , urgentTextColor = "#FFFFFF"
+                     , urgentBorderColor = "#FFFFFF"
                      , fontName = "xft:ubuntu:size=9"
                      }
 
@@ -134,7 +138,7 @@ main = do
     gconf <- gconfGetDefault
     browser <- getUrlHandler gconf "http"
     email <- getUrlHandler gconf "mailto"
-    xmonad $ defaultConfig
+    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
         { workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ layout
