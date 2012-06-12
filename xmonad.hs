@@ -11,10 +11,14 @@ import DBus.Client.Simple
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.ComboP
+import XMonad.Layout.Grid
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Tabbed
+import XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig (additionalKeys)
@@ -46,7 +50,17 @@ floatLayout = simpleFloat' shrinkText theme
 
 tabbedLayout = tabbed shrinkText theme
 
-layout = named "Tabs" (noBorders tabbedLayout)
+imLayout = named "IM" $
+    combineTwoP (TwoPane 0.03 0.2) rosterLayout mainLayout isRoster
+    where rosterLayout    = smartBorders (Mirror tiledLayout)
+          mainLayout      = Grid
+          isRoster        = pidginRoster `Or` skypeRoster
+          pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
+          -- TODO: distinguish Skype's main window better
+          skypeRoster     = Title "koterpillar - Skype™ (Beta)"
+
+layout = onWorkspace "IM7" imLayout $
+        named "Tabs" (noBorders tabbedLayout)
     ||| named "Vertical" (smartBorders tiledLayout)
     ||| named "Horizontal" (smartBorders (Mirror tiledLayout))
     ||| named "Float" (smartBorders floatLayout)
