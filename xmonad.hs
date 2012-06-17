@@ -61,7 +61,8 @@ imLayout = named "IM" $
           isRoster        = pidginRoster `Or` skypeRoster
           pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
           -- TODO: distinguish Skype's main window better
-          skypeRoster     = Title "koterpillar - Skype™ (Beta)"
+          skypeRoster     = Or (Title $ skypeLogin ++ " - Skype™") (Title "Skype™ 4.0 для Linux")
+          skypeLogin      = "koterpillar"
 
 layout = onWorkspace "IM7" imLayout $
         named "Tabs" (noBorders tabbedLayout)
