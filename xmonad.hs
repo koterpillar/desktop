@@ -86,7 +86,7 @@ taffybarColorUnsafe fg bg = wrap t "</span>"
 
 
 pp :: PP
-pp = defaultPP { ppTitle = wrap "<b>" "</b>" . taffybarEscape
+pp = defaultPP { ppTitle = wrap "<b>" "</b>" . taffybarEscape . shorten 150
                , ppCurrent = taffybarColorUnsafe "black" "#ffc060" . pad . subNumber
                , ppVisible = taffybarColorUnsafe "black" "#f0f0f0" . pad . subNumber
                , ppUrgent = taffybarColorUnsafe "white" "red" . pad . subNumber
