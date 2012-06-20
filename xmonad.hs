@@ -22,7 +22,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import XMonad.Util.Dmenu
-import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.EZConfig (additionalKeys, removeKeys)
 
 import System.Gnome.GConf
 
@@ -145,7 +145,9 @@ main = do
         , layoutHook = avoidStruts $ layout
         , logHook = dbusLogWithPP client pp
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
-        } `additionalKeys`
+        } `removeKeys`
+        [ (mod4Mask               , xK_p)
+        ] `additionalKeys`
         [ ((mod1Mask,               xK_Tab   ), windows W.focusDown) -- Alt-Tab to switch windows
         , ((mod1Mask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- Alt-Shift-Tab
         , ((0                     , xF86XK_PowerOff), shutdownMenu)
