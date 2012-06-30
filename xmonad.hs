@@ -144,17 +144,14 @@ main = do
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ layout
         , logHook = dbusLogWithPP client pp
-        , modMask = mod4Mask     -- Rebind Mod to the Windows key
         } `removeKeys`
-        [ (mod4Mask               , xK_p)
+        [ (mod1Mask               , xK_p)
         ] `additionalKeys`
-        [ ((mod1Mask,               xK_Tab   ), windows W.focusDown) -- Alt-Tab to switch windows
-        , ((mod1Mask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- Alt-Shift-Tab
-        , ((0                     , xF86XK_PowerOff), shutdownMenu)
-        , ((mod4Mask              , xK_Return), spawn $ XMonad.terminal defaultConfig)
+        [ ((0                     , xF86XK_PowerOff), shutdownMenu)
+        , ((mod1Mask              , xK_Return), spawn $ XMonad.terminal defaultConfig)
         , ((0                     , xF86XK_HomePage), spawn $ browser)
         , ((0                     , xF86XK_Mail), spawn $ email)
         , ((0                     , xF86XK_Messenger), spawn "pidgin")
-        , ((mod4Mask              , xK_b     ), sendMessage ToggleStruts)
-        , ((mod4Mask              , xK_l), spawn "gnome-screensaver-command --lock")
+        , ((mod1Mask              , xK_b     ), sendMessage ToggleStruts)
+        , ((mod1Mask              , xK_l), spawn "gnome-screensaver-command --lock")
         ]
