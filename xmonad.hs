@@ -146,9 +146,9 @@ main = do
         , logHook = dbusLogWithPP client pp
         } `removeKeys`
         [ (mod1Mask               , xK_p)
+        , (mod1Mask              , xK_Return)
         ] `additionalKeys`
         [ ((0                     , xF86XK_PowerOff), shutdownMenu)
-        , ((mod1Mask              , xK_Return), spawn $ XMonad.terminal defaultConfig)
         , ((0                     , xF86XK_HomePage), spawn $ browser)
         , ((0                     , xF86XK_Mail), spawn $ email)
         , ((0                     , xF86XK_Messenger), spawn "pidgin")
