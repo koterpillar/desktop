@@ -113,7 +113,8 @@ doReboot = consoleKit "Restart"
 
 consoleKit :: String -> X ()
 consoleKit x = spawn $
-    "dbus-send --system --dest=org.freedesktop.ConsoleKit"
+    "dbus-send --system --print-reply"
+    ++ " --dest=org.freedesktop.ConsoleKit"
     ++ " /org/freedesktop/ConsoleKit/Manager"
     ++ " org.freedesktop.ConsoleKit.Manager." ++ x
 
