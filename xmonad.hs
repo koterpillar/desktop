@@ -154,5 +154,4 @@ main = do
         , ((0                     , xF86XK_Mail), spawn $ email)
         , ((0                     , xF86XK_Messenger), spawn "pidgin")
         , ((mod1Mask              , xK_b     ), sendMessage ToggleStruts)
-        , ((mod1Mask              , xK_l), spawn "gnome-screensaver-command --lock")
         ]
