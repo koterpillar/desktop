@@ -147,8 +147,8 @@ main = do
         , logHook = dbusLogWithPP client pp
 	, modMask = mod4Mask
         } `removeKeys`
-        [ (mod1Mask               , xK_p)
-        , (mod1Mask              , xK_Return)
+        [ (mod4Mask               , xK_p)
+        , (mod4Mask               , xK_Return)
         ] `additionalKeys`
         [ ((0                     , xF86XK_PowerOff), shutdownMenu)
         , ((0                     , xF86XK_HomePage), spawn $ browser)
