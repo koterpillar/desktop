@@ -145,6 +145,7 @@ main = do
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ layout
         , logHook = dbusLogWithPP client pp
+	, modMask = mod4Mask
         } `removeKeys`
         [ (mod1Mask               , xK_p)
         , (mod1Mask              , xK_Return)
@@ -153,5 +154,5 @@ main = do
         , ((0                     , xF86XK_HomePage), spawn $ browser)
         , ((0                     , xF86XK_Mail), spawn $ email)
         , ((0                     , xF86XK_Messenger), spawn "pidgin")
-        , ((mod1Mask              , xK_b     ), sendMessage ToggleStruts)
+        , ((mod4Mask              , xK_b     ), sendMessage ToggleStruts)
         ]
