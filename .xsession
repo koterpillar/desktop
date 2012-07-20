@@ -23,6 +23,6 @@ export GTK_IM_MODULE="ibus"
 export QT_IM_MODULE="xim"
 ibus-daemon -d -x
 
-synapse -s &
+(sleep 2 && synapse -s) &
 
 exec xmonad
