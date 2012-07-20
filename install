@@ -30,6 +30,8 @@ then
 	cabal install gtk-traymanager.cabal
 	cd - >/dev/null
 
+	cabal install current-locale
+
 	cabal install taffybar
 fi
 

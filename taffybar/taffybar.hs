@@ -8,6 +8,8 @@ import System.Taffybar.Widgets.PollingBar
 
 import System.Information.CPU
 
+import System.CurrentLocale
+
 import Data.Char
 import Data.List
 import Data.Maybe
@@ -38,7 +40,8 @@ batteryConfig = defaultBatteryConfig { barColor = batteryColor
                                                 | otherwise = (0, 0, 0)
 
 main = do
-  let clock = textClockNew Nothing "%a %b %_d %H:%M" 1
+  locale <- currentLocale
+  let clock = textClockNew (Just locale) "%a %b %_d %H:%M" 1
       log = xmonadLogNew
       tray = systrayNew
       battery = batteryBarNew batteryConfig 10
