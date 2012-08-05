@@ -32,6 +32,8 @@ then
 
 	cabal install current-locale
 
+	sudo apt-get -y install libxml2-dev
+
 	cabal install taffybar
 fi
 
