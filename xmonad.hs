@@ -142,11 +142,12 @@ main = do
     browser <- getUrlHandler gconf "http"
     email <- getUrlHandler gconf "mailto"
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
-        { workspaces = myWorkspaces
+        { terminal = "x-terminal-emulator"
+        , workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ layout
         , logHook = dbusLogWithPP client pp
-	, modMask = mod4Mask
+        , modMask = mod4Mask
         } `removeKeys`
         [ (mod4Mask               , xK_p)
         , (mod4Mask               , xK_Return)
