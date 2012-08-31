@@ -98,15 +98,17 @@ pp = defaultPP { ppTitle = wrap "<b>" "</b>" . taffybarEscape . shorten 150
      where
         spaceBefore [ws, l, wt] = [' ':ws, l, wt]
 
-myWorkspaces = map maybeNamed [1..9 :: Int]
-    where maybeNamed x = wsName x ++ show x
-          wsName 6 = "Mail"
-          wsName 7 = "IM"
-          wsName _ = ""
+wsName :: Int -> String
+wsName x = maybeName x ++ show x
+    where maybeName 6 = "Mail"
+          maybeName 7 = "IM"
+          maybeName _ = ""
+
+myWorkspaces = map wsName [1..9 :: Int]
 
 myManageHook = composeAll
-    [ className =? "Thunderbird" --> doShift "Mail6"
-    , className =? "Pidgin" <||> className =? "Skype" --> doShift "IM7"
+    [ className =? "Thunderbird" --> doShift (wsName 6)
+    , className =? "Pidgin" <||> className =? "Skype" --> doShift (wsName 7)
     ]
 
 doShutdown = consoleKit "Stop"
