@@ -1,7 +1,5 @@
 #!/bin/sh
 
-xcompmgr -s &
-
 gnome-settings-daemon &
 
 eval $(gnome-keyring-daemon --start)
