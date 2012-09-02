@@ -65,10 +65,10 @@ imLayout = named "IM" $
           skypeLogin      = "koterpillar"
 
 layout = onWorkspace "IM7" imLayout $
-        named "Tabs" (noBorders tabbedLayout)
+        named "Grid" (smartBorders Grid)
+    ||| named "Tabs" (noBorders tabbedLayout)
     ||| named "Vertical" (smartBorders tiledLayout)
     ||| named "Horizontal" (smartBorders (Mirror tiledLayout))
-    ||| named "Grid" Grid
     ||| named "Float" (smartBorders floatLayout)
 
 -- For default configuration, see
