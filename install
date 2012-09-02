@@ -46,7 +46,7 @@ sudo apt-get -y install synapse zeitgeist-extension-fts
 ln -sf $DIR/synapse ~/.config
 
 # IBus
-sudo apt-get -y install ibus ibus-pinyin ibus-table
+sudo apt-get -y install ibus ibus-pinyin ibus-table ibus-m17n
 
 # Session script
 sudo apt-get -y purge feh
