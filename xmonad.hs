@@ -9,6 +9,7 @@ import Data.String.Utils
 import DBus.Client.Simple
 
 import XMonad
+import XMonad.Actions.Search
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
@@ -159,4 +160,5 @@ main = do
         , ((0                     , xF86XK_Mail), spawn $ email)
         , ((0                     , xF86XK_Messenger), spawn "pidgin")
         , ((mod4Mask              , xK_b     ), sendMessage ToggleStruts)
+        , ((mod4Mask              , xK_s     ), selectSearch google)
         ]
