@@ -65,8 +65,10 @@ imLayout = named "IM" $
           skypeRoster     = Or (Title $ skypeLogin ++ " - Skype™") (Title "Skype™ 4.0 для Linux")
           skypeLogin      = "koterpillar"
 
+gridLayout = GridRatio (3/2)
+
 layout = onWorkspace "IM7" imLayout $
-        named "Grid" (smartBorders Grid)
+        named "Grid" (smartBorders gridLayout)
     ||| named "Tabs" (noBorders tabbedLayout)
     ||| named "Vertical" (smartBorders tiledLayout)
     ||| named "Horizontal" (smartBorders (Mirror tiledLayout))
