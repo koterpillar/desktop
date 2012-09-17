@@ -68,8 +68,8 @@ imLayout = named "IM" $
 gridLayout = GridRatio (3/2)
 
 layout = onWorkspace "IM7" imLayout $
-        named "Grid" (smartBorders gridLayout)
-    ||| named "Tabs" (noBorders tabbedLayout)
+        named "Tabs" (smartBorders tabbedLayout)
+    ||| named "Grid" (smartBorders gridLayout)
     ||| named "Vertical" (smartBorders tiledLayout)
     ||| named "Horizontal" (smartBorders (Mirror tiledLayout))
     ||| named "Float" (smartBorders floatLayout)
