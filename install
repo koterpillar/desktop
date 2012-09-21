@@ -11,6 +11,7 @@ sudo apt-get -y install cabal-install xmonad \
 
 mkdir -p ~/.xmonad
 ln -sf $DIR/xmonad.hs ~/.xmonad
+ln -sf $DIR/xmonad-lib ~/.xmonad/lib
 
 # Taffybar
 if ghc -e 'System.Taffybar.screenNumber System.Taffybar.defaultTaffybarConfig' 2>&1 | grep -q Failed
