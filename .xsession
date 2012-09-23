@@ -23,4 +23,4 @@ ibus-daemon -d -x
 
 (sleep 2 && synapse -s) &
 
-exec xmonad
+exec xmonad >/tmp/xmonad-$(whoami).log 2>&1
