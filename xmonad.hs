@@ -147,6 +147,24 @@ main = do
     gconf <- gconfGetDefault
     browser <- getUrlHandler gconf "http"
     email <- getUrlHandler gconf "mailto"
+    let keys = [ ((0                   , xF86XK_PowerOff ), shutdownMenu)
+               , ((0                   , xF86XK_HomePage ), spawn browser)
+               , ((0                   , xF86XK_Mail     ), spawn email)
+               , ((0                   , xF86XK_Messenger), spawn "pidgin")
+               , ((modm                , xK_b    ), sendMessage ToggleStruts)
+               , ((modm                , xK_s    ), selectSearch google)
+
+               , ((modm                , xK_h    ), withFocused $ sendMessage . expandWindowAlt)
+               , ((modm                , xK_l    ), withFocused $ sendMessage . shrinkWindowAlt)
+               , ((modm .|. shiftMask  , xK_h    ), withFocused $ sendMessage . tallWindowAlt)
+               , ((modm .|. shiftMask  , xK_l    ), withFocused $ sendMessage . wideWindowAlt)
+               , ((modm .|. controlMask, xK_space), sendMessage resetAlt)
+               ]
+               ++
+               -- Switch/move windows to workspaces
+               [((m .|. modm, k), windows $ f i)
+                   | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal]
+                   , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
         { terminal = "x-terminal-emulator"
         , workspaces = myWorkspaces
@@ -157,17 +175,4 @@ main = do
         } `removeKeys`
         [ (modm                 , xK_p)
         , (modm                 , xK_Return)
-        ] `additionalKeys`
-        [ ((0                   , xF86XK_PowerOff  ), shutdownMenu)
-        , ((0                   , xF86XK_HomePage  ), spawn browser)
-        , ((0                   , xF86XK_Mail      ), spawn email)
-        , ((0                   , xF86XK_Messenger ), spawn "pidgin")
-        , ((modm                , xK_b    ), sendMessage ToggleStruts)
-        , ((modm                , xK_s    ), selectSearch google)
-
-        , ((modm                , xK_h    ), withFocused $ sendMessage . expandWindowAlt)
-        , ((modm                , xK_l    ), withFocused $ sendMessage . shrinkWindowAlt)
-        , ((modm .|. shiftMask  , xK_h    ), withFocused $ sendMessage . tallWindowAlt)
-        , ((modm .|. shiftMask  , xK_l    ), withFocused $ sendMessage . wideWindowAlt)
-        , ((modm .|. controlMask, xK_space), sendMessage resetAlt)
-        ]
+        ] `additionalKeys` keys
