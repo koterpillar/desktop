@@ -32,6 +32,9 @@ import Graphics.X11.ExtraTypes.XF86
 
 import System.Taffybar.XMonadLog
 
+-- For default configuration, see
+-- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
+
 theme :: Theme
 theme = defaultTheme { activeColor = "#FFE8C9"
                      , activeTextColor = "#000000"
@@ -63,9 +66,6 @@ layout = onWorkspace "IM7" imLayout $
     ||| named "Tabs" (smartBorders tabbedLayout)
     ||| named "Float" (smartBorders floatLayout)
 
--- For default configuration, see
--- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
-
 -- For named workspaces, make the number a subscript
 subNumber :: String -> String
 subNumber [x] = [x]
@@ -76,7 +76,6 @@ subNumber named = taffybarEscape (take lname named) ++ wrap smallFont "</span>" 
 taffybarColorUnsafe :: String -> String -> String -> String
 taffybarColorUnsafe fg bg = wrap t "</span>"
     where t = concat ["<span fgcolor=\"", fg, if null bg then "" else "\" bgcolor=\"" ++ bg , "\">"]
-
 
 pp :: PP
 pp = defaultPP { ppTitle = wrap "<b>" "</b>" . taffybarEscape . shorten 150
@@ -128,9 +127,7 @@ shutdownMenu = stringMenu [ ("shutdown", doShutdown)
 getUrlHandler :: GConf -> String -> IO String
 getUrlHandler gconf scheme = do
     handler <- gconf `gconfGet` ("/desktop/gnome/url-handlers/" ++ scheme ++ "/command")
-    handler <- return $ replace " %u" "" handler
-    handler <- return $ replace " %s" "" handler
-    return handler
+    return $ replace " %u" "" $ replace " %s" "" $ handler
 
 modm = mod4Mask
 
@@ -145,22 +142,21 @@ main = do
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ layout
         , logHook = dbusLogWithPP client pp
-        , modMask = mod4Mask
+        , modMask = modm
         } `removeKeys`
         [ (modm                 , xK_p)
         , (modm                 , xK_Return)
         ] `additionalKeys`
-        [ ((0                   , xF86XK_PowerOff), shutdownMenu)
-        , ((0                   , xF86XK_HomePage), spawn $ browser)
-        , ((0                   , xF86XK_Mail), spawn $ email)
-        , ((0                   , xF86XK_Messenger), spawn "pidgin")
-        , ((modm                , xK_b     ), sendMessage ToggleStruts)
-        , ((modm                , xK_s     ), selectSearch google)
+        [ ((0                   , xF86XK_PowerOff  ), shutdownMenu)
+        , ((0                   , xF86XK_HomePage  ), spawn browser)
+        , ((0                   , xF86XK_Mail      ), spawn email)
+        , ((0                   , xF86XK_Messenger ), spawn "pidgin")
+        , ((modm                , xK_b    ), sendMessage ToggleStruts)
+        , ((modm                , xK_s    ), selectSearch google)
 
         , ((modm .|. shiftMask  , xK_a    ), withFocused (sendMessage . expandWindowAlt))
         , ((modm .|. shiftMask  , xK_z    ), withFocused (sendMessage . shrinkWindowAlt))
         , ((modm .|. shiftMask  , xK_s    ), withFocused (sendMessage . tallWindowAlt))
         , ((modm .|. shiftMask  , xK_d    ), withFocused (sendMessage . wideWindowAlt))
         , ((modm .|. controlMask, xK_space), sendMessage resetAlt)
-
         ]
