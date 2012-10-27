@@ -3,6 +3,7 @@ import System.IO
 import Control.Monad
 
 import Data.List
+import qualified Data.Map as M
 import Data.Maybe
 import Data.String.Utils
 
@@ -14,7 +15,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.ComboP
-import XMonad.Layout.Grid
+import XMonad.Layout.MosaicAlt
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace
@@ -30,16 +31,6 @@ import System.Gnome.GConf
 import Graphics.X11.ExtraTypes.XF86
 
 import System.Taffybar.XMonadLog
-
-tiledLayout = Tall nmaster delta ratio
-    where
-        -- default tiling algorithm partitions the screen into two panes
-        -- The default number of windows in the master pane
-        nmaster = 1
-        -- Default proportion of screen occupied by master pane
-        ratio   = 1/2
-        -- Percent of screen to increment by when resizing panes
-        delta   = 3/100
 
 theme :: Theme
 theme = defaultTheme { activeColor = "#FFE8C9"
@@ -57,21 +48,19 @@ tabbedLayout = tabbed shrinkText theme
 
 imLayout = named "IM" $
     combineTwoP (TwoPane 0.03 0.2) rosterLayout mainLayout isRoster
-    where rosterLayout    = smartBorders (Mirror tiledLayout)
-          mainLayout      = Grid
+    where rosterLayout    = smartBorders mosaicLayout
+          mainLayout      = mosaicLayout
           isRoster        = pidginRoster `Or` skypeRoster
           pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
           -- TODO: distinguish Skype's main window better
           skypeRoster     = Or (Title $ skypeLogin ++ " - Skype™") (Title "Skype™ 4.0 для Linux")
           skypeLogin      = "koterpillar"
 
-gridLayout = GridRatio (3/2)
+mosaicLayout = MosaicAlt M.empty
 
 layout = onWorkspace "IM7" imLayout $
-        named "Tabs" (smartBorders tabbedLayout)
-    ||| named "Grid" (smartBorders gridLayout)
-    ||| named "Vertical" (smartBorders tiledLayout)
-    ||| named "Horizontal" (smartBorders (Mirror tiledLayout))
+        named "Mosaic" (smartBorders mosaicLayout)
+    ||| named "Tabs" (smartBorders tabbedLayout)
     ||| named "Float" (smartBorders floatLayout)
 
 -- For default configuration, see
@@ -143,6 +132,8 @@ getUrlHandler gconf scheme = do
     handler <- return $ replace " %s" "" handler
     return handler
 
+modm = mod4Mask
+
 main = do
     client <- connectSession
     gconf <- gconfGetDefault
@@ -156,13 +147,20 @@ main = do
         , logHook = dbusLogWithPP client pp
         , modMask = mod4Mask
         } `removeKeys`
-        [ (mod4Mask               , xK_p)
-        , (mod4Mask               , xK_Return)
+        [ (modm                 , xK_p)
+        , (modm                 , xK_Return)
         ] `additionalKeys`
-        [ ((0                     , xF86XK_PowerOff), shutdownMenu)
-        , ((0                     , xF86XK_HomePage), spawn $ browser)
-        , ((0                     , xF86XK_Mail), spawn $ email)
-        , ((0                     , xF86XK_Messenger), spawn "pidgin")
-        , ((mod4Mask              , xK_b     ), sendMessage ToggleStruts)
-        , ((mod4Mask              , xK_s     ), selectSearch google)
+        [ ((0                   , xF86XK_PowerOff), shutdownMenu)
+        , ((0                   , xF86XK_HomePage), spawn $ browser)
+        , ((0                   , xF86XK_Mail), spawn $ email)
+        , ((0                   , xF86XK_Messenger), spawn "pidgin")
+        , ((modm                , xK_b     ), sendMessage ToggleStruts)
+        , ((modm                , xK_s     ), selectSearch google)
+
+        , ((modm .|. shiftMask  , xK_a    ), withFocused (sendMessage . expandWindowAlt))
+        , ((modm .|. shiftMask  , xK_z    ), withFocused (sendMessage . shrinkWindowAlt))
+        , ((modm .|. shiftMask  , xK_s    ), withFocused (sendMessage . tallWindowAlt))
+        , ((modm .|. shiftMask  , xK_d    ), withFocused (sendMessage . wideWindowAlt))
+        , ((modm .|. controlMask, xK_space), sendMessage resetAlt)
+
         ]
