@@ -56,7 +56,7 @@ imLayout = named "IM" $
           isRoster        = pidginRoster `Or` skypeRoster
           pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
           -- TODO: distinguish Skype's main window better
-          skypeRoster     = Or (Title $ skypeLogin ++ " - Skype™") (Title "Skype™ 4.0 для Linux")
+          skypeRoster     = Title $ skypeLogin ++ " - Skype™"
           skypeLogin      = "koterpillar"
 
 mosaicLayout = MosaicAlt M.empty
