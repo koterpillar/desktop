@@ -17,7 +17,7 @@ ln -sf $DIR/xmonad-lib ~/.xmonad/lib
 if ghc -e 'System.Taffybar.screenNumber System.Taffybar.defaultTaffybarConfig' 2>&1 | grep -q Failed
 then
 	sudo apt-get -y install gtk2hs-buildtools libghc-cairo-dev libghc-gtk-dev \
-		libgtk-3-dev libxml2-dev
+		libgtk-3-dev libxml2-dev imagemagick
 
 	cabal update
 	cabal install current-locale taffybar

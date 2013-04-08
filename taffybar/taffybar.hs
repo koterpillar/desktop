@@ -69,9 +69,9 @@ unescapeChar str = fst $ fromRight result
           fromRight (Left _) = error "invalid number"
           fromRight (Right x) = x
 
-dconfGet :: String -> IO String
-dconfGet path = do
-    output <- readProcess "dconf" ["read", path] []
+gsettingsGet :: String -> String -> IO String
+gsettingsGet schema key = do
+    output <- readProcess "gsettings" ["get", schema, key] []
     let len = length output
     return $ drop 1 $ take (len - 2) $ output
 
@@ -83,7 +83,7 @@ effects = [ "-resize", "1920x100000"
 
 copyBackground :: IO ()
 copyBackground = do
-    backgroundUrl <- dconfGet "/org/gnome/desktop/background/picture-uri"
+    backgroundUrl <- gsettingsGet "org.gnome.desktop.background" "picture-uri"
     let desktopBackground = urlToFile backgroundUrl
     home <- getHomeDirectory
     let taffybarBackground = home ++ "/.config/taffybar/background-crop.jpeg"
