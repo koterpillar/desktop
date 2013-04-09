@@ -5,7 +5,7 @@
       "show-indicator" : false
     },
     "shortcuts" : {
-      "activate" : "<Super>o",
+      "activate" : "<Super>p",
       "execute" : "Return",
       "execute-without-hide" : "<Shift>Return",
       "delete-char" : "BackSpace",

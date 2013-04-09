@@ -154,6 +154,8 @@ main = do
                , ((modm                , xK_b    ), sendMessage ToggleStruts)
                , ((modm                , xK_s    ), selectSearch google)
 
+               , ((modm                , xK_p    ), spawn "synapse")
+
                , ((modm                , xK_h    ), withFocused $ sendMessage . expandWindowAlt)
                , ((modm                , xK_l    ), withFocused $ sendMessage . shrinkWindowAlt)
                , ((modm .|. shiftMask  , xK_h    ), withFocused $ sendMessage . tallWindowAlt)

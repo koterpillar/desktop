@@ -20,6 +20,4 @@ export XMODIFIERS="@im=ibus"
 export GTK_IM_MODULE="ibus"
 export QT_IM_MODULE="xim"
 
-synapse -s &
-
 exec xmonad >/tmp/xmonad-$(whoami).log 2>&1
