@@ -14,6 +14,8 @@ import System.CurrentLocale
 
 import System.Directory
 
+import System.Exit
+
 import System.Gnome.GConf
 
 import System.Information.CPU
@@ -51,46 +53,42 @@ batteryConfig = defaultBatteryConfig { barColor = batteryColor
                                                 | pct < 0.9 = (0.1, 0.1, 0.1)
                                                 | otherwise = (0, 0, 0)
 
-urlToFile :: String -> String
-urlToFile url | urlPrefix == prefix = unescape escapedPath
-              | otherwise = error "url must start with " ++ prefix
-    where (urlPrefix, escapedPath) = splitAt (length prefix) url
-          prefix = "file://"
-
-unescape :: String -> String
-unescape str = UTFBS.toString $ BS.pack $ unescapeBS str
-    where unescapeBS [] = []
-          unescapeBS ('%':c1:c2:rest) = (unescapeChar (c1:c2:[])):unescapeBS rest
-          unescapeBS (x:rest) = (BS.unpack $ UTFBS.fromString $ [x]) ++ unescapeBS rest
-
--- unescapeChar :: String -> Char
-unescapeChar str = fst $ fromRight result
-    where result = hexadecimal $ Text.pack str
-          fromRight (Left _) = error "invalid number"
-          fromRight (Right x) = x
-
-gsettingsGet :: String -> String -> IO String
-gsettingsGet schema key = do
-    output <- readProcess "gsettings" ["get", schema, key] []
-    let len = length output
-    return $ drop 1 $ take (len - 2) $ output
-
 effects :: [String]
 effects = [ "-resize", "1920x100000"
           , "-crop", "10000x25+0+0"
           , "-size", "10000x25", "xc:white", "-compose", "blend", "-define", "compose:args=20,80", "-composite"
           ]
 
+getFehBackground :: IO (Maybe String)
+getFehBackground = do
+    home <- getHomeDirectory
+    let fehbg = home ++ "/.fehbg"
+    fehbgExists <- doesFileExist fehbg
+    if fehbgExists
+        then do
+            fehbgContent <- readFile fehbg
+            let backgroundFile = takeWhile ('\'' /=) $ tail $ dropWhile ('\'' /=) fehbgContent
+            backgroundExists <- doesFileExist backgroundFile
+            if backgroundExists
+                then return $ Just backgroundFile
+                else return Nothing
+        else return Nothing
+
 copyBackground :: IO ()
 copyBackground = do
-    backgroundUrl <- gsettingsGet "org.gnome.desktop.background" "picture-uri"
-    let desktopBackground = urlToFile backgroundUrl
-    home <- getHomeDirectory
-    let taffybarBackground = home ++ "/.config/taffybar/background-crop.jpeg"
-    backgroundExists <- doesFileExist taffybarBackground
-    when backgroundExists $ removeFile taffybarBackground
-    readProcess "convert" ([desktopBackground] ++ effects ++ [taffybarBackground]) ""
-    return ()
+    fehbg <- getFehBackground
+    case fehbg of
+        Nothing -> return ()
+        Just background -> do
+            home <- getHomeDirectory
+            let taffybarBackground = home ++ "/.config/taffybar/background-crop.jpeg"
+            backgroundCacheExists <- doesFileExist taffybarBackground
+            when backgroundCacheExists $ removeFile taffybarBackground
+            (exitcode, _, _) <- readProcessWithExitCode
+                                    "convert"
+                                    ([background] ++ effects ++ [taffybarBackground])
+                                    ""
+            return ()
 
 main = do
     copyBackground
