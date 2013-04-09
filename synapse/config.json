@@ -1,7 +1,11 @@
 {
   "ui" : {
+    "global" : {
+      "ui-type" : "default",
+      "show-indicator" : false
+    },
     "shortcuts" : {
-      "activate" : "<Super>p",
+      "activate" : "<Super>o",
       "execute" : "Return",
       "execute-without-hide" : "<Shift>Return",
       "delete-char" : "BackSpace",
@@ -20,10 +24,6 @@
       "paste" : "<Control>v",
       "alt-paste" : "<Shift>Insert",
       "exit" : "<Control>q"
-    },
-    "global" : {
-      "ui-type" : "default",
-      "show-indicator" : false
     }
   }
 }
