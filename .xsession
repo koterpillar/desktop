@@ -2,7 +2,7 @@
 
 eval $(cat ~/.fehbg)
 
-xmodmap ~/.xmodmaprc
+setxkbmap -option altwin:swap_lalt_lwin -option caps:ctrl_modifier
 
 eval $(gnome-keyring-daemon --start)
 export GNOME_KEYRING_SOCKET

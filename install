@@ -35,6 +35,5 @@ sudo apt-get -y install ibus ibus-pinyin ibus-table ibus-m17n
 sudo apt-get -y install notify-osd
 
 ln -sf $DIR/.xsession ~
-ln -sf $DIR/.xmodmaprc ~
 
 sudo apt-get -y autoremove
