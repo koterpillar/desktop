@@ -7,9 +7,11 @@ sudo install default.desktop /usr/share/xsessions
 
 # XMonad
 sudo apt-get -y install cabal-install xmonad \
-	libghc-gconf-dev libghc-missingh-dev xcompmgr
+	libghc-gconf-dev libghc-missingh-dev xcompmgr xosd-bin
 
 [ -d ~/.cabal ] || cabal update
+
+cabal install xmonad-extras
 
 mkdir -p ~/.xmonad
 ln -sf $DIR/xmonad.hs ~/.xmonad
