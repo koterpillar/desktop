@@ -1,5 +1,6 @@
 import System.IO
 
+import Control.Concurrent
 import Control.Monad
 
 import Data.List
@@ -153,16 +154,24 @@ spawnOsd opts = spawn $ "osd_cat " ++ optionsString opts
 osdPercentage :: MonadIO m => OSDOptions -> Double -> m ()
 osdPercentage opts percent = do
     let opts' = M.insert "barmode" "percentage" opts
+    spawnOsd $ M.union underlay opts'
+    liftIO $ threadDelay 50000
     spawnOsd $ M.insert "percentage" (show $ (truncate percent :: Integer)) opts'
 
 osdOpts :: OSDOptions
 osdOpts = M.fromList [ ("align", "center")
                      , ("pos", "middle")
                      , ("delay", "1")
-                     , ("outline", "10")
-                     , ("outlinecolour", "white")
-                     , ("color", "green")
+                     , ("color", "darkgreen")
                      ]
+
+underlay :: OSDOptions
+underlay = M.fromList [ ("color", "white")
+                      , ("percentage", "100")
+                      , ("outline", "2")
+                      , ("outlinecolour", "white")
+                      ]
+
 volumeStep = 3
 lowerVolume = Volume.lowerVolume volumeStep >>= osdPercentage osdOpts
 raiseVolume = Volume.raiseVolume volumeStep >>= osdPercentage osdOpts
