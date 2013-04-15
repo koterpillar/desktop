@@ -142,41 +142,6 @@ getUrlHandler gconf scheme = do
     handler <- gconf `gconfGet` ("/desktop/gnome/url-handlers/" ++ scheme ++ "/command")
     return $ replace " %u" "" $ replace " %s" "" $ handler
 
-type OSDOptions = M.Map String String
-
-optionsString :: OSDOptions -> String
-optionsString = intercalate " " . map (uncurry makeOption) . M.toList
-    where makeOption k v = "--" ++ k ++ "=" ++ v
-
-spawnOsd :: MonadIO m => OSDOptions -> m ()
-spawnOsd opts = spawn $ "osd_cat " ++ optionsString opts
-
-osdPercentage :: MonadIO m => OSDOptions -> Double -> m ()
-osdPercentage opts percent = do
-    let opts' = M.insert "barmode" "percentage" opts
-    spawnOsd $ M.union underlay opts'
-    liftIO $ threadDelay 50000
-    spawnOsd $ M.insert "percentage" (show $ (truncate percent :: Integer)) opts'
-
-osdOpts :: OSDOptions
-osdOpts = M.fromList [ ("align", "center")
-                     , ("pos", "middle")
-                     , ("delay", "1")
-                     , ("color", "darkgreen")
-                     ]
-
-underlay :: OSDOptions
-underlay = M.fromList [ ("color", "white")
-                      , ("percentage", "100")
-                      , ("outline", "2")
-                      , ("outlinecolour", "white")
-                      ]
-
-volumeStep = 3
-lowerVolume = Volume.lowerVolume volumeStep >>= osdPercentage osdOpts
-raiseVolume = Volume.raiseVolume volumeStep >>= osdPercentage osdOpts
-toggleMute  = void Volume.toggleMute
-
 modm = mod4Mask
 
 main = do
@@ -189,14 +154,10 @@ main = do
                , ((0                   , xF86XK_Mail     ), spawn email)
                , ((0                   , xF86XK_Messenger), spawn "pidgin")
 
-               , ((0                   , xF86XK_AudioMute), toggleMute)
-               , ((0                   , xF86XK_AudioLowerVolume), lowerVolume)
-               , ((0                   , xF86XK_AudioRaiseVolume), raiseVolume)
-
                , ((modm                , xK_b    ), sendMessage ToggleStruts)
                , ((modm                , xK_s    ), selectSearch google)
 
-               , ((modm                , xK_p    ), spawn "synapse")
+               , ((modm                , xK_o    ), spawn "synapse")
 
                , ((modm                , xK_h    ), withFocused $ sendMessage . expandWindowAlt)
                , ((modm                , xK_l    ), withFocused $ sendMessage . shrinkWindowAlt)

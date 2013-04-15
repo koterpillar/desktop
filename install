@@ -18,7 +18,7 @@ ln -sf $DIR/xmonad.hs ~/.xmonad
 
 # Taffybar
 sudo apt-get -y install gtk2hs-buildtools libghc-cairo-dev libghc-gtk-dev \
-	libgtk-3-dev libxml2-dev imagemagick feh
+	libgtk-3-dev libxml2-dev imagemagick
 
 cabal install current-locale taffybar
 
