@@ -15,6 +15,7 @@ import DBus.Client (listen, matchAny, MatchRule(..), connectSession, emit, Clien
 
 import Graphics.UI.Gtk hiding (Signal)
 import Graphics.UI.Gtk.WebKit.WebView
+import Graphics.UI.Gtk.WebKit.WebSettings
 
 import Numeric
 
@@ -97,6 +98,10 @@ setupWebkitLog w = do
     baseDir <- getUserConfigDir "taffybar"
     html <- formatHtml
     webViewLoadHtmlString w html ("file://" ++ baseDir)
+
+    wsettings <- webViewGetWebSettings w
+    set wsettings [webSettingsEnableUniversalAccessFromFileUris := True]
+    webViewSetWebSettings w wsettings
 
     client <- connectSession
 
