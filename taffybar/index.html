@@ -122,7 +122,7 @@
                 $('#clock').text(
                     dt.toLocaleDateString()
                     + " "
-                    + dt.toLocaleTimeString().substring(0, 5)
+                    + dt.toLocaleTimeString().replace(/:.. .+$/, '')
                 );
             }
 
