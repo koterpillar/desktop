@@ -7,12 +7,13 @@
                 background-size: 1920px 1080px;
                 background-repeat: no-repeat;
                 background-position: 0px 0px;
-                font-size: 14px;
                 margin: 0;
             }
 
             body {
                 margin: 4px;
+                font-size: 14px;
+                text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white;
             }
 
             .workspaces, .layout, .title {
@@ -41,7 +42,7 @@
             }
 
             .empty {
-                color: gray;
+                color: #999;
             }
 
             .urgent, .current, .visible {
@@ -53,13 +54,15 @@
                 0%, 100% {
                     color: white;
                     text-shadow:
-                        -1px -1px 0 red,
-                        1px -1px 0 red,
-                        -1px 1px 0 red,
-                        1px 1px 0 red;
+                        0 0 10px red, 0 0 10px red, 0 0 10px red,
+                        0 0 10px red, 0 0 10px red, 0 0 10px red;
                 }
                 50% {
-                    background-color: red;
+                    text-shadow:
+                        0 0 10px red, 0 0 10px red, 0 0 10px red,
+                        0 0 10px red, 0 0 10px red, 0 0 10px red,
+                        0 0 20px red, 0 0 20px red, 0 0 20px red,
+                        0 0 20px red, 0 0 20px red, 0 0 20px red;
                     color: white;
                 }
             }
@@ -68,13 +71,15 @@
                 0%, 100% {
                     color: white;
                     text-shadow:
-                        -1px -1px 0 red,
-                        1px -1px 0 red,
-                        -1px 1px 0 red,
-                        1px 1px 0 red;
+                        0 0 10px red, 0 0 10px red, 0 0 10px red,
+                        0 0 10px red, 0 0 10px red, 0 0 10px red;
                 }
                 50% {
-                    background-color: red;
+                    text-shadow:
+                        0 0 10px red, 0 0 10px red, 0 0 10px red,
+                        0 0 10px red, 0 0 10px red, 0 0 10px red,
+                        0 0 20px red, 0 0 20px red, 0 0 20px red,
+                        0 0 20px red, 0 0 20px red, 0 0 20px red;
                     color: white;
                 }
             }
@@ -96,6 +101,10 @@
                 background-color: #f0f0f0;
             }
 
+            #status {
+                display: inline;
+            }
+
             #clock {
                 float: right;
             }
@@ -114,10 +123,14 @@
                 updateClock();
                 setInterval(updateClock, 1000);
             });
+
+            function setStatus(status) {
+                $('#status').html(status);
+            }
         </script>
     </head>
     <body>
-        {{ status }}
-        <span id="clock"></span>
+        <div id="status">Loading...</div>
+        <div id="clock"></div>
     </body>
 </html>

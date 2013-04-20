@@ -99,21 +99,22 @@ gnomeBackground = do
         then return $ Just backgroundFile
         else return Nothing
 
+-- TODO: properly encode paths
 htmlEncode = replace " " "%20"
 
-htmlDataMap :: String -> IO (M.Map String String)
-htmlDataMap status = do
+-- TODO: instead of templating, send JavaScript events
+htmlDataMap :: IO (M.Map String String)
+htmlDataMap = do
     background <- gnomeBackground
     let background' = fromMaybe "" background
-    return $ M.fromList [ ("status", status)
-                        , ("background", htmlEncode background')
+    return $ M.fromList [ ("background", htmlEncode background')
                         ]
 
-formatHtml :: String -> IO String
-formatHtml status = do
+formatHtml :: IO String
+formatHtml = do
     htmlFile <- getUserConfigFile "taffybar" "index.html"
     html <- readFile htmlFile
-    dataMap <- htmlDataMap status
+    dataMap <- htmlDataMap
     return $ M.foldrWithKey replaceMapItem html dataMap
         where replaceMapItem k v = replace ("{{ " ++ k ++ " }}") v
 
@@ -126,9 +127,16 @@ setupWebkitLog w = do
                            , matchMember = parseMemberName "Update"
                            }
 
+    baseDir <- getUserConfigDir "taffybar"
+    html <- formatHtml
+    webViewLoadHtmlString w html ("file://" ++ baseDir)
+
     client <- connectSession
 
     listen client matcher $ callback w
+
+escapeQuotes :: String -> String
+escapeQuotes = replace "'" "\\'" . replace "\\" "\\\\"
 
 callback :: WebView -> Signal -> IO ()
 callback w sig = do
@@ -137,11 +145,7 @@ callback w sig = do
     postGUIAsync $ do
         (_, h) <- widgetGetSizeRequest w
         widgetSetSizeRequest w 1800 h
-        baseDir <- getUserConfigDir "taffybar"
-        status' <- formatHtml status
-        writeFile "/home/alex/projects/desktop/taf.html" status'
-        webViewLoadHtmlString w status' ("file://" ++ baseDir)
-
+        webViewExecuteScript w $ "window.setStatus && setStatus('" ++ escapeQuotes status ++ "')"
 
 xmonadWebkitLogNew :: IO Widget
 xmonadWebkitLogNew = do
