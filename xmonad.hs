@@ -8,7 +8,7 @@ import qualified Data.Map as M
 import Data.Maybe
 import Data.String.Utils
 
-import DBus.Client.Simple
+import DBus.Client
 
 import XMonad
 import XMonad.Actions.Search

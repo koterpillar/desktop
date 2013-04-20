@@ -5,6 +5,7 @@ import qualified Data.ByteString.UTF8 as UTFBS
 import Data.Char
 import Data.List
 import Data.List.Utils
+import qualified Data.Map as M
 import Data.Maybe
 import qualified Data.Text as Text
 import Data.Text.Read
@@ -16,8 +17,6 @@ import Graphics.UI.Gtk hiding (Signal)
 import Graphics.UI.Gtk.WebKit.WebView
 
 import Numeric
-
-import System.CurrentLocale
 
 import System.Directory
 
@@ -100,32 +99,23 @@ gnomeBackground = do
         then return $ Just backgroundFile
         else return Nothing
 
-backgroundCropFileName :: IO String
-backgroundCropFileName = getUserCacheFile "taffybar" "background-crop.jpeg"
+htmlEncode = replace " " "%20"
 
-copyBackground :: IO ()
-copyBackground = do
-    back <- gnomeBackground
-    case back of
-        Nothing -> return ()
-        Just background -> do
-            taffybarBackground <- backgroundCropFileName
-            backgroundCacheExists <- doesFileExist taffybarBackground
-            when backgroundCacheExists $ removeFile taffybarBackground
-            (exitcode, _, _) <- readProcessWithExitCode
-                                    "convert"
-                                    ([background] ++ effects ++ [taffybarBackground])
-                                    ""
-            return ()
+htmlDataMap :: String -> IO (M.Map String String)
+htmlDataMap status = do
+    background <- gnomeBackground
+    let background' = fromMaybe "" background
+    return $ M.fromList [ ("status", status)
+                        , ("background", htmlEncode background')
+                        ]
 
 formatHtml :: String -> IO String
 formatHtml status = do
     htmlFile <- getUserConfigFile "taffybar" "index.html"
     html <- readFile htmlFile
-    background <- backgroundCropFileName
-    let html' = replace "{{ background }}" background html
-    let html'' = replace "{{ status }}" status html'
-    return html''
+    dataMap <- htmlDataMap status
+    return $ M.foldrWithKey replaceMapItem html dataMap
+        where replaceMapItem k v = replace ("{{ " ++ k ++ " }}") v
 
 setupWebkitLog :: WebView -> IO ()
 setupWebkitLog w = do
@@ -138,7 +128,6 @@ setupWebkitLog w = do
 
     client <- connectSession
 
-
     listen client matcher $ callback w
 
 callback :: WebView -> Signal -> IO ()
@@ -150,6 +139,7 @@ callback w sig = do
         widgetSetSizeRequest w 1800 h
         baseDir <- getUserConfigDir "taffybar"
         status' <- formatHtml status
+        writeFile "/home/alex/projects/desktop/taf.html" status'
         webViewLoadHtmlString w status' ("file://" ++ baseDir)
 
 
@@ -161,10 +151,7 @@ xmonadWebkitLogNew = do
     return (toWidget l)
 
 main = do
-    copyBackground
-    locale <- currentLocale
-    let clock = textClockNew (Just locale) "%a %b %_d %H:%M" 1
-        log = xmonadWebkitLogNew
+    let log = xmonadWebkitLogNew
         tray = systrayNew
         battery = batteryBarNew batteryConfig 10
     defaultTaffybar defaultTaffybarConfig { startWidgets = [ log ]
