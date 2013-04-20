@@ -68,28 +68,25 @@ layout = onWorkspace "IM7" imLayout $
     ||| named "Tabs" (smartBorders tabbedLayout)
     ||| named "Float" (smartBorders floatLayout)
 
+wrapClass :: String -> String -> String
+wrapClass cls = wrap ("<span class='" ++ cls ++ "'>") "</span>"
+
 -- For named workspaces, make the number a subscript
 subNumber :: String -> String
 subNumber [x] = [x]
-subNumber named = taffybarEscape (take lname named) ++ wrap smallFont "</span>" (drop lname named)
+subNumber named = taffybarEscape (take lname named) ++ wrapClass "subscript" (drop lname named)
     where lname = (length named) - 1
-          smallFont = "<span font_desc=\"7\">"
-
-taffybarColorUnsafe :: String -> String -> String -> String
-taffybarColorUnsafe fg bg = wrap t "</span>"
-    where t = concat ["<span fgcolor=\"", fg, if null bg then "" else "\" bgcolor=\"" ++ bg , "\">"]
 
 pp :: PP
-pp = defaultPP { ppTitle = wrap "<b>" "</b>" . taffybarEscape . shorten 150
-               , ppCurrent = taffybarColorUnsafe "black" "#ffc060" . pad . subNumber
-               , ppVisible = taffybarColorUnsafe "black" "#f0f0f0" . pad . subNumber
-               , ppUrgent = taffybarColorUnsafe "white" "red" . pad . subNumber
-               , ppHidden = taffybarColorUnsafe "black" "" . subNumber
-               , ppHiddenNoWindows = taffybarColorUnsafe "#A0A0A0" "" . subNumber
-               , ppOrder = spaceBefore
+pp = defaultPP { ppTitle = wrapClass "title" . taffybarEscape . shorten 150
+               , ppCurrent = wrapClass "current" . subNumber
+               , ppVisible = wrapClass "visible" . subNumber
+               , ppUrgent = wrapClass "urgent" . subNumber
+               , ppHidden = wrapClass "hidden" . subNumber
+               , ppHiddenNoWindows = wrapClass "hidden empty" . subNumber
+               , ppSep = ""
+               , ppOrder = zipWith wrapClass ["workspaces", "layout", "title"]
                }
-     where
-        spaceBefore [ws, l, wt] = [' ':ws, l, wt]
 
 namedWorkspaces = [ ("4", "Git")
                   , ("6", "Mail")

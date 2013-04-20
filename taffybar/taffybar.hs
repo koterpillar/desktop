@@ -4,15 +4,24 @@ import qualified Data.ByteString as BS
 import qualified Data.ByteString.UTF8 as UTFBS
 import Data.Char
 import Data.List
+import Data.List.Utils
 import Data.Maybe
 import qualified Data.Text as Text
 import Data.Text.Read
+
+import DBus (toVariant, fromVariant, Signal(..), signal, parseObjectPath, parseInterfaceName, parseMemberName)
+import DBus.Client (listen, matchAny, MatchRule(..), connectSession, emit, Client)
+
+import Graphics.UI.Gtk hiding (Signal)
+import Graphics.UI.Gtk.WebKit.WebView
 
 import Numeric
 
 import System.CurrentLocale
 
 import System.Directory
+
+import System.Environment.XDG.BaseDir (getUserCacheFile, getUserConfigDir, getUserConfigFile)
 
 import System.Exit
 
@@ -91,6 +100,8 @@ gnomeBackground = do
         then return $ Just backgroundFile
         else return Nothing
 
+backgroundCropFileName :: IO String
+backgroundCropFileName = getUserCacheFile "taffybar" "background-crop.jpeg"
 
 copyBackground :: IO ()
 copyBackground = do
@@ -98,8 +109,7 @@ copyBackground = do
     case back of
         Nothing -> return ()
         Just background -> do
-            home <- getHomeDirectory
-            let taffybarBackground = home ++ "/.config/taffybar/background-crop.jpeg"
+            taffybarBackground <- backgroundCropFileName
             backgroundCacheExists <- doesFileExist taffybarBackground
             when backgroundCacheExists $ removeFile taffybarBackground
             (exitcode, _, _) <- readProcessWithExitCode
@@ -108,11 +118,53 @@ copyBackground = do
                                     ""
             return ()
 
+formatHtml :: String -> IO String
+formatHtml status = do
+    htmlFile <- getUserConfigFile "taffybar" "index.html"
+    html <- readFile htmlFile
+    background <- backgroundCropFileName
+    let html' = replace "{{ background }}" background html
+    let html'' = replace "{{ status }}" status html'
+    return html''
+
+setupWebkitLog :: WebView -> IO ()
+setupWebkitLog w = do
+    let matcher = matchAny { matchSender = Nothing
+                           , matchDestination = Nothing
+                           , matchPath = parseObjectPath "/org/xmonad/Log"
+                           , matchInterface = parseInterfaceName "org.xmonad.Log"
+                           , matchMember = parseMemberName "Update"
+                           }
+
+    client <- connectSession
+
+
+    listen client matcher $ callback w
+
+callback :: WebView -> Signal -> IO ()
+callback w sig = do
+    let [bdy] = signalBody sig
+        Just status = fromVariant bdy
+    postGUIAsync $ do
+        (_, h) <- widgetGetSizeRequest w
+        widgetSetSizeRequest w 1500 h
+        baseDir <- getUserConfigDir "taffybar"
+        status' <- formatHtml status
+        webViewLoadHtmlString w status' ("file://" ++ baseDir)
+
+
+xmonadWebkitLogNew :: IO Widget
+xmonadWebkitLogNew = do
+    l <- webViewNew
+    on l realize $ setupWebkitLog l
+    widgetShowAll l
+    return (toWidget l)
+
 main = do
     copyBackground
     locale <- currentLocale
     let clock = textClockNew (Just locale) "%a %b %_d %H:%M" 1
-        log = xmonadLogNew
+        log = xmonadWebkitLogNew
         tray = systrayNew
         battery = batteryBarNew batteryConfig 10
     defaultTaffybar defaultTaffybarConfig { startWidgets = [ log ]
