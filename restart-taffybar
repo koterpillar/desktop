@@ -3,6 +3,9 @@
 BINARY=$(echo ~/.cache/taffybar/taffybar-*)
 
 pidof $BINARY >/dev/null && kill $(pidof $BINARY)
-rm -f $BINARY
+if [ "$1" = "-f" ]
+then
+    rm -f $BINARY
+fi
 
 taffybar &
