@@ -144,12 +144,9 @@
                     $('#weather').html(temp + units);
                     var forecast = $('forecast', weather).map(function (k, el) {
                         el = $(el);
-                        var day = el.attr('day');
-                        var text = el.attr('text');
-                        var high = el.attr('high');
-                        var low = el.attr('low');
-                        return day + ": " + text + ", " + low + "&ndash;" +
-                            high + units;
+                        return el.attr('day') + ": " + el.attr('text') + ", " +
+                            el.attr('low') + "&ndash;" + el.attr('high') +
+                            units;
                     });
                     forecast = Array.prototype.join.call(forecast, "; ");
                     $('#weather').attr('title', unescapeHTML(forecast));
