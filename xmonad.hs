@@ -78,7 +78,7 @@ subNumber named = taffybarEscape (take lname named) ++ wrapClass "subscript" (dr
     where lname = (length named) - 1
 
 pp :: PP
-pp = defaultPP { ppTitle = wrapClass "title" . taffybarEscape . shorten 150
+pp = defaultPP { ppTitle = taffybarEscape
                , ppCurrent = wrapClass "current" . subNumber
                , ppVisible = wrapClass "visible" . subNumber
                , ppUrgent = wrapClass "urgent" . subNumber
