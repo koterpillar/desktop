@@ -147,7 +147,7 @@ callback w sig = do
         Just status = fromVariant bdy
     postGUIAsync $ do
         (_, h) <- widgetGetSizeRequest w
-        widgetSetSizeRequest w 1500 h
+        widgetSetSizeRequest w 1800 h
         baseDir <- getUserConfigDir "taffybar"
         status' <- formatHtml status
         webViewLoadHtmlString w status' ("file://" ++ baseDir)
@@ -168,5 +168,5 @@ main = do
         tray = systrayNew
         battery = batteryBarNew batteryConfig 10
     defaultTaffybar defaultTaffybarConfig { startWidgets = [ log ]
-                                          , endWidgets = [ tray, clock, battery ]
+                                          , endWidgets = [ tray, battery ]
                                           }

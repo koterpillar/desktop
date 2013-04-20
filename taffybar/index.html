@@ -94,9 +94,29 @@
             .visible {
                 background-color: #f0f0f0;
             }
+
+            #clock {
+                float: right;
+            }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script>
+            function updateClock() {
+                var dt = new Date();
+                $('#clock').text(
+                    dt.toLocaleDateString()
+                    + " "
+                    + dt.toLocaleTimeString().substring(0, 5)
+                );
+            }
+            $(document).ready(function () {
+                updateClock();
+                setInterval(updateClock, 1000);
+            });
+        </script>
     </head>
     <body>
         {{ status }}
+        <span id="clock"></span>
     </body>
 </html>
