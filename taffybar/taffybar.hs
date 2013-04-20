@@ -76,6 +76,7 @@ htmlDataMap = do
     return $ M.fromList [ ("background",    background)
                         , ("screen.width",  show screen_width)
                         , ("screen.height", show screen_height)
+                        , ("bar.height",    show $ barHeight taffybarConfig)
                         ]
 
 formatHtml :: IO String
