@@ -68,7 +68,13 @@ gnomeBackgroundUrl = gsettingsGet "org.gnome.desktop.background" "picture-uri"
 htmlDataMap :: IO (M.Map String String)
 htmlDataMap = do
     background <- gnomeBackgroundUrl
-    return $ M.fromList [ ("background", background)
+    Just disp <- displayGetDefault
+    screen <- displayGetScreen disp $ screenNumber taffybarConfig
+    screen_width <- screenGetWidth screen
+    screen_height <- screenGetHeight screen
+    return $ M.fromList [ ("background",    background)
+                        , ("screen.width",  show screen_width)
+                        , ("screen.height", show screen_height)
                         ]
 
 formatHtml :: IO String
