@@ -88,7 +88,7 @@ formatHtml = do
         where replaceMapItem k v = replace ("{{ " ++ k ++ " }}") v
 
 setupWebkitLog :: WebView -> IO ()
-setupWebkitLog w = do
+setupWebkitLog wk = do
     let matcher = matchAny { matchSender = Nothing
                            , matchDestination = Nothing
                            , matchPath = parseObjectPath "/org/xmonad/Log"
@@ -98,15 +98,15 @@ setupWebkitLog w = do
 
     baseDir <- getUserConfigDir "taffybar"
     html <- formatHtml
-    webViewLoadHtmlString w html ("file://" ++ baseDir)
+    webViewLoadHtmlString wk html ("file://" ++ baseDir)
 
-    wsettings <- webViewGetWebSettings w
+    wsettings <- webViewGetWebSettings wk
     set wsettings [webSettingsEnableUniversalAccessFromFileUris := True]
-    webViewSetWebSettings w wsettings
+    webViewSetWebSettings wk wsettings
 
     client <- connectSession
 
-    listen client matcher $ callback w
+    listen client matcher $ callback wk
 
 escapeQuotes :: String -> String
 escapeQuotes = replace "'" "\\'" . replace "\\" "\\\\"

@@ -139,7 +139,8 @@
             }
 
             function updateWeather() {
-                $.ajax('http://weather.yahooapis.com/forecastrss?w=12707339&u=c')
+                $.ajax('http://weather.yahooapis.com/forecastrss?' +
+                    'w=' + window.my_geolocation.woeid + '&u=c')
                 .success(function (weather) {
                     var temp = $('condition', weather).attr('temp');
                     var units = $('units', weather).attr('temperature');
@@ -161,10 +162,31 @@
                 setInterval(updateWeather, 5 * 60 * 1000);
             }
 
+            function setupLocation() {
+                var api_key = 'a54ebf597a8e77198d9a47c798d42c51';
+                $.getJSON('http://freegeoip.net/json/')
+                .success(function (loc) {
+                    window.my_geolocation = loc;
+                    $.getJSON('http://query.yahooapis.com/v1/public/yql?q=' +
+                        'select%20place.woeid%20from%20flickr.places%20where%20' +
+                        'lat%3D' + loc.latitude + '%20and%20' +
+                        'lon%3D' + loc.longitude + '%20and%20' +
+                        'api_key=%22' + api_key + '%22&format=json')
+                    .success (function (yloc) {
+                        window.my_geolocation.woeid = yloc.query.results.places.place.woeid;
+                        locationReady();
+                    });
+                });
+            }
+
             $(document).ready(function () {
                 setupClock();
-                setupWeather();
+                setupLocation();
             });
+
+            function locationReady() {
+                setupWeather();
+            };
 
             function setStatus(status) {
                 $('#status').html(status);
