@@ -71,11 +71,11 @@ htmlDataMap = do
     background <- gnomeBackgroundUrl
     Just disp <- displayGetDefault
     screen <- displayGetScreen disp $ screenNumber taffybarConfig
-    screen_width <- screenGetWidth screen
-    screen_height <- screenGetHeight screen
+    (Rectangle _ _ monitor_width monitor_height) <-
+        screenGetMonitorGeometry screen $ monitorNumber taffybarConfig
     return $ M.fromList [ ("background",    background)
-                        , ("screen.width",  show screen_width)
-                        , ("screen.height", show screen_height)
+                        , ("monitor.width",  show monitor_width)
+                        , ("monitor.height", show monitor_height)
                         , ("bar.height",    show $ barHeight taffybarConfig)
                         ]
 
@@ -118,7 +118,8 @@ callback wk sig = do
     postGUIAsync $ do
         Just disp <- displayGetDefault
         screen <- displayGetScreen disp $ screenNumber taffybarConfig
-        sw <- screenGetWidth screen
+        (Rectangle _ _ sw _) <- screenGetMonitorGeometry screen $
+            monitorNumber taffybarConfig
         widgetSetSizeRequest wk sw (barHeight taffybarConfig)
         webViewExecuteScript wk $ "window.setStatus && setStatus('" ++ escapeQuotes status ++ "')"
 
