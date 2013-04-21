@@ -1,12 +1,19 @@
 #!/bin/sh
 
+LOG=/tmp/xmonad-$(whoami).log
+
+rm $LOG
+touch $LOG
+
 gnome-settings-daemon &
 
 eval $(gnome-keyring-daemon --start)
 export GNOME_KEYRING_SOCKET
 export GNOME_KEYRING_PID
 
-taffybar &
+nautilus --no-default-window &
+
+taffybar >>$LOG 2>&1 &
 
 nm-applet --sm-disable &
 
@@ -18,4 +25,4 @@ export QT_IM_MODULE="xim"
 
 xcompmgr &
 
-exec xmonad >/tmp/xmonad-$(whoami).log 2>&1
+exec xmonad >>$LOG 2>&1
