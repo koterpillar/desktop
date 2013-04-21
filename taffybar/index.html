@@ -122,11 +122,9 @@
         <script>
             function updateClock() {
                 var dt = new Date();
-                $('#clock').text(
-                    dt.toLocaleDateString()
-                    + " "
-                    + dt.toLocaleTimeString().replace(/:.. .+$/, '')
-                );
+                var clockText = dt.toLocaleDateString() + " " +
+                    dt.toLocaleTimeString().replace(/:.. .+$/, '')
+                $('#clock').text(clockText);
             }
 
             function setupClock() {
