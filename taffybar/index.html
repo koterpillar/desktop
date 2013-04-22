@@ -123,7 +123,8 @@
             function updateClock() {
                 var dt = new Date();
                 var clockText = dt.toLocaleDateString() + " " +
-                    dt.toLocaleTimeString().replace(/:.. .+$/, '')
+                    dt.toLocaleTimeString(undefined, {hour12: false}).
+                        replace(/:..( .+)?$/, '');
                 $('#clock').text(clockText);
             }
 
