@@ -152,7 +152,7 @@ main = do
                , ((0                   , xF86XK_Messenger), spawn "pidgin")
 
                , ((modm                , xK_b    ), sendMessage ToggleStruts)
-               , ((modm                , xK_s    ), selectSearch google)
+               , ((modm                , xK_s    ), selectSearchBrowser browser google)
 
                , ((modm                , xK_o    ), spawn "synapse")
 
