@@ -92,7 +92,12 @@ callback wk sig = do
         (Rectangle _ _ sw _) <- screenGetMonitorGeometry screen $
             monitorNumber taffybarConfig
         widgetSetSizeRequest wk sw (barHeight taffybarConfig)
-        webViewExecuteScript wk $ "window.setStatus && setStatus('" ++ escapeQuotes status ++ "')"
+        webViewExecuteScript wk $ setStatus status
+
+setStatus :: String -> String
+setStatus status = let statusStr = escapeQuotes status in
+    "window.setXMonadStatus ? window.setXMonadStatus('" ++ statusStr ++ "')" ++
+        " : window.XMonadStatus = '" ++ statusStr ++ "'"
 
 xmonadWebkitLogNew :: IO Widget
 xmonadWebkitLogNew = do

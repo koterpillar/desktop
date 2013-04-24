@@ -207,19 +207,22 @@
                 $('html').css('height', $(document).height());
             }
 
-            $(document).ready(function () {
-                setupClock();
-                setupLocation();
-                setupBackground();
-            });
-
             function locationReady() {
                 setupWeather();
             };
 
-            function setStatus(status) {
+            function setXMonadStatus(status) {
                 $('#status').html(status);
             }
+
+            $(document).ready(function () {
+                setupClock();
+                setupLocation();
+                setupBackground();
+                if (window.XMonadStatus) {
+                    setXMonadStatus(window.XMonadStatus);
+                }
+            });
         </script>
     </head>
     <body>
