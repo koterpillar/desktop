@@ -4,6 +4,7 @@ import qualified Data.ByteString as BS
 import qualified Data.ByteString.UTF8 as UTFBS
 import Data.Char
 import Data.List
+import Data.List.Split
 import Data.List.Utils
 import qualified Data.Map as M
 import Data.Maybe
@@ -14,6 +15,7 @@ import DBus (toVariant, fromVariant, Signal(..), signal, parseObjectPath, parseI
 import DBus.Client (listen, matchAny, MatchRule(..), connectSession, emit, Client)
 
 import Graphics.UI.Gtk hiding (Signal)
+import Graphics.UI.Gtk.WebKit.NetworkRequest
 import Graphics.UI.Gtk.WebKit.WebView
 import Graphics.UI.Gtk.WebKit.WebSettings
 
@@ -40,19 +42,14 @@ gsettingsGet schema key = do
     let len = length output
     return $ drop 1 $ take (len - 2) $ output
 
-gnomeBackgroundUrl :: IO String
-gnomeBackgroundUrl = gsettingsGet "org.gnome.desktop.background" "picture-uri"
-
 -- TODO: instead of templating, send JavaScript events
 htmlDataMap :: IO (M.Map String String)
 htmlDataMap = do
-    background <- gnomeBackgroundUrl
     Just disp <- displayGetDefault
     screen <- displayGetScreen disp $ screenNumber taffybarConfig
     (Rectangle _ _ monitor_width monitor_height) <-
         screenGetMonitorGeometry screen $ monitorNumber taffybarConfig
-    return $ M.fromList [ ("background",    background)
-                        , ("monitor.width",  show monitor_width)
+    return $ M.fromList [ ("monitor.width",  show monitor_width)
                         , ("monitor.height", show monitor_height)
                         , ("bar.height",    show $ barHeight taffybarConfig)
                         ]
@@ -64,6 +61,8 @@ formatHtml = do
     dataMap <- htmlDataMap
     return $ M.foldrWithKey replaceMapItem html dataMap
         where replaceMapItem k v = replace ("{{ " ++ k ++ " }}") v
+
+gsettingsPrefix = "gsettings:"
 
 setupWebkitLog :: WebView -> IO ()
 setupWebkitLog wk = do
@@ -81,6 +80,21 @@ setupWebkitLog wk = do
     wsettings <- webViewGetWebSettings wk
     set wsettings [webSettingsEnableUniversalAccessFromFileUris := True]
     webViewSetWebSettings wk wsettings
+
+    on wk resourceRequestStarting $ \_ _ nreq _ -> do
+        case nreq of
+            Nothing -> return ()
+            (Just req) -> do
+                uri_ <- networkRequestGetUri req
+                case uri_ of
+                    Nothing -> return ()
+                    Just uri -> do
+                        when (gsettingsPrefix `isPrefixOf` uri) $ do
+                            let path = drop (length gsettingsPrefix) uri
+                            let [schema, key] = splitOn "/" path
+                            setting <- gsettingsGet schema key
+                            networkRequestSetUri req $
+                                "data:text/plain," ++ setting
 
     client <- connectSession
 
