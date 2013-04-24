@@ -51,7 +51,6 @@ htmlDataMap = do
         screenGetMonitorGeometry screen $ monitorNumber taffybarConfig
     return $ M.fromList [ ("monitor.width",  show monitor_width)
                         , ("monitor.height", show monitor_height)
-                        , ("bar.height",    show $ barHeight taffybarConfig)
                         ]
 
 formatHtml :: IO String

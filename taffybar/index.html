@@ -4,7 +4,6 @@
         <style>
             html {
                 margin: 0;
-                height: {{ bar.height }}px;
                 overflow: hidden;
             }
 
@@ -203,6 +202,7 @@
                 .success(function (background) {
                     $('body').css("background-image", "url('" + background + "')");
                 });
+                $('html').css('height', $(document).height());
             }
 
             $(document).ready(function () {
