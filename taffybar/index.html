@@ -10,7 +10,6 @@
             body {
                 margin: 4px 120px 4px 4px;
                 font-size: 14px;
-                background-size: {{ monitor.width }}px {{ monitor.height }}px;
                 background-repeat: no-repeat;
                 background-position: 0px 0px;
                 text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white;
@@ -200,7 +199,10 @@
             function setupBackground() {
                 $.ajax('gsettings:org.gnome.desktop.background/picture-uri')
                 .success(function (background) {
-                    $('body').css("background-image", "url('" + background + "')");
+                    $('body').css('background-image',
+                        "url('" + background + "')");
+                    $('body').css('background-size',
+                        screen.width + "px " + screen.height + "px");
                 });
                 $('html').css('height', $(document).height());
             }

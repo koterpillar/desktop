@@ -42,25 +42,6 @@ gsettingsGet schema key = do
     let len = length output
     return $ drop 1 $ take (len - 2) output
 
--- TODO: instead of templating, send JavaScript events
-htmlDataMap :: IO (M.Map String String)
-htmlDataMap = do
-    Just disp <- displayGetDefault
-    screen <- displayGetScreen disp $ screenNumber taffybarConfig
-    (Rectangle _ _ monitor_width monitor_height) <-
-        screenGetMonitorGeometry screen $ monitorNumber taffybarConfig
-    return $ M.fromList [ ("monitor.width",  show monitor_width)
-                        , ("monitor.height", show monitor_height)
-                        ]
-
-formatHtml :: IO String
-formatHtml = do
-    htmlFile <- getUserConfigFile "taffybar" "index.html"
-    html <- readFile htmlFile
-    dataMap <- htmlDataMap
-    return $ M.foldrWithKey replaceMapItem html dataMap
-        where replaceMapItem k = replace ("{{ " ++ k ++ " }}")
-
 gsettingsPrefix = "gsettings:"
 
 setupWebkitLog :: WebView -> IO ()
@@ -73,7 +54,8 @@ setupWebkitLog wk = do
                            }
 
     baseDir <- getUserConfigDir "taffybar"
-    html <- formatHtml
+    htmlFile <- getUserConfigFile "taffybar" "index.html"
+    html <- readFile htmlFile
     webViewLoadHtmlString wk html ("file://" ++ baseDir)
 
     wsettings <- webViewGetWebSettings wk
