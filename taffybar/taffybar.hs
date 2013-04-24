@@ -40,7 +40,7 @@ gsettingsGet :: String -> String -> IO String
 gsettingsGet schema key = do
     output <- readProcess "gsettings" ["get", schema, key] []
     let len = length output
-    return $ drop 1 $ take (len - 2) $ output
+    return $ drop 1 $ take (len - 2) output
 
 -- TODO: instead of templating, send JavaScript events
 htmlDataMap :: IO (M.Map String String)
@@ -59,7 +59,7 @@ formatHtml = do
     html <- readFile htmlFile
     dataMap <- htmlDataMap
     return $ M.foldrWithKey replaceMapItem html dataMap
-        where replaceMapItem k v = replace ("{{ " ++ k ++ " }}") v
+        where replaceMapItem k = replace ("{{ " ++ k ++ " }}")
 
 gsettingsPrefix = "gsettings:"
 
@@ -80,20 +80,18 @@ setupWebkitLog wk = do
     set wsettings [webSettingsEnableUniversalAccessFromFileUris := True]
     webViewSetWebSettings wk wsettings
 
-    on wk resourceRequestStarting $ \_ _ nreq _ -> do
-        case nreq of
-            Nothing -> return ()
-            (Just req) -> do
-                uri_ <- networkRequestGetUri req
-                case uri_ of
-                    Nothing -> return ()
-                    Just uri -> do
-                        when (gsettingsPrefix `isPrefixOf` uri) $ do
-                            let path = drop (length gsettingsPrefix) uri
-                            let [schema, key] = splitOn "/" path
-                            setting <- gsettingsGet schema key
-                            networkRequestSetUri req $
-                                "data:text/plain," ++ setting
+    on wk resourceRequestStarting $ \_ _ nreq _ -> case nreq of
+        Nothing -> return ()
+        (Just req) -> do
+            uri_ <- networkRequestGetUri req
+            case uri_ of
+                Nothing -> return ()
+                Just uri -> when (gsettingsPrefix `isPrefixOf` uri) $ do
+                    let path = drop (length gsettingsPrefix) uri
+                    let [schema, key] = splitOn "/" path
+                    setting <- gsettingsGet schema key
+                    networkRequestSetUri req $
+                        "data:text/plain," ++ setting
 
     client <- connectSession
 

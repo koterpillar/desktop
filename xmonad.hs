@@ -75,7 +75,7 @@ wrapClass cls = wrap ("<span class='" ++ cls ++ "'>") "</span>"
 subNumber :: String -> String
 subNumber [x] = [x]
 subNumber named = taffybarEscape (take lname named) ++ wrapClass "subscript" (drop lname named)
-    where lname = (length named) - 1
+    where lname = length named - 1
 
 pp :: PP
 pp = defaultPP { ppTitle = taffybarEscape
@@ -127,7 +127,7 @@ consoleKit x = spawn $
 stringMenu :: [(String, X a)] -> X a
 stringMenu items = do
     action <- dmenu $ map fst items
-    snd . fromJust $ find (((==) action) . fst) items
+    snd . fromJust $ find ((==) action . fst) items
 
 shutdownMenu :: X ()
 shutdownMenu = stringMenu [ ("shutdown", doShutdown)
@@ -137,7 +137,7 @@ shutdownMenu = stringMenu [ ("shutdown", doShutdown)
 getUrlHandler :: GConf -> String -> IO String
 getUrlHandler gconf scheme = do
     handler <- gconf `gconfGet` ("/desktop/gnome/url-handlers/" ++ scheme ++ "/command")
-    return $ replace " %u" "" $ replace " %s" "" $ handler
+    return $ replace " %u" "" $ replace " %s" "" handler
 
 modm = mod4Mask
 
@@ -171,7 +171,7 @@ main = do
         { terminal = "x-terminal-emulator"
         , workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
-        , layoutHook = avoidStruts $ layout
+        , layoutHook = avoidStruts layout
         , logHook = dbusLogWithPP client pp
         , modMask = modm
         } `removeKeys`
