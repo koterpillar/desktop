@@ -53,11 +53,6 @@ setupWebkitLog wk = do
                            , matchMember = parseMemberName "Update"
                            }
 
-    baseDir <- getUserConfigDir "taffybar"
-    htmlFile <- getUserConfigFile "taffybar" "index.html"
-    html <- readFile htmlFile
-    webViewLoadHtmlString wk html ("file://" ++ baseDir ++ "/")
-
     wsettings <- webViewGetWebSettings wk
     set wsettings [webSettingsEnableUniversalAccessFromFileUris := True]
     webViewSetWebSettings wk wsettings
@@ -74,6 +69,11 @@ setupWebkitLog wk = do
                     setting <- gsettingsGet schema key
                     networkRequestSetUri req $
                         "data:text/plain," ++ setting
+
+    baseDir <- getUserConfigDir "taffybar"
+    htmlFile <- getUserConfigFile "taffybar" "index.html"
+    html <- readFile htmlFile
+    webViewLoadHtmlString wk html ("file://" ++ baseDir ++ "/")
 
     client <- connectSession
 
