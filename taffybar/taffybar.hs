@@ -56,7 +56,7 @@ setupWebkitLog wk = do
     baseDir <- getUserConfigDir "taffybar"
     htmlFile <- getUserConfigFile "taffybar" "index.html"
     html <- readFile htmlFile
-    webViewLoadHtmlString wk html ("file://" ++ baseDir)
+    webViewLoadHtmlString wk html ("file://" ++ baseDir ++ "/")
 
     wsettings <- webViewGetWebSettings wk
     set wsettings [webSettingsEnableUniversalAccessFromFileUris := True]
