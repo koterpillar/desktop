@@ -5,6 +5,12 @@ LOG=/tmp/xmonad-$(whoami).log
 rm $LOG
 touch $LOG
 
+export XMODIFIERS="@im=ibus"
+export GTK_IM_MODULE="ibus"
+export QT_IM_MODULE="ibus"
+
+ibus-daemon -x &
+
 gnome-settings-daemon &
 
 eval $(gnome-keyring-daemon --start)
@@ -18,12 +24,6 @@ taffybar >>$LOG 2>&1 &
 nm-applet --sm-disable &
 
 (sleep 3 && gnome-power-manager) &
-
-export XMODIFIERS="@im=ibus"
-export GTK_IM_MODULE="ibus"
-export QT_IM_MODULE="xim"
-
-ibus-daemon &
 
 xcompmgr &
 
