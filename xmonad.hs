@@ -32,7 +32,7 @@ import System.Gnome.GConf
 
 import Graphics.X11.ExtraTypes.XF86
 
-import System.Taffybar.XMonadLog
+import System.Tianbar.XMonadLog
 
 -- For default configuration, see
 -- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
@@ -74,19 +74,8 @@ wrapClass cls = wrap ("<span class='" ++ cls ++ "'>") "</span>"
 -- For named workspaces, make the number a subscript
 subNumber :: String -> String
 subNumber [x] = [x]
-subNumber named = taffybarEscape (take lname named) ++ wrapClass "subscript" (drop lname named)
+subNumber named = take lname named ++ wrapClass "subscript" (drop lname named)
     where lname = length named - 1
-
-pp :: PP
-pp = defaultPP { ppTitle = taffybarEscape
-               , ppCurrent = wrapClass "current" . subNumber
-               , ppVisible = wrapClass "visible" . subNumber
-               , ppUrgent = wrapClass "urgent" . subNumber
-               , ppHidden = wrapClass "hidden" . subNumber
-               , ppHiddenNoWindows = wrapClass "hidden empty" . subNumber
-               , ppSep = ""
-               , ppOrder = zipWith wrapClass ["workspaces", "layout", "title"]
-               }
 
 namedWorkspaces = [ ("4", "Git")
                   , ("6", "Mail")
@@ -172,7 +161,7 @@ main = do
         , workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts layout
-        , logHook = dbusLogWithPP client pp
+        , logHook = dbusLog client
         , modMask = modm
         } `removeKeys`
         [ (modm                 , xK_p)
