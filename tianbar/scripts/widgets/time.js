@@ -25,7 +25,7 @@ define(['jquery'], function ($) {
   function updateClock() {
     var dt = new Date();
     var clockText = dt.toLocaleDateString() + " " + timeString(dt);
-    $('#clock').text(clockText);
+    $('.widget-time').text(clockText);
   }
 
   $(document).ready(function () {
