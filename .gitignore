@@ -1,3 +1,5 @@
 *.hi
 *.o
 *.swp
+/tianbar/components
+/tianbar/node_modules
