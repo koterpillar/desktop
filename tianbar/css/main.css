@@ -107,7 +107,7 @@ body {
     display: inline;
 }
 
-#clock, #weather {
+.widget-right {
     float: right;
     margin-left: 15px;
 }

@@ -3,41 +3,7 @@ require.config({
     "jquery": "../components/jquery/jquery.min"
   }
 });
-require(['jquery'], function ($) {
-  window.timeLocaleSupport = false;
-  try {
-    new Date().toLocaleTimeString("i");
-  } catch (e) {
-    window.timeLocaleSupport = e.name === 'RangeError';
-  }
-
-  function timeString(date) {
-    if (window.timeLocaleSupport) {
-      return date.toLocaleTimeString(undefined, {
-        hour12: false,
-        hour: "numeric",
-        minute: "numeric",
-        second: undefined
-      });
-    } else {
-      function pad(s) {
-        return ((''+s).length < 2 ? '0' : '') + s;
-      }
-      return pad(date.getHours()) + ":" + pad(date.getMinutes());
-    }
-  }
-
-  function updateClock() {
-    var dt = new Date();
-    var clockText = dt.toLocaleDateString() + " " + timeString(dt);
-    $('#clock').text(clockText);
-  }
-
-  function setupClock() {
-    updateClock();
-    setInterval(updateClock, 1000);
-  }
-
+require(['jquery', 'widgets/time'], function ($) {
   function unescapeHTML(html) {
     return $('<span/>').html(html).text();
   }
@@ -103,7 +69,6 @@ require(['jquery'], function ($) {
   }
 
   $(document).ready(function () {
-    setupClock();
     setupLocation();
     setupBackground();
     if (window.XMonadStatus) {
