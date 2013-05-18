@@ -103,7 +103,7 @@ body {
     background-color: #f0f0f0;
 }
 
-#status {
+.widget-xmonad {
     display: inline;
 }
 
