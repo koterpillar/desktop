@@ -68,15 +68,6 @@ layout = onWorkspace "IM7" imLayout $
     ||| named "Tabs" (smartBorders tabbedLayout)
     ||| named "Float" (smartBorders floatLayout)
 
-wrapClass :: String -> String -> String
-wrapClass cls = wrap ("<span class='" ++ cls ++ "'>") "</span>"
-
--- For named workspaces, make the number a subscript
-subNumber :: String -> String
-subNumber [x] = [x]
-subNumber named = take lname named ++ wrapClass "subscript" (drop lname named)
-    where lname = length named - 1
-
 namedWorkspaces = [ ("4", "Git")
                   , ("6", "Mail")
                   , ("7", "IM")

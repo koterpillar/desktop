@@ -19,7 +19,7 @@ export GNOME_KEYRING_PID
 
 nautilus --no-default-window &
 
-taffybar >>$LOG 2>&1 &
+tianbar >>$LOG 2>&1 &
 
 nm-applet --sm-disable &
 
