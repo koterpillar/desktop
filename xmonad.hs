@@ -51,6 +51,10 @@ floatLayout = simpleFloat' shrinkText theme
 
 tabbedLayout = tabbed shrinkText theme
 
+gitWorkspace  = "4"
+mailWorkspace = "6"
+imWorkspace   = "7"
+
 imLayout = named "IM" $
     combineTwoP (TwoPane 0.03 0.2) rosterLayout mainLayout isRoster
     where rosterLayout    = smartBorders mosaicLayout
@@ -63,35 +67,17 @@ imLayout = named "IM" $
 
 mosaicLayout = MosaicAlt M.empty
 
-layout = onWorkspace "IM7" imLayout $
+layout = onWorkspace imWorkspace imLayout $
         named "Mosaic" (smartBorders mosaicLayout)
     ||| named "Tabs" (smartBorders tabbedLayout)
     ||| named "Float" (smartBorders floatLayout)
 
-namedWorkspaces = [ ("4", "Git")
-                  , ("6", "Mail")
-                  , ("7", "IM")
-                  ]
-
-wsName :: (String, String) -> String
-wsName = uncurry $ flip (++)
-
-wsFromIndex :: String -> String
-wsFromIndex n = case find ((==) n . fst) namedWorkspaces of
-    Just ws -> wsName ws
-    Nothing -> n
-
-wsFromName :: String -> String
-wsFromName n = case find ((==) n . snd) namedWorkspaces of
-    Just ws -> wsName ws
-    Nothing -> n
-
-myWorkspaces = map wsFromIndex $ map show [1..9] ++ ["0", "-", "="]
+myWorkspaces = map show [1..9] ++ ["0", "-", "="]
 
 myManageHook = composeAll
-    [ className =? "Gitg" --> doShift (wsFromName "Git")
-    , className =? "Thunderbird" --> doShift (wsFromName "Mail")
-    , className =? "Pidgin" <||> className =? "Skype" --> doShift (wsFromName "IM")
+    [ className =? "Gitg" --> doShift gitWorkspace
+    , className =? "Thunderbird" --> doShift mailWorkspace
+    , className =? "Pidgin" <||> className =? "Skype" --> doShift imWorkspace
     ]
 
 doShutdown = consoleKit "Stop"
