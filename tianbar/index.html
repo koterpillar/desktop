@@ -18,9 +18,12 @@
                         {{#if this.urgent}}      urgent  {{/if}}
                         {{#unless this.visible}} hidden  {{/unless}}
                         {{#unless this.windows}} empty   {{/unless}}
-                    '>
-                        {{ this.tag }}
-                    </span>
+                    '
+                        {{#if this.icon}}
+                            ><i class="icon-{{ this.icon }}"></i><sub>{{ this.tag }}</sub></span>
+                        {{else}}
+                            >{{ this.tag }}</span>
+                        {{/if}}
                 {{/each}}
             </span>
             <span class='layout'>{{ layout }}</span>

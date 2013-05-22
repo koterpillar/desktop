@@ -38,9 +38,8 @@ body {
     text-overflow: ellipsis;
 }
 
-.subscript {
-    font-size: 10px;
-    vertical-align: sub;
+sub {
+    font-size: x-small;
 }
 
 .empty {

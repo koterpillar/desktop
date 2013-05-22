@@ -1,15 +1,25 @@
 define(['handlebars', 'jquery'], function (Handlebars, $) {
   var template;
-  function setStatus(status) {
-    $('.widget-xmonad').html(template(status));
+  function setStatus(st) {
+    $('.widget-xmonad').html(template(st));
   }
 
-  window.setXMonadStatus = function (status) {
+  window.setXMonadStatus = function (st) {
     window.XMonadStatus = undefined;
-    if (typeof status === "string") {
-      status = JSON.parse(status);
+    if (typeof st === "string") {
+      st = JSON.parse(st);
     }
-    setStatus(status);
+    for (var i = 0; i < st.workspaces.length; i++) {
+      wksp = st.workspaces[i];
+      if (wksp.tag === "4") {
+        wksp.icon = "code-fork";
+      } else if (wksp.tag === "6") {
+        wksp.icon = "envelope";
+      } else if (wksp.tag === "7") {
+        wksp.icon = "comment-alt";
+      }
+    }
+    setStatus(st);
   }
 
   $(document).ready(function () {
