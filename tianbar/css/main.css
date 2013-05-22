@@ -17,27 +17,6 @@ body {
     margin: 0px 2px 0px 0px;
 }
 
-.workspace4::after {
-    font-family: FontAwesome;
-    content: "\f126";
-    font-size: xx-small;
-    vertical-align: super;
-}
-
-.workspace6::after {
-    font-family: FontAwesome;
-    content: "\f003";
-    font-size: xx-small;
-    vertical-align: super;
-}
-
-.workspace7::after {
-    font-family: FontAwesome;
-    content: "\f0e5";
-    vertical-align: super;
-    font-size: xx-small;
-}
-
 .layout {
     padding: 21px 2px;
     margin: -22px inherit;

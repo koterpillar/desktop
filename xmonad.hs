@@ -8,11 +8,14 @@ import qualified Data.Map as M
 import Data.Maybe
 import Data.String.Utils
 
+import DBus -- TODO: remove after moving JSON to Tianbar
+import Text.JSON -- TODO: remove after moving JSON to Tianbar
+import XMonad.Util.NamedWindows -- TODO: remove after moving JSON to Tianbar
+
 import DBus.Client
 
 import XMonad
 import XMonad.Actions.Search
-import qualified XMonad.Actions.Volume as Volume
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
@@ -24,9 +27,10 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Tabbed
 import XMonad.Layout.TwoPane
-import qualified XMonad.StackSet as W
+import qualified XMonad.StackSet as S
 import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig (additionalKeys, removeKeys)
+import XMonad.Util.WorkspaceCompare
 
 import System.Gnome.GConf
 
@@ -107,6 +111,55 @@ getUrlHandler gconf scheme = do
 
 modm = mod4Mask
 
+sig :: Signal
+sig = signal (fromJust $ parseObjectPath "/org/xmonad/Log")
+              (fromJust $ parseInterfaceName "org.xmonad.Log")
+              (fromJust $ parseMemberName "Update")
+
+jsString = JSString . toJSString
+jsObject = JSObject . toJSObject
+
+jsonLog :: Client -> X ()
+jsonLog client = do
+
+    winset <- gets windowset
+    urgents <- readUrgents
+
+    -- layout description
+    let ld = description . S.layout . S.workspace . S.current $ winset
+
+    sort_ <- mkWsSort getWsCompare
+
+    -- workspace list
+    let ws = workspacesJson sort_ urgents winset
+
+    -- window title
+    wt <- maybe (return "") (fmap show . getName) . S.peek $ winset
+
+    let json = JSObject $ toJSObject [ ("layout", jsString ld)
+                                     , ("workspaces", ws)
+                                     , ("title", jsString wt)
+                                     ]
+    let jsonStr = showJSValue json ""
+    liftIO $ emit client sig { signalBody = [ toVariant jsonStr ] }
+    -- liftIO $ putStrLn jsonStr
+
+workspacesJson :: WorkspaceSort -> [Window] -> WindowSet -> JSValue
+workspacesJson sort_ urgents s = JSArray $ map wsJson $ sort_ ws
+   where ws = map S.workspace (S.current s : S.visible s) ++ S.hidden s
+         this     = S.currentTag s
+         visibles = map (S.tag . S.workspace) (S.visible s)
+
+         wsJson w = jsObject [ ("tag",     jsString $ tag)
+                             , ("current", JSBool $ tag == this)
+                             , ("visible", JSBool $ tag `elem` visibles)
+                             , ("urgent",  JSBool $ isUrgent)
+                             , ("windows", JSBool $ hasWindows)
+                             ]
+          where tag = S.tag w
+                isUrgent = any (\x -> maybe False (== tag) (S.findTag x s)) urgents
+                hasWindows = isJust (S.stack w)
+
 main = do
     client <- connectSession
     gconf <- gconfGetDefault
@@ -132,13 +185,13 @@ main = do
                -- Switch/move windows to workspaces
                [((m .|. modm, k), windows $ f i)
                    | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal]
-                   , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+                   , (f, m) <- [(S.greedyView, 0), (S.shift, shiftMask)]]
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
         { terminal = "x-terminal-emulator"
         , workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts layout
-        , logHook = dbusLog client
+        , logHook = jsonLog client
         , modMask = modm
         } `removeKeys`
         [ (modm                 , xK_p)
