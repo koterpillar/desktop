@@ -25,7 +25,6 @@ import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Tabbed
 import XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
-import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig (additionalKeys, removeKeys)
 
 import System.Gnome.GConf
@@ -80,26 +79,6 @@ myManageHook = composeAll
     , className =? "Pidgin" <||> className =? "Skype" --> doShift imWorkspace
     ]
 
-doShutdown = consoleKit "Stop"
-doReboot = consoleKit "Restart"
-
-consoleKit :: String -> X ()
-consoleKit x = spawn $
-    "dbus-send --system --print-reply"
-    ++ " --dest=org.freedesktop.ConsoleKit"
-    ++ " /org/freedesktop/ConsoleKit/Manager"
-    ++ " org.freedesktop.ConsoleKit.Manager." ++ x
-
-stringMenu :: [(String, X a)] -> X a
-stringMenu items = do
-    action <- dmenu $ map fst items
-    snd . fromJust $ find ((==) action . fst) items
-
-shutdownMenu :: X ()
-shutdownMenu = stringMenu [ ("shutdown", doShutdown)
-                          , ("reboot", doReboot)
-                          ]
-
 getUrlHandler :: GConf -> String -> IO String
 getUrlHandler gconf scheme = do
     handler <- gconf `gconfGet` ("/desktop/gnome/url-handlers/" ++ scheme ++ "/command")
@@ -107,12 +86,14 @@ getUrlHandler gconf scheme = do
 
 modm = mod4Mask
 
+confirmShutdown = "/usr/lib/indicator-session/gtk-logout-helper -s"
+
 main = do
     client <- connectSession
     gconf <- gconfGetDefault
     browser <- getUrlHandler gconf "http"
     email <- getUrlHandler gconf "mailto"
-    let keys = [ ((0                   , xF86XK_PowerOff ), shutdownMenu)
+    let keys = [ ((0                   , xF86XK_PowerOff ), spawn confirmShutdown)
                , ((0                   , xF86XK_HomePage ), spawn browser)
                , ((0                   , xF86XK_Mail     ), spawn email)
                , ((0                   , xF86XK_Messenger), spawn "pidgin")
