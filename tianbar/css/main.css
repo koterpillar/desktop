@@ -42,6 +42,10 @@ sub {
     font-size: x-small;
 }
 
+.workspace {
+    margin-right: 3px;
+}
+
 .empty {
     color: #999;
 }

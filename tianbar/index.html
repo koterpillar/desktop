@@ -9,25 +9,5 @@
         <div class="widget-xmonad"></div>
         <div class="widget-time widget-right"></div>
         <div class="widget-weather widget-right"></div>
-        <script id="xmonad-layout" type="text/x-handlebars-template">
-            <span class='workspaces'>
-                {{#each workspaces}}
-                    <span class='
-                        workspace
-                        {{#if this.current}}     current {{/if}}
-                        {{#if this.urgent}}      urgent  {{/if}}
-                        {{#unless this.visible}} hidden  {{/unless}}
-                        {{#unless this.windows}} empty   {{/unless}}
-                    '
-                        {{#if this.icon}}
-                            ><i class="icon-{{ this.icon }}"></i><sub>{{ this.tag }}</sub></span>
-                        {{else}}
-                            >{{ this.tag }}</span>
-                        {{/if}}
-                {{/each}}
-            </span>
-            <span class='layout'>{{ layout }}</span>
-            <span class='title'>{{ title }}</span>
-        </script>
     </body>
 </html>

@@ -1,12 +1,6 @@
 require.config({
   paths: {
-    "handlebars": "../components/handlebars/handlebars",
     "jquery": "../components/jquery/jquery.min"
-  },
-  shim: {
-    "handlebars": {
-      exports: "Handlebars"
-    }
   }
 });
 require(

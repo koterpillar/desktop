@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "font-awesome": "*",
-    "handlebars": "*",
     "jquery": "*",
     "requirejs": "*"
   }

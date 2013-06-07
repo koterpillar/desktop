@@ -7,7 +7,7 @@ sudo apt-get -y install cabal-install
 [ -d ~/.cabal ] || cabal update
 
 # XMonad
-cabal install xmonad xmonad-extras MissingH
+cabal install xmonad xmonad-extras MissingH blaze-html
 
 mkdir -p ~/.xmonad
 ln -sf $DIR/xmonad.hs ~/.xmonad

@@ -8,9 +8,13 @@ import qualified Data.Map as M
 import Data.Maybe
 import Data.String.Utils
 
-import DBus -- TODO: remove after moving JSON to Tianbar
-import Text.JSON -- TODO: remove after moving JSON to Tianbar
-import XMonad.Util.NamedWindows -- TODO: remove after moving JSON to Tianbar
+-- TODO: remove after moving JSON to Tianbar
+import DBus
+import XMonad.Util.NamedWindows
+import Text.Blaze
+import qualified Text.Blaze.Html5 as H
+import qualified Text.Blaze.Html5.Attributes as A
+import Text.Blaze.Renderer.String (renderMarkup)
 
 import DBus.Client
 
@@ -58,6 +62,12 @@ gitWorkspace  = "4"
 mailWorkspace = "6"
 imWorkspace   = "7"
 
+workspaceIcon :: String -> Maybe String
+workspaceIcon s | s == gitWorkspace  = Just "code-fork"
+                | s == mailWorkspace = Just "envelope"
+                | s == imWorkspace   = Just "comment-alt"
+                | otherwise          = Nothing
+
 imLayout = named "IM" $
     combineTwoP (TwoPane 0.03 0.2) rosterLayout mainLayout isRoster
     where rosterLayout    = smartBorders mosaicLayout
@@ -95,49 +105,53 @@ sig = signal (fromJust $ parseObjectPath "/org/xmonad/Log")
               (fromJust $ parseInterfaceName "org.xmonad.Log")
               (fromJust $ parseMemberName "Update")
 
-jsString = JSString . toJSString
-jsObject = JSObject . toJSObject
-
-jsonLog :: Client -> X ()
-jsonLog client = do
+blazeLog :: Client -> X ()
+blazeLog client = do
 
     winset <- gets windowset
     urgents <- readUrgents
-
-    -- layout description
     let ld = description . S.layout . S.workspace . S.current $ winset
-
     sort_ <- mkWsSort getWsCompare
-
-    -- workspace list
-    let ws = workspacesJson sort_ urgents winset
-
-    -- window title
     wt <- maybe (return "") (fmap show . getName) . S.peek $ winset
 
-    let json = JSObject $ toJSObject [ ("layout", jsString ld)
-                                     , ("workspaces", ws)
-                                     , ("title", jsString wt)
-                                     ]
-    let jsonStr = showJSValue json ""
-    liftIO $ emit client sig { signalBody = [ toVariant jsonStr ] }
-    -- liftIO $ putStrLn jsonStr
+    let html = renderMarkup $ tianbarHtml ld wt sort_ urgents winset
+    liftIO $ emit client sig { signalBody = [ toVariant html ] }
 
-workspacesJson :: WorkspaceSort -> [Window] -> WindowSet -> JSValue
-workspacesJson sort_ urgents s = JSArray $ map wsJson $ sort_ ws
-   where ws = map S.workspace (S.current s : S.visible s) ++ S.hidden s
-         this     = S.currentTag s
-         visibles = map (S.tag . S.workspace) (S.visible s)
+tianbarHtml :: String        -- ^ layout description
+            -> String        -- ^ window title
+            -> WorkspaceSort -- ^ workspace sort (?)
+            -> [Window]      -- ^ urgent windows
+            -> WindowSet     -- ^ all windows
+            -> Markup
+tianbarHtml layout title sort_ urgents windows = do
+    H.span ! A.class_ (toValue "workspaces") $
+        mapM_ wsHtml $ sort_ ws
+    H.span ! A.class_ (toValue "layout") $ toMarkup layout
+    H.span ! A.class_ (toValue "title") $ toMarkup title
+    where
+        ws = map S.workspace (S.current windows : S.visible windows) ++ S.hidden windows
+        this     = S.currentTag windows
+        visibles = map (S.tag . S.workspace) (S.visible windows)
 
-         wsJson w = jsObject [ ("tag",     jsString $ tag)
-                             , ("current", JSBool $ tag == this)
-                             , ("visible", JSBool $ tag `elem` visibles)
-                             , ("urgent",  JSBool $ isUrgent)
-                             , ("windows", JSBool $ hasWindows)
-                             ]
-          where tag = S.tag w
-                isUrgent = any (\x -> maybe False (== tag) (S.findTag x s)) urgents
-                hasWindows = isJust (S.stack w)
+        wsHtml w = H.span ! A.class_ (toValue $ unwords classes) $
+            if isJust icon
+                then do
+                    H.i ! A.class_ (toValue $ "icon-" ++ fromJust icon) $
+                        toMarkup ""
+                    H.sub $ toMarkup tag
+                else
+                    toMarkup tag
+            where
+                classes =
+                    ["workspace"] ++
+                    ["current" | tag == this] ++
+                    ["hidden"  | tag `notElem` visibles] ++
+                    ["urgent"  | isUrgent] ++
+                    ["empty"   | noWindows]
+                tag = S.tag w
+                icon = workspaceIcon tag
+                isUrgent = any (\x -> maybe False (== tag) (S.findTag x windows)) urgents
+                noWindows = isNothing (S.stack w)
 
 confirmShutdown = "/usr/lib/indicator-session/gtk-logout-helper -s"
 
@@ -172,7 +186,7 @@ main = do
         , workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts layout
-        , logHook = jsonLog client
+        , logHook = blazeLog client
         , modMask = modm
         } `removeKeys`
         [ (modm                 , xK_p)
