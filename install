@@ -7,6 +7,7 @@ sudo apt-get -y install cabal-install
 [ -d ~/.cabal ] || cabal update
 
 # XMonad
+sudo apt-get -y install libx11-dev libxrandr-dev libxft-dev
 cabal install xmonad xmonad-extras MissingH
 
 mkdir -p ~/.xmonad
@@ -19,7 +20,11 @@ sudo apt-get -y install gtk2hs-buildtools libgtk2.0-dev libxml2-dev \
 cabal install tianbar
 
 # Tianbar config
-sudo apt-get install nodejs
+if ! -f /etc/apt/sources.list.d/chris-lea/node_js-$(lsb_release -sc).list; then
+	sudo add-apt-repository -y ppa:chris-lea/node.js
+	sudo apt-get update
+fi
+sudo apt-get -y install nodejs
 
 cd $DIR/tianbar
 npm install
