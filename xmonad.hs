@@ -64,7 +64,7 @@ imWorkspace   = "7"
 
 workspaceIcon :: String -> Maybe String
 workspaceIcon s | s == gitWorkspace  = Just "code-fork"
-                | s == mailWorkspace = Just "envelope"
+                | s == mailWorkspace = Just "envelope-alt"
                 | s == imWorkspace   = Just "comment-alt"
                 | otherwise          = Nothing
 
