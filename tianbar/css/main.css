@@ -7,8 +7,13 @@ body {
     margin: 4px;
     font-family: "Ubuntu";
     font-size: 15px;
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
+    background:
+        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
+        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
+        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
+        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
+        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px);
+    background-size: 11px 11px, 13px 13px, 17px 17px, 7px 7px, 19px 19px;
     text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white;
     cursor: default;
 }
