@@ -8,15 +8,11 @@ import qualified Data.Map as M
 import Data.Maybe
 import Data.String.Utils
 
--- TODO: remove after moving JSON to Tianbar
-import DBus
-import XMonad.Util.NamedWindows
+import DBus.Client
+
 import Text.Blaze
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
-import Text.Blaze.Renderer.String (renderMarkup)
-
-import DBus.Client
 
 import XMonad
 import XMonad.Actions.Search
@@ -100,39 +96,13 @@ getUrlHandler gconf scheme = do
 
 modm = mod4Mask
 
-sig :: Signal
-sig = signal (fromJust $ parseObjectPath "/org/xmonad/Log")
-              (fromJust $ parseInterfaceName "org.xmonad.Log")
-              (fromJust $ parseMemberName "Update")
-
-blazeLog :: Client -> X ()
-blazeLog client = do
-
-    winset <- gets windowset
-    urgents <- readUrgents
-    let ld = description . S.layout . S.workspace . S.current $ winset
-    sort_ <- mkWsSort getWsCompare
-    wt <- maybe (return "") (fmap show . getName) . S.peek $ winset
-
-    let html = renderMarkup $ tianbarHtml ld wt sort_ urgents winset
-    liftIO $ emit client sig { signalBody = [ toVariant html ] }
-
-tianbarHtml :: String        -- ^ layout description
-            -> String        -- ^ window title
-            -> WorkspaceSort -- ^ workspace sort (?)
-            -> [Window]      -- ^ urgent windows
-            -> WindowSet     -- ^ all windows
-            -> Markup
-tianbarHtml layout title sort_ urgents windows = do
+myMarkup :: MarkupRenderer
+myMarkup layout title workspaces _ _ = do
     H.span ! A.class_ (toValue "workspaces") $
-        mapM_ wsHtml $ sort_ ws
+        mapM_ wsHtml $ workspaces
     H.span ! A.class_ (toValue "layout") $ toMarkup layout
     H.span ! A.class_ (toValue "title") $ toMarkup title
     where
-        ws = map S.workspace (S.current windows : S.visible windows) ++ S.hidden windows
-        this     = S.currentTag windows
-        visibles = map (S.tag . S.workspace) (S.visible windows)
-
         wsHtml w = H.span ! A.class_ (toValue $ unwords classes) $
             if isJust icon
                 then do
@@ -144,14 +114,12 @@ tianbarHtml layout title sort_ urgents windows = do
             where
                 classes =
                     ["workspace"] ++
-                    ["current" | tag == this] ++
-                    ["hidden"  | tag `notElem` visibles] ++
-                    ["urgent"  | isUrgent] ++
-                    ["empty"   | noWindows]
-                tag = S.tag w
+                    ["current" | wsCurrent w] ++
+                    ["hidden"  | wsHidden w] ++
+                    ["urgent"  | wsUrgent w] ++
+                    ["empty"   | wsEmpty w]
+                tag = wsTag w
                 icon = workspaceIcon tag
-                isUrgent = any (\x -> maybe False (== tag) (S.findTag x windows)) urgents
-                noWindows = isNothing (S.stack w)
 
 confirmShutdown = "/usr/lib/indicator-session/gtk-logout-helper -s"
 
@@ -186,7 +154,7 @@ main = do
         , workspaces = myWorkspaces
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts layout
-        , logHook = blazeLog client
+        , logHook = dbusLogWithMarkup client myMarkup
         , modMask = modm
         } `removeKeys`
         [ (modm                 , xK_p)
