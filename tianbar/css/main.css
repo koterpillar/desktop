@@ -8,12 +8,40 @@ body {
     font-family: "Ubuntu";
     font-size: 15px;
     background:
-        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
-        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
-        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
-        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px),
-        -webkit-linear-gradient(0deg, rgba(0,100,50,.1) 5px, transparent 5px);
-    background-size: 11px 11px, 13px 13px, 17px 17px, 7px 7px, 19px 19px;
+        -webkit-linear-gradient(90deg, white 1px, transparent 1px) 0 0/5px 5px,
+        -webkit-linear-gradient(0deg, white 1px, transparent 1px) 0 0/5px 5px,
+
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 10px 0px/95px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 50px 0px/65px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 30px 0px/85px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 80px 0px/35px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 20px 0px/55px 5px repeat-x,
+
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 15px 5px/95px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 75px 5px/65px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 45px 5px/85px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 65px 5px/35px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 25px 5px/55px 5px repeat-x,
+
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 30px 10px/95px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 50px 10px/65px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 20px 10px/85px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 90px 10px/35px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 20px 10px/55px 5px repeat-x,
+
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 10px 15px/95px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 50px 15px/65px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 40px 15px/85px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 80px 15px/35px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 20px 15px/55px 5px repeat-x,
+
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 30px 20px/95px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 80px 20px/65px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 30px 20px/85px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 90px 20px/35px 5px repeat-x,
+        -webkit-linear-gradient(0deg, rgba(0,127,0,.1) 5px, transparent 5px) 40px 20px/55px 5px repeat-x,
+
+        rgba(0,127,0,.1);
     text-shadow: 0 0 10px white, 0 0 10px white, 0 0 10px white;
     cursor: default;
 }
@@ -23,11 +51,11 @@ body {
 }
 
 .layout {
+    background: rgba(255, 255, 255, 0.8);
     padding: 21px 2px;
     margin: -22px inherit;
     font-size: 12px;
     border: 2px solid white;
-    border-radius: 40px;
     width: 50px;
     display: inline-block;
     text-align: center;
@@ -57,54 +85,17 @@ sub {
 
 .urgent, .current, .visible {
     padding: 1px 2px;
-    border-radius: 4px;
-}
-
-@keyframes urgent {
-    0%, 100% {
-        color: white;
-        text-shadow:
-            0 0 10px red, 0 0 10px red, 0 0 10px red,
-            0 0 10px red, 0 0 10px red, 0 0 10px red;
-    }
-    50% {
-        text-shadow:
-            0 0 10px red, 0 0 10px red, 0 0 10px red,
-            0 0 10px red, 0 0 10px red, 0 0 10px red,
-            0 0 20px red, 0 0 20px red, 0 0 20px red,
-            0 0 20px red, 0 0 20px red, 0 0 20px red;
-        color: white;
-    }
-}
-
-@-webkit-keyframes urgent {
-    0%, 100% {
-        color: white;
-        text-shadow:
-            0 0 10px red, 0 0 10px red, 0 0 10px red,
-            0 0 10px red, 0 0 10px red, 0 0 10px red;
-    }
-    50% {
-        text-shadow:
-            0 0 10px red, 0 0 10px red, 0 0 10px red,
-            0 0 10px red, 0 0 10px red, 0 0 10px red,
-            0 0 20px red, 0 0 20px red, 0 0 20px red,
-            0 0 20px red, 0 0 20px red, 0 0 20px red;
-        color: white;
-    }
 }
 
 .urgent {
-    animation-name: urgent;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    -webkit-animation-name: urgent;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: infinite;
+    color: white;
+    text-shadow:
+        0 0 10px red, 0 0 10px red, 0 0 10px red,
+        0 0 10px red, 0 0 10px red, 0 0 10px red;
 }
 
 .current {
-    background-color: #ffc060;
+    background-color: #99ccff;
 }
 
 .visible {
