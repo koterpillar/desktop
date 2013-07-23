@@ -1,35 +1,24 @@
-define(['jquery'], function ($) {
-  timeLocaleSupport = false;
-  try {
-    new Date().toLocaleTimeString("i");
-  } catch (e) {
-    timeLocaleSupport = e.name === 'RangeError';
-  }
-
-  function timeString(date) {
-    if (timeLocaleSupport) {
-      return date.toLocaleTimeString(undefined, {
-        hour12: false,
-        hour: "numeric",
-        minute: "numeric",
-        second: undefined
-      });
-    } else {
-      function pad(s) {
-        return ((''+s).length < 2 ? '0' : '') + s;
-      }
-      return pad(date.getHours()) + ":" + pad(date.getMinutes());
-    }
-  }
+define(['jquery', 'moment', 'moment/lang'], function ($, moment) {
+  var config = {
+    format: 'llll'
+  };
 
   function updateClock() {
-    var dt = new Date();
-    var clockText = dt.toLocaleDateString() + " " + timeString(dt);
+    var dt = moment();
+    var clockText = dt.format(config.format);
     $('.widget-time').text(clockText);
   }
 
   $(document).ready(function () {
+    var lang = navigator.language;
+    if (moment.langData(lang)) {
+      moment.lang(lang);
+    } else {
+      moment.lang(navigator.language.replace(/-.+/, ''));
+    }
     updateClock();
     setInterval(updateClock, 1000);
   });
+
+  return config;
 });

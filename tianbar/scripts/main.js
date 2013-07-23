@@ -1,6 +1,8 @@
 require.config({
   paths: {
-    "jquery": "../components/jquery/jquery.min"
+    'jquery': '../components/jquery/jquery.min',
+    'moment': '../components/moment/min/moment.min',
+    'moment/lang': '../components/moment/min/langs.min'
   }
 });
 require(

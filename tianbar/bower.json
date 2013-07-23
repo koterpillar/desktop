@@ -2,6 +2,7 @@
   "dependencies": {
     "font-awesome": "*",
     "jquery": "*",
+    "moment": "*",
     "requirejs": "*"
   }
 }
