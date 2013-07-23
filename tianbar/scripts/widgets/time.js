@@ -16,6 +16,8 @@ define(['jquery', 'moment', 'moment/lang'], function ($, moment) {
     } else {
       moment.lang(navigator.language.replace(/-.+/, ''));
     }
+    // Force 24 hour time
+    moment.langData("en")._longDateFormat.LT = 'HH:mm';
     updateClock();
     setInterval(updateClock, 1000);
   });
