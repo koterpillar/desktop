@@ -4,14 +4,14 @@ DIR=`pwd`/`dirname $0`
 
 # Haskell general
 sudo apt-get -y install cabal-install
-[ -d ~/.cabal ] || cabal update
+[ -d $HOME/.cabal ] || cabal update
 
 # XMonad
 sudo apt-get -y install libx11-dev libxrandr-dev libxft-dev
 cabal install xmonad xmonad-extras MissingH blaze-html
 
-mkdir -p ~/.xmonad
-ln -sf $DIR/xmonad.hs ~/.xmonad
+mkdir -p $HOME/.xmonad
+ln -sf $DIR/xmonad.hs $HOME/.xmonad
 
 # Tianbar
 sudo apt-get -y install gtk2hs-buildtools libgtk2.0-dev libxml2-dev \
@@ -32,11 +32,11 @@ npm install
 ./node_modules/.bin/bower install
 cd - >/dev/null
 
-ln -sf $DIR/tianbar ~/.config
+ln -sf $DIR/tianbar $HOME/.config
 
 # Synapse
 sudo apt-get -y install synapse zeitgeist-core
-ln -sf $DIR/synapse ~/.config
+ln -sf $DIR/synapse $HOME/.config
 
 # IBus
 sudo apt-get -y install ibus ibus-pinyin ibus-table ibus-m17n
@@ -45,12 +45,12 @@ sudo apt-get -y install ibus ibus-pinyin ibus-table ibus-m17n
 sudo install default.desktop /usr/share/xsessions
 sudo apt-get -y install notify-osd xcompmgr
 
-ln -sf $DIR/.xsession ~
+ln -sf $DIR/.xsession $HOME
 
-mkdir -p ~/.local/share/applications
-ln -sf $DIR/*.desktop ~/.local/share/applications
+mkdir -p $HOME/.local/share/applications
+ln -sf $DIR/*.desktop $HOME/.local/share/applications
 
-mkdir -p ~/.config/gnome-session/sessions
-ln -sf $DIR/xmonad.session ~/.config/gnome-session/sessions
+mkdir -p $HOME/.config/gnome-session/sessions
+ln -sf $DIR/xmonad.session $HOME/.config/gnome-session/sessions
 
 sudo apt-get -y autoremove
