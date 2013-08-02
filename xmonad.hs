@@ -125,10 +125,7 @@ main = do
     client <- connectSession
     gconf <- gconfGetDefault
     browser <- getUrlHandler gconf "http"
-    email <- getUrlHandler gconf "mailto"
-    let keys = [ ((0                   , xF86XK_HomePage ), spawn browser)
-               , ((0                   , xF86XK_Mail     ), spawn email)
-               , ((0                   , xF86XK_Messenger), spawn "pidgin")
+    let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
 
                , ((modm                , xK_b    ), sendMessage ToggleStruts)
                , ((modm                , xK_s    ), selectSearchBrowser browser google)
