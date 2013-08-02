@@ -121,15 +121,12 @@ myMarkup layout title workspaces _ _ = do
                 tag = wsTag w
                 icon = workspaceIcon tag
 
-confirmShutdown = "/usr/lib/indicator-session/gtk-logout-helper -s"
-
 main = do
     client <- connectSession
     gconf <- gconfGetDefault
     browser <- getUrlHandler gconf "http"
     email <- getUrlHandler gconf "mailto"
-    let keys = [ ((0                   , xF86XK_PowerOff ), spawn confirmShutdown)
-               , ((0                   , xF86XK_HomePage ), spawn browser)
+    let keys = [ ((0                   , xF86XK_HomePage ), spawn browser)
                , ((0                   , xF86XK_Mail     ), spawn email)
                , ((0                   , xF86XK_Messenger), spawn "pidgin")
 

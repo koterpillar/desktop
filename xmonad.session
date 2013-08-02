@@ -1,0 +1,6 @@
+[GNOME Session]
+Name=XMonad session
+RequiredComponents=gnome-settings-daemon;
+RequiredProviders=windowmanager;panel;
+DefaultProvider-windowmanager=xmonad
+DefaultProvider-panel=tianbar
