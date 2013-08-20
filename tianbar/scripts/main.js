@@ -2,17 +2,26 @@ require.config({
   paths: {
     'jquery': '../components/jquery/jquery.min',
     'moment': '../components/moment/min/moment.min',
-    'moment/lang': '../components/moment/min/langs.min'
+    'moment/lang': '../components/moment/min/langs.min',
+    'tianbar': 'tianbar:scripts',
   }
 });
 require(
   [
     'jquery',
-    'widgets/time',
-    'widgets/weather',
-    'widgets/xmonad'
+    'tianbar/location_shim',
+    'moment'
   ],
-  function ($) {
+  function ($, location_shim, moment) {
+    // Force 24 hour time
+    moment.langData("en")._longDateFormat.LT = 'HH:mm';
+
+    require([
+      'tianbar/time',
+      'tianbar/weather',
+      'tianbar/xmonad'
+    ]);
+
     $(document).ready(function () {
       $('html').css('height', $(document).height());
     });
