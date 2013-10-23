@@ -2,32 +2,28 @@
 
 DIR=`pwd`/`dirname $0`
 
+INSTALL='sudo pacman -S --needed --noconfirm'
+
 # Haskell general
-sudo apt-get -y install cabal-install
+$INSTALL cabal-install
 [ -d $HOME/.cabal ] || cabal update
 
 # XMonad
-sudo apt-get -y install libx11-dev libxrandr-dev libxft-dev
+$INSTALL gtk2hs-buildtools gconf libx11 libxrandr libxft
 cabal install xmonad xmonad-extras MissingH blaze-html gconf
 
 mkdir -p $HOME/.xmonad
 ln -sf $DIR/xmonad.hs $HOME/.xmonad
 
 # Tianbar
-sudo apt-get -y install gtk2hs-buildtools libgtk2.0-dev libxml2-dev \
-    libwebkitgtk-dev
+$INSTALL gtk2 libxml2 webkitgtk2
 
 cabal install tianbar
 
 $HOME/.cabal/bin/xmonad --recompile
 
 # Tianbar config
-if [ ! -f /etc/apt/sources.list.d/chris-lea-node_js-$(lsb_release -sc).list ]
-then
-	sudo add-apt-repository -y ppa:chris-lea/node.js
-	sudo apt-get update
-fi
-sudo apt-get -y install nodejs
+$INSTALL nodejs
 
 cd $DIR/tianbar
 npm install
@@ -37,15 +33,15 @@ cd - >/dev/null
 ln -sf $DIR/tianbar $HOME/.config
 
 # Synapse
-sudo apt-get -y install synapse zeitgeist-core
+$INSTALL synapse zeitgeist
 ln -sf $DIR/synapse $HOME/.config
 
 # IBus
-sudo apt-get -y install ibus ibus-pinyin ibus-table ibus-m17n
+$INSTALL ibus ibus-pinyin ibus-m17n
 
 # Session script
 sudo install default.desktop /usr/share/xsessions
-sudo apt-get -y install notify-osd xcompmgr
+# sudo apt-get -y install notify-osd xcompmgr
 
 ln -sf $DIR/.xsession $HOME
 
@@ -54,5 +50,3 @@ ln -sf $DIR/*.desktop $HOME/.local/share/applications
 
 mkdir -p $HOME/.config/gnome-session/sessions
 ln -sf $DIR/xmonad.session $HOME/.config/gnome-session/sessions
-
-sudo apt-get -y autoremove
