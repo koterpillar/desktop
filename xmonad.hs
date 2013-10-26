@@ -145,7 +145,7 @@ main = do
                    | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal]
                    , (f, m) <- [(S.greedyView, 0), (S.shift, shiftMask)]]
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
-        { terminal = "x-terminal-emulator"
+        { terminal = "terminator"
         , workspaces = myWorkspaces
         , handleEventHook = fullscreenEventHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
