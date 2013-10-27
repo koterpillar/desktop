@@ -18,6 +18,7 @@ import XMonad
 import XMonad.Actions.Search
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.ComboP
 import XMonad.Layout.MosaicAlt
@@ -146,6 +147,7 @@ main = do
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
         { terminal = "x-terminal-emulator"
         , workspaces = myWorkspaces
+        , handleEventHook = fullscreenEventHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts layout
         , logHook = dbusLogWithMarkup client myMarkup
