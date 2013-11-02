@@ -32,10 +32,9 @@ import qualified XMonad.StackSet as S
 import XMonad.Util.EZConfig (additionalKeys, removeKeys)
 import XMonad.Util.WorkspaceCompare
 
-import System.Gnome.GConf
-
 import Graphics.X11.ExtraTypes.XF86
 
+import System.Environment
 import System.Tianbar.XMonadLog
 
 -- For default configuration, see
@@ -90,11 +89,6 @@ myManageHook = composeAll
     , className =? "Pidgin" <||> className =? "Skype" --> doShift imWorkspace
     ]
 
-getUrlHandler :: GConf -> String -> IO String
-getUrlHandler gconf scheme = do
-    handler <- gconf `gconfGet` ("/desktop/gnome/url-handlers/" ++ scheme ++ "/command")
-    return $ replace " %u" "" $ replace " %s" "" handler
-
 modm = mod4Mask
 
 myMarkup :: MarkupRenderer
@@ -124,8 +118,7 @@ myMarkup layout title workspaces _ _ = do
 
 main = do
     client <- connectSession
-    gconf <- gconfGetDefault
-    browser <- getUrlHandler gconf "http"
+    browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
     let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
 
                , ((modm                , xK_b    ), sendMessage ToggleStruts)
