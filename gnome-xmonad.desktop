@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=XMonad
-Comment=XMonad
-TryExec=gnome-session
-Exec=gnome-session --session xmonad
-Type=XSession
-Icon=
-Type=Application

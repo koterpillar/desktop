@@ -1,0 +1,17 @@
+#!/bin/bash
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+ibus-daemon -dx
+
+xcompmgr &
+
+tianbar &
+
+nm-applet &
+
+exec xmonad
+

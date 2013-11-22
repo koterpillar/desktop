@@ -42,10 +42,10 @@ ln -sf $DIR/synapse $HOME/.config
 $INSTALL ibus ibus-pinyin ibus-m17n
 
 # Session script
-sudo install gnome-xmonad.desktop /usr/share/xsessions
+sudo install xinit.desktop /usr/share/xsessions
 
-mkdir -p $HOME/.local/share/applications
-ln -sf $DIR/*.desktop $HOME/.local/share/applications
+$INSTALL notify-osd gnome-keyring
 
-mkdir -p $HOME/.config/gnome-session/sessions
-ln -sf $DIR/xmonad.session $HOME/.config/gnome-session/sessions
+ln -sf $DIR/.xinitrc $HOME
+ln -sf $DIR/.xsession $HOME
+ln -sf $DIR/.xsession-dbus $HOME
