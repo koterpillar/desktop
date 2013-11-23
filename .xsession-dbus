@@ -13,6 +13,8 @@ tianbar &
 
 nm-applet &
 
+(sleep 120 && /usr/lib/deja-dup/deja-dup/deja-dup-monitor) &
+
 setxkbmap -option altwin:swap_alt_win
 
 exec xmonad
