@@ -13,5 +13,6 @@ tianbar &
 
 nm-applet &
 
-exec xmonad
+setxkbmap -option altwin:swap_alt_win
 
+exec xmonad
