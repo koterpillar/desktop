@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-DIR=`pwd`/`dirname $0`
+DIR=$(readlink -f $(pwd)/$(dirname $0))
 
 INSTALL='sudo pacman -S --needed --noconfirm'
 
