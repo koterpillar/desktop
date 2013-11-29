@@ -46,6 +46,6 @@ sudo install xinit.desktop /usr/share/xsessions
 
 $INSTALL notify-osd gnome-keyring
 
-ln -sf $DIR/.xinitrc $HOME
-ln -sf $DIR/.xsession $HOME
-ln -sf $DIR/.xsession-dbus $HOME
+ln -sf $DIR/xinitrc $HOME/.xinitrc
+ln -sf $DIR/xsession $HOME/.xsession
+ln -sf $DIR/xsession-dbus $HOME/.xsession-dbus
