@@ -1,0 +1,25 @@
+[global_config]
+  enabled_plugins = InactivityWatch, ActivityWatch, TerminalShot
+[keybindings]
+[profiles]
+  [[default]]
+    use_system_font = False
+    background_darkness = 0.94
+    urgent_bell = True
+    background_type = transparent
+    background_image = None
+    cursor_color = "#000000000000"
+    foreground_color = "#000000"
+    font = Anonymous Pro 11
+    background_color = "#ffffff"
+    audible_bell = True
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
