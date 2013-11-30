@@ -1,3 +1,0 @@
-[GNOME Session]
-Name=XMonad session
-RequiredComponents=gnome-settings-daemon;xmonad;tianbar;
