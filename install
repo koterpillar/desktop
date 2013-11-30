@@ -3,8 +3,8 @@
 DIR=$(readlink -f $(pwd)/$(dirname $0))
 
 # Dotfiles
-ls config | xargs -I FILE ln -sf $DIR/config/FILE $HOME/.config/FILE
-ls dotfiles | xargs -I FILE ln -sf $DIR/dotfiles/FILE $HOME/.FILE
+ls config | xargs -I FILE ln -sfn $DIR/config/FILE $HOME/.config/FILE
+ls dotfiles | xargs -I FILE ln -sfn $DIR/dotfiles/FILE $HOME/.FILE
 
 INSTALL='sudo pacman -S --needed --noconfirm'
 
