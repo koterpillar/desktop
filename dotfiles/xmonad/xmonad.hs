@@ -30,6 +30,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as S
 import XMonad.Util.EZConfig (additionalKeys, removeKeys)
+import XMonad.Util.Run
 import XMonad.Util.WorkspaceCompare
 
 import Graphics.X11.ExtraTypes.XF86
@@ -116,11 +117,70 @@ myMarkup layout title workspaces _ _ = do
                 tag = wsTag w
                 icon = workspaceIcon tag
 
+maxVolume :: Double
+maxVolume = 0x10000
+
+pulseAudioDump :: MonadIO m => m [String]
+pulseAudioDump = liftM lines $ runProcessWithInput "pacmd" ["dump"] ""
+
+pulseAudioDumpLine :: MonadIO m => String -> m (Maybe String)
+pulseAudioDumpLine prefix = do
+    dump <- pulseAudioDump
+    let filtered = filter (prefix `isPrefixOf`) dump
+    return $ case filtered of
+                 [line] -> Just line
+                 _ -> Nothing
+
+currentVolume :: MonadIO m => m Double
+currentVolume = do
+    volumeLine <- pulseAudioDumpLine "set-sink-volume"
+    let volume = case volumeLine of
+                     Just vline -> read $ last $ words vline
+                     _ -> 0
+    return $ volume / maxVolume
+
+currentMute :: MonadIO m => m Bool
+currentMute = do
+    muteLine <- pulseAudioDumpLine "set-sink-mute"
+    return $ case muteLine of
+                 Just mline -> case last $ words mline of
+                                   "no" -> False
+                                   "yes" -> True
+                                   x -> error x
+                 _ -> True
+
+setVolume :: MonadIO m => Double -> m ()
+setVolume vol = spawn $ "pacmd set-sink-volume 0 " ++ show volVal
+    where newVol = max 0 $ min 1 vol
+          volVal = round $ newVol * maxVolume
+
+setMute :: MonadIO m => Bool -> m ()
+setMute mute = spawn $ "pacmd set-sink-mute 0 " ++ muteStr mute
+    where muteStr True  = "yes"
+          muteStr False = "no"
+
+raiseVolume :: MonadIO m => Double -> m ()
+raiseVolume percent = do
+    vol <- currentVolume
+    setVolume $ vol + (percent / 100)
+
+lowerVolume :: MonadIO m => Double -> m ()
+lowerVolume = raiseVolume . negate
+
+toggleMute :: MonadIO m => m ()
+toggleMute = do
+    mute <- currentMute
+    setMute $ not mute
+
 main = do
     client <- connectSession
     browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
     let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
                , ((0                   , xF86XK_Explorer), spawn "systemctl suspend")
+
+               , ((0                   , xF86XK_AudioRaiseVolume), raiseVolume 5)
+               , ((0                   , xF86XK_AudioLowerVolume), lowerVolume 5)
+               , ((0                   , xF86XK_AudioMute), toggleMute)
 
                , ((modm                , xK_b    ), sendMessage ToggleStruts)
                , ((modm                , xK_s    ), selectSearchBrowser browser google)
