@@ -2,6 +2,10 @@
 
 DIR=$(readlink -f $(pwd)/$(dirname $0))
 
+# Dotfiles
+ls config | xargs -I FILE ln -sf $DIR/config/FILE $HOME/.config/FILE
+ls dotfiles | xargs -I FILE ln -sf $DIR/dotfiles/FILE $HOME/.FILE
+
 INSTALL='sudo pacman -S --needed --noconfirm'
 
 # Haskell general
@@ -11,9 +15,6 @@ $INSTALL cabal-install
 # XMonad
 $INSTALL gtk2hs-buildtools gconf libx11 libxrandr libxft
 cabal install xmonad xmonad-extras MissingH blaze-html gconf
-
-mkdir -p $HOME/.xmonad
-ln -sf $DIR/xmonad.hs $HOME/.xmonad
 
 $INSTALL terminator
 
@@ -27,16 +28,13 @@ $HOME/.cabal/bin/xmonad --recompile
 # Tianbar config
 $INSTALL nodejs
 
-cd $DIR/tianbar
+cd $DIR/config/tianbar
 npm install
 ./node_modules/.bin/bower install
 cd - >/dev/null
 
-ln -sf $DIR/tianbar $HOME/.config
-
 # Synapse
 $INSTALL synapse zeitgeist
-ln -sf $DIR/synapse $HOME/.config
 
 # IBus
 $INSTALL ibus ibus-pinyin ibus-m17n
@@ -45,5 +43,3 @@ $INSTALL ibus ibus-pinyin ibus-m17n
 sudo install xinit.desktop /usr/share/xsessions
 
 $INSTALL notify-osd gnome-keyring
-
-ls dotfiles | xargs -I FILE ln -sf $DIR/dotfiles/FILE $HOME/.FILE

@@ -1,5 +1,7 @@
-*.hi
-*.o
-*.swp
-/tianbar/bower_components
-/tianbar/node_modules
+.*.sw?
+/config/tianbar/bower_components
+/config/tianbar/node_modules
+/dotfiles/xmonad/*.hi
+/dotfiles/xmonad/*.o
+/dotfiles/xmonad/xmonad.errors
+/dotfiles/xmonad/xmonad-x86_64-linux
