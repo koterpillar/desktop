@@ -43,4 +43,4 @@ $INSTALL ibus ibus-pinyin ibus-m17n
 sudo install xinit.desktop /usr/share/xsessions
 sudo install Xsession /etc/X11
 
-$INSTALL notify-osd gnome-keyring
+$INSTALL notify-osd gnome-keyring xcompmgr
