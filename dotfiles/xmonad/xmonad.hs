@@ -61,8 +61,8 @@ imWorkspace   = "7"
 
 workspaceIcon :: String -> Maybe String
 workspaceIcon s | s == gitWorkspace  = Just "code-fork"
-                | s == mailWorkspace = Just "envelope-alt"
-                | s == imWorkspace   = Just "comment-alt"
+                | s == mailWorkspace = Just "envelope-o"
+                | s == imWorkspace   = Just "comment-o"
                 | otherwise          = Nothing
 
 imLayout = named "IM" $
@@ -102,7 +102,7 @@ myMarkup layout title workspaces _ _ = do
         wsHtml w = H.span ! A.class_ (toValue $ unwords classes) $
             if isJust icon
                 then do
-                    H.i ! A.class_ (toValue $ "icon-" ++ fromJust icon) $
+                    H.i ! A.class_ (toValue $ "fa fa-" ++ fromJust icon) $
                         toMarkup ""
                     H.sub $ toMarkup tag
                 else
