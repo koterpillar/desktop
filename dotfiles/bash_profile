@@ -2,4 +2,6 @@
 # ~/.bash_profile
 #
 
+export PATH=$HOME/bin:$HOME/.cabal/bin:$PATH
+
 [[ -f ~/.bashrc ]] && . ~/.bashrc
