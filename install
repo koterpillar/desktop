@@ -1,22 +1,44 @@
 #!/bin/bash -e
 
+INSTALL='sudo pacman -S --needed --noconfirm'
+
 DIR=$(readlink -f $(pwd)/$(dirname $0))
+
+# System
+$INSTALL base-devel dnsutils curl ecryptfs-utils ghc \
+	htop iftop iotop lsof ltrace networkmanager nmap ntp \
+	pkgfile pm-utils rsync screen strace wget whois
+
+# Desktop environment
+$INSTALL gnome-keyring ibus ibus-pinyin ibus-m17n \
+	infinality-bundle infinality-bundle-multilib \
+	lightdm lightdm-gtk3-greeter lxappearance mosh notify-osd \
+	python-xdg python2-xdg synapse terminator xcompmgr xorg-xinit \
+	zeitgeist
+
+sudo install xinit.desktop /usr/share/xsessions
+sudo install Xsession /etc/X11
+
+# Development
+$INSTALL cabal-install git gitg gvim happy meld moreutils nodejs qemu tig \
+	virt-manager
+
+# Applications
+$INSTALL chromium firefox flashplugin file-roller gimp mencoder pidgin skype \
+	thunderbird thunderbird-i18n-ru thunderbird-i18n-zh-cn totem
+
 
 # Dotfiles
 ls config | xargs -I FILE ln -sfn $DIR/config/FILE $HOME/.config/FILE
 ls dotfiles | xargs -I FILE ln -sfn $DIR/dotfiles/FILE $HOME/.FILE
-
-INSTALL='sudo pacman -S --needed --noconfirm'
 
 # Haskell general
 $INSTALL cabal-install
 [ -d $HOME/.cabal ] || cabal update
 
 # XMonad
-$INSTALL gtk2hs-buildtools gconf libx11 libxrandr libxft
-cabal install xmonad xmonad-extras MissingH blaze-html gconf
-
-$INSTALL terminator
+$INSTALL libx11 libxrandr libxft
+cabal install xmonad xmonad-extras MissingH blaze-html
 
 # Tianbar
 $INSTALL gtk2 libxml2 webkitgtk2
@@ -26,21 +48,7 @@ cabal install tianbar
 $HOME/.cabal/bin/xmonad --recompile
 
 # Tianbar config
-$INSTALL nodejs
-
 cd $DIR/config/tianbar
 npm install
 ./node_modules/.bin/bower install
 cd - >/dev/null
-
-# Synapse
-$INSTALL synapse zeitgeist
-
-# IBus
-$INSTALL ibus ibus-pinyin ibus-m17n
-
-# Session script
-sudo install xinit.desktop /usr/share/xsessions
-sudo install Xsession /etc/X11
-
-$INSTALL notify-osd gnome-keyring xcompmgr
