@@ -22,6 +22,9 @@ then
 	sudo pacman -Sy
 fi
 
+$INSTALL yaourt
+INSTALL='sudo yaourt -S --needed --noconfirm'
+
 # System
 $INSTALL base-devel dnsutils curl ecryptfs-utils ghc htop iftop iotop lsof \
 	ltrace networkmanager net-tools nmap ntp openssh pkgfile pm-utils \
