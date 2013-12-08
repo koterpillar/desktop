@@ -37,8 +37,8 @@ $INSTALL autojump bash-completion gksu gnome-keyring ibus{,-{pinyin,m17n}} \
 	notify-osd python-xdg python2-xdg synapse terminator ttf-arphic-ukai \
 	ttf-arphic-uming xcompmgr xorg-xinit wqy-microhei wqy-zenhei zeitgeist
 
-sudo install xinit.desktop /usr/share/xsessions
-sudo install Xsession /etc/X11
+sudo install $DIR/Xsession/xinit.desktop /usr/share/xsessions
+sudo install $DIR/Xsession/Xsession /etc/X11
 
 # Development
 $INSTALL cabal-install git gitg gvim happy ipython{,2} meld moreutils \
