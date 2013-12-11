@@ -34,9 +34,9 @@ $INSTALL base-devel dnsutils curl ecryptfs-utils ghc htop iftop iotop lsof \
 $INSTALL autojump bash-completion gksu gnome-keyring ibus{,-{pinyin,m17n}} \
 	infinality-bundle infinality-bundle-multilib \
 	lightdm lightdm-gtk3-greeter lxappearance mosh network-manager-applet \
-	notify-osd python-xdg python2-xdg synapse terminator ttf-arphic-ukai \
-	ttf-arphic-uming xcompmgr xorg-xinit xscreensaver wqy-microhei \
-	wqy-zenhei zeitgeist
+	notify-osd python-xdg python2-xdg synapse terminator tracker \
+	ttf-arphic-ukai ttf-arphic-uming xcompmgr xorg-xinit xscreensaver \
+	wqy-microhei wqy-zenhei zeitgeist
 
 sudo install $DIR/Xsession/xinit.desktop /usr/share/xsessions
 sudo install $DIR/Xsession/Xsession /etc/X11
