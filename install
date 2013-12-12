@@ -27,8 +27,8 @@ INSTALL='sudo yaourt -S --needed --noconfirm'
 
 # System
 $INSTALL base-devel dnsutils curl ecryptfs-utils ghc htop iftop iotop lsof \
-	ltrace networkmanager net-tools nmap ntp openssh pkgfile pm-utils \
-	rsync screen strace sudo wget whois xorg-server yaourt
+	ltrace networkmanager net-tools ngrep nmap ntp openssh pkgfile \
+	pm-utils rsync screen strace sudo wget whois xorg-server yaourt
 
 # Desktop environment
 $INSTALL autojump bash-completion gksu gnome-keyring ibus{,-{pinyin,m17n}} \
