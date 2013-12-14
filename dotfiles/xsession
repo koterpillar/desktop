@@ -1,3 +1,31 @@
 #!/bin/bash --login
 
-dbus-launch --exit-with-session $HOME/.xsession-dbus
+set -e
+
+eval $(dbus-launch --sh-syntax --exit-with-session)
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+export GNOME_KEYRING_CONTROL
+export SSH_AUTH_SOCK
+export GPG_AGENT_INFO
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+ibus-daemon -dx
+
+zeitgeist-daemon -r &
+
+xcompmgr &
+
+tianbar &
+
+nm-applet &
+
+xscreensaver -no-splash &
+
+(sleep 120 && /usr/lib/deja-dup/deja-dup/deja-dup-monitor) &
+
+setxkbmap -option altwin:swap_alt_win
+
+exec xmonad
