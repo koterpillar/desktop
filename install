@@ -43,8 +43,8 @@ sudo install $DIR/Xsession/Xsession /etc/X11
 
 # Development
 $INSTALL cabal-install git gitg gvim happy ipython{,2} meld moreutils \
-	nodejs python{,2}{,-virtualenv} qemu sshfs tcpdump tig virt-manager \
-	wireshark-gtk
+	nodejs python{,2}{,-pylint,-virtualenv} qemu sshfs tcpdump tig \
+	virt-manager wireshark-gtk
 
 # Applications
 $INSTALL aspell{,-{en,ru}} chromium firefox flashplugin file-roller \
