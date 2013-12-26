@@ -1,0 +1,9 @@
+[user]
+	name = Alexey Kotlyarov
+	email = a@koterpillar.com
+[color]
+	ui = auto
+[push]
+	default = matching
+[core]
+	excludesfile = ~/.gitignore_global
