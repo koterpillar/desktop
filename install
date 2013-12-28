@@ -23,7 +23,7 @@ then
 fi
 
 $INSTALL yaourt
-INSTALL='sudo yaourt -S --needed --noconfirm'
+INSTALL='yaourt -S --needed --noconfirm'
 
 # Packages
 # Files in packages/ may contain Bash brace expansions
