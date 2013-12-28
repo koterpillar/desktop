@@ -7,6 +7,7 @@ gimp
 libreoffice-{calc,draw,impress,writer}
 mencoder
 pidgin
+screen-message
 skype
 thunderbird
 thunderbird-i18n-{en-gb,en-us,ru,zh-cn}
