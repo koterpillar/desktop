@@ -1,0 +1,13 @@
+aspell{,-{en,ru}}
+chromium
+file-roller
+firefox
+flashplugin
+gimp
+libreoffice-{calc,draw,impress,writer}
+mencoder
+pidgin
+skype
+thunderbird
+thunderbird-i18n-{en-gb,en-us,ru,zh-cn}
+totem

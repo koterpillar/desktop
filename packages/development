@@ -1,0 +1,16 @@
+cabal-install
+git
+gitg
+gvim
+happy
+ipython{,2}
+meld
+moreutils
+nodejs
+python{,2}{,-pylint,-virtualenv}
+qemu
+sshfs
+tcpdump
+tig
+virt-manager
+wireshark-gtk

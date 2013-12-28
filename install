@@ -25,32 +25,13 @@ fi
 $INSTALL yaourt
 INSTALL='sudo yaourt -S --needed --noconfirm'
 
-# System
-$INSTALL base-devel dnsutils curl ecryptfs-utils ghc htop iftop iotop lsof \
-	ltrace networkmanager net-tools ngrep nmap ntp openssh pkgfile \
-	pm-utils rsync screen strace sudo wget whois xorg-server yaourt
+# Packages
+# Files in packages/ may contain Bash brace expansions
+$INSTALL $(bash -c "echo $(echo $(cat packages/*))")
 
-# Desktop environment
-$INSTALL autojump bash-completion gksu gnome-keyring ibus{,-{pinyin,m17n}} \
-	infinality-bundle infinality-bundle-multilib \
-	lightdm lightdm-gtk3-greeter lxappearance mosh network-manager-applet \
-	notify-osd python-xdg python2-xdg synapse terminator tracker \
-	ttf-arphic-ukai ttf-arphic-uming xcompmgr xorg-xinit xscreensaver \
-	wqy-microhei wqy-zenhei zeitgeist
-
+# Desktop session support
 sudo install $DIR/Xsession/xinit.desktop /usr/share/xsessions
 sudo install $DIR/Xsession/Xsession /etc/X11
-
-# Development
-$INSTALL cabal-install git gitg gvim happy ipython{,2} meld moreutils \
-	nodejs python{,2}{,-pylint,-virtualenv} qemu sshfs tcpdump tig \
-	virt-manager wireshark-gtk
-
-# Applications
-$INSTALL aspell{,-{en,ru}} chromium firefox flashplugin file-roller \
-	gimp libreoffice-{calc,draw,impress,writer} mencoder pidgin skype \
-	thunderbird thunderbird-i18n-{en-gb,en-us,ru,zh-cn} totem
-
 
 # Dotfiles
 ls config | xargs -I FILE ln -sfn $DIR/config/FILE $HOME/.config/FILE
