@@ -1,5 +1,6 @@
 .*.sw?
 /config/gtk-3.0/bookmarks
+/config/hexchat/scrollback
 /config/tianbar/bower_components
 /config/tianbar/node_modules
 /dotfiles/xmonad/*.hi
