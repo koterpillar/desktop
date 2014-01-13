@@ -7,16 +7,13 @@ DIR=$(readlink -f $(pwd)/$(dirname $0))
 # Pacman repositories
 PACMAN_CONF=/etc/pacman.conf
 PACMAN_UPDATE=
-if ! grep -q archlinuxfr $PACMAN_CONF
-then
-	sudo sh -c "cat $DIR/pacman/yaourt.conf >> $PACMAN_CONF"
-	PACMAN_UPDATE=1
-fi
-if ! grep -q infinality-bundle $PACMAN_CONF
-then
-	sudo sh -c "cat $DIR/pacman/infinality.conf >> $PACMAN_CONF"
-	PACMAN_UPDATE=1
-fi
+for REPO in $DIR/pacman/*.conf; do
+	if ! grep -q $(basename $REPO .conf) $PACMAN_CONF
+	then
+		sudo sh -c "(echo; cat $REPO) >> $PACMAN_CONF"
+		PACMAN_UPDATE=1
+	fi
+done
 if [ "$PACMAN_UPDATE" != "" ]
 then
 	sudo pacman -Sy
