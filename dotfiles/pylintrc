@@ -33,6 +33,7 @@ load-plugins=
 # --disable=W"
 disable=
 	star-args,
+	super-on-old-class,
 
 
 [REPORTS]
