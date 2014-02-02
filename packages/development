@@ -1,4 +1,5 @@
 cabal-install
+ctags
 git
 gitg
 gvim
