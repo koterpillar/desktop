@@ -95,7 +95,7 @@ modm = mod4Mask
 myMarkup :: MarkupRenderer
 myMarkup layout title workspaces _ _ = do
     H.span ! A.class_ (toValue "workspaces") $
-        mapM_ wsHtml $ workspaces
+        mapM_ wsHtml workspaces
     H.span ! A.class_ (toValue "layout") $ toMarkup layout
     H.span ! A.class_ (toValue "title") $ toMarkup title
     where
