@@ -1,6 +1,8 @@
 [submodule "dotfiles/vim"]
 	path = dotfiles/vim
 	url = git@github.com:koterpillar/vim.git
+	branch = master
 [submodule "edit-server"]
 	path = edit-server
 	url = git@github.com:koterpillar/edit-server.git
+	branch = master
