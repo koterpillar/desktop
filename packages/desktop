@@ -2,6 +2,7 @@ autojump
 bash-completion
 gksu
 gnome-keyring
+gnome-themes-standard
 ibus{,-{pinyin,m17n}}
 infinality-bundle
 infinality-bundle-multilib
@@ -15,6 +16,7 @@ python{,2}-xdg
 synapse
 terminator
 tracker
+ttf-anonymous-pro
 ttf-arphic-ukai
 ttf-arphic-uming
 wqy-microhei
