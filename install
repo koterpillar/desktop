@@ -27,6 +27,7 @@ INSTALL='yaourt -S --needed --noconfirm'
 $INSTALL $(bash -c "echo $(echo $(cat packages/*))")
 
 # Desktop session support
+sudo mkdir -p /usr/share/xsessions
 sudo install $DIR/Xsession/xinit.desktop /usr/share/xsessions
 sudo install $DIR/Xsession/Xsession /etc/X11
 
