@@ -1,6 +1,6 @@
 require.config({
   paths: {
-    'jquery': '../bower_components/jquery/jquery.min',
+    'jquery': '../bower_components/jquery/dist/jquery.min',
     'moment': '../bower_components/moment/min/moment-with-langs.min',
     'tianbar': 'tianbar:scripts'
   }
