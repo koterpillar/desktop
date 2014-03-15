@@ -23,10 +23,22 @@ require(
       'tianbar/time',
       'tianbar/weather',
       'tianbar/xmonad'
-    ]);
+    ], function (time, weather, xmonad) {
+      function adjustWidth() {
+        $('.widget-xmonad').width($(document).width() - 300);
+        $('.title').width(
+          $('.widget-xmonad').width() -
+          $('.workspaces').width() -
+          $('.layout').width() -
+          20
+        );
+      }
 
-    $(document).ready(function () {
-      $('html').css('height', $(document).height());
+      $(document).ready(function () {
+        $('html').css('height', $(document).height());
+      });
+
+      xmonad.change.add(adjustWidth);
     });
   }
 );

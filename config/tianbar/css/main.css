@@ -64,7 +64,6 @@ body {
 .title {
     margin-left: 4px;
     font-weight: bold;
-    width: 1200px;
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -103,7 +102,7 @@ sub {
 }
 
 .widget-xmonad {
-    display: inline;
+    display: inline-block;
 }
 
 .widget-right {
