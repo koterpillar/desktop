@@ -176,9 +176,14 @@ main = do
     client <- connectSession
     browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
     let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
+
                , ((0                   , xF86XK_Explorer), spawn "xscreensaver-command -lock")
                , ((shiftMask           , xF86XK_Explorer), spawn "systemctl suspend")
                , ((0                   , xF86XK_HomePage), spawn browser)
+
+               , ((modm                , xK_F1), spawn "xscreensaver-command -lock")
+               , ((modm .|. shiftMask  , xK_F1), spawn "systemctl suspend")
+               , ((modm                , xK_F2), spawn browser)
 
                , ((0                   , xF86XK_AudioRaiseVolume), raiseVolume 5)
                , ((0                   , xF86XK_AudioLowerVolume), lowerVolume 5)
