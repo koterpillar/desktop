@@ -20,12 +20,17 @@ require(
     moment.langData(lang)._longDateFormat.LT = 'HH:mm';
 
     require([
+      'tianbar/power',
       'tianbar/time',
       'tianbar/weather',
       'tianbar/xmonad'
-    ], function (time, weather, xmonad) {
+    ], function (dbus, time, weather, xmonad) {
       function adjustWidth() {
-        $('.widget-xmonad').width($(document).width() - 300);
+        var rightWidth = 0;
+        $('.widget-right').each(function (_, w) {
+          rightWidth += $(w).width();
+        });
+        $('.widget-xmonad').width($(document).width() - rightWidth - 60);
         $('.title').width(
           $('.widget-xmonad').width() -
           $('.workspaces').width() -
