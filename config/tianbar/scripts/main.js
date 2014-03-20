@@ -24,7 +24,7 @@ require(
       'tianbar/time',
       'tianbar/weather',
       'tianbar/xmonad'
-    ], function (dbus, time, weather, xmonad) {
+    ], function (power, time, weather, xmonad) {
       function adjustWidth() {
         var rightWidth = 0;
         $('.widget-right').each(function (_, w) {
