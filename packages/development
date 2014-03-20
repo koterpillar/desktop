@@ -9,6 +9,7 @@ meld
 moreutils
 nodejs
 python{,2}{,-pylint,-virtualenv}
+python-virtualenvwrapper
 qemu
 sshfs
 tcpdump

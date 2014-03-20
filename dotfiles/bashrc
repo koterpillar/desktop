@@ -41,3 +41,5 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 source /etc/profile.d/autojump.bash
+
+source virtualenvwrapper.sh
