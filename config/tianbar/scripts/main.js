@@ -44,6 +44,7 @@ require(
       });
 
       xmonad.change.add(adjustWidth);
+      power.updated.add(adjustWidth);
     });
   }
 );
