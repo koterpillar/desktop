@@ -24,7 +24,7 @@ tianbar &
 
 nm-applet &
 
-xscreensaver -no-splash &
+gnome-screensaver &
 
 (sleep 120 && /usr/lib/deja-dup/deja-dup/deja-dup-monitor) &
 

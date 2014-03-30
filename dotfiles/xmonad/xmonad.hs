@@ -172,17 +172,23 @@ toggleMute = do
     mute <- currentMute
     setMute $ not mute
 
+screensaver :: MonadIO m => m ()
+screensaver = spawn "gnome-screensaver-command -l"
+
+suspend :: MonadIO m => m ()
+suspend = spawn "systemctl suspend"
+
 main = do
     client <- connectSession
     browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
     let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
 
-               , ((0                   , xF86XK_Explorer), spawn "xscreensaver-command -lock")
-               , ((shiftMask           , xF86XK_Explorer), spawn "systemctl suspend")
+               , ((0                   , xF86XK_Explorer), screensaver)
+               , ((shiftMask           , xF86XK_Explorer), suspend)
                , ((0                   , xF86XK_HomePage), spawn browser)
 
-               , ((modm                , xK_F1), spawn "xscreensaver-command -lock")
-               , ((modm .|. shiftMask  , xK_F1), spawn "systemctl suspend")
+               , ((modm                , xK_F1), screensaver)
+               , ((modm .|. shiftMask  , xK_F1), suspend)
                , ((modm                , xK_F2), spawn browser)
 
                , ((0                   , xF86XK_AudioRaiseVolume), raiseVolume 5)

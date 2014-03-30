@@ -2,6 +2,7 @@ autojump
 bash-completion
 gksu
 gnome-keyring
+gnome-screensaver
 gnome-themes-standard
 ibus{,-{pinyin,m17n}}
 infinality-bundle
@@ -23,5 +24,4 @@ wqy-microhei
 wqy-zenhei
 xcompmgr
 xorg-xinit
-xscreensaver
 zeitgeist
