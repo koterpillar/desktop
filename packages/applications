@@ -1,5 +1,7 @@
 aspell{,-{en,ru}}
 chromium
+eog
+evince
 file-roller
 firefox
 flashplugin
