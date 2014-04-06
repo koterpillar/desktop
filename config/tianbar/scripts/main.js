@@ -22,9 +22,10 @@ require(
     require([
       'tianbar/power',
       'tianbar/time',
+      'tianbar/volume',
       'tianbar/weather',
       'tianbar/xmonad'
-    ], function (power, time, weather, xmonad) {
+    ], function (power, time, volume, weather, xmonad) {
       function adjustWidth() {
         var rightWidth = 0;
         $('.widget-right').each(function (_, w) {
