@@ -2,16 +2,15 @@ require.config({
   paths: {
     'jquery': '../bower_components/jquery/dist/jquery.min',
     'moment': '../bower_components/moment/min/moment-with-langs.min',
-    'tianbar': 'tianbar:scripts'
+    'tianbar': 'tianbar:///data/scripts'
   }
 });
 require(
   [
     'jquery',
-    'tianbar/location_shim',
     'moment'
   ],
-  function ($, location_shim, moment) {
+  function ($, moment) {
     // Force 24 hour time
     var lang = navigator.language;
     if (!moment.langData(lang)) {
