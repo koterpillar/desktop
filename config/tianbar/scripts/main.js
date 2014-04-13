@@ -28,9 +28,9 @@ require(
       function adjustWidth() {
         var rightWidth = 0;
         $('.widget-right').each(function (_, w) {
-          rightWidth += $(w).width();
+          rightWidth += $(w).width() + 15;
         });
-        $('.widget-xmonad').width($(document).width() - rightWidth - 60);
+        $('.widget-xmonad').width($(document).width() - rightWidth - 20);
         $('.title').width(
           $('.widget-xmonad').width() -
           $('.workspaces').width() -
