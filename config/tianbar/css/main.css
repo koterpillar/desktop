@@ -46,10 +46,6 @@ body {
     cursor: default;
 }
 
-.workspaces, .layout, .title {
-    margin: 0px;
-}
-
 .layout {
     background: rgba(255, 255, 255, 0.8);
     padding: 21px 2px;
