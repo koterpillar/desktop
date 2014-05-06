@@ -42,7 +42,7 @@ $INSTALL cabal-install
 
 # XMonad
 $INSTALL libx11 libxrandr libxft
-cabal install xmonad xmonad-extras MissingH blaze-html
+cabal install xmonad MissingH blaze-html
 
 # Tianbar
 $INSTALL gtk2 libxml2 webkitgtk2 gtk2hs-buildtools
