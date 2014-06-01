@@ -2,6 +2,7 @@
 /config/gtk-3.0/bookmarks
 /config/hexchat/scrollback
 /dotfiles/ipython/profile_default/history.sqlite
+/dotfiles/ipython/profile_default/security
 /config/tianbar/bower_components
 /config/tianbar/node_modules
 /dotfiles/xmonad/*.hi
