@@ -30,6 +30,11 @@ gnome-screensaver &
 
 setxkbmap -option altwin:swap_alt_win
 
+if [ -f ~/.fehbg ]
+then
+	eval $(cat ~/.fehbg)
+fi
+
 $DESKTOP_ROOT/edit-server/edit-server &
 
 exec xmonad
