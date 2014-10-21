@@ -26,6 +26,8 @@ nm-applet &
 
 gnome-screensaver &
 
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
 (sleep 120 && /usr/lib/deja-dup/deja-dup/deja-dup-monitor) &
 
 setxkbmap -option altwin:swap_alt_win
