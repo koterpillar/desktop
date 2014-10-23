@@ -5,7 +5,6 @@ feh
 gksu
 gnome-keyring
 gnome-screensaver
-gnome-polkit
 gnome-themes-standard
 ibus{,-{pinyin,m17n}}
 infinality-bundle
@@ -16,6 +15,7 @@ lxappearance
 mosh
 network-manager-applet
 notify-osd
+polkit-gnome
 python{,2}-xdg
 synapse
 terminator
