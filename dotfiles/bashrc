@@ -40,6 +40,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
 fi
 
-source /etc/profile.d/autojump.bash
+source /etc/profile.d/autojump.sh
 
 source virtualenvwrapper.sh
