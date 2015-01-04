@@ -19,12 +19,27 @@ then
 	sudo pacman -Sy
 fi
 
-$INSTALL yaourt
-INSTALL='yaourt -S --needed --noconfirm'
+# Install Aura from AUR manually
+if ! which aura >/dev/null 2>&1
+then
+	$INSTALL wget base-devel abs
+	TMPDIR=$(mktemp -d)
+	trap "rm -rf $TMPDIR" EXIT
+	curl -s https://aur.archlinux.org/packages/au/aura-bin/aura-bin.tar.gz | \
+		tar xz -C $TMPDIR
+	pushd $TMPDIR/aura-bin >/dev/null
+	makepkg
+	sudo pacman -U --noconfirm aura-*.pkg.tar.xz
+	popd >/dev/null
+fi
+
+INSTALL='sudo aura -S --needed --noconfirm'
+AUR_INSTALL='sudo aura -A --needed --noconfirm'
 
 # Packages
 # Files in packages/ may contain Bash brace expansions
-$INSTALL $(bash -c "echo $(echo $(cat packages/*))")
+$INSTALL $(bash -c "echo $(echo $(cat packages/* | grep -v '^aur:'))")
+$AUR_INSTALL $(bash -c "echo $(echo $(cat packages/* | sed '/^aur:/!d;s/^aur://g'))")
 
 # Desktop session support
 sudo mkdir -p /usr/share/xsessions

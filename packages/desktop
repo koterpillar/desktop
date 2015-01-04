@@ -20,7 +20,7 @@ python{,2}-xdg
 synapse
 terminator
 tracker
-ttf-anonymous-pro
+aur:ttf-anonymous-pro
 ttf-arphic-ukai
 ttf-arphic-uming
 ttf-symbola
