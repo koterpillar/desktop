@@ -7,3 +7,5 @@
 	default = simple
 [core]
 	excludesfile = ~/.gitignore_global
+[alias]
+	taga = !git tag -a -m $1
