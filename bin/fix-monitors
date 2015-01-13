@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+case $(hostname) in
+	shancha)
+	xrandr --auto
+	xrandr | grep -q "HDMI1 connected" && \
+		xrandr --output HDMI1 --mode 1920x1080 --above LVDS1
+	;;
+esac
+killall tianbar
+tianbar &
+. ~/.fehbg
