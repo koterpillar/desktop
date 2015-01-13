@@ -2,9 +2,12 @@
 
 case $(hostname) in
 	shancha)
-	xrandr --auto
-	xrandr | grep -q "HDMI1 connected" && \
-		xrandr --output HDMI1 --mode 1920x1080 --above LVDS1
+		xrandr --auto
+		xrandr | grep -q "HDMI1 connected" && \
+			xrandr --output HDMI1 --mode 1920x1080 --above LVDS1
+	;;
+	devs-alexey)
+		xrandr --output DVI-1 --auto --right-of DVI-0
 	;;
 esac
 killall tianbar
