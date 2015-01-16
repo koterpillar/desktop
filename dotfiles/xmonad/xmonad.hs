@@ -185,7 +185,10 @@ main = do
 
                , ((0                   , xF86XK_Explorer), screensaver)
                , ((shiftMask           , xF86XK_Explorer), suspend)
+
+               , ((0                   , xF86XK_ScreenSaver), screensaver)
                , ((0                   , xF86XK_HomePage), spawn browser)
+               , ((0                   , xF86XK_Display), spawn "fix-monitors")
 
                , ((modm                , xK_F1), screensaver)
                , ((modm .|. shiftMask  , xK_F1), suspend)
