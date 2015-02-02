@@ -3,8 +3,13 @@
 case $(hostname) in
 	shancha)
 		xrandr --auto
-		xrandr | grep -q "HDMI1 connected" && \
+		if xrandr | grep -q "HDMI1 connected"
+		then
 			xrandr --output HDMI1 --mode 1920x1080 --above LVDS1
+			pacmd set-default-sink 0
+		else
+			pacmd set-default-sink 1
+		fi
 	;;
 	devs-alexey)
 		xrandr --output DVI-1 --auto --right-of DVI-0
