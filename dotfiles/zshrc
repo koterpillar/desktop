@@ -1,0 +1,34 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory nomatch
+unsetopt autocd
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/alex/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+autoload -Uz promptinit
+promptinit
+prompt redhat
+
+export PATH=$HOME/bin:$HOME/.cabal/bin:$PATH
+export EDITOR=vim
+export PAGER='less -R'
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+bindkey '^[[1;5D' vi-backward-word
+bindkey '^[[1;5C' vi-forward-word
+bindkey '^[OF' vi-end-of-line
+bindkey '^[OH' vi-beginning-of-line
+
+source /usr/share/autojump/autojump.zsh
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

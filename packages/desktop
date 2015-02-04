@@ -1,5 +1,4 @@
 autojump
-bash-completion
 bc
 feh
 gksu
@@ -29,3 +28,6 @@ wqy-zenhei
 xcompmgr
 xorg-xinit
 zeitgeist
+zsh
+zsh-completions
+zsh-syntax-highlighting
