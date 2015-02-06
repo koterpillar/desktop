@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+DIR=$(readlink -f $(pwd)/$(dirname $0))
+
+# Dotfiles
+mkdir -p $HOME/.config
+mkdir -p $HOME/bin
+ls config | xargs -I FILE ln -sfn $DIR/config/FILE $HOME/.config/FILE
+ls dotfiles | xargs -I FILE ln -sfn $DIR/dotfiles/FILE $HOME/.FILE
+ls bin | xargs -I FILE ln -sfn $DIR/bin/FILE $HOME/bin/FILE
