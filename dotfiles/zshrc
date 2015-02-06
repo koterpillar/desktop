@@ -17,7 +17,6 @@ autoload -Uz promptinit
 promptinit
 prompt redhat
 
-export PATH=$HOME/bin:$HOME/.cabal/bin:$PATH
 export EDITOR=vim
 export PAGER='less -R'
 
