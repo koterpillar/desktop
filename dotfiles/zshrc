@@ -1,17 +1,13 @@
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt appendhistory nomatch
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
-bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
+
 zstyle :compinstall filename '/home/alex/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
 
 autoload -Uz promptinit
 promptinit
@@ -23,6 +19,7 @@ export PAGER='less -R'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
+bindkey -e
 bindkey '^[[1;5D' vi-backward-word
 bindkey '^[[1;5C' vi-forward-word
 bindkey '^[OF' vi-end-of-line
