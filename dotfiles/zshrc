@@ -4,8 +4,6 @@ SAVEHIST=10000
 setopt appendhistory nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
 
-zstyle :compinstall filename '/home/alex/.zshrc'
-
 autoload -Uz compinit
 compinit
 
@@ -24,6 +22,8 @@ bindkey '^[[1;5D' vi-backward-word
 bindkey '^[[1;5C' vi-forward-word
 bindkey '^[OF' vi-end-of-line
 bindkey '^[OH' vi-beginning-of-line
+bindkey '^[[3~' delete-char
+bindkey '^[[3;5~' delete-word
 
 source /usr/share/autojump/autojump.zsh
 
