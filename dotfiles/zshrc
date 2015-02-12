@@ -18,12 +18,20 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 bindkey -e
+
+# X terminal keys
 bindkey '^[[1;5D' vi-backward-word
 bindkey '^[[1;5C' vi-forward-word
 bindkey '^[OF' vi-end-of-line
 bindkey '^[OH' vi-beginning-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[[3;5~' delete-word
+
+# Non-X terminal keys, where different
+bindkey '^[[D' vi-backward-word
+bindkey '^[[C' vi-forward-word
+bindkey '^[[4~' vi-end-of-line
+bindkey '^[[1~' vi-beginning-of-line
 
 source /usr/share/autojump/autojump.zsh
 
