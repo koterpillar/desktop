@@ -2,6 +2,9 @@
 
 set -e
 
+# global /etc/zshprofile overrides $PATH
+. $HOME/.zshenv
+
 export DESKTOP_ROOT=$(dirname $(dirname $(readlink $0)))
 
 eval $(dbus-launch --sh-syntax --exit-with-session)

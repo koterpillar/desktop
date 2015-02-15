@@ -11,6 +11,8 @@ autoload -Uz promptinit
 promptinit
 prompt redhat
 
+# global /etc/zshprofile overrides $PATH
+. $HOME/.zshenv
 export EDITOR=vim
 export PAGER='less -R'
 
