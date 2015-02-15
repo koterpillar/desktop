@@ -6,3 +6,6 @@
 	path = edit-server
 	url = git@github.com:koterpillar/edit-server.git
 	branch = master
+[submodule "vendor/zgen"]
+	path = vendor/zgen
+	url = https://github.com/tarjoilija/zgen.git

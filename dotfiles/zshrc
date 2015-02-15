@@ -7,14 +7,12 @@ unsetopt autocd
 autoload -Uz compinit
 compinit
 
-autoload -Uz promptinit
-promptinit
-prompt redhat
-
 # global /etc/zshprofile overrides $PATH
 . $HOME/.zshenv
 export EDITOR=vim
 export PAGER='less -R'
+
+export DESKTOP_ROOT=$(dirname $(dirname $(readlink ~/.zshrc)))
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -35,6 +33,20 @@ bindkey '^[[C' vi-forward-word
 bindkey '^[[4~' vi-end-of-line
 bindkey '^[[1~' vi-beginning-of-line
 
-source /usr/share/autojump/autojump.zsh
+source $DESKTOP_ROOT/vendor/zgen/zgen.zsh
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if ! zgen saved; then
+    echo 'Creating a zgen save'
+
+    zgen oh-my-zsh
+
+    zgen oh-my-zsh plugins/git
+
+    zgen load zsh-users/zsh-syntax-highlighting
+
+    zgen oh-my-zsh themes/jreese
+
+    zgen save
+fi
+
+source /usr/share/autojump/autojump.zsh
