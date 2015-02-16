@@ -1,6 +1,9 @@
-#!/bin/bash --login
+#!/bin/zsh --login
 
 set -e
+
+# global /etc/zshprofile overrides $PATH
+. $HOME/.zshenv
 
 export DESKTOP_ROOT=$(dirname $(dirname $(readlink $0)))
 
