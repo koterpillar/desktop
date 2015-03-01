@@ -120,6 +120,9 @@ myMarkup layout title workspaces _ _ = do
 maxVolume :: Double
 maxVolume = 0x10000
 
+sink :: String
+sink = "alsa_output.pci-0000_00_1b.0.analog-stereo"
+
 pulseAudioDump :: MonadIO m => m [String]
 pulseAudioDump = liftM lines $ runProcessWithInput "pacmd" ["dump"] ""
 
@@ -150,12 +153,12 @@ currentMute = do
                  _ -> True
 
 setVolume :: MonadIO m => Double -> m ()
-setVolume vol = spawn $ "pacmd set-sink-volume 0 " ++ show volVal
+setVolume vol = spawn $ "pacmd set-sink-volume " ++ sink ++ " " ++ show volVal
     where newVol = max 0 $ min 1 vol
           volVal = round $ newVol * maxVolume
 
 setMute :: MonadIO m => Bool -> m ()
-setMute mute = spawn $ "pacmd set-sink-mute 0 " ++ muteStr mute
+setMute mute = spawn $ "pacmd set-sink-mute " ++ sink ++ " " ++ muteStr mute
     where muteStr True  = "yes"
           muteStr False = "no"
 
