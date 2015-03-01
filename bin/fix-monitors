@@ -6,9 +6,9 @@ case $(hostname) in
 		if xrandr | grep -q "HDMI1 connected"
 		then
 			xrandr --output HDMI1 --mode 1920x1080 --above LVDS1
-			pacmd set-default-sink 0
+			pactl set-card-profile 0 output:hdmi-stereo
 		else
-			pacmd set-default-sink 1
+			pactl set-card-profile 0 output:analog-stereo
 		fi
 	;;
 	devs-alexey)
