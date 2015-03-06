@@ -5,7 +5,7 @@ gksu
 gnome-keyring
 gnome-screensaver
 gnome-themes-standard
-ibus{,-{pinyin,m17n}}
+ibus{,-{libpinyin,m17n}}
 infinality-bundle
 infinality-bundle-multilib
 lightdm
