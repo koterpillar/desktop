@@ -7,6 +7,10 @@ case $(hostname) in
 		then
 			xrandr --output HDMI1 --mode 1920x1080 --above LVDS1
 			pactl set-card-profile 0 output:hdmi-stereo
+		elif xrandr | grep -q "HDMI2 connected"
+		then
+			xrandr --output HDMI2 --mode 1920x1080 --above LVDS1
+			pactl set-card-profile 0 output:hdmi-stereo
 		else
 			pactl set-card-profile 0 output:analog-stereo
 		fi
