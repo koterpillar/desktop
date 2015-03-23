@@ -9,3 +9,6 @@
 	excludesfile = ~/.gitignore_global
 [alias]
 	taga = !git tag -a -m $1
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+	insteadOf = git://github.com/
