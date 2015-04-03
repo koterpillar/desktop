@@ -9,7 +9,7 @@
 	excludesfile = ~/.gitignore_global
 [alias]
 	taga = !git tag -a -m $1
-	merge-pr = !git checkout master && git fetch && git reset --hard origin/master && git merge --no-ff --no-edit $1 && git push && git push origin --delete $1 && git branch -d
+	merge-pr = !CURRENT=${1-$(git rev-parse --abbrev-ref HEAD)} && (echo $CURRENT | grep -qv '^master$' || (echo 'Cannot merge master' >&2 && false)) && git checkout master && git fetch && git reset --hard origin/master && git merge --no-ff --no-edit $1 && git push && git push origin --delete $CURRENT && git branch -d $CURRENT
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 	insteadOf = git://github.com/
