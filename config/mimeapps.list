@@ -1,0 +1,10 @@
+[Default Applications]
+application/x-extension-eml=thunderbird.desktop
+application/xhtml+xml=chromium.desktop
+message/rfc822=thunderbird.desktop
+text/html=chromium.desktop
+text/mml=chromium.desktop
+text/xml=chromium.desktop
+x-scheme-handler/http=chromium.desktop
+x-scheme-handler/https=chromium.desktop
+x-scheme-handler/mailto=thunderbird.desktop
