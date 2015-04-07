@@ -19,6 +19,6 @@ case $(hostname) in
 		xrandr --output DVI-1 --auto --right-of DVI-0
 	;;
 esac
-killall tianbar
+killall tianbar || true
 tianbar &
 . ~/.fehbg
