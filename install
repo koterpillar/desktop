@@ -50,18 +50,37 @@ sudo install $DIR/Xsession/Xsession /etc/X11
 
 # Haskell general
 $INSTALL cabal-install
-[ -d $HOME/.cabal ] || cabal update
+[ -d $HOME/.cabal/packages ] || cabal update
+
+cabal sandbox init
+
+function sandbox_link {
+	EXECUTABLE=$1
+	SCRIPT=$HOME/bin/$EXECUTABLE
+	TARGET=$DIR/.cabal-sandbox/bin/$EXECUTABLE
+	: > $SCRIPT
+	cat <<EOF >> $SCRIPT
+#!/bin/sh
+export GHC_PACKAGE_PATH=\$(cd $DIR; cabal exec -- sh -c 'echo \$GHC_PACKAGE_PATH')
+exec $TARGET "\$@"
+EOF
+	chmod +x $SCRIPT
+}
 
 # XMonad
 $INSTALL libx11 libxrandr libxft
 cabal install xmonad MissingH blaze-html
+
+sandbox_link xmonad
 
 # Tianbar
 $INSTALL gtk2 libxml2 webkitgtk2 gtk2hs-buildtools
 
 cabal install tianbar
 
-$HOME/.cabal/bin/xmonad --recompile
+sandbox_link tianbar
+
+$HOME/bin/xmonad --recompile
 
 # Tianbar config
 cd $DIR/config/tianbar

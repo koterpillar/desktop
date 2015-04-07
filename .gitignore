@@ -1,4 +1,6 @@
 .*.sw?
+/.cabal-sandbox
+/cabal.sandbox.config
 /config/gtk-3.0/bookmarks
 /config/hexchat/scrollback
 /dotfiles/ipython/profile_default/history.sqlite
