@@ -35,12 +35,15 @@ bindkey '^[[1~' vi-beginning-of-line
 
 source $DESKTOP_ROOT/vendor/zgen/zgen.zsh
 
+DISABLE_VENV_CD=1
 if ! zgen saved; then
     echo 'Creating a zgen save'
 
     zgen oh-my-zsh
 
     zgen oh-my-zsh plugins/git
+
+    zgen oh-my-zsh plugins/virtualenvwrapper
 
     zgen load zsh-users/zsh-syntax-highlighting
 
