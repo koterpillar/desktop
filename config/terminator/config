@@ -3,17 +3,14 @@
 [keybindings]
 [profiles]
   [[default]]
-    use_system_font = False
-    background_darkness = 0.94
-    urgent_bell = True
-    background_type = transparent
+    palette = "#2e3436:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#6db329:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
     background_image = None
-    cursor_color = "#000000000000"
-    foreground_color = "#000000"
-    font = Anonymous Pro 11
-    background_color = "#ffffff"
-    audible_bell = True
+    urgent_bell = True
+    use_system_font = False
+    foreground_color = "#ffffff"
     scrollback_infinite = True
+    font = Anonymous Pro 11
+    use_theme_colors = True
 [layouts]
   [[default]]
     [[[child1]]]
