@@ -87,3 +87,8 @@ cd $DIR/config/tianbar
 npm install
 ./node_modules/.bin/bower install
 cd - >/dev/null
+
+# Hoe
+cabal install hoe
+
+sandbox_link hoe
