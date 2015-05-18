@@ -1,2 +1,6 @@
 typeset -U path
 path=(~/bin ~/.cabal/bin $path)
+
+export PAGER=less
+export LESS='-RFX'
+export EDITOR=vim

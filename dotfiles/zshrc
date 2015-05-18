@@ -7,11 +7,6 @@ unsetopt autocd
 autoload -Uz compinit
 compinit
 
-# global /etc/zshprofile overrides $PATH
-. $HOME/.zshenv
-export EDITOR=vim
-export PAGER='less -R'
-
 export DESKTOP_ROOT=$(dirname $(dirname $(readlink ~/.zshrc)))
 
 alias ls='ls --color=auto'
@@ -53,3 +48,7 @@ if ! zgen saved; then
 fi
 
 source /usr/share/autojump/autojump.zsh
+
+# global /etc/zshprofile overrides $PATH
+# oh-my-zsh overrides $PAGER
+source $HOME/.zshenv
