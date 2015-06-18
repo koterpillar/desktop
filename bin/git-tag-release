@@ -4,7 +4,7 @@
 CURRENT=v$(git max-release)
 
 case "$1" in
-    revision)
+    ""|revision)
         NEW=v$(git max-release | awk -F . '{print $1 "." $2 "." ($3 + 1)}')
         ;;
 
