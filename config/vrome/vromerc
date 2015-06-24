@@ -1,0 +1,7 @@
+map x D
+set disablesites=rss.koterpillar.com
+
+set hintkeys=jlkhsdagwerui
+
+unmap <M-f>
+unmap <C-f>
