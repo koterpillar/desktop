@@ -1,5 +1,12 @@
 #!/bin/zsh --login
 
+# LightDM runs this in bash
+echo "shell is $shell" >&2
+if [ "$shell" != "zsh" ]
+then
+	exec zsh $0
+fi
+
 set -e
 
 # global /etc/zshprofile overrides $PATH
