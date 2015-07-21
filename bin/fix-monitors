@@ -18,6 +18,15 @@ case $(hostname) in
 	devs-alexey)
 		xrandr --output DVI-1 --auto --right-of DVI-0
 	;;
+	mujin)
+		xrandr --auto
+		if xrandr | grep -q "DP-0 connected"
+		then
+			xrandr --output LVDS-0 --mode 1280x800 --pos 1920x776 --rotate normal --output DP-0 --mode 1920x1080 --pos 0x0 --rotate normal
+		else
+			xrandr --output LVDS-0 --mode 1280x800
+		fi
+	;;
 esac
 killall tianbar || true
 tianbar &
