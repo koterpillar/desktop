@@ -8,6 +8,7 @@ ipython{,2}
 meld
 moreutils
 nodejs
+npm
 python{,2}{,-pylint,-virtualenv}
 python-virtualenvwrapper
 qemu

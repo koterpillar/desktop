@@ -9,7 +9,7 @@ ibus{,-{libpinyin,m17n}}
 infinality-bundle
 infinality-bundle-multilib
 lightdm
-lightdm-gtk3-greeter
+lightdm-gtk-greeter
 lxappearance
 mosh
 network-manager-applet
@@ -19,7 +19,7 @@ python{,2}-xdg
 synapse
 terminator
 tracker
-aur:ttf-anonymous-pro
+ttf-anonymous-pro
 ttf-arphic-ukai
 ttf-arphic-uming
 ttf-symbola
