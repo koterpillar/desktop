@@ -5,6 +5,7 @@ gitg
 gvim
 happy
 ipython{,2}
+aur:jq-git
 meld
 moreutils
 nodejs
