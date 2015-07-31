@@ -25,7 +25,7 @@ then
 	$INSTALL wget base-devel abs
 	TMPDIR=$(mktemp -d)
 	trap "rm -rf $TMPDIR" EXIT
-	curl -s https://aur.archlinux.org/packages/au/aura-bin/aura-bin.tar.gz | \
+	curl -s https://aur4.archlinux.org/cgit/aur.git/snapshot/aura-bin.tar.gz | \
 		tar xz -C $TMPDIR
 	pushd $TMPDIR/aura-bin >/dev/null
 	makepkg
