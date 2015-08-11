@@ -1,2 +1,4 @@
 \pset expanded auto
 \pset linestyle unicode
+
+\set ON_ERROR_STOP on
