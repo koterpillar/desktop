@@ -4,18 +4,19 @@ INSTALL='sudo pacman -S --needed --noconfirm'
 
 DIR=$(readlink -f $(pwd)/$(dirname $0))
 
-# Pacman repositories
+# Pacman configuration
 PACMAN_CONF=/etc/pacman.conf
-PACMAN_UPDATE=
-for REPO in $DIR/pacman/*.conf; do
-	if ! grep -q $(basename $REPO .conf) $PACMAN_CONF
-	then
-		sudo sh -c "(echo; cat $REPO) >> $PACMAN_CONF"
-		PACMAN_UPDATE=1
-	fi
-done
-if [ "$PACMAN_UPDATE" != "" ]
+if ! diff -q $PACMAN_CONF $DIR/etc/pacman.conf >/dev/null
 then
+	sudo install $DIR/etc/pacman.conf $PACMAN_CONF
+
+	sudo pacman-key --init
+	sudo pacman-key --populate archlinux
+
+	# Infinality key
+	sudo pacman-key -r 962DDE58
+	sudo pacman-key --lsign 962DDE58
+
 	sudo pacman -Sy
 fi
 
