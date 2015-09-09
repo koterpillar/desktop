@@ -7,6 +7,14 @@
 /dotfiles/ipython/profile_default/security
 /config/tianbar/bower_components
 /config/tianbar/node_modules
+/dotfiles/stack/build-plan
+/dotfiles/stack/build-plan-cache
+/dotfiles/stack/global/.stack-work
+/dotfiles/stack/indices
+/dotfiles/stack/lockfile
+/dotfiles/stack/programs
+/dotfiles/stack/snapshots
+/dotfiles/stack/templates
 /dotfiles/xmonad/*.hi
 /dotfiles/xmonad/*.o
 /dotfiles/xmonad/xmonad.errors

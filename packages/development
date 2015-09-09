@@ -4,6 +4,7 @@ git
 gitg
 gvim
 happy
+aur:haskell-stack
 ipython{,2}
 jq
 meld

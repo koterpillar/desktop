@@ -92,3 +92,8 @@ cd - >/dev/null
 cabal install hoe
 
 sandbox_link hoe
+
+# Hdevtools
+cabal install hdevtools
+
+sandbox_link hdevtools
