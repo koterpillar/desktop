@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+"""
+Merge the current pull request and remove the branch.
+"""
+# pylint:disable=invalid-name
+# The script has to be called 'git-merge-pr' to work as a Git command
+# pylint:enable=invalid-name
+
+import argparse
+import subprocess
+import sys
+
+
+def git(*args):
+    """Call git in a subprocess."""
+
+    return subprocess.check_output(('git',) + args).decode()
+
+
+def main():
+    """Main entry point."""
+
+    parser = argparse.ArgumentParser(
+        description="Merge the current pull request and remove the branch",
+    )
+    parser.add_argument('branch', nargs='?', help="The branch to merge")
+    parser.add_argument('--master', action='store_true',
+                        help="Merge into master instead of develop")
+
+    args = parser.parse_args()
+
+    if args.master:
+        base = 'master'
+    else:
+        try:
+            git('show-ref', 'develop')
+            base = 'develop'
+        except subprocess.CalledProcessError:
+            base = 'master'
+
+    current = args.branch or \
+        git('rev-parse', '--abbrev-ref', 'HEAD').strip()
+
+    for protected_branch in ('master', 'develop'):
+        if current == protected_branch:
+            print("Cannot merge the {0} branch.".format(current),
+                  file=sys.stderr)
+            return 1
+
+    git('checkout', base)
+    git('fetch')
+    git('reset', '--hard', 'origin/{0}'.format(base))
+    git('merge', '--no-ff', '--no-edit', current)
+    git('push')
+    try:
+        git('push', 'origin', '--delete', current)
+    except subprocess.CalledProcessError:
+        pass
+    git('branch', '-d', current)
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
