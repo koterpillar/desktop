@@ -190,9 +190,11 @@ suspend :: MonadIO m => m ()
 suspend = spawn "systemctl suspend"
 
 main = do
-    -- GHC_PACKAGE_PATH is set by the wrapper script, unset it for programs
-    -- started from under XMonad
+    -- GHC_PACKAGE_PATH and PATH are set by the wrapper script, unset it for
+    -- programs started from under XMonad
     unsetEnv "GHC_PACKAGE_PATH"
+    getEnv "PREVPATH" >>= setEnv "PATH"
+    unsetEnv "PREVPATH"
     client <- connectSession
     browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
     let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")

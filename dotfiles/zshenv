@@ -1,5 +1,5 @@
 typeset -U path
-path=(~/bin ~/.cabal/bin $path)
+path=(~/bin ~/.local/bin $path)
 
 export PAGER=less
 export LESS='-RFX'

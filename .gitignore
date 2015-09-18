@@ -12,7 +12,9 @@
 /dotfiles/stack/global/.stack-work
 /dotfiles/stack/indices
 /dotfiles/stack/lockfile
+/dotfiles/stack/precompiled
 /dotfiles/stack/programs
+/dotfiles/stack/setup-exe-cache
 /dotfiles/stack/snapshots
 /dotfiles/stack/templates
 /dotfiles/xmonad/*.hi
