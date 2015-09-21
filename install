@@ -55,6 +55,8 @@ sudo install $DIR/Xsession/Xsession /etc/X11
 
 ./makelinks
 
+stack setup
+
 # XMonad
 $INSTALL libx11 libxrandr libxft
 stack install xmonad MissingH blaze-html
