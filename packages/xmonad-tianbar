@@ -1,0 +1,11 @@
+stack:MissingH
+stack:blaze-html
+gtk2
+gtk2hs-buildtools
+libx11
+libxft
+libxml2
+libxrandr
+stack:tianbar
+webkitgtk2
+stack:xmonad

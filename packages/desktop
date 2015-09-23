@@ -5,6 +5,7 @@ gksu
 gnome-keyring
 gnome-screensaver
 gnome-themes-standard
+stack:hoe
 ibus{,-{libpinyin,m17n}}
 infinality-bundle
 infinality-bundle-multilib

@@ -36,11 +36,14 @@ fi
 
 INSTALL='sudo aura -S --needed --noconfirm'
 AUR_INSTALL='sudo aura -A --needed --noconfirm'
+STACK_INSTALL='stack install'
 
 # Packages
 # Files in packages/ may contain Bash brace expansions
-$INSTALL $(bash -c "echo $(echo $(cat packages/* | grep -v '^aur:'))")
+$INSTALL $(bash -c "echo $(echo $(cat packages/* | grep -v '^[a-z]\+:'))")
 $AUR_INSTALL $(bash -c "echo $(echo $(cat packages/* | sed '/^aur:/!d;s/^aur://g'))")
+stack setup
+$STACK_INSTALL $(bash -c "echo $(echo $(cat packages/* | sed '/^stack:/!d;s/^stack://g'))")
 
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
@@ -55,27 +58,9 @@ sudo install $DIR/Xsession/Xsession /etc/X11
 
 ./makelinks
 
-stack setup
-
-# XMonad
-$INSTALL libx11 libxrandr libxft
-stack install xmonad MissingH blaze-html
-
-# Tianbar
-$INSTALL gtk2 libxml2 webkitgtk2 gtk2hs-buildtools
-
-stack install tianbar
-
+# XMonad and Tianbar config
 $HOME/bin/xmonad --recompile
-
-# Tianbar config
 cd $DIR/config/tianbar
 npm install
 ./node_modules/.bin/bower install
 cd - >/dev/null
-
-# Hoe
-stack install hoe
-
-# Hdevtools
-stack install hdevtools

@@ -5,14 +5,15 @@ gitg
 gvim
 happy
 aur:haskell-stack
+stack:hdevtools
 ipython{,2}
 jq
 meld
 moreutils
 nodejs
 npm
-python{,2}{,-pylint,-virtualenv}
 python-virtualenvwrapper
+python{,2}{,-pylint,-virtualenv}
 qemu
 sshfs
 tcpdump
