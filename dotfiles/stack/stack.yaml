@@ -1,2 +1,6 @@
-author-name: Alexey Kotlyarov
-author-email: a@koterpillar.com
+templates:
+  scm-init: git
+  params:
+    author-name: Alexey Kotlyarov
+    author-email: a@koterpillar.com
+    github-username: koterpillar
