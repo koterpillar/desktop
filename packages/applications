@@ -13,6 +13,7 @@ lib32-libpulse
 libreoffice-fresh
 mencoder
 nautilus
+stack:pandoc
 pidgin
 aur:screen-message
 skype
