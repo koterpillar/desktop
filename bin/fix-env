@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+setxkbmap -option altwin:swap_alt_win
+
 case $(hostname) in
 	shancha)
 		xrandr --auto
@@ -30,4 +32,8 @@ case $(hostname) in
 esac
 killall tianbar || true
 tianbar &
-. ~/.fehbg
+
+if [ -f ~/.fehbg ]
+then
+	. ~/.fehbg
+fi
