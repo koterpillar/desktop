@@ -3,14 +3,15 @@
 [keybindings]
 [profiles]
   [[default]]
-    palette = "#2e3436:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#6db329:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    foreground_color = "#002b36"
+    background_color = "#eee8d5"
+    cursor_color = "#002b36"
     background_image = None
     urgent_bell = True
     use_system_font = False
-    foreground_color = "#ffffff"
     scrollback_infinite = True
     font = Anonymous Pro 11
-    use_theme_colors = True
 [layouts]
   [[default]]
     [[[child1]]]
