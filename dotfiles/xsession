@@ -30,7 +30,7 @@ zeitgeist-daemon -r &
 
 xcompmgr &
 
-fix-monitors &
+fix-env &
 
 nm-applet &
 
