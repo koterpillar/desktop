@@ -40,6 +40,6 @@ gnome-screensaver &
 
 (sleep 120 && /usr/lib/deja-dup/deja-dup/deja-dup-monitor) &
 
-$DESKTOP_ROOT/edit-server/edit-server &
+chrome_edit_server &
 
 exec xmonad
