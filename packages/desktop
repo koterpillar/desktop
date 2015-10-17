@@ -6,7 +6,7 @@ gnome-keyring
 gnome-screensaver
 gnome-themes-standard
 stack:hoe
-ibus{,-{libpinyin,m17n}}
+ibus{,-{sunpinyin,m17n,hangul}}
 infinality-bundle
 infinality-bundle-multilib
 lightdm

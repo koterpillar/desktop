@@ -64,3 +64,9 @@ cd $DIR/config/tianbar
 npm install
 ./node_modules/.bin/bower install
 cd - >/dev/null
+
+for conf in $DIR/dconf/*.dconf
+do
+	confpath=$(echo $conf | sed -E 's!.+/!!;s!\.!/!g;s!dconf$!!;s!^!/!')
+	dconf load $confpath < $conf
+done
