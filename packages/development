@@ -17,6 +17,7 @@ python{,2}{,-pylint,-virtualenv}
 qemu
 sshfs
 tcpdump
+the_silver_searcher
 tig
 virt-manager
 wireshark-gtk
