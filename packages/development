@@ -1,5 +1,6 @@
 cabal-install
 ctags
+stack:ghc-mod
 git
 gitg
 gvim
