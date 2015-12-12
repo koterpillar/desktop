@@ -2,6 +2,7 @@ aspell{,-{en,ru}}
 chromium
 eog
 evince
+evolution
 file-roller
 firefox
 flashplugin
@@ -17,6 +18,4 @@ stack:pandoc
 pidgin
 aur:screen-message
 skype
-thunderbird
-thunderbird-i18n-{en-gb,en-us,ru,zh-cn}
 totem
