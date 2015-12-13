@@ -17,6 +17,7 @@ python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 qemu
 sshfs
+stack:stylish-haskell
 tcpdump
 the_silver_searcher
 tig
