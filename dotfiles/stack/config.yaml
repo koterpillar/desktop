@@ -4,3 +4,5 @@ templates:
     author-name: Alexey Kotlyarov
     author-email: a@koterpillar.com
     github-username: koterpillar
+
+compiler-check: newer-minor
