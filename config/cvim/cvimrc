@@ -1,0 +1,8 @@
+site 'https://rss.koterpillar.com/*' {
+  unmap j
+  unmap k
+  unmap n
+  unmap p
+  unmap s
+  unmap o
+}
