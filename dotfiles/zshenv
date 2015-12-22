@@ -4,3 +4,8 @@ path=(~/bin ~/.local/bin $path)
 export PAGER=less
 export LESS='-RFX'
 export EDITOR=vim
+
+if [ "$COLORTERM" = "gnome-terminal" ] && [ "$TERM" = "xterm" ]
+then
+    export TERM=xterm-256color
+fi
