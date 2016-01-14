@@ -2,7 +2,6 @@ aspell{,-{en,ru}}
 chromium
 eog
 evince
-evolution
 file-roller
 firefox
 flashplugin
@@ -13,6 +12,7 @@ aur:lib32-gtk-engines
 lib32-libpulse
 libreoffice-fresh
 mencoder
+aur:n1
 nautilus
 stack:pandoc
 pidgin

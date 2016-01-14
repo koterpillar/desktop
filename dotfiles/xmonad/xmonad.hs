@@ -86,7 +86,7 @@ myWorkspaces = map show [1..9] ++ ["0", "-", "="]
 
 myManageHook = composeAll
     [ className =? "Gitg" --> doShift gitWorkspace
-    , className =? "Evolution" --> doShift mailWorkspace
+    , className =? "Nylas N1" --> doShift mailWorkspace
     , className =? "Pidgin" <||> className =? "Skype" --> doShift imWorkspace
     ]
 

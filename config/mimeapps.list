@@ -1,11 +1,11 @@
 [Default Applications]
-application/x-extension-eml=evolution.desktop
+application/x-extension-eml=nylas.desktop
 application/xhtml+xml=chromium.desktop
-message/rfc822=evolution.desktop
+message/rfc822=nylas.desktop
 text/html=chromium.desktop
 text/mml=chromium.desktop
 text/xml=chromium.desktop
 x-scheme-handler/http=chromium.desktop
 x-scheme-handler/https=chromium.desktop
-x-scheme-handler/mailto=evolution.desktop
+x-scheme-handler/mailto=nylas.desktop
 application/pdf=evince.desktop
