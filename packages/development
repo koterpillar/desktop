@@ -5,7 +5,6 @@ git
 gitg
 gvim
 happy
-aur:haskell-stack
 stack:hdevtools
 ipython{,2}
 jq
@@ -17,6 +16,7 @@ python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 qemu
 sshfs
+stack
 stack:stylish-haskell
 tcpdump
 the_silver_searcher
