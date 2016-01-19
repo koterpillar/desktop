@@ -15,6 +15,9 @@ lightdm-gtk-greeter
 lxappearance
 mosh
 network-manager-applet
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
 notify-osd
 polkit-gnome
 python{,2}-xdg
@@ -24,7 +27,6 @@ tracker
 ttf-anonymous-pro
 ttf-arphic-ukai
 ttf-arphic-uming
-ttf-symbola
 wqy-microhei
 wqy-zenhei
 xcompmgr
