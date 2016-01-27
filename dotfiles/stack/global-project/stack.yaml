@@ -1,12 +1,10 @@
 flags: {}
 packages: []
 extra-deps:
-- cabal-helper-0.6.2.0
-- gtk-traymanager-0.1.5
+- gtk-traymanager-0.1.6
 - optparse-declarative-0.3.0
-- webkit-0.14.1.0
+- webkit-0.14.1.1
 - X11-xft-0.3.1
-- xdg-basedir-0.2.2
 - xmonad-0.11.1
 - xmonad-contrib-0.11.4
-resolver: lts-3.17
+resolver: lts-5.0
