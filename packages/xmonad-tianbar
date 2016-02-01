@@ -2,6 +2,7 @@ stack:MissingH
 stack:blaze-html
 gtk2
 gtk2hs-buildtools
+stack:hostname
 libx11
 libxft
 libxml2

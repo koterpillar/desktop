@@ -10,6 +10,8 @@ import Data.String.Utils
 
 import DBus.Client
 
+import Network.HostName
+
 import Text.Blaze
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -197,6 +199,11 @@ main = do
     unsetEnv "PREVPATH"
     client <- connectSession
     browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
+    hostname <- getHostName
+    -- Screens get ordered wrong on mujin
+    let screenOrdering = case hostname of
+                             "mujin" -> [0, 2, 1]
+                             _ -> [0..]
     let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
 
                , ((0                   , xF86XK_Explorer), screensaver)
@@ -232,6 +239,11 @@ main = do
                [((m .|. modm, k), windows $ f i)
                    | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal]
                    , (f, m) <- [(S.greedyView, 0), (S.shift, shiftMask)]]
+               ++
+               -- Switch focus/move windows between workspaces
+               [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+                   | (key, sc) <- zip [xK_w, xK_e, xK_r] screenOrdering
+                   , (f, m) <- [(S.view, 0), (S.shift, shiftMask)]]
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
         { terminal = "terminator"
         , workspaces = myWorkspaces
