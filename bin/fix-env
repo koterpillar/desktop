@@ -17,9 +17,6 @@ case $(hostname) in
 			pactl set-card-profile 0 output:analog-stereo
 		fi
 	;;
-	devs-alexey)
-		xrandr --output DVI-1 --auto --right-of DVI-0
-	;;
 	mujin)
 		xrandr --auto
 		if xrandr | grep -q "DP-0 connected"
