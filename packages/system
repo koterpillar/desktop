@@ -1,3 +1,4 @@
+acpi_call
 curl
 dnsutils
 ecryptfs-utils
@@ -20,6 +21,8 @@ rsync
 screen
 strace
 sudo
+tlp
 wget
 whois
+x86_energy_perf_policy
 xorg-server

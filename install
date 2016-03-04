@@ -59,6 +59,9 @@ sudo mkdir -p /usr/share/xsessions
 sudo install $DIR/Xsession/xinit.desktop /usr/share/xsessions
 sudo install $DIR/Xsession/Xsession /etc/X11
 
+# TLP
+sudo install $DIR/etc/default/tlp /etc/default/tlp
+
 ./makelinks
 
 # XMonad and Tianbar config
