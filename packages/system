@@ -15,7 +15,6 @@ nmap
 ntp
 openssh
 pkgfile
-pm-utils
 reflector
 rsync
 screen
