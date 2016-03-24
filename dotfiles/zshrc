@@ -48,6 +48,9 @@ if ! zgen saved; then
     zgen save
 fi
 
+# FIXME: why doesn't RPS1 work in jreese theme?
+RPS1='%(?..%{$fg[red]%}%? ↵%{$reset_color%})'
+
 source /usr/share/autojump/autojump.zsh
 
 # global /etc/zshprofile overrides $PATH
