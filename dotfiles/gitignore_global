@@ -1,6 +1,6 @@
 .sw?
 .*.sw?
 .~lock.*#
+.ropeproject
 /tags
-/.ropeproject
 /.vimrc
