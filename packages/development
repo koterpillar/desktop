@@ -1,3 +1,4 @@
+autopep8
 cabal-install
 ctags
 stack:ghc-mod
@@ -12,6 +13,7 @@ meld
 moreutils
 nodejs
 npm
+pep8
 python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 qemu
