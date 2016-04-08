@@ -34,7 +34,7 @@ fix-env &
 
 nm-applet &
 
-gnome-screensaver &
+light-locker &
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 

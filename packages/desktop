@@ -4,12 +4,12 @@ pip:chrome-edit-server
 feh
 gksu
 gnome-keyring
-gnome-screensaver
 gnome-themes-standard
 stack:hoe
 ibus{,-{sunpinyin,m17n,hangul}}
 infinality-bundle
 infinality-bundle-multilib
+light-locker
 lightdm
 lightdm-gtk-greeter
 lxappearance

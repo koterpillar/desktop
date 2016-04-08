@@ -186,7 +186,7 @@ toggleMute = do
     setMute $ not mute
 
 screensaver :: MonadIO m => m ()
-screensaver = spawn "gnome-screensaver-command -l"
+screensaver = spawn "light-locker-command -l"
 
 suspend :: MonadIO m => m ()
 suspend = spawn "systemctl suspend"
