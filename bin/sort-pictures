@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+chmod -x *
+find . -name '*.JPG' -exec sh -c 'mv "{}" $(echo "{}" | sed s/JPG/jpg/)' \;
+exiftool '-FileName<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%e .
