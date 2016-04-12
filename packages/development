@@ -23,6 +23,7 @@ stack:stylish-haskell
 tcpdump
 the_silver_searcher
 tig
+pip:tox
 virt-manager
 wireshark-gtk
 xorg-server-xvfb
