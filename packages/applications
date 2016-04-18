@@ -16,6 +16,7 @@ aur:n1
 nautilus
 stack:pandoc
 pidgin
+aur:pidgin-leftify-tabs
 aur:screen-message
 skype
 totem
