@@ -1,0 +1,96 @@
+#!/bin/bash -e
+
+# FIXME country for mirrors
+COUNTRY=AU
+
+if [ -z $COMPUTER_LOCALE ]
+then
+    echo "Specify COMPUTER_LOCALE" >&2
+    exit 1
+fi
+
+# Disk to use for the target system
+DISK=/dev/sda
+
+if [ -z $COMPUTER_NAME ]
+then
+    echo "Specify COMPUTER_NAME" >&2
+    exit 1
+fi
+
+if [ -z $COMPUTER_TIMEZONE ]
+then
+    echo "Specify COMPUTER_TIMEZONE" >&2
+    exit 1
+fi
+
+# Update the system clock
+timedatectl set-ntp true
+
+# Partitioning
+if ! (mount | grep -q /mnt)
+then
+    (
+        # New partition table
+        echo o; echo Y;
+        # /boot
+        echo n; echo; echo; echo '+200M'; echo 'ef00';
+        # /
+        echo n; echo; echo; echo; echo;
+        # Write out
+        echo w; echo Y;
+    ) | gdisk $DISK
+fi
+
+# Format the partitions
+for obj in /mnt/boot /mnt ${DISK}1 ${DISK}2
+do
+    umount $obj >/dev/null 2>&1 || true
+done
+mkfs.vfat ${DISK}1
+mkfs.ext4 -F -F ${DISK}2
+
+# Mount the partitions
+mount ${DISK}2 /mnt
+mkdir -p /mnt/boot
+mount ${DISK}1 /mnt/boot
+
+# Mirrors
+curl -s "https://www.archlinux.org/mirrorlist/?country=$COUNTRY&protocol=http&ip_version=4" | \
+    sed 's/#Server/Server/g' > /etc/pacman.d/mirrorlist
+
+# Base packages
+pacstrap /mnt base
+
+# Configure the system
+genfstab -p /mnt >> /mnt/etc/fstab
+
+CHROOT="arch-chroot /mnt"
+
+echo $COMPUTER_NAME > /mnt/etc/hostname
+
+$CHROOT ln -s /usr/share/zoneinfo/$COMPUTER_TIMEZONE /etc/localtime
+
+echo "en_US.UTF-8 UTF-8" > /mnt/etc/locale.gen
+echo "$COMPUTER_LOCALE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+$CHROOT locale-gen
+echo "$COMPUTER_LOCALE.UTF-8" > /etc/locale.conf
+
+$CHROOT mkinitcpio -p linux
+
+echo "Setting the new system root password."
+$CHROOT passwd
+
+# Boot loader
+ROOT_UUID=$(blkid -s PARTUUID -o value ${DISK}2)
+mkdir -p /mnt/boot/loader/entries
+cat > /mnt/boot/loader/entries/arch.conf <<EOF
+title Arch Linux
+linux /vmlinuz-linux
+initrd /initramfs-linux.img
+options root=PARTUUID=${ROOT_UUID} rw
+EOF
+$CHROOT bootctl --path=/boot install
+
+echo "Not implemented yet" >&2
+exit 1
