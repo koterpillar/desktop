@@ -78,9 +78,6 @@ echo "$COMPUTER_LOCALE.UTF-8" > /etc/locale.conf
 
 $CHROOT mkinitcpio -p linux
 
-echo "Setting the new system root password."
-$CHROOT passwd
-
 # Boot loader
 ROOT_UUID=$(blkid -s PARTUUID -o value ${DISK}2)
 mkdir -p /mnt/boot/loader/entries
@@ -92,5 +89,14 @@ options root=PARTUUID=${ROOT_UUID} rw
 EOF
 $CHROOT bootctl --path=/boot install
 
-echo "Not implemented yet" >&2
-exit 1
+# User management
+$CHROOT groupadd --system sudo
+$CHROOT pacman -S --noconfirm sudo
+echo '%sudo ALL=(ALL) ALL' > /mnt/etc/sudoers.d/sudo-group
+
+$CHROOT useradd --create-home --groups sudo alex
+
+$CHROOT passwd -l root
+
+echo "Setting the new system user password."
+$CHROOT passwd alex
