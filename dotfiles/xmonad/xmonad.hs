@@ -200,9 +200,8 @@ main = do
     client <- connectSession
     browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
     hostname <- getHostName
-    -- Screens get ordered wrong on mujin
+    -- If screens get ordered wrong, the order can be changed here
     let screenOrdering = case hostname of
-                             "mujin" -> [0, 2, 1]
                              _ -> [0..]
     let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
 

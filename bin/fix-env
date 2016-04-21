@@ -17,20 +17,6 @@ case $(hostname) in
 			pactl set-card-profile 0 output:analog-stereo
 		fi
 	;;
-	mujin)
-		xrandr --auto
-		xrandr --newmode "1280x800_60.00"   83.50  1280 1352 1480 1680  800 803 809 831 -hsync +vsync 2>/dev/null || true
-		xrandr --addmode eDP-1 "1280x800_60.00"
-		if xrandr | grep -q "HDMI-1 connected"
-		then
-			xrandr \
-				--output HDMI-1 --primary --mode 1920x1080 \
-				--output HDMI-2 --mode 1920x1080 --pos 1920x0 \
-				--output eDP-1 --mode "1280x800_60.00" --pos 3000x1080
-		else
-			xrandr --output eDP-1 --mode "1280x800_60.00"
-		fi
-	;;
 esac
 killall tianbar || true
 tianbar &
