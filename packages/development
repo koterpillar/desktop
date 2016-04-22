@@ -1,6 +1,7 @@
 autopep8
 cabal-install
 ctags
+eslint
 stack:ghc-mod
 git
 gitg
@@ -12,6 +13,7 @@ jq
 meld
 moreutils
 nodejs
+aur:nodejs-jshint
 npm
 pep8
 python-virtualenvwrapper
