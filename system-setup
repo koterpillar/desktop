@@ -36,24 +36,33 @@ then
         # /boot
         echo n; echo; echo; echo '+200M'; echo 'ef00';
         # /
-        echo n; echo; echo; echo; echo;
+        echo n; echo; echo; echo; echo 'e801';
         # Write out
         echo w; echo Y;
     ) | gdisk $DISK
 fi
+BOOTPART=${DISK}1
+CRYPTPART=${DISK}2
 
-# Format the partitions
-for obj in /mnt/boot /mnt ${DISK}1 ${DISK}2
+for obj in /mnt/boot /mnt
 do
     umount $obj >/dev/null 2>&1 || true
 done
-mkfs.vfat ${DISK}1
-mkfs.ext4 -F -F ${DISK}2
+cryptsetup luksClose cryptroot >/dev/null 2>&1 || true
+
+echo "Setting the root filesystem password"
+cryptsetup -y luksFormat $CRYPTPART
+cryptsetup open $CRYPTPART cryptroot
+ROOTPART=/dev/mapper/cryptroot
+
+# Format the partitions
+mkfs -t vfat $BOOTPART
+mkfs -t ext4 $ROOTPART
 
 # Mount the partitions
-mount ${DISK}2 /mnt
+mount $ROOTPART /mnt
 mkdir -p /mnt/boot
-mount ${DISK}1 /mnt/boot
+mount $BOOTPART /mnt/boot
 
 # Mirrors
 curl -s "https://www.archlinux.org/mirrorlist/?country=$COUNTRY&protocol=http&ip_version=4" | \
@@ -76,16 +85,17 @@ echo "$COMPUTER_LOCALE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 $CHROOT locale-gen
 echo "$COMPUTER_LOCALE.UTF-8" > /etc/locale.conf
 
+sed -i '/^HOOKS/ s/filesystems/encrypt filesystems/g' /mnt/etc/mkinitcpio.conf
 $CHROOT mkinitcpio -p linux
 
 # Boot loader
-ROOT_UUID=$(blkid -s PARTUUID -o value ${DISK}2)
+CRYPT_UUID=$(blkid -s UUID -o value $CRYPTPART)
 mkdir -p /mnt/boot/loader/entries
 cat > /mnt/boot/loader/entries/arch.conf <<EOF
 title Arch Linux
 linux /vmlinuz-linux
 initrd /initramfs-linux.img
-options root=PARTUUID=${ROOT_UUID} rw
+options cryptdevice=UUID=${CRYPT_UUID}:cryptroot root=/dev/mapper/cryptroot rw
 EOF
 $CHROOT bootctl --path=/boot install
 
