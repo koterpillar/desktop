@@ -1,6 +1,6 @@
 #!/bin/zsh -e
 
-DIR=$(readlink -f $(pwd)/$(dirname $0))
+DIR=$(readlink -f $(dirname $0))
 
 # Dotfiles
 mkdir -p $HOME/.config

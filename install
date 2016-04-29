@@ -41,10 +41,17 @@ PIP_INSTALL='pip install --user'
 
 # Packages
 # Files in packages/ may contain Bash brace expansions
+
 $INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | grep -v '^[a-z]\+:'))")
+
+# gcc-multilib conflicts with gcc
+yes | sudo pacman -S --needed gcc-multilib
 $AUR_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^aur:/!d;s/^aur://g'))")
+
+ln -sfnT $DIR/dotfiles/stack $HOME/.stack
 stack setup
 $STACK_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^stack:/!d;s/^stack://g'))")
+
 $INSTALL python-pip
 $PIP_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^pip:/!d;s/^pip://g'))")
 
