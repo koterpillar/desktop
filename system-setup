@@ -53,7 +53,7 @@ done
 cryptsetup luksClose cryptroot >/dev/null 2>&1 || true
 
 echo "Setting the root filesystem password"
-cryptsetup -y luksFormat $CRYPTPART
+cryptsetup --batch-mode luksFormat $CRYPTPART
 cryptsetup open $CRYPTPART cryptroot
 ROOTPART=/dev/mapper/cryptroot
 
