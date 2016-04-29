@@ -1,0 +1,129 @@
+#!/bin/bash -e
+
+: ${COMPUTER_USER:=alex}
+: ${COMPUTER_LOCALE:=ru_RU}
+: ${DISK:=/dev/sda}
+
+GEOIP_INFO=$(curl -s https://geoip.nekudo.com/api)
+# No jq available on live ISO, only Perl
+function jq {
+    echo "$1" | perl -e "
+use JSON::PP;
+my \$data = do { local \$/; <STDIN> };
+\$data = decode_json(\$data);
+for my \$selector (split /\\./, '$2') {
+    \$data = \$data->{\$selector};
+}
+print \$data;
+"
+}
+COUNTRY=$(jq "$GEOIP_INFO" country.code)
+COMPUTER_TIMEZONE=$(jq "$GEOIP_INFO" location.time_zone)
+
+if [ -z $COMPUTER_NAME ]
+then
+    echo "Specify COMPUTER_NAME" >&2
+    exit 1
+fi
+
+# Update the system clock
+timedatectl set-ntp true
+
+# Partitioning
+if ! (mount | grep -q /mnt)
+then
+    (
+        # New partition table
+        echo o; echo Y;
+        # /boot
+        echo n; echo; echo; echo '+200M'; echo 'ef00';
+        # /
+        echo n; echo; echo; echo; echo 'e801';
+        # Write out
+        echo w; echo Y;
+    ) | gdisk $DISK
+fi
+BOOTPART=${DISK}1
+CRYPTPART=${DISK}2
+
+for obj in /mnt/boot /mnt
+do
+    umount $obj >/dev/null 2>&1 || true
+done
+cryptsetup luksClose cryptroot >/dev/null 2>&1 || true
+
+echo "Setting the root filesystem password"
+cryptsetup -y luksFormat $CRYPTPART
+cryptsetup open $CRYPTPART cryptroot
+ROOTPART=/dev/mapper/cryptroot
+
+# Format the partitions
+mkfs -t vfat $BOOTPART
+mkfs -t ext4 $ROOTPART
+
+# Mount the partitions
+mount $ROOTPART /mnt
+mkdir -p /mnt/boot
+mount $BOOTPART /mnt/boot
+
+# Mirrors
+curl -s "https://www.archlinux.org/mirrorlist/?country=$COUNTRY&protocol=http&ip_version=4" | \
+    sed 's/#Server/Server/g' > /etc/pacman.d/mirrorlist
+
+# Base packages
+pacstrap /mnt base
+
+# Configure the system
+genfstab -p /mnt >> /mnt/etc/fstab
+
+CHROOT="arch-chroot /mnt"
+
+echo $COMPUTER_NAME > /mnt/etc/hostname
+
+$CHROOT ln -s /usr/share/zoneinfo/$COMPUTER_TIMEZONE /etc/localtime
+
+echo "en_US.UTF-8 UTF-8" > /mnt/etc/locale.gen
+echo "$COMPUTER_LOCALE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+$CHROOT locale-gen
+echo "$COMPUTER_LOCALE.UTF-8" > /etc/locale.conf
+
+sed -i '/^HOOKS/ s/filesystems/encrypt filesystems/g' /mnt/etc/mkinitcpio.conf
+$CHROOT mkinitcpio -p linux
+
+# Boot loader
+CRYPT_UUID=$(blkid -s UUID -o value $CRYPTPART)
+mkdir -p /mnt/boot/loader/entries
+cat > /mnt/boot/loader/entries/arch.conf <<EOF
+title Arch Linux
+linux /vmlinuz-linux
+initrd /initramfs-linux.img
+options cryptdevice=UUID=${CRYPT_UUID}:cryptroot root=/dev/mapper/cryptroot rw
+EOF
+$CHROOT bootctl --path=/boot install
+
+# User management
+$CHROOT groupadd --system sudo
+$CHROOT pacman -S --noconfirm --needed sudo
+echo '%sudo ALL=(ALL) ALL' > /mnt/etc/sudoers.d/sudo-group
+
+$CHROOT useradd --create-home --groups sudo $COMPUTER_USER
+
+$CHROOT passwd -l root
+
+echo "Setting the new system user password."
+$CHROOT passwd $COMPUTER_USER
+
+# Hand off to the install script
+
+# arch-chroot doesn't give the user a tty to prompt for password, disable it
+# temporarily
+sed -i 's/ ALL$/NOPASSWD: ALL/' /mnt/etc/sudoers.d/sudo-group
+trap 'sed -i "s/NOPASSWD: //" /mnt/etc/sudoers.d/sudo-group' exit
+
+AS_USER="$CHROOT sudo -u $COMPUTER_USER -i"
+USER_HOME=/home/$COMPUTER_USER
+
+$CHROOT pacman -S --noconfirm --needed git
+$AS_USER mkdir -p $USER_HOME/projects
+$AS_USER git clone https://github.com/koterpillar/desktop.git $USER_HOME/projects/desktop
+$AS_USER $USER_HOME/projects/desktop/install
