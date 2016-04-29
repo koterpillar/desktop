@@ -103,7 +103,7 @@ $CHROOT bootctl --path=/boot install
 
 # User management
 $CHROOT groupadd --system sudo
-$CHROOT pacman -S --noconfirm sudo
+$CHROOT pacman -S --noconfirm --needed sudo
 echo '%sudo ALL=(ALL) ALL' > /mnt/etc/sudoers.d/sudo-group
 
 $CHROOT useradd --create-home --groups sudo $COMPUTER_USER
@@ -117,13 +117,13 @@ $CHROOT passwd $COMPUTER_USER
 
 # arch-chroot doesn't give the user a tty to prompt for password, disable it
 # temporarily
-echo "$COMPUTER_USER ALL=(ALL) NOPASSWD: ALL" > /mnt/etc/sudoers.d/00-no-password
-trap 'rm /mnt/etc/sudoers.d/00-no-password' exit
+sed -i 's/ ALL$/NOPASSWD: ALL/' /mnt/etc/sudoers.d/sudo-group
+trap 'sed -i "s/NOPASSWD: //" /mnt/etc/sudoers.d/sudo-group' exit
 
 AS_USER="$CHROOT sudo -u $COMPUTER_USER -i"
 USER_HOME=/home/$COMPUTER_USER
 
-$CHROOT pacman -S --noconfirm git
+$CHROOT pacman -S --noconfirm --needed git
 $AS_USER mkdir -p $USER_HOME/projects
 $AS_USER git clone https://github.com/koterpillar/desktop.git $USER_HOME/projects/desktop
 $AS_USER $USER_HOME/projects/desktop/install
