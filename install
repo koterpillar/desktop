@@ -2,7 +2,7 @@
 
 INSTALL='sudo pacman -S --needed --noconfirm'
 
-DIR=$(readlink -f $(pwd)/$(dirname $0))
+DIR=$(readlink -f $(dirname $0))
 
 # Pacman configuration
 PACMAN_CONF=/etc/pacman.conf
