@@ -2,6 +2,7 @@
 
 # FIXME country for mirrors
 COUNTRY=AU
+COMPUTER_USER=alex
 
 if [ -z $COMPUTER_LOCALE ]
 then
@@ -104,9 +105,24 @@ $CHROOT groupadd --system sudo
 $CHROOT pacman -S --noconfirm sudo
 echo '%sudo ALL=(ALL) ALL' > /mnt/etc/sudoers.d/sudo-group
 
-$CHROOT useradd --create-home --groups sudo alex
+$CHROOT useradd --create-home --groups sudo $COMPUTER_USER
 
 $CHROOT passwd -l root
 
 echo "Setting the new system user password."
-$CHROOT passwd alex
+$CHROOT passwd $COMPUTER_USER
+
+# Hand off to the install script
+
+# arch-chroot doesn't give the user a tty to prompt for password, disable it
+# temporarily
+echo "$COMPUTER_USER ALL=(ALL) NOPASSWD: ALL" > /mnt/etc/sudoers.d/00-no-password
+trap 'rm /mnt/etc/sudoers.d/00-no-password' exit
+
+AS_USER="$CHROOT sudo -u $COMPUTER_USER -i"
+USER_HOME=/home/$COMPUTER_USER
+
+$CHROOT pacman -S --noconfirm git
+$AS_USER mkdir -p $USER_HOME/projects
+$AS_USER git clone https://github.com/koterpillar/desktop.git $USER_HOME/projects/desktop
+$AS_USER $USER_HOME/projects/desktop/install
