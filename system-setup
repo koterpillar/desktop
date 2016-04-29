@@ -1,27 +1,28 @@
 #!/bin/bash -e
 
-# FIXME country for mirrors
-COUNTRY=AU
-COMPUTER_USER=alex
+: ${COMPUTER_USER:=alex}
+: ${COMPUTER_LOCALE:=ru_RU}
+: ${DISK:=/dev/sda}
 
-if [ -z $COMPUTER_LOCALE ]
-then
-    echo "Specify COMPUTER_LOCALE" >&2
-    exit 1
-fi
-
-# Disk to use for the target system
-DISK=/dev/sda
+GEOIP_INFO=$(curl -s https://geoip.nekudo.com/api)
+# No jq available on live ISO, only Perl
+function jq {
+    echo "$1" | perl -e "
+use JSON::PP;
+my \$data = do { local \$/; <STDIN> };
+\$data = decode_json(\$data);
+for my \$selector (split /\\./, '$2') {
+    \$data = \$data->{\$selector};
+}
+print \$data;
+"
+}
+COUNTRY=$(jq "$GEOIP_INFO" country.code)
+COMPUTER_TIMEZONE=$(jq "$GEOIP_INFO" location.time_zone)
 
 if [ -z $COMPUTER_NAME ]
 then
     echo "Specify COMPUTER_NAME" >&2
-    exit 1
-fi
-
-if [ -z $COMPUTER_TIMEZONE ]
-then
-    echo "Specify COMPUTER_TIMEZONE" >&2
     exit 1
 fi
 
