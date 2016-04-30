@@ -91,11 +91,13 @@ sed -i '/^HOOKS/ s/filesystems/encrypt filesystems/g' /mnt/etc/mkinitcpio.conf
 $CHROOT mkinitcpio -p linux
 
 # Boot loader
+$CHROOT pacman -S --noconfirm --needed intel-ucode
 CRYPT_UUID=$(blkid -s UUID -o value $CRYPTPART)
 mkdir -p /mnt/boot/loader/entries
 cat > /mnt/boot/loader/entries/arch.conf <<EOF
 title Arch Linux
 linux /vmlinuz-linux
+initrd /intel-ucode.img
 initrd /initramfs-linux.img
 options cryptdevice=UUID=${CRYPT_UUID}:cryptroot root=/dev/mapper/cryptroot rw
 EOF
