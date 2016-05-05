@@ -1,7 +1,6 @@
 acpi_call
 curl
 dnsutils
-ecryptfs-utils
 ghc
 htop
 iftop
