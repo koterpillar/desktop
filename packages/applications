@@ -14,7 +14,7 @@ libreoffice-fresh
 mencoder
 aur:n1
 nautilus
-stack:pandoc
+pandoc
 pidgin
 aur:pidgin-leftify-tabs
 aur:screen-message
