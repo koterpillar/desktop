@@ -9,6 +9,7 @@ gvim
 happy
 stack:hdevtools
 ipython{,2}
+pip:isort
 jq
 meld
 moreutils
