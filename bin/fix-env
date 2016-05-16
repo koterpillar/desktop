@@ -4,23 +4,24 @@ setxkbmap -option altwin:swap_alt_win
 
 case $(hostname) in
 	shancha)
+		xrandr --auto
 		if xrandr | grep -q "HDMI1 connected"
 		then
-			xrandr --output LVDS1 --auto
 			xrandr --output HDMI1 --primary --above LVDS1 --auto
 			pactl set-card-profile 0 output:hdmi-stereo
 		elif xrandr | grep -q "HDMI2 connected"
 		then
-			xrandr --output LVDS1 --auto
 			xrandr --output HDMI2 --primary --above LVDS1 --auto
 			pactl set-card-profile 0 output:hdmi-stereo-extra1
 		elif xrandr | grep -q "DP1 connected"
 		then
-			xrandr --output LVDS1 --auto
 			xrandr --output DP1 --primary --above LVDS1 --auto
 			pactl set-card-profile 0 output:analog-stereo
+		elif xrandr | grep -q "VGA1 connected"
+		then
+			xrandr --output VGA1 --primary --above LVDS1 --auto
+			pactl set-card-profile 0 output:analog-stereo
 		else
-			xrandr --auto
 			pactl set-card-profile 0 output:analog-stereo
 		fi
 	;;
