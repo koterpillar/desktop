@@ -73,6 +73,8 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_DIRTY="⚡"
 
+ZSH_THEME_TERM_TITLE_IDLE="$PROMPT_HOST: %~"
+
 source /usr/share/autojump/autojump.zsh
 
 # global /etc/zshprofile overrides $PATH
