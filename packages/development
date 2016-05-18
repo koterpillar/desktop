@@ -4,6 +4,7 @@ ctags
 eslint
 stack:ghc-mod
 git
+aur:gitflow-avf
 gitg
 gvim
 happy

@@ -45,6 +45,8 @@ if ! zgen saved; then
 
     zgen load zsh-users/zsh-syntax-highlighting
 
+    zgen load petervanderdoes/git-flow-completion
+
     zgen save
 fi
 
