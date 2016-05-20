@@ -41,6 +41,8 @@ if ! zgen saved; then
 
     zgen oh-my-zsh plugins/pip
 
+    zgen load zsh-users/zsh-autosuggestions
+
     zgen oh-my-zsh plugins/virtualenvwrapper
 
     zgen load zsh-users/zsh-syntax-highlighting
