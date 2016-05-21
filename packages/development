@@ -2,7 +2,7 @@ autopep8
 cabal-install
 ctags
 eslint
-stack:ghc-mod
+ghc-mod
 git
 aur:gitflow-avf
 gitg
@@ -23,7 +23,7 @@ python{,2}{,-pylint,-virtualenv}
 qemu
 sshfs
 stack
-stack:stylish-haskell
+stylish-haskell
 tcpdump
 the_silver_searcher
 tig
