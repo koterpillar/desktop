@@ -28,6 +28,9 @@ bindkey '^[[C' vi-forward-word
 bindkey '^[[4~' vi-end-of-line
 bindkey '^[[1~' vi-beginning-of-line
 
+# Edit the command line with Ctrl-V
+bindkey '^V' edit-command-line
+
 source $DESKTOP_ROOT/vendor/zgen/zgen.zsh
 
 DISABLE_VENV_CD=1
