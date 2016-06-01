@@ -214,6 +214,8 @@ main = do
                -- Button with some windows on it on MacBook Pro
                , ((0                   , xF86XK_LaunchA), spawn "fix-env")
 
+               , ((0                   , xK_Print), spawn "gnome-screenshot -i")
+
                , ((modm                , xK_F1), screensaver)
                , ((modm .|. shiftMask  , xK_F1), suspend)
                , ((modm                , xK_F2), spawn browser)
