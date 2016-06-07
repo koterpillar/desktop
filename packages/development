@@ -30,6 +30,7 @@ the_silver_searcher
 tig
 pip:tox
 virt-manager
+pip:wdb.server
 wireshark-gtk
 xorg-server-xvfb
 aur:zeal

@@ -42,4 +42,6 @@ light-locker &
 
 chrome_edit_server &
 
+wdp.server.py &
+
 exec xmonad
