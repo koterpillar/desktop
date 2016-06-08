@@ -1,10 +1,10 @@
 flags: {}
 packages: []
 extra-deps:
-- gtk-traymanager-0.1.6
+- gi-webkit2-4.0.3
+- gi-javascriptcore-4.0.3
+- gi-soup-2.4.3
 - optparse-declarative-0.3.0
-- webkit-0.14.1.1
 - X11-xft-0.3.1
-- xmonad-0.11.1
-- xmonad-contrib-0.11.4
-resolver: lts-5.13
+- xmonad-contrib-0.12
+resolver: lts-6.2
