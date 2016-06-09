@@ -8,6 +8,14 @@ ls config | xargs -I FILE ln -sfnT $DIR/config/FILE $HOME/.config/FILE
 ls dotfiles | xargs -I FILE ln -sfnT $DIR/dotfiles/FILE $HOME/.FILE
 ln -sfnT $DIR/bin $HOME/bin
 
+# Git repositories
+submodule () {
+    [ -d "$1"/.git ] || git clone "$2" "$1"
+}
+submodule $HOME/.vim git@github.com:koterpillar/vim.git
+submodule $HOME/.zgen https://github.com/tarjoilija/zgen.git
+ln -sfnT $HOME/.vim/.vimrc $HOME/.vimrc
+
 # xdg-mime ignores $XDG_CONFIG_HOME/mimeapps.list
 mkdir -p $HOME/.local/share/applications
 ln -sf $HOME/.config/mimeapps.list $HOME/.local/share/applications/mimeapps.list

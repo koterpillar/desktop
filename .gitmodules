@@ -1,7 +1,0 @@
-[submodule "dotfiles/vim"]
-	path = dotfiles/vim
-	url = git@github.com:koterpillar/vim.git
-	branch = master
-[submodule "vendor/zgen"]
-	path = vendor/zgen
-	url = https://github.com/tarjoilija/zgen.git

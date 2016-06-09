@@ -31,7 +31,7 @@ bindkey '^[[1~' vi-beginning-of-line
 # Edit the command line with Ctrl-V
 bindkey '^V' edit-command-line
 
-source $DESKTOP_ROOT/vendor/zgen/zgen.zsh
+source ~/.zgen/zgen.zsh
 
 DISABLE_VENV_CD=1
 DISABLE_UPDATE_PROMPT=true
