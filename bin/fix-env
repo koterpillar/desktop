@@ -19,8 +19,16 @@ case $(hostname) in
 			pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
 		elif xrandr | grep -q "VGA1 connected"
 		then
-			xrandr --output VGA1 --primary --above LVDS1 --auto
-			pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
+			if nmcli --terse --fields name connection show --active | grep -v docker0 | sha1sum | grep -q 81340f1c782c190b9c45e8967a63581f0451fb01
+			then
+				xrandr --output VGA1 --primary --left-of LVDS1 --auto
+				xrandr --output LVDS1 --pos 1920x432
+				pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
+				pactl set-sink-mute 0 1
+			else
+				xrandr --output VGA1 --primary --above LVDS1 --auto
+				pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
+			fi
 		else
 			pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
 		fi
