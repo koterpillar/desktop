@@ -13,10 +13,10 @@ require(
   function ($, moment) {
     // Force 24 hour time
     var lang = navigator.language;
-    if (!moment.langData(lang)) {
+    if (!moment.localeData(lang)) {
       lang = lang.replace(/-.+/, '');
     }
-    moment.langData(lang)._longDateFormat.LT = 'HH:mm';
+    moment.localeData(lang)._longDateFormat.LT = 'HH:mm';
 
     require([
       'tianbar/time',
