@@ -30,11 +30,12 @@ require(
     require([
       'tianbar/time',
       'tianbar/ibus',
+      'tianbar/network',
       'tianbar/power',
       'tianbar/volume',
       'tianbar/weather',
       'tianbar/xmonad'
-    ], function (time, ibus, power, volume, weather, xmonad) {
+    ], function (time, ibus, network, power, volume, weather, xmonad) {
       function adjustWidth() {
         var rightWidth = 0;
         $('.widget-right').each(function (_, w) {
@@ -56,6 +57,7 @@ require(
       xmonad.change.add(adjustWidth);
       power.updated.add(adjustWidth);
       ibus.updated.add(adjustWidth);
+      network.updated.add(adjustWidth);
     });
   }
 );
