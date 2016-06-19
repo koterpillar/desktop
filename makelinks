@@ -14,6 +14,7 @@ submodule () {
 }
 submodule $HOME/.vim git@github.com:koterpillar/vim.git
 submodule $HOME/.zgen https://github.com/tarjoilija/zgen.git
+ln -sfnT $HOME/.vim $HOME/.config/nvim
 ln -sfnT $HOME/.vim/.vimrc $HOME/.vimrc
 
 # xdg-mime ignores $XDG_CONFIG_HOME/mimeapps.list
