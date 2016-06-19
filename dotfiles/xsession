@@ -36,8 +36,6 @@ light-locker &
 
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-(sleep 120 && /usr/lib/deja-dup/deja-dup/deja-dup-monitor) &
-
 chrome_edit_server &
 
 wdb.server.py &
