@@ -34,8 +34,6 @@ case $(hostname) in
 		fi
 	;;
 esac
-killall tianbar || true
-tianbar &
 
 if [ -f ~/.fehbg ]
 then
