@@ -14,7 +14,7 @@ set -e
 
 export DESKTOP_ROOT=$(dirname $(dirname $(readlink $0)))
 
-eval $(dbus-launch --sh-syntax --exit-with-session)
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus
 
 eval $(gnome-keyring-daemon --replace --components=gpg,pkcs11,secrets,ssh)
 export GNOME_KEYRING_CONTROL
