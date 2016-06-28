@@ -4,6 +4,7 @@
 /cabal.sandbox.config
 /config/gtk-3.0/bookmarks
 /config/hexchat/scrollback
+/config/systemd/user/default.target.wants/
 /dotfiles/ipython/profile_default/history.sqlite
 /dotfiles/ipython/profile_default/security
 /config/tianbar/bower_components
