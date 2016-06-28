@@ -38,8 +38,6 @@ light-locker &
 
 chrome_edit_server &
 
-wdb.server.py &
-
 tianbar &
 
 exec xmonad
