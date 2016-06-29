@@ -1,3 +1,39 @@
-#!/bin/bash
+#!/bin/zsh --login
 
-exec $HOME/.xsession
+# LightDM runs this in bash
+echo "shell is $shell" >&2
+if [ "$shell" != "zsh" ]
+then
+	exec zsh $0
+fi
+
+set -e
+
+# global /etc/zshprofile overrides $PATH
+. $HOME/.zshenv
+
+export DESKTOP_ROOT=$(dirname $(dirname $(readlink $0)))
+
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus
+
+eval $(gnome-keyring-daemon --start)
+export SSH_AUTH_SOCK
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+ibus-daemon -dx
+
+xcompmgr &
+
+fix-env &
+
+light-locker &
+
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+chrome_edit_server &
+
+tianbar &
+
+exec xmonad

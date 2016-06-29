@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=xsession
-Comment=Execute .xsession
-TryExec=xinit
-Exec=/etc/X11/Xsession
-Type=XSession
-Icon=
-Type=Application
