@@ -15,6 +15,7 @@ pip:isort
 jq
 meld
 moreutils
+aur:ncurses5-compat-libs
 nodejs
 aur:nodejs-jshint
 npm

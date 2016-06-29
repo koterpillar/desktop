@@ -42,6 +42,7 @@ then
 	aur_install pacaur
 
 	# AUR package keys
+	gpg --recv-keys 702353E0F7E48EDB  # ncurses5-compat-libs
 	gpg --recv-keys 1EB2638FF56C0C53  # pacaur/cower
 fi
 
