@@ -14,8 +14,8 @@ then
 	sudo pacman-key --populate archlinux
 
 	# Infinality key
-	sudo pacman-key -r 962DDE58
-	sudo pacman-key --lsign 962DDE58
+	sudo pacman-key -r AE6866C7962DDE58
+	sudo pacman-key --lsign AE6866C7962DDE58
 
 	sudo pacman -Sy
 fi
