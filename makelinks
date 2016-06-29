@@ -8,9 +8,6 @@ ls config | xargs -I FILE ln -sfnT $DIR/config/FILE $HOME/.config/FILE
 ls dotfiles | xargs -I FILE ln -sfnT $DIR/dotfiles/FILE $HOME/.FILE
 ln -sfnT $DIR/bin $HOME/bin
 
-# Systemd
-ls config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable
-
 # Git repositories
 submodule () {
     [ -d "$1"/.git ] || git clone "$2" "$1"

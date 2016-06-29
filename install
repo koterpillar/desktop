@@ -71,6 +71,9 @@ sudo install $DIR/etc/default/tlp /etc/default/tlp
 
 ./makelinks
 
+# Systemd
+ls config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable
+
 # XMonad and Tianbar config
 $HOME/bin/xmonad --recompile
 cd $DIR/config/tianbar
