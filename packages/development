@@ -23,6 +23,7 @@ pep8
 python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 qemu
+ruby-travis
 sshfs
 stack
 stylish-haskell
