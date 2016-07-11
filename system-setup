@@ -85,7 +85,7 @@ $CHROOT ln -s /usr/share/zoneinfo/$COMPUTER_TIMEZONE /etc/localtime
 echo "en_US.UTF-8 UTF-8" > /mnt/etc/locale.gen
 echo "$COMPUTER_LOCALE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 $CHROOT locale-gen
-echo "$COMPUTER_LOCALE.UTF-8" > /etc/locale.conf
+echo "LANG=$COMPUTER_LOCALE.UTF-8" > /mnt/etc/locale.conf
 
 sed -i '/^HOOKS/ s/filesystems/encrypt filesystems/g' /mnt/etc/mkinitcpio.conf
 $CHROOT mkinitcpio -p linux
