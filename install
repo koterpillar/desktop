@@ -81,6 +81,14 @@ sudo install $DIR/etc/default/tlp /etc/default/tlp
 
 # Systemd
 ls config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable
+sudo systemctl enable \
+	docker \
+	NetworkManager \
+	sshd \
+	tlp \
+	tlp-sleep \
+	&& true
+sudo systemctl disable systemd-rfkill
 
 # XMonad and Tianbar config
 $HOME/bin/xmonad --recompile
