@@ -19,7 +19,7 @@ aur:ncurses5-compat-libs
 nodejs
 aur:nodejs-jshint
 npm
-pep8
+python-pycodestyle
 python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 qemu
