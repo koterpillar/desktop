@@ -1,5 +1,6 @@
 stack:MissingH
 stack:blaze-html
+gobject-introspection
 stack:hostname
 libx11
 libxft
