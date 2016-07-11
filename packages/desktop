@@ -3,6 +3,7 @@ bc
 pip:chrome-edit-server
 feh
 gksu
+gnome-control-center
 gnome-keyring
 gnome-themes-standard
 stack:hoe
@@ -19,6 +20,7 @@ noto-fonts
 noto-fonts-emoji
 notify-osd
 polkit-gnome
+pulseaudio
 python{,2}-xdg
 synapse
 terminator
