@@ -10,6 +10,7 @@ if ! diff -q $PACMAN_CONF $DIR/etc/pacman.conf >/dev/null
 then
 	sudo install $DIR/etc/pacman.conf $PACMAN_CONF
 
+	sudo rm -r /etc/pacman.d/gnupg
 	sudo pacman-key --init
 	sudo pacman-key --populate archlinux
 
