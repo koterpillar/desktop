@@ -56,7 +56,10 @@ if ! zgen saved; then
 fi
 
 # Theme
-if [ $HOST = shancha ]
+if [ $HOST = taohua ]
+then
+    PROMPT_HOST=桃花
+elif [ $HOST = shancha ]
 then
     PROMPT_HOST=山茶
 elif [ $HOST = liushu ]

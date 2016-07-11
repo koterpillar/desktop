@@ -3,7 +3,7 @@
 setxkbmap -option altwin:swap_alt_win
 
 case $(hostname) in
-	shancha)
+	taohua|shancha)
 		xrandr --auto
 		if xrandr | grep -q "HDMI1 connected"
 		then
