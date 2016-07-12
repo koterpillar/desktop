@@ -15,6 +15,7 @@ lib32-libpulse
 libreoffice-fresh
 mencoder
 nautilus
+aur:obnam
 pandoc
 pidgin
 aur:pidgin-leftify-tabs
