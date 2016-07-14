@@ -3,7 +3,7 @@
 setxkbmap -option altwin:swap_alt_win
 
 has_connection () {
-	nmcli --terse --fields name connection show --active | grep -v docker0 | sha1sum | grep -q $1
+	nmcli --terse --fields name connection show --active | grep -v docker0 | grep -v "Wired Connection" | sha1sum | grep -q $1
 }
 
 case $(hostname) in
