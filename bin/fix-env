@@ -29,8 +29,15 @@ case $(hostname) in
 			pactl set-card-profile 0 output:hdmi-stereo-extra1+input:analog-stereo
 		elif xrandr | grep -q "DP1 connected"
 		then
-			xrandr --output DP1 --primary --above LVDS1 --auto
-			pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
+			if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0
+			then
+				xrandr --output DP1 --primary --left-of LVDS1 --auto
+				xrandr --output LVDS1 --pos 2560x700
+				pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
+			else
+				xrandr --output DP1 --primary --above LVDS1 --auto
+				pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
+			fi
 		elif xrandr | grep -q "VGA1 connected"
 		then
 			if has_connection 81340f1c782c190b9c45e8967a63581f0451fb01
