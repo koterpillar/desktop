@@ -9,6 +9,7 @@ lsof
 ltrace
 net-tools
 networkmanager
+nfs-utils
 ngrep
 nmap
 ntp

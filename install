@@ -84,6 +84,8 @@ ls config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user 
 sudo systemctl enable \
 	docker \
 	NetworkManager \
+	nfs-client.target \
+	rpcbind \
 	sshd \
 	tlp \
 	tlp-sleep \
