@@ -9,6 +9,9 @@ flashplugin
 gimp
 gnome-screenshot
 aur:google-talkplugin
+gstreamer
+gst-libav
+gst-plugins-{base,bad,good,ugly}
 hexchat
 keeweb-desktop
 aur:lib32-gtk-engines
