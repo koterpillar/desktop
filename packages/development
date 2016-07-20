@@ -28,6 +28,7 @@ qemu
 ruby-travis
 sshfs
 stack
+stack:stackage-upload
 stylish-haskell
 tcpdump
 the_silver_searcher
