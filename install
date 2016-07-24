@@ -50,7 +50,7 @@ fi
 INSTALL='pacaur -S --needed --noconfirm'
 AUR_INSTALL='pacaur -y --needed --noconfirm'
 STACK_INSTALL='stack install'
-PIP_INSTALL='pip install --user'
+PIP_INSTALL='pip install --user --upgrade'
 
 # Packages
 # Files in packages/ may contain Bash brace expansions
