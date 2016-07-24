@@ -1,5 +1,6 @@
 aspell{,-{en,ru}}
 chromium
+aur:chromium-pepper-flash
 eog
 evince
 evolution
