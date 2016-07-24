@@ -25,7 +25,6 @@ python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 python{,2}-yaml
 qemu
-ruby-travis
 sshfs
 stack
 stack:stackage-upload
