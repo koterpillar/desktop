@@ -48,7 +48,7 @@ then
 fi
 
 INSTALL='pacaur -S --needed --noconfirm'
-AUR_INSTALL='pacaur -S --needed --noconfirm'
+AUR_INSTALL='pacaur -y --needed --noconfirm'
 STACK_INSTALL='stack install'
 PIP_INSTALL='pip install --user'
 

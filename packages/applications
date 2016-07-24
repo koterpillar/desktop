@@ -14,7 +14,7 @@ gstreamer
 gst-libav
 gst-plugins-{base,bad,good,ugly}
 hexchat
-keeweb-desktop
+aur:keeweb-desktop
 aur:lib32-gtk-engines
 lib32-libpulse
 libreoffice-fresh
