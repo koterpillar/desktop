@@ -9,15 +9,16 @@ has_connection () {
 case $(hostname) in
 	taohua)
 		SOUNDCARD=alsa_card.pci-0000_00_1f.3
+		SOUND_OUTPUT=alsa_output.pci-0000_00_1f.3
 		xrandr --auto
 		if xrandr | grep -q "HDMI-1 connected"
 		then
 			xrandr --output HDMI-1 --primary --above eDP-1 --auto
 			pactl set-card-profile $SOUNDCARD output:hdmi-stereo+input:analog-stereo
-			pactl set-default-sink $SOUNDCARD.hdmi-stereo
+			pactl set-default-sink $SOUND_OUTPUT.hdmi-stereo
 		else
 			pactl set-card-profile $SOUNDCARD output:analog-stereo+input:analog-stereo
-			pactl set-default-sink $SOUNDCARD.analog-stereo
+			pactl set-default-sink $SOUND_OUTPUT.analog-stereo
 		fi
 	;;
 	shancha)
