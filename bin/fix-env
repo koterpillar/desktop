@@ -26,6 +26,14 @@ case $(hostname) in
 			pactl set-default-sink $SOUND_OUTPUT.analog-stereo
 		fi
 	;;
+	yulan)
+		xrandr --auto
+		if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
+			has_connection 81340f1c782c190b9c45e8967a63581f0451fb01
+		then
+			pactl set-sink-mute alsa_output.pci-0000_00_1b.0.analog-stereo 1
+		fi
+	;;
 	shancha)
 		xrandr --auto
 		if xrandr | grep -q "HDMI1 connected"

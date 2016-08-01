@@ -59,6 +59,9 @@ fi
 if [ $HOST = taohua ]
 then
     PROMPT_HOST=桃花
+elif [ $HOST = yulan ]
+then
+    PROMPT_HOST=玉兰
 elif [ $HOST = shancha ]
 then
     PROMPT_HOST=山茶
