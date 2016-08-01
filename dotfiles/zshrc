@@ -68,6 +68,8 @@ then
 elif [ $HOST = lanmei ]
 then
     PROMPT_HOST=蓝莓
+else
+    PROMPT_HOST=$HOST
 fi
 
 PROMPT='%{$fg[green]%}$PROMPT_HOST%{$reset_color%} %~ \
