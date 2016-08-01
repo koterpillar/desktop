@@ -1,6 +1,7 @@
 autojump
 bc
 pip:chrome-edit-server
+dialog
 feh
 gksu
 gnome-control-center
