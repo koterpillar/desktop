@@ -83,6 +83,7 @@ $DIR/makelinks
 ls config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable
 sudo systemctl enable \
 	docker \
+	lightdm \
 	NetworkManager \
 	nfs-client.target \
 	rpcbind \
