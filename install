@@ -92,6 +92,7 @@ sudo systemctl enable \
 	tlp-sleep \
 	&& true
 sudo systemctl disable systemd-rfkill
+timedatectl set-ntp true
 
 # XMonad and Tianbar config
 $HOME/bin/xmonad --recompile
