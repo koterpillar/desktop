@@ -62,9 +62,6 @@ then
 elif [ $HOST = yulan ]
 then
     PROMPT_HOST=玉兰
-elif [ $HOST = shancha ]
-then
-    PROMPT_HOST=山茶
 elif [ $HOST = liushu ]
 then
     PROMPT_HOST=柳树

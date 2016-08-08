@@ -49,42 +49,6 @@ case $(hostname) in
 			pactl set-sink-mute alsa_output.pci-0000_00_1f.3.analog-stereo 1
 		fi
 	;;
-	shancha)
-		xrandr --auto
-		if xrandr | grep -q "HDMI1 connected"
-		then
-			xrandr --output HDMI1 --primary --above LVDS1 --auto
-			pactl set-card-profile 0 output:hdmi-stereo+input:analog-stereo
-		elif xrandr | grep -q "HDMI2 connected"
-		then
-			xrandr --output HDMI2 --primary --above LVDS1 --auto
-			pactl set-card-profile 0 output:hdmi-stereo-extra1+input:analog-stereo
-		elif xrandr | grep -q "DP1 connected"
-		then
-			if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
-				has_connection 6c3601e50a2c5d2bc0ae572fb4d5cc8431d7d9ec
-			then
-				xrandr --output DP1 --primary --left-of LVDS1 --auto
-				xrandr --output LVDS1 --pos 2560x700
-				pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
-			else
-				xrandr --output DP1 --primary --above LVDS1 --auto
-				pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
-			fi
-		elif xrandr | grep -q "VGA1 connected"
-		then
-			xrandr --output VGA1 --primary --above LVDS1 --auto
-			pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
-		else
-			pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
-		fi
-		if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
-			has_connection 6c3601e50a2c5d2bc0ae572fb4d5cc8431d7d9ec || \
-			has_connection 81340f1c782c190b9c45e8967a63581f0451fb01
-		then
-			pactl set-sink-mute alsa_output.pci-0000_00_1b.0.analog-stereo 1
-		fi
-	;;
 esac
 
 if [ -f ~/.fehbg ]
