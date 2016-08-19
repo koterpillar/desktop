@@ -3,7 +3,6 @@ autojump
 bc
 pip:chrome-edit-server
 dialog
-emojione-color-font
 feh
 gksu
 gnome-control-center
@@ -19,7 +18,6 @@ lightdm-gtk-greeter
 mosh
 network-manager-applet
 noto-fonts
-noto-fonts-emoji
 notify-osd
 polkit-gnome
 pulseaudio
@@ -30,6 +28,7 @@ tracker
 ttf-anonymous-pro
 ttf-arphic-ukai
 ttf-arphic-uming
+aur:ttf-emojione-color
 wqy-microhei
 wqy-zenhei
 xcompmgr
