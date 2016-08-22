@@ -29,7 +29,10 @@ case $(hostname) in
 	yulan)
 		DPI=120
 		xrandr --dpi $DPI --auto
-		if xrandr | grep -q "DP-1 connected"
+		if xrandr | grep -q "HDMI-1 connected"
+		then
+			xrandr --output HDMI-1 --primary --above eDP-1 --auto
+		elif xrandr | grep -q "DP-1 connected"
 		then
 			if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
 				has_connection 6c3601e50a2c5d2bc0ae572fb4d5cc8431d7d9ec
