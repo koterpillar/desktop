@@ -8,6 +8,7 @@ gksu
 gnome-control-center
 gnome-keyring
 gnome-themes-standard
+gvfs-mtp
 stack:hoe
 ibus{,-{sunpinyin,m17n,hangul}}
 infinality-bundle
