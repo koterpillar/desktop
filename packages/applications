@@ -1,6 +1,5 @@
 aspell{,-{en,ru}}
 chromium
-aur:chromium-pepper-flash
 eog
 evince
 evolution
@@ -24,6 +23,7 @@ mplayer
 nautilus
 aur:obnam
 pandoc
+aur:pepper-flash
 pidgin
 aur:pidgin-extprefs
 aur:pidgin-leftify-tabs
