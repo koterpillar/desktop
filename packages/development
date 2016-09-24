@@ -24,13 +24,13 @@ python-pycodestyle
 python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 python{,2}-yaml
+aur:ripgrep
 qemu
 sshfs
 stack
 stack:stackage-upload
 stylish-haskell
 tcpdump
-the_silver_searcher
 tig
 pip:tox
 virt-manager
