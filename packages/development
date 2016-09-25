@@ -24,7 +24,7 @@ python-pycodestyle
 python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
 python{,2}-yaml
-aur:ripgrep
+ripgrep
 qemu
 sshfs
 stack
