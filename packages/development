@@ -9,7 +9,6 @@ aur:gitflow-avh
 gitg
 gvim
 happy
-stack:hdevtools
 inotify-tools
 ipython{,2}
 pip:isort
