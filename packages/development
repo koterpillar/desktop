@@ -9,6 +9,7 @@ aur:gitflow-avh
 gitg
 gvim
 happy
+hindent
 inotify-tools
 ipython{,2}
 pip:isort
@@ -28,7 +29,6 @@ qemu
 sshfs
 stack
 stack:stackage-upload
-stylish-haskell
 tcpdump
 tig
 pip:tox
