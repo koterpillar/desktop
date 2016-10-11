@@ -2,6 +2,7 @@ autopep8
 cabal-install
 ctags
 docker
+emacs
 eslint
 ghc-mod
 git

@@ -12,6 +12,7 @@ ln -sfnT $DIR/bin $HOME/bin
 submodule () {
     [ -d "$1"/.git ] || git clone "$2" "$1"
 }
+submodule $HOME/.emacs.d https://github.com/syl20bnr/spacemacs
 submodule $HOME/.vim git@github.com:koterpillar/vim.git
 submodule $HOME/.zgen https://github.com/tarjoilija/zgen.git
 ln -sfnT $HOME/.vim $HOME/.config/nvim
