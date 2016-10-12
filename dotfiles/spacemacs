@@ -298,6 +298,8 @@ values."
    exec-path-from-shell-check-startup-files nil
 
    fci-mode 1
+
+   global-git-commit-mode t
    ))
 
 (defun dotspacemacs/user-init ()
