@@ -15,7 +15,6 @@ submodule () {
 submodule $HOME/.emacs.d https://github.com/syl20bnr/spacemacs
 submodule $HOME/.vim git@github.com:koterpillar/vim.git
 submodule $HOME/.zgen https://github.com/tarjoilija/zgen.git
-ln -sfnT $HOME/.vim/.vimrc $HOME/.vimrc
 
 # xdg-mime ignores $XDG_CONFIG_HOME/mimeapps.list
 mkdir -p $HOME/.local/share/applications
