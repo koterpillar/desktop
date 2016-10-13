@@ -53,14 +53,22 @@ values."
      ;; spell-checking
 
      syntax-checking
-     python
      haskell
+
+     html
+     javascript
+
+     python
+
+     markdown
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      editorconfig
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -280,7 +288,7 @@ values."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
+   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -291,15 +299,6 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
-
-   browse-url-browser-function 'browse-url-generic
-   browse-url-generic-program "xdg-open"
-
-   exec-path-from-shell-check-startup-files nil
-
-   fci-mode 1
-
-   global-git-commit-mode t
    ))
 
 (defun dotspacemacs/user-init ()
@@ -309,6 +308,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
+  (setq-default exec-path-from-shell-check-startup-files nil)
   )
 
 (defun dotspacemacs/user-config ()
@@ -318,6 +319,17 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (setq-default browse-url-browser-function 'browse-url-generic)
+  (setq-default browse-url-generic-program "xdg-open")
+
+  (fci-mode 1)
+
+  (setq-default global-git-commit-mode t)
+
+  (setq-default web-mode-markup-indent-offset 2)
+
+  (editorconfig-mode 1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -339,7 +351,7 @@ you should place your code here."
     ("#00FF99" "#CCFF99" "#FFCC99" "#FF9999" "#FF99CC" "#CC99FF" "#9999FF" "#99CCFF" "#99FFCC" "#7FFF00")))
  '(package-selected-packages
    (quote
-    (helm-company helm-c-yasnippet company-statistics company-cabal company-anaconda auto-yasnippet ac-ispell auto-complete flycheck-pos-tip pos-tip flycheck-haskell git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache ht hemisu-theme default-light-theme twilight-bright-theme color-theme-sanityinc-tomorrow organic-green-theme material-theme yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode intero flycheck hy-mode hlint-refactor hindent helm-pydoc helm-hoogle haskell-snippets yasnippet cython-mode company-ghci company-ghc ghc company haskell-mode cmm-mode anaconda-mode pythonic smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (mmm-mode markdown-toc markdown-mode gh-md editorconfig pony-mode web-mode web-beautify tagedit slim-mode scss-mode sass-mode pug-mode livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc helm-css-scss haml-mode emmet-mode company-web web-completion-data company-tern dash-functional tern coffee-mode helm-company helm-c-yasnippet company-statistics company-cabal company-anaconda auto-yasnippet ac-ispell auto-complete flycheck-pos-tip pos-tip flycheck-haskell git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache ht hemisu-theme default-light-theme twilight-bright-theme color-theme-sanityinc-tomorrow organic-green-theme material-theme yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode intero flycheck hy-mode hlint-refactor hindent helm-pydoc helm-hoogle haskell-snippets yasnippet cython-mode company-ghci company-ghc ghc company haskell-mode cmm-mode anaconda-mode pythonic smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

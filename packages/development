@@ -20,6 +20,7 @@ moreutils
 aur:ncurses5-compat-libs
 nodejs
 aur:nodejs-jshint
+aur:nodejs-tern
 npm
 python-pycodestyle
 python-virtualenvwrapper
