@@ -8,7 +8,6 @@ ghc-mod
 git
 aur:gitflow-avh
 gitg
-gvim
 happy
 hindent
 inotify-tools
@@ -34,6 +33,7 @@ stack:stackage-upload
 tcpdump
 tig
 pip:tox
+vim
 virt-manager
 pip:wdb.server
 wireshark-gtk
