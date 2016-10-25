@@ -13,6 +13,7 @@ hindent
 inotify-tools
 ipython{,2}
 pip:isort
+aur:js-beautify
 jq
 meld
 moreutils
