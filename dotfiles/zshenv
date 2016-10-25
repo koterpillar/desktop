@@ -3,7 +3,7 @@ path=(~/bin ~/.local/bin $path)
 
 export PAGER=less
 export LESS='-RFX'
-export EDITOR='emacs -nw'
+export EDITOR=emacsclient
 
 export WORKON_HOME=~/.virtualenvs
 
