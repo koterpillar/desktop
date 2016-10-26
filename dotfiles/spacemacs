@@ -310,6 +310,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
   (setq-default exec-path-from-shell-check-startup-files nil)
+
+  (setq-default mouse-wheel-progressive-speed nil)
   )
 
 (defun dotspacemacs/user-config ()
