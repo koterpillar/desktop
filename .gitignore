@@ -19,6 +19,7 @@
 /dotfiles/stack/setup-exe-cache
 /dotfiles/stack/snapshots
 /dotfiles/stack/templates
+/dotfiles/stack/upload/credentials.json
 /dotfiles/xmonad/*.hi
 /dotfiles/xmonad/*.o
 /dotfiles/xmonad/xmonad.errors
