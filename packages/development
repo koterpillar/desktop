@@ -30,7 +30,6 @@ ripgrep
 qemu
 sshfs
 stack
-stack:stackage-upload
 tcpdump
 tig
 pip:tox

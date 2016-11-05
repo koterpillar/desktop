@@ -4,7 +4,6 @@ extra-deps:
 - gi-javascriptcore-4.0.3
 - gi-webkit2-4.0.3
 - optparse-declarative-0.3.0
-- stackage-cli-0.1.0.2
 - X11-xft-0.3.1
 - xmonad-contrib-0.12
 resolver: lts-7.1
