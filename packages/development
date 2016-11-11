@@ -22,6 +22,8 @@ nodejs
 aur:nodejs-jshint
 aur:nodejs-tern
 npm
+pulp
+purescript
 python-pycodestyle
 python-virtualenvwrapper
 python{,2}{,-pylint,-virtualenv}
