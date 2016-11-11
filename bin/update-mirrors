@@ -1,4 +1,5 @@
 #!/bin/sh -e
-COUNTRY=$(curl -s https://geoip.nekudo.com/api | jq -r '.country.name')
+IP=$(curl -s https://api.ipify.org)
+COUNTRY=$(geoiplookup $IP | awk -F ', ' '{print $2}')
 sudo reflector --country $COUNTRY -l 200 -p http --sort rate \
   --save /etc/pacman.d/mirrorlist

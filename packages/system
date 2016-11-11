@@ -2,6 +2,7 @@ acpi_call
 curl
 dnsutils
 ghc
+geoip
 htop
 iftop
 iotop
