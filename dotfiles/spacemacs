@@ -42,7 +42,8 @@ values."
      emacs-lisp
 
      version-control
-     git
+     (git :variables
+          git-magit-status-fullscreen t)
      github
 
      dash
