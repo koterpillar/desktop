@@ -1,12 +1,8 @@
-import System.IO
-
-import Control.Concurrent
 import Control.Monad
 
 import Data.List
 import qualified Data.Map as M
 import Data.Maybe
-import Data.String.Utils
 
 import DBus.Client
 
@@ -18,7 +14,6 @@ import qualified Text.Blaze.Html5.Attributes as A
 
 import XMonad
 import XMonad.Actions.Search
-import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.UrgencyHook
@@ -33,7 +28,6 @@ import XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as S
 import XMonad.Util.EZConfig (additionalKeys, removeKeys)
 import XMonad.Util.Run
-import XMonad.Util.WorkspaceCompare
 
 import Graphics.X11.ExtraTypes.XF86
 
@@ -44,14 +38,14 @@ import System.Tianbar.XMonadLog
 -- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
 
 theme :: Theme
-theme = defaultTheme { activeColor = "#FFE8C9"
-                     , activeTextColor = "#000000"
-                     , activeBorderColor = "#FFE8C9"
-                     , urgentColor = "#FF0000"
-                     , urgentTextColor = "#FFFFFF"
-                     , urgentBorderColor = "#FFFFFF"
-                     , fontName = "xft:ubuntu:size=9"
-                     }
+theme = def { activeColor = "#FFE8C9"
+            , activeTextColor = "#000000"
+            , activeBorderColor = "#FFE8C9"
+            , urgentColor = "#FF0000"
+            , urgentTextColor = "#FFFFFF"
+            , urgentBorderColor = "#FFFFFF"
+            , fontName = "xft:ubuntu:size=9"
+            }
 
 floatLayout = simpleFloat' shrinkText theme
 
@@ -244,11 +238,11 @@ main = do
                [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
                    | (key, sc) <- zip [xK_w, xK_e, xK_r] screenOrdering
                    , (f, m) <- [(S.view, 0), (S.shift, shiftMask)]]
-    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
+    xmonad $ withUrgencyHook NoUrgencyHook $ def
         { terminal = "terminator"
         , workspaces = myWorkspaces
         , handleEventHook = fullscreenEventHook
-        , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
+        , manageHook = manageDocks <+> myManageHook <+> manageHook def
         , layoutHook = avoidStruts layout
         , logHook = dbusLogWithMarkup client myMarkup
         , modMask = modm
