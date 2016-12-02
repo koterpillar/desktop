@@ -17,3 +17,6 @@
 
 [tig]
 	line-graphics = utf-8
+
+[github]
+	user = koterpillar
