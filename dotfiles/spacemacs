@@ -50,7 +50,9 @@ values."
 
      syntax-checking
 
-     haskell
+     (haskell :variables
+              haskell-completion-backend 'intero
+              haskell-enable-hindent-style "johan-tibell")
 
      html
      javascript
