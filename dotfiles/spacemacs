@@ -353,18 +353,6 @@ you should place your code here."
 
   (editorconfig-mode 1)
 
-  (add-hook 'editorconfig-custom-hooks
-            (lambda (hash)
-              (let ((indent-str (gethash 'indent_size hash)))
-                (when (stringp indent-str)
-                  (let ((indent (string-to-number indent-str)))
-                    (when (> indent 0)
-                      (setq haskell-indentation-layout-offset indent
-                            haskell-indentation-starter-offset indent
-                            haskell-indentation-left-offset indent
-                            haskell-indentation-where-pre-offset indent
-                            haskell-indentation-where-post-offset indent)))))))
-
   ;; https://github.com/syl20bnr/spacemacs/pull/7670
   (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
     (advice-add func :after 'my/python-setup-checkers))
