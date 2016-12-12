@@ -1,4 +1,12 @@
 {
+  "plugins": {
+    "opensearch": {
+      "use_internal": false,
+      "search_engines": [
+        ".config/synapse/google.xml"
+      ]
+    }
+  },
   "ui" : {
     "global" : {
       "ui-type" : "default",
