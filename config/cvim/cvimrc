@@ -1,3 +1,5 @@
+iunmap <C-l>
+
 site 'https://rss.koterpillar.com/*' {
   unmap j
   unmap k
@@ -6,3 +8,5 @@ site 'https://rss.koterpillar.com/*' {
   unmap s
   unmap o
 }
+
+let blacklists = ["https://remarkjs.com/*"]
