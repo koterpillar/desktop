@@ -17,6 +17,7 @@
 /dotfiles/stack/precompiled
 /dotfiles/stack/programs
 /dotfiles/stack/setup-exe-cache
+/dotfiles/stack/setup-exe-src
 /dotfiles/stack/snapshots
 /dotfiles/stack/templates
 /dotfiles/stack/upload/credentials.json
