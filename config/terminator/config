@@ -12,7 +12,7 @@
 [plugins]
 [profiles]
   [[default]]
-    background_image = None
+    cursor_color = "#aaaaaa"
     font = Anonymous Pro 11
     scrollback_infinite = True
     urgent_bell = True
