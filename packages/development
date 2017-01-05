@@ -17,7 +17,6 @@ aur:js-beautify
 jq
 meld
 moreutils
-aur:ncurses5-compat-libs
 nodejs
 aur:nodejs-jshint
 aur:nodejs-tern
