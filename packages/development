@@ -40,4 +40,4 @@ pip:wdb.server
 wireshark-gtk
 xorg-server-xvfb
 yapf
-aur:zeal
+zeal
