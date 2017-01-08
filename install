@@ -60,6 +60,8 @@ $AUR_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^aur:/!d;s/^au
 
 ln -sfnT $DIR/dotfiles/stack $HOME/.stack
 stack setup
+# gi-* depends on haskell-gi but doesn't list it as a dependency
+stack build haskell-gi
 $STACK_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^stack:/!d;s/^stack://g'))")
 
 $INSTALL python-pip
