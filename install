@@ -14,10 +14,6 @@ then
 	sudo pacman-key --init
 	sudo pacman-key --populate archlinux
 
-	# Infinality key
-	sudo pacman-key -r AE6866C7962DDE58
-	sudo pacman-key --lsign AE6866C7962DDE58
-
 	sudo pacman -Sy
 fi
 
@@ -73,8 +69,10 @@ then
 	chsh -s /bin/zsh
 fi
 
-# TLP
+# System config
 sudo install $DIR/etc/default/tlp /etc/default/tlp
+sudo install $DIR/etc/profile.d/freetype2.sh /etc/profile.d/freetype2.sh
+sudo install $DIR/etc/fonts/local.conf /etc/fonts.local.conf
 
 $DIR/makelinks
 
