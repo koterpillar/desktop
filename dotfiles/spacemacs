@@ -350,6 +350,8 @@ you should place your code here."
 
   (global-git-commit-mode t)
 
+  (setq-default magit-log-arguments '("--graph" "--color" "--decorate" "-n256"))
+
   (setq-default web-mode-markup-indent-offset 2)
   ;; FIXME this belongs to individual projects' .dir-locals.el
   (setq-default web-mode-engines-alist '(("django" . "\\.html\\'")))
