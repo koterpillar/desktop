@@ -7,5 +7,5 @@ libxft
 libxml2
 libxrandr
 stack:tianbar
-webkitgtk2
+webkit2gtk
 stack:xmonad
