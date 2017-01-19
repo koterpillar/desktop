@@ -4,6 +4,7 @@ bc
 pip:chrome-edit-server
 dialog
 feh
+aur:fonts-meta-extended-lt
 gksu
 gnome-control-center
 gnome-keyring

@@ -71,8 +71,20 @@ fi
 
 # System config
 sudo install $DIR/etc/default/tlp /etc/default/tlp
-sudo install $DIR/etc/profile.d/freetype2.sh /etc/profile.d/freetype2.sh
-sudo install $DIR/etc/fonts/local.conf /etc/fonts.local.conf
+
+# Fontconfig
+# https://gist.github.com/cryzed/4f64bb79e80d619866ee0b18ba2d32fc
+sudo ln -sfn /etc/fonts/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
+sudo ln -sfn /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
+sudo ln -sfn /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
+sudo ln -sfn /etc/fonts/conf.avail/30-infinality-aliases.conf /etc/fonts/conf.d/
+
+sudo rm -f /etc/fonts.local.conf
+if grep -q 38 /etc/profile.d/freetype2.sh
+then
+    sudo rm /etc/profile.d/freetype2.sh
+    sudo pacman -S --noconfirm freetype2
+fi
 
 $DIR/makelinks
 
