@@ -1,0 +1,2 @@
+#!/bin/sh
+exec rofi -combi-modi window,drun,run -show combi -modi combi -font "Fira Mono 18"
