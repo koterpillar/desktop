@@ -185,6 +185,9 @@ screensaver = spawn "light-locker-command -l"
 suspend :: MonadIO m => m ()
 suspend = spawn "systemctl suspend"
 
+menu :: String
+menu = "rofi -combi-modi window,drun,run -show combi -modi combi"
+
 main = do
     -- GHC_PACKAGE_PATH and PATH are set by the wrapper script, unset it for
     -- programs started from under XMonad
@@ -220,7 +223,7 @@ main = do
                , ((modm                , xK_b    ), sendMessage ToggleStruts)
                , ((modm                , xK_s    ), selectSearchBrowser browser google)
 
-               , ((modm                , xK_o    ), spawn "synapse")
+               , ((modm                , xK_o    ), spawn menu)
 
                , ((modm                , xK_h    ), withFocused $ sendMessage . expandWindowAlt)
                , ((modm                , xK_l    ), withFocused $ sendMessage . shrinkWindowAlt)

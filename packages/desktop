@@ -22,7 +22,7 @@ notify-osd
 polkit-gnome
 pulseaudio
 python{,2}-xdg
-synapse
+rofi
 terminator
 tracker
 ttf-anonymous-pro
