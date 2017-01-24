@@ -13,10 +13,15 @@ import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 
 import XMonad
+
+import XMonad.Config.Desktop
+
 import XMonad.Actions.Search
+
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.UrgencyHook
+
 import XMonad.Layout.ComboP
 import XMonad.Layout.MosaicAlt
 import XMonad.Layout.Named
@@ -25,7 +30,9 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Tabbed
 import XMonad.Layout.TwoPane
+
 import qualified XMonad.StackSet as S
+
 import XMonad.Util.EZConfig (additionalKeys, removeKeys)
 import XMonad.Util.Run
 
@@ -241,12 +248,12 @@ main = do
                [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
                    | (key, sc) <- zip [xK_w, xK_e, xK_r] screenOrdering
                    , (f, m) <- [(S.view, 0), (S.shift, shiftMask)]]
-    xmonad $ withUrgencyHook NoUrgencyHook $ def
+    xmonad $ withUrgencyHook NoUrgencyHook $ desktopConfig
         { terminal = "terminator"
         , workspaces = myWorkspaces
         , handleEventHook = fullscreenEventHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook def
-        , layoutHook = avoidStruts layout
+        , layoutHook = desktopLayoutModifiers layout
         , logHook = dbusLogWithMarkup client myMarkup
         , modMask = modm
         } `removeKeys`
