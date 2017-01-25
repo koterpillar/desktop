@@ -208,7 +208,7 @@ main = do
 
                , ("M4-<F1>", screensaver)
                , ("M4-S-<F1>", suspend)
-               , ("M4-S-<F2>", spawn browser)
+               , ("M4-<F2>", spawn browser)
 
                , ("<XF86AudioRaiseVolume>", raiseVolume 5)
                , ("<XF86AudioLowerVolume>", lowerVolume 5)
