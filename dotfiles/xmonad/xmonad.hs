@@ -46,6 +46,7 @@ theme = def { activeColor = "#FFE8C9"
             , urgentColor = "#FF0000"
             , urgentTextColor = "#FFFFFF"
             , urgentBorderColor = "#FFFFFF"
+            , fontName = "-*-fixed-medium-*-*-*-14-*-*-*-*-*-*-*"
             }
 
 floatLayout = simpleFloat' shrinkText theme
