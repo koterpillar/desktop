@@ -1,6 +1,5 @@
 import Control.Monad
 
-import Data.List
 import qualified Data.Map as M
 import Data.Maybe
 
@@ -18,11 +17,10 @@ import XMonad.Config.Desktop
 
 import XMonad.Actions.Search
 
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.UrgencyHook
 
 import XMonad.Layout.ComboP
+import XMonad.Layout.Fullscreen
 import XMonad.Layout.MosaicAlt
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
@@ -227,7 +225,6 @@ main = do
                , ((0                   , xF86XK_AudioLowerVolume), lowerVolume 5)
                , ((0                   , xF86XK_AudioMute), toggleMute)
 
-               , ((modm                , xK_b    ), sendMessage ToggleStruts)
                , ((modm                , xK_s    ), selectSearchBrowser browser google)
 
                , ((modm                , xK_o    ), spawn menu)
@@ -251,9 +248,9 @@ main = do
     xmonad $ withUrgencyHook NoUrgencyHook $ desktopConfig
         { terminal = "terminator"
         , workspaces = myWorkspaces
-        , handleEventHook = fullscreenEventHook
-        , manageHook = manageDocks <+> myManageHook <+> manageHook def
-        , layoutHook = desktopLayoutModifiers layout
+        , handleEventHook = handleEventHook desktopConfig <+> fullscreenEventHook
+        , manageHook = myManageHook <+> fullscreenManageHook <+> manageHook desktopConfig
+        , layoutHook = fullscreenFull $ desktopLayoutModifiers layout
         , logHook = dbusLogWithMarkup client myMarkup
         , modMask = modm
         } `removeKeys`
