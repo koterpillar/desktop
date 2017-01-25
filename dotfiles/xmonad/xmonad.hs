@@ -5,8 +5,6 @@ import Data.Maybe
 
 import DBus.Client
 
-import Network.HostName
-
 import Text.Blaze
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
@@ -16,6 +14,7 @@ import XMonad
 import XMonad.Config.Desktop
 
 import XMonad.Actions.Search
+import XMonad.Actions.PhysicalScreens
 
 import XMonad.Hooks.UrgencyHook
 
@@ -198,10 +197,6 @@ main = do
     unsetEnv "PREVPATH"
     client <- connectSession
     browser <- liftM (fromMaybe "chromium") $ lookupEnv "BROWSER"
-    hostname <- getHostName
-    -- If screens get ordered wrong, the order can be changed here
-    let screenOrdering = case hostname of
-                             _ -> [0..]
     let keys = [ ("<XF86Messenger>", spawn "pidgin")
 
                , ("<XF86ScreenSaver>", screensaver)
@@ -236,9 +231,9 @@ main = do
                    , (f, m) <- [(S.greedyView, 0), (S.shift, shiftMask)]]
                ++
                -- Switch focus/move windows between workspaces
-               [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-                   | (key, sc) <- zip [xK_w, xK_e, xK_r] screenOrdering
-                   , (f, m) <- [(S.view, 0), (S.shift, shiftMask)]]
+               [((m .|. modm, key), f sc)
+                   | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+                   , (f, m) <- [(viewScreen, 0), (sendToScreen, shiftMask)]]
     xmonad $ withUrgencyHook NoUrgencyHook $ desktopConfig
         { terminal = "terminator"
         , workspaces = myWorkspaces
