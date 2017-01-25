@@ -264,13 +264,7 @@ workspaceKeys
   , (f, m) <- [(viewScreen, 0), (sendToScreen, shiftMask)]
   ]
 
-main
-    -- GHC_PACKAGE_PATH and PATH are set by the wrapper script, unset it for
-    -- programs started from under XMonad
- = do
-  unsetEnv "GHC_PACKAGE_PATH"
-  getEnv "PREVPATH" >>= setEnv "PATH"
-  unsetEnv "PREVPATH"
+main = do
   client <- connectSession
   xmonad $
     withUrgencyHook NoUrgencyHook $
