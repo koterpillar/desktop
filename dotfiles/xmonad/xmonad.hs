@@ -31,10 +31,8 @@ import XMonad.Layout.TwoPane
 
 import qualified XMonad.StackSet as S
 
-import XMonad.Util.EZConfig (additionalKeys, removeKeys)
+import XMonad.Util.EZConfig
 import XMonad.Util.Run
-
-import Graphics.X11.ExtraTypes.XF86
 
 import System.Environment
 import System.Tianbar.XMonadLog
@@ -205,37 +203,34 @@ main = do
     -- If screens get ordered wrong, the order can be changed here
     let screenOrdering = case hostname of
                              _ -> [0..]
-    let keys = [ ((0                   , xF86XK_Messenger), spawn "pidgin")
+    let keys = [ ("<XF86Messenger>", spawn "pidgin")
 
-               , ((0                   , xF86XK_Explorer), screensaver)
-               , ((shiftMask           , xF86XK_Explorer), suspend)
+               , ("<XF86ScreenSaver>", screensaver)
+               , ("<XF86HomePage>", spawn browser)
+               , ("<XF86Display>", spawn "fix-env")
+               , ("M4-<F7>", spawn "fix-env")
 
-               , ((0                   , xF86XK_ScreenSaver), screensaver)
-               , ((0                   , xF86XK_HomePage), spawn browser)
-               , ((0                   , xF86XK_Display), spawn "fix-env")
-               , ((modm                , xK_F7), spawn "fix-env")
+               , ("<Print>", spawn "gnome-screenshot -i")
 
-               , ((0                   , xK_Print), spawn "gnome-screenshot -i")
+               , ("M4-<F1>", screensaver)
+               , ("M4-S-<F1>", suspend)
+               , ("M4-S-<F2>", spawn browser)
 
-               , ((modm                , xK_F1), screensaver)
-               , ((modm .|. shiftMask  , xK_F1), suspend)
-               , ((modm                , xK_F2), spawn browser)
+               , ("<XF86AudioRaiseVolume>", raiseVolume 5)
+               , ("<XF86AudioLowerVolume>", lowerVolume 5)
+               , ("<XF86AudioMute>", toggleMute)
 
-               , ((0                   , xF86XK_AudioRaiseVolume), raiseVolume 5)
-               , ((0                   , xF86XK_AudioLowerVolume), lowerVolume 5)
-               , ((0                   , xF86XK_AudioMute), toggleMute)
+               , ("M4-s", selectSearchBrowser browser google)
 
-               , ((modm                , xK_s    ), selectSearchBrowser browser google)
+               , ("M4-o", spawn menu)
 
-               , ((modm                , xK_o    ), spawn menu)
-
-               , ((modm                , xK_h    ), withFocused $ sendMessage . expandWindowAlt)
-               , ((modm                , xK_l    ), withFocused $ sendMessage . shrinkWindowAlt)
-               , ((modm .|. shiftMask  , xK_h    ), withFocused $ sendMessage . tallWindowAlt)
-               , ((modm .|. shiftMask  , xK_l    ), withFocused $ sendMessage . wideWindowAlt)
-               , ((modm .|. controlMask, xK_space), sendMessage resetAlt)
+               , ("M4-h", withFocused $ sendMessage . expandWindowAlt)
+               , ("M4-l", withFocused $ sendMessage . shrinkWindowAlt)
+               , ("M4-S-h", withFocused $ sendMessage . tallWindowAlt)
+               , ("M4-S-l", withFocused $ sendMessage . wideWindowAlt)
+               , ("M4-C-<Space>", sendMessage resetAlt)
                ]
-               ++
+    let workspaceKeys =
                -- Switch/move windows to workspaces
                [((m .|. modm, k), windows $ f i)
                    | (i, k) <- zip myWorkspaces $ [xK_1 .. xK_9] ++ [xK_0, xK_minus, xK_equal]
@@ -253,7 +248,8 @@ main = do
         , layoutHook = fullscreenFull $ desktopLayoutModifiers layout
         , logHook = dbusLogWithMarkup client myMarkup
         , modMask = modm
-        } `removeKeys`
-        [ (modm                 , xK_p)
-        , (modm                 , xK_Return)
-        ] `additionalKeys` keys
+        } `removeKeysP`
+        [ "M4-p"
+        , "M4-<Return>"
+        ] `additionalKeysP` keys
+        `additionalKeys` workspaceKeys
