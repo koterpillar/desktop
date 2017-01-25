@@ -47,7 +47,6 @@ theme = def { activeColor = "#FFE8C9"
             , urgentColor = "#FF0000"
             , urgentTextColor = "#FFFFFF"
             , urgentBorderColor = "#FFFFFF"
-            , fontName = "xft:ubuntu:size=9"
             }
 
 floatLayout = simpleFloat' shrinkText theme
