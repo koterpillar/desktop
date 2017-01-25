@@ -37,8 +37,8 @@ import XMonad.Util.Run
 import System.Environment
 import System.Tianbar.XMonadLog
 
--- For default configuration, see
--- http://xmonad.org/xmonad-docs/xmonad/src/XMonad-Config.html
+-- For configuration documentation, see
+-- http://xmonad.org/xmonad-docs/xmonad-contrib/index.html
 
 theme :: Theme
 theme = def { activeColor = "#FFE8C9"
