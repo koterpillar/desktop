@@ -1,5 +1,13 @@
 flags: {}
-packages: []
+packages:
+- location:
+    git: https://github.com/xmonad/xmonad
+    commit: f2da028ff96698289a31a44bdbaea97c53aa01aa
+  extra-dep: true
+- location:
+    git: https://github.com/xmonad/xmonad-contrib
+    commit: 33c805fadcda8144a086c9d53aad932bbbc3e81b
+  extra-dep: true
 extra-deps:
 - gi-cairo-1.0.6
 - gi-gdk-3.0.6
@@ -8,6 +16,6 @@ extra-deps:
 - gi-javascriptcore-4.0.6
 - gi-webkit2-4.0.6
 - optparse-declarative-0.3.0
+- X11-1.7
 - X11-xft-0.3.1
-- xmonad-contrib-0.12
-resolver: lts-7.14
+resolver: lts-7.15

@@ -24,4 +24,5 @@
 /dotfiles/xmonad/*.hi
 /dotfiles/xmonad/*.o
 /dotfiles/xmonad/xmonad.errors
+/dotfiles/xmonad/xmonad.state
 /dotfiles/xmonad/xmonad-x86_64-linux
