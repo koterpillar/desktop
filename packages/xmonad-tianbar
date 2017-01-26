@@ -1,7 +1,7 @@
 stack:MissingH
 stack:blaze-html
+stack:dbus
 gobject-introspection
-stack:hostname
 libx11
 libxft
 libxml2
@@ -9,3 +9,4 @@ libxrandr
 stack:tianbar
 webkit2gtk
 stack:xmonad
+stack:xmonad-contrib
