@@ -27,7 +27,7 @@ case $(hostname) in
 		fi
 	;;
 	yulan)
-		DPI=120
+		DPI=96
 		xrandr --dpi $DPI --auto
 		if xrandr | grep -q "HDMI-1 connected"
 		then
