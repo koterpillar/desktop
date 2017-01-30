@@ -97,7 +97,7 @@ sudo systemctl disable systemd-rfkill
 timedatectl set-ntp true
 
 # XMonad and Tianbar config
-$HOME/bin/xmonad --recompile
+$HOME/.local/bin/xmonad --recompile
 cd $DIR/config/tianbar
 npm install
 ./node_modules/.bin/bower install
