@@ -6,6 +6,16 @@ has_connection () {
 	nmcli --terse --fields name connection show --active | grep -v docker0 | grep -v "Wired Connection" | sha1sum | grep -q $1
 }
 
+has_monitor () {
+    xrandr | grep -q "^$1 connected"
+}
+
+DPI=96
+
+xrandr_dpi () {
+    xrandr --dpi $DPI "$@"
+}
+
 case $(hostname) in
 	taohua)
 		SOUNDCARD=alsa_card.pci-0000_00_1f.3
@@ -15,10 +25,10 @@ case $(hostname) in
 		# output profile manually fixes it
 		pactl set-card-profile $SOUNDCARD output:analog-stereo
 
-		xrandr --auto
-		if xrandr | grep -q "HDMI-1 connected"
+		xrandr_dpi --auto
+		if has_monitor HDMI-1
 		then
-			xrandr --output HDMI-1 --primary --above eDP-1 --auto
+			xrandr_dpi --output HDMI-1 --primary --above eDP-1 --auto
 			pactl set-card-profile $SOUNDCARD output:hdmi-stereo+input:analog-stereo
 			pactl set-default-sink $SOUND_OUTPUT.hdmi-stereo
 		else
@@ -27,23 +37,27 @@ case $(hostname) in
 		fi
 	;;
 	yulan)
-		DPI=96
-		xrandr --dpi $DPI --auto
-		if xrandr | grep -q "HDMI-1 connected"
+		DPI=155
+		if has_monitor HDMI-1
 		then
-			xrandr --output HDMI-1 --primary --above eDP-1 --auto
-		elif xrandr | grep -q "DP-1 connected"
+      xrandr_dpi --auto
+      xrandr_dpi --output HDMI-1 --primary --above eDP-1 --auto
+		elif has_monitor DP-1
 		then
 			if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
 				has_connection 6c3601e50a2c5d2bc0ae572fb4d5cc8431d7d9ec
 			then
-				xrandr --output DP-1 --primary --left-of eDP-1 --auto
-				xrandr --dpi $DPI --output eDP-1 --pos 2560x600
+        DPI=96
+        xrandr_dpi --auto
+				xrandr_dpi --output DP-1 --primary --left-of eDP-1 --auto
+				xrandr_dpi --output eDP-1 --pos 2560x600
 			else
-				xrandr --output DP-1 --primary --above eDP-1 --auto
+        DPI=96
+        xrandr_dpi --auto
+				xrandr_dpi --output DP-1 --primary --above eDP-1 --auto
 			fi
 		else
-			:  # pass
+      xrandr_dpi --auto
 		fi
 
 		if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
