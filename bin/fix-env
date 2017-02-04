@@ -18,6 +18,7 @@ xrandr_dpi () {
 
 case $(hostname) in
 	taohua)
+    DPI=125
 		SOUNDCARD=alsa_card.pci-0000_00_1f.3
 		SOUND_OUTPUT=alsa_output.pci-0000_00_1f.3
 
