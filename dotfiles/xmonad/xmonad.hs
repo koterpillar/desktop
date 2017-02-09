@@ -54,15 +54,12 @@ floatLayout = simpleFloat' shrinkText theme
 
 tabbedLayout = tabbed shrinkText theme
 
-gitWorkspace = "4"
-
 mailWorkspace = "6"
 
 imWorkspace = "7"
 
 workspaceIcon :: String -> Maybe String
 workspaceIcon s
-  | s == gitWorkspace = Just "code-fork"
   | s == mailWorkspace = Just "envelope-o"
   | s == imWorkspace = Just "comment-o"
   | otherwise = Nothing
@@ -90,8 +87,7 @@ myWorkspaces = map show [1 .. 9] ++ ["0", "-", "="]
 
 myManageHook =
   composeAll
-    [ className =? "Gitg" --> doShift gitWorkspace
-    , className =? "Evolution" --> doShift mailWorkspace
+    [ className =? "Evolution" --> doShift mailWorkspace
     , className =? "Pidgin" <||> className =? "Skype" --> doShift imWorkspace
     ]
 
