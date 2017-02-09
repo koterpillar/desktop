@@ -69,11 +69,8 @@ imLayout =
   where
     rosterLayout = smartBorders mosaicLayout
     mainLayout = mosaicLayout
-    isRoster = pidginRoster `Or` skypeRoster
+    isRoster = pidginRoster
     pidginRoster = And (ClassName "Pidgin") (Role "buddy_list")
-    -- TODO: distinguish Skype's main window better
-    skypeRoster = Title $ skypeLogin ++ " - Skype™"
-    skypeLogin = "koterpillar"
 
 mosaicLayout = MosaicAlt M.empty
 
@@ -88,7 +85,7 @@ myWorkspaces = map show [1 .. 9] ++ ["0", "-", "="]
 myManageHook =
   composeAll
     [ className =? "Evolution" --> doShift mailWorkspace
-    , className =? "Pidgin" <||> className =? "Skype" --> doShift imWorkspace
+    , className =? "Pidgin" --> doShift imWorkspace
     ]
 
 modm = mod4Mask
