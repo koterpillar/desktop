@@ -2,8 +2,11 @@ import Control.Monad
 
 import qualified Data.Map as M
 import Data.Maybe
+import Data.Monoid
 
 import DBus.Client
+
+import Graphics.X11.Xrandr
 
 import Text.Blaze
 import qualified Text.Blaze.Html5 as H
@@ -220,6 +223,16 @@ menu = spawn "rofi -combi-modi window,drun,run -show combi -modi combi"
 browser :: String
 browser = "chromium"
 
+-- Listen to monitor configuration changes, and call the screen rearranging script
+listenMonitorsHook :: X ()
+listenMonitorsHook = withDisplay $ \dpy -> do
+  root <- asks theRoot
+  io $ xrrSelectInput dpy root rrScreenChangeNotifyMask
+
+monitorsHook :: Event -> X All
+monitorsHook (RRScreenChangeNotifyEvent {}) = spawn "fix-env" >> pure (All True)
+monitorsHook _ = pure (All True)
+
 extraKeys =
   [ ("<XF86Messenger>", spawn "pidgin")
   , ("<XF86ScreenSaver>", screensaver)
@@ -264,7 +277,8 @@ main = do
     desktopConfig
     { terminal = "terminator"
     , workspaces = myWorkspaces
-    , handleEventHook = handleEventHook desktopConfig <+> fullscreenEventHook
+    , handleEventHook = monitorsHook <+> handleEventHook desktopConfig <+> fullscreenEventHook
+    , startupHook = listenMonitorsHook <+> startupHook desktopConfig
     , manageHook =
         myManageHook <+> fullscreenManageHook <+> manageHook desktopConfig
     , layoutHook = fullscreenFull $ desktopLayoutModifiers layout

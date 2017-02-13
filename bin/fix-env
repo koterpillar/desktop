@@ -1,5 +1,15 @@
 #!/bin/sh -e
 
+# Ensure only one copy is running
+LOCK_DIR=$XDG_RUNTIME_DIR/fix-env.lock
+if mkdir $LOCK_DIR 2>/dev/null
+then
+    trap 'rmdir "$LOCK_DIR"; exit $?' EXIT
+    sleep 3
+else
+    exit
+fi
+
 setxkbmap -option altwin:swap_alt_win
 
 has_connection () {
