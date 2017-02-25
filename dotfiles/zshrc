@@ -40,9 +40,13 @@ if ! zgen saved; then
 
     zgen oh-my-zsh
 
+    zgen oh-my-zsh plugins/autojump
+    zgen oh-my-zsh plugins/bower
+    zgen oh-my-zsh plugins/django
     zgen oh-my-zsh plugins/git
-
+    zgen oh-my-zsh plugins/npm
     zgen oh-my-zsh plugins/pip
+    zgen oh-my-zsh plugins/stack
 
     zgen load zsh-users/zsh-autosuggestions
 
@@ -84,8 +88,6 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_DIRTY="⚡"
 
 ZSH_THEME_TERM_TITLE_IDLE="$PROMPT_HOST: %~"
-
-source /usr/share/autojump/autojump.zsh
 
 # global /etc/zshprofile overrides $PATH
 # oh-my-zsh overrides $PAGER
