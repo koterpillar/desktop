@@ -92,3 +92,5 @@ ZSH_THEME_TERM_TITLE_IDLE="$PROMPT_HOST: %~"
 # global /etc/zshprofile overrides $PATH
 # oh-my-zsh overrides $PAGER
 source $HOME/.zshenv
+
+source /etc/profile.d/vte.sh

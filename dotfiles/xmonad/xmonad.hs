@@ -275,7 +275,7 @@ main = do
   xmonad $
     withUrgencyHook NoUrgencyHook $
     desktopConfig
-    { terminal = "terminator"
+    { terminal = "termite"
     , workspaces = myWorkspaces
     , handleEventHook = monitorsHook <+> handleEventHook desktopConfig <+> fullscreenEventHook
     , startupHook = listenMonitorsHook <+> startupHook desktopConfig

@@ -23,7 +23,7 @@ polkit-gnome
 pulseaudio
 python{,2}-xdg
 rofi
-terminator
+termite
 tracker
 ttf-anonymous-pro
 ttf-arphic-ukai
