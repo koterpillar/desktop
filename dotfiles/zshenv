@@ -5,6 +5,10 @@ export PAGER=less
 export LESS='-RFX'
 export EDITOR="emacsclient --alternate-editor emacs"
 
+e() {
+    ${(z)EDITOR} "$@"
+}
+
 export WORKON_HOME=~/.virtualenvs
 
 if [ "$COLORTERM" = "gnome-terminal" ] && [ "$TERM" = "xterm" ]
