@@ -230,7 +230,7 @@ listenMonitorsHook = withDisplay $ \dpy -> do
   io $ xrrSelectInput dpy root rrScreenChangeNotifyMask
 
 monitorsHook :: Event -> X All
-monitorsHook (RRScreenChangeNotifyEvent {}) = spawn "fix-env" >> pure (All True)
+monitorsHook (RRScreenChangeNotifyEvent {}) = spawn "fix-env --delay" >> pure (All True)
 monitorsHook _ = pure (All True)
 
 extraKeys =
