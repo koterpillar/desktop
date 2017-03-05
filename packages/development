@@ -10,6 +10,7 @@ aur:gitflow-avh
 gitg
 happy
 hindent
+hoogle
 inotify-tools
 ipython{,2}
 pip:isort
