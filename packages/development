@@ -34,6 +34,7 @@ sshfs
 stack
 tcpdump
 tig
+twine
 pip:tox
 vim
 virt-manager
