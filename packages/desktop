@@ -20,12 +20,12 @@ mosh
 network-manager-applet
 notify-osd
 noto-fonts
+otf-fira-mono
 polkit-gnome
 pulseaudio
 python{,2}-xdg
 rofi
 tracker
-ttf-anonymous-pro
 ttf-arphic-ukai
 ttf-arphic-uming
 aur:ttf-emojione-color
