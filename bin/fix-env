@@ -57,17 +57,31 @@ case $(hostname) in
       xrandr_dpi --output HDMI-1 --primary --above eDP-1 --auto
 		elif has_monitor DP-1
 		then
+			  if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
+				        has_connection 6c3601e50a2c5d2bc0ae572fb4d5cc8431d7d9ec
+			  then
+            DPI=96
+            xrandr_dpi --auto
+				    xrandr_dpi --output DP-1 --primary --left-of eDP-1 --auto
+				    xrandr_dpi --output eDP-1 --pos 2560x600
+			  else
+            DPI=96
+            xrandr_dpi --auto
+				    xrandr_dpi --output DP-1 --primary --above eDP-1 --auto
+			  fi
+		elif has_monitor DP-1-8
+		then
 			if has_connection 503314a033141b4654c78cca5d4bfe59fcbe6dc0 || \
 				has_connection 6c3601e50a2c5d2bc0ae572fb4d5cc8431d7d9ec
 			then
         DPI=96
         xrandr_dpi --auto
-				xrandr_dpi --output DP-1 --primary --left-of eDP-1 --auto
+				xrandr_dpi --output DP-1-8 --primary --left-of eDP-1 --auto
 				xrandr_dpi --output eDP-1 --pos 2560x600
 			else
         DPI=96
         xrandr_dpi --auto
-				xrandr_dpi --output DP-1 --primary --above eDP-1 --auto
+				xrandr_dpi --output DP-1-8 --primary --above eDP-1 --auto
 			fi
 		else
       xrandr_dpi --auto
