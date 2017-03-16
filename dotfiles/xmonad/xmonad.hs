@@ -218,7 +218,7 @@ suspend = spawn "systemctl suspend"
 menu
   :: MonadIO m
   => m ()
-menu = spawn "rofi -combi-modi window,drun,run -show combi -modi combi -font \"Fira Mono 24\""
+menu = spawn "rofi -combi-modi window,drun,run -show combi -modi combi -font \"Fira Mono 18\""
 
 browser :: String
 browser = "chromium"
