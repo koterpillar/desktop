@@ -218,7 +218,7 @@ suspend = spawn "systemctl suspend"
 menu
   :: MonadIO m
   => m ()
-menu = spawn "rofi -combi-modi window,drun,run -show combi -modi combi"
+menu = spawn "rofi -combi-modi window,drun,run -show combi -modi combi -font \"Fira Mono 24\""
 
 browser :: String
 browser = "chromium"
@@ -275,7 +275,7 @@ main = do
   xmonad $
     withUrgencyHook NoUrgencyHook $
     desktopConfig
-    { terminal = "termite"
+    { terminal = "kitty"
     , workspaces = myWorkspaces
     , handleEventHook = monitorsHook <+> handleEventHook desktopConfig <+> fullscreenEventHook
     , startupHook = listenMonitorsHook <+> startupHook desktopConfig

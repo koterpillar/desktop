@@ -7,6 +7,7 @@
 /config/systemd/user/default.target.wants/
 /dotfiles/ipython/profile_default/history.sqlite
 /dotfiles/ipython/profile_default/security
+/config/kitty/cached.json
 /config/tianbar/bower_components
 /config/tianbar/node_modules
 /dotfiles/stack/build-plan
