@@ -12,7 +12,6 @@ gnome-themes-standard
 gvfs-mtp
 stack:hoe
 ibus{,-{sunpinyin,m17n,hangul}}
-aur:kitty-git
 light-locker
 lightdm
 lightdm-gtk-greeter
@@ -25,6 +24,7 @@ polkit-gnome
 pulseaudio
 python{,2}-xdg
 rofi
+termite
 tracker
 ttf-arphic-ukai
 ttf-arphic-uming
