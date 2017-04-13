@@ -2,6 +2,14 @@
 .*.sw?
 /.cabal-sandbox
 /cabal.sandbox.config
+/config/Code/Backups
+/config/Code/Cache
+/config/Code/CachedData
+/config/Code/Cookies
+/config/Code/Cookies-journal
+/config/Code/storage.json
+/config/Code/GPUCache
+/config/Code/Local Storage
 /config/gtk-3.0/bookmarks
 /config/hexchat/scrollback
 /config/systemd/user/default.target.wants/

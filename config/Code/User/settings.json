@@ -1,0 +1,15 @@
+{
+    "editor.detectIndentation": true,
+    "editor.fontFamily": "Fira Mono",
+    "editor.rulers": [80],
+    "editor.wordWrap": "on",
+
+    "files.exclude": {
+        "**/*.pyc": true
+    },
+
+    "python.venvPath": "~/.virtualenvs",
+
+    "workbench.colorTheme": "Tinacious Design (Light)",
+    "workbench.welcome.enabled": true
+}

@@ -37,6 +37,7 @@ tig
 twine
 pip:tox
 vim
+aur:visual-studio-code
 virt-manager
 pip:wdb.server
 wireshark-gtk

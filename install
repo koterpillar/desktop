@@ -103,6 +103,13 @@ npm install
 ./node_modules/.bin/bower install
 cd - >/dev/null
 
+# VS Code
+for ext in $(cat vscode-extensions)
+do
+	code --install-extension $ext
+done
+
+
 for conf in $DIR/dconf/*.dconf
 do
 	confpath=$(echo $conf | sed -E 's!.+/!!;s!\.!/!g;s!dconf$!!;s!^!/!')
