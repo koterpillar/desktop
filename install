@@ -85,7 +85,7 @@ $DIR/makelinks
 ls config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable
 sudo systemctl enable \
 	docker \
-	lightdm \
+	gdm \
 	NetworkManager \
 	nfs-client.target \
 	rpcbind \
@@ -95,13 +95,6 @@ sudo systemctl enable \
 	&& true
 sudo systemctl disable systemd-rfkill
 timedatectl set-ntp true
-
-# XMonad and Tianbar config
-$HOME/.local/bin/xmonad --recompile
-cd $DIR/config/tianbar
-npm install
-./node_modules/.bin/bower install
-cd - >/dev/null
 
 # VS Code
 for ext in $(cat vscode-extensions)

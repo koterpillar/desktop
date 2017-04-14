@@ -1,32 +1,19 @@
 #!/bin/sh -e
 
-if [ "$1" == "--delay" ]
-then
-    # Ensure only one copy is running
-    LOCK_DIR=$XDG_RUNTIME_DIR/fix-env.lock
-    if mkdir $LOCK_DIR 2>/dev/null
-    then
-        trap 'rmdir "$LOCK_DIR"; exit $?' EXIT
-        sleep 3
-    else
-        exit
-    fi
-fi
-
-setxkbmap -option altwin:swap_alt_win
-
 has_connection () {
     nmcli --terse --fields name connection show --active | grep -v docker0 | grep -v "Wired Connection" | sha1sum | grep -q $1
 }
 
 has_monitor () {
-    xrandr | grep -q "^$1 connected"
+    echo "Not implemented for Wayland">&2
+    exit 1
 }
 
 DPI=96
 
 xrandr_dpi () {
-    xrandr --dpi $DPI "$@"
+    echo "Not implemented for Wayland">&2
+    exit 1
 }
 
 case $(hostname) in
@@ -98,8 +85,3 @@ case $(hostname) in
         fi
     ;;
 esac
-
-if [ -f ~/.fehbg ]
-then
-    . ~/.fehbg
-fi
