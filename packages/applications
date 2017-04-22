@@ -24,6 +24,7 @@ nautilus
 aur:obnam
 pandoc
 aur:pepper-flash
+perl-image-exiftool
 pidgin
 aur:pidgin-extprefs
 aur:pidgin-leftify-tabs
