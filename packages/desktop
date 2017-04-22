@@ -6,6 +6,7 @@ dialog
 aur:fonts-meta-extended-lt
 gksu
 gnome
+gnome-tweak-tool
 gvfs-mtp
 stack:hoe
 ibus{,-{sunpinyin,m17n,hangul}}
