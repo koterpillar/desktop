@@ -25,5 +25,3 @@ tlp
 wget
 whois
 x86_energy_perf_policy
-xf86-input-libinput
-xorg-server

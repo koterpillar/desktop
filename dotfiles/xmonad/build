@@ -1,3 +1,0 @@
-#!/bin/sh
-# Recompile XMonad using Stack
-stack ghc -- $(dirname $0)/xmonad.hs -o $1
