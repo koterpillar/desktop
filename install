@@ -96,13 +96,6 @@ sudo systemctl enable \
 sudo systemctl disable systemd-rfkill
 timedatectl set-ntp true
 
-# VS Code
-for ext in $(cat vscode-extensions)
-do
-	code --install-extension $ext
-done
-
-
 for conf in $DIR/dconf/*.dconf
 do
 	confpath=$(echo $conf | sed -E 's!.+/!!;s!\.!/!g;s!dconf$!!;s!^!/!')
