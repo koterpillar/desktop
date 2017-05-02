@@ -1,6 +1,5 @@
 autojump
 bc
-pip:chrome-edit-server
 aur:chrome-gnome-shell-git
 dialog
 aur:fonts-meta-extended-lt
