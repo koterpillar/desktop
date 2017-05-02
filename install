@@ -43,7 +43,6 @@ fi
 INSTALL='pacaur -S --needed --noconfirm'
 AUR_INSTALL='pacaur -y --needed --noconfirm'
 STACK_INSTALL='stack install'
-PIP_INSTALL='pip install --user --upgrade'
 
 # Packages
 # Files in packages/ may contain Bash brace expansions
@@ -59,9 +58,6 @@ stack setup
 # gi-* depends on haskell-gi but doesn't list it as a dependency
 stack build haskell-gi
 $STACK_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^stack:/!d;s/^stack://g'))")
-
-$INSTALL python-pip
-$PIP_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^pip:/!d;s/^pip://g'))")
 
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
