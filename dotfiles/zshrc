@@ -42,15 +42,11 @@ if ! zgen saved; then
 
     zgen oh-my-zsh plugins/autojump
     zgen oh-my-zsh plugins/bower
-    zgen oh-my-zsh plugins/django
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/npm
-    zgen oh-my-zsh plugins/pip
     zgen oh-my-zsh plugins/stack
 
     zgen load zsh-users/zsh-autosuggestions
-
-    zgen oh-my-zsh plugins/virtualenvwrapper
 
     zgen load zsh-users/zsh-syntax-highlighting
 
