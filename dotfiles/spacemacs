@@ -327,16 +327,6 @@ values."
    dotspacemacs-whitespace-cleanup nil
    ))
 
-;; https://github.com/syl20bnr/spacemacs/pull/7670
-(defun my/python-setup-checkers (&rest args)
-  (let ((pylint (spacemacs/pyenv-executable-find "pylint"))
-        (flake8 (spacemacs/pyenv-executable-find "flake8")))
-    (when pylint
-      (flycheck-set-checker-executable "python-pylint" pylint))
-    (when flake8
-      (flycheck-set-checker-executable "python-flake8" flake8))
-    ))
-
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init', before layer configuration
@@ -368,14 +358,8 @@ you should place your code here."
   (setq-default magit-log-arguments '("--graph" "--color" "--decorate" "-n256"))
 
   (setq-default web-mode-markup-indent-offset 2)
-  ;; FIXME this belongs to individual projects' .dir-locals.el
-  (setq-default web-mode-engines-alist '(("django" . "\\.html\\'")))
 
   (editorconfig-mode 1)
-
-  ;; https://github.com/syl20bnr/spacemacs/pull/7670
-  (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
-    (advice-add func :after 'my/python-setup-checkers))
 
   (add-to-list 'exec-path "~/.local/bin")
   )
