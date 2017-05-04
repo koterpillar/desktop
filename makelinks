@@ -1,12 +1,21 @@
 #!/bin/bash -e
 
-DIR=$(readlink -f $(dirname $0))
+if [ "$OSTYPE" '=~' "darwin" ]
+then
+    LN=gln
+    READLINK=greadlink
+else
+    LN=ln
+    READLINK=readlink
+fi
+
+DIR=$($READLINK -f $(dirname $0))
 
 # Config and dotfiles
 mkdir -p $HOME/.config
-ls $DIR/config | xargs -I FILE ln -sfnT $DIR/config/FILE $HOME/.config/FILE
-ls $DIR/dotfiles | xargs -I FILE ln -sfnT $DIR/dotfiles/FILE $HOME/.FILE
-ln -sfnT $DIR/bin $HOME/bin
+ls $DIR/config | xargs -I FILE $LN -sfnT $DIR/config/FILE $HOME/.config/FILE
+ls $DIR/dotfiles | xargs -I FILE $LN -sfnT $DIR/dotfiles/FILE $HOME/.FILE
+$LN -sfnT $DIR/bin $HOME/bin
 
 # Git repositories
 submodule () {
@@ -21,6 +30,9 @@ submodule $HOME/.emacs.d https://github.com/syl20bnr/spacemacs
 submodule $HOME/.vim https://github.com/koterpillar/vim.git
 submodule $HOME/.zgen https://github.com/tarjoilija/zgen.git
 
-# xdg-mime ignores $XDG_CONFIG_HOME/mimeapps.list
-mkdir -p $HOME/.local/share/applications
-ln -sf $HOME/.config/mimeapps.list $HOME/.local/share/applications/mimeapps.list
+if [ ! "$OSTYPE" '=~' "darwin" ]
+then
+    # xdg-mime ignores $XDG_CONFIG_HOME/mimeapps.list
+    mkdir -p $HOME/.local/share/applications
+    $LN -sf $HOME/.config/mimeapps.list $HOME/.local/share/applications/mimeapps.list
+fi
