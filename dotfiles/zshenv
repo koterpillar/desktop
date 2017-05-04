@@ -1,5 +1,6 @@
 typeset -U path
 path=(~/bin ~/.local/bin $path)
+export PATH
 
 export PAGER=less
 export LESS='-RFX'

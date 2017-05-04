@@ -376,6 +376,8 @@ you should place your code here."
   ;; https://github.com/syl20bnr/spacemacs/pull/7670
   (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
     (advice-add func :after 'my/python-setup-checkers))
+
+  (add-to-list 'exec-path "~/.local/bin")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
