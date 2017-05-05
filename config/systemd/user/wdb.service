@@ -1,8 +1,0 @@
-[Unit]
-Description=wdb
-
-[Service]
-ExecStart=/usr/bin/python %h/.local/bin/wdb.server.py
-
-[Install]
-WantedBy=default.target
