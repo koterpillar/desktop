@@ -92,8 +92,11 @@ sudo systemctl enable \
 sudo systemctl disable systemd-rfkill
 timedatectl set-ntp true
 
-for conf in $DIR/dconf/*.dconf
-do
-	confpath=$(echo $conf | sed -E 's!.+/!!;s!\.!/!g;s!dconf$!!;s!^!/!')
-	dconf load $confpath < $conf
-done
+# GSettings
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'ru'), ('ibus', 'sunpinyin'), ('ibus', 'hangul')]"
+gsettings set org.gnome.desktop.interface clock-format '24h'
+gsettings set org.gnome.desktop.interface clock-show-date true
+gsettings set org.gnome.desktop.interface monospace-font-name 'Monospace 11'
+# To enlarge text on higher DPI displays
+# gsetting set org.gnome.desktop.interface text-scaling-factor 1.25
+gsettings set org.gnome.system.location.enabled true
