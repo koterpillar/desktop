@@ -15,7 +15,6 @@ otf-fira-mono
 polkit-gnome
 pulseaudio
 python{,2}-xdg
-termite
 ttf-arphic-ukai
 ttf-arphic-uming
 aur:ttf-emojione-color
