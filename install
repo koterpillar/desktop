@@ -42,7 +42,6 @@ fi
 
 INSTALL='pacaur -S --needed --noconfirm'
 AUR_INSTALL='pacaur -y --needed --noconfirm'
-STACK_INSTALL='stack install'
 
 # Packages
 # Files in packages/ may contain Bash brace expansions
@@ -55,9 +54,6 @@ $AUR_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^aur:/!d;s/^au
 
 ln -sfnT $DIR/dotfiles/stack $HOME/.stack
 stack setup
-# gi-* depends on haskell-gi but doesn't list it as a dependency
-stack build haskell-gi
-$STACK_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^stack:/!d;s/^stack://g'))")
 
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]

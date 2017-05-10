@@ -7,7 +7,6 @@ gksu
 gnome
 gnome-tweak-tool
 gvfs-mtp
-stack:hoe
 ibus{,-{sunpinyin,m17n,hangul}}
 mosh
 noto-fonts
