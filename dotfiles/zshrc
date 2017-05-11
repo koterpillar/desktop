@@ -9,7 +9,6 @@ compinit
 
 export DESKTOP_ROOT=$(dirname $(dirname $(readlink ~/.zshrc)))
 
-alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 bindkey -e
