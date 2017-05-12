@@ -3,7 +3,6 @@ bc
 aur:chrome-gnome-shell-git
 dialog
 aur:fonts-meta-extended-lt
-gksu
 gnome
 gnome-tweak-tool
 gvfs-mtp
