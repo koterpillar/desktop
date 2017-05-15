@@ -80,7 +80,7 @@ CHROOT="arch-chroot /mnt"
 
 echo $COMPUTER_NAME > /mnt/etc/hostname
 
-$CHROOT ln -s /usr/share/zoneinfo/$COMPUTER_TIMEZONE /etc/localtime
+$CHROOT ln -sf /usr/share/zoneinfo/$COMPUTER_TIMEZONE /etc/localtime
 
 echo "en_US.UTF-8 UTF-8" > /mnt/etc/locale.gen
 echo "$COMPUTER_LOCALE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
@@ -115,7 +115,7 @@ $CHROOT passwd -l root
 echo "Setting the new system user password."
 $CHROOT passwd $COMPUTER_USER
 
-# Hand off to the install script
+# Prepare the system for the install script
 
 # arch-chroot doesn't give the user a tty to prompt for password, disable it
 # temporarily
@@ -125,8 +125,8 @@ trap 'sed -i "s/NOPASSWD: //" /mnt/etc/sudoers.d/sudo-group' exit
 AS_USER="$CHROOT sudo -u $COMPUTER_USER -i"
 USER_HOME=/home/$COMPUTER_USER
 
-$CHROOT pacman -S --noconfirm --needed git
+$CHROOT pacman -S --noconfirm --needed git networkmanager sudo
 $CHROOT update-ca-trust
 $AS_USER mkdir -p $USER_HOME/projects
 $AS_USER git clone https://github.com/koterpillar/desktop.git $USER_HOME/projects/desktop
-$AS_USER $USER_HOME/projects/desktop/install
+$AS_USER $USER_HOME/projects/desktop/makelinks

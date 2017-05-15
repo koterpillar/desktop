@@ -38,6 +38,12 @@ then
 	gpg --recv-keys 1EB2638FF56C0C53  # pacaur/cower key
 	aur_install cower
 	aur_install pacaur
+
+	if [ ! -f $HOME/.config/pacaur/config ]
+	then
+		mkdir -p $HOME/.config
+		ln -sfnT $DIR/config/pacaur $HOME/config/pacaur
+	fi
 fi
 
 INSTALL='pacaur -S --needed --noconfirm'

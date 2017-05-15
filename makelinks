@@ -4,8 +4,8 @@ DIR=$(readlink -f $(dirname $0))
 
 # Config and dotfiles
 mkdir -p $HOME/.config
-ls config | xargs -I FILE ln -sfnT $DIR/config/FILE $HOME/.config/FILE
-ls dotfiles | xargs -I FILE ln -sfnT $DIR/dotfiles/FILE $HOME/.FILE
+ls $DIR/config | xargs -I FILE ln -sfnT $DIR/config/FILE $HOME/.config/FILE
+ls $DIR/dotfiles | xargs -I FILE ln -sfnT $DIR/dotfiles/FILE $HOME/.FILE
 ln -sfnT $DIR/bin $HOME/bin
 
 # Git repositories
