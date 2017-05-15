@@ -349,8 +349,10 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (setq-default browse-url-browser-function 'browse-url-generic)
-  (setq-default browse-url-generic-program "xdg-open")
+  (when (not (equal system-type 'darwin))
+    (setq-default browse-url-browser-function 'browse-url-generic)
+    (setq-default browse-url-generic-program "xdg-open")
+  )
 
   (fci-mode 1)
 
@@ -363,6 +365,12 @@ you should place your code here."
   (editorconfig-mode 1)
 
   (add-to-list 'exec-path "~/.local/bin")
+
+  (when (eq system-type 'darwin)
+    ;; macOS key fixing
+    (define-key global-map [home] 'beginning-of-line)
+    (define-key global-map [end] 'end-of-line)
+    )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
