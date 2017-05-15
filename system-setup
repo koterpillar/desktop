@@ -80,7 +80,7 @@ CHROOT="arch-chroot /mnt"
 
 echo $COMPUTER_NAME > /mnt/etc/hostname
 
-$CHROOT ln -s /usr/share/zoneinfo/$COMPUTER_TIMEZONE /etc/localtime
+$CHROOT ln -sf /usr/share/zoneinfo/$COMPUTER_TIMEZONE /etc/localtime
 
 echo "en_US.UTF-8 UTF-8" > /mnt/etc/locale.gen
 echo "$COMPUTER_LOCALE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
