@@ -92,7 +92,7 @@ sudo systemctl enable \
 	tlp-sleep \
 	&& true
 sudo systemctl disable systemd-rfkill
-timedatectl set-ntp true
+sudo timedatectl set-ntp true
 
 # GSettings
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'ru'), ('ibus', 'sunpinyin'), ('ibus', 'hangul')]"
