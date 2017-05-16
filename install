@@ -50,13 +50,8 @@ INSTALL='pacaur -S --needed --noconfirm'
 AUR_INSTALL='pacaur -y --needed --noconfirm'
 
 # Packages
-# Files in packages/ may contain Bash brace expansions
-
-$INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | grep -v '^[a-z]\+:'))")
-
-# gcc-multilib conflicts with gcc
-yes | sudo pacman -S --needed gcc-multilib
-$AUR_INSTALL $(bash -c "echo $(echo $(cat $DIR/packages/* | sed '/^aur:/!d;s/^aur://g'))")
+$INSTALL $(cat $DIR/packages/* | grep -v '^[a-z]\+:')
+$AUR_INSTALL $(cat $DIR/packages/* | sed '/^aur:/!d;s/^aur://g')
 
 ln -sfnT $DIR/dotfiles/stack $HOME/.stack
 stack setup
@@ -111,7 +106,6 @@ use-system-font=false
 use-theme-colors=true
 visible-name='alex'
 END
-
 gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
 gsettings set org.gnome.Terminal.ProfilesList list "['b1dcc9dd-5262-4d8d-a863-c897e6d979b9']"
 gsettings set org.gnome.Terminal.ProfilesList default 'b1dcc9dd-5262-4d8d-a863-c897e6d979b9'

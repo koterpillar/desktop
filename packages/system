@@ -1,7 +1,6 @@
 acpi_call
 curl
 dnsutils
-ghc
 geoip
 htop
 iftop
@@ -9,7 +8,6 @@ iotop
 lsof
 ltrace
 net-tools
-networkmanager
 nfs-utils
 ngrep
 nmap

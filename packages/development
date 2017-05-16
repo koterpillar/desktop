@@ -2,6 +2,7 @@ cabal-install
 docker
 emacs
 eslint
+ghc
 ghc-mod
 git
 gitg
@@ -9,9 +10,8 @@ happy
 hindent
 hoogle
 inotify-tools
-ipython{,2}
-aur:js-beautify
 jq
+aur:js-beautify
 meld
 moreutils
 nodejs
@@ -20,11 +20,13 @@ aur:nodejs-tern
 npm
 pulp
 purescript
+python
+python-virtualenv
 python-virtualenvwrapper
-python{,2}
-python{,2}-virtualenv
-ripgrep
+python2
+python2-virtualenv
 qemu
+ripgrep
 sshfs
 stack
 tcpdump
