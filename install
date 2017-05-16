@@ -32,7 +32,7 @@ then
 		popd >/dev/null
 	}
 
-	$INSTALL wget base-devel abs
+	$INSTALL wget base-devel
 
 	$INSTALL expac yajl
 	gpg --recv-keys 1EB2638FF56C0C53  # pacaur/cower key
