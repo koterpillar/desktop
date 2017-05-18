@@ -10,10 +10,15 @@ ln -sfnT $DIR/bin $HOME/bin
 
 # Git repositories
 submodule () {
-    [ -d "$1"/.git ] || git clone "$2" "$1"
+    if [ ! -d "$1"/.git ]
+    then
+        # Ignore the config file as the SSH keys might not yet be there
+        HOME=/dev/null XDG_CONFIG_HOME=/dev/null git clone "$2" "$1"
+    fi
 }
+
 submodule $HOME/.emacs.d https://github.com/syl20bnr/spacemacs
-submodule $HOME/.vim git@github.com:koterpillar/vim.git
+submodule $HOME/.vim https://github.com/koterpillar/vim.git
 submodule $HOME/.zgen https://github.com/tarjoilija/zgen.git
 
 # xdg-mime ignores $XDG_CONFIG_HOME/mimeapps.list
