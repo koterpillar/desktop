@@ -27,6 +27,10 @@ bindkey '^[[C' vi-forward-word
 bindkey '^[[4~' vi-end-of-line
 bindkey '^[[1~' vi-beginning-of-line
 
+# macOS terminal keys, where different
+bindkey '^[^[[D' vi-backward-word
+bindkey '^[^[[C' vi-forward-word
+
 # Edit the command line with Ctrl-V
 bindkey '^V' edit-command-line
 
