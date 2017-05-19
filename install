@@ -42,7 +42,7 @@ then
 	if [ ! -f $HOME/.config/pacaur/config ]
 	then
 		mkdir -p $HOME/.config
-		ln -sfnT $DIR/config/pacaur $HOME/config/pacaur
+		ln -sfnT $DIR/config/pacaur $HOME/.config/pacaur
 	fi
 fi
 
