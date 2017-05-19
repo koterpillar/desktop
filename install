@@ -75,19 +75,21 @@ sudo ln -sfn /etc/fonts/conf.avail/30-infinality-aliases.conf /etc/fonts/conf.d/
 $DIR/makelinks
 
 # Systemd
-ls config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable
-sudo systemctl enable \
+ls $DIR/config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable --no-reload
+sudo systemctl enable --no-reload \
 	docker \
 	gdm \
 	NetworkManager \
 	nfs-client.target \
 	rpcbind \
 	sshd \
+  systemd-timesyncd \
 	tlp \
 	tlp-sleep \
 	&& true
-sudo systemctl disable systemd-rfkill
-sudo timedatectl set-ntp true
+sudo systemctl disable --no-reload systemd-rfkill
+# Ignore reload errors if running in chroot
+sudo systemctl daemon-reload || true
 
 # GSettings
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'ru'), ('ibus', 'sunpinyin'), ('ibus', 'hangul')]"
