@@ -75,6 +75,11 @@ sudo ln -sfn /etc/fonts/conf.avail/30-infinality-aliases.conf /etc/fonts/conf.d/
 $DIR/makelinks
 
 # Systemd
+if [ ! -f $HOME/.config/systemd ]
+then
+  mkdir -p $HOME/.config
+  ln -sfnT $DIR/config/systemd $HOME/.config/systemd
+fi
 ls $DIR/config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable --no-reload
 sudo systemctl enable --no-reload \
 	docker \
