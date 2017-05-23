@@ -12,6 +12,7 @@
 /config/tianbar/node_modules
 /dotfiles/stack/build-plan
 /dotfiles/stack/build-plan-cache
+/dotfiles/stack/docker.db
 /dotfiles/stack/global-project/.stack-work
 /dotfiles/stack/indices
 /dotfiles/stack/lockfile
