@@ -6,6 +6,8 @@ unsetopt autocd
 
 autoload -Uz compinit
 compinit
+autoload -Uz bashcompinit
+bashcompinit
 
 export DESKTOP_ROOT=$(dirname $(dirname $(readlink ~/.zshrc)))
 
@@ -47,7 +49,6 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/bower
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/npm
-    zgen oh-my-zsh plugins/stack
 
     zgen load zsh-users/zsh-autosuggestions
 
@@ -56,6 +57,11 @@ if ! zgen saved; then
     zgen load petervanderdoes/git-flow-completion
 
     zgen save
+fi
+
+if which stack >/dev/null
+then
+    eval "$(stack --bash-completion-script stack)"
 fi
 
 # Theme
