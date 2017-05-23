@@ -47,6 +47,7 @@ if ! zgen saved; then
 
     zgen oh-my-zsh plugins/autojump
     zgen oh-my-zsh plugins/bower
+    zgen oh-my-zsh plugins/docker
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/npm
 
