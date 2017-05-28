@@ -65,6 +65,10 @@ then
     eval "$(stack --bash-completion-script stack)"
 fi
 
+# FIXME: Docker plugin isn't registering for autocomplete
+autoload _docker
+compdef _docker docker
+
 # Theme
 if [ $HOST = taohua ]
 then
