@@ -38,7 +38,6 @@ bindkey '^V' edit-command-line
 
 source ~/.zgen/zgen.zsh
 
-DISABLE_VENV_CD=1
 DISABLE_UPDATE_PROMPT=true
 if ! zgen saved; then
     echo 'Creating a zgen save'
