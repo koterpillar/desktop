@@ -3,6 +3,7 @@
 .#*
 .~lock.*#
 /tags
+/.dir-locals.el
 /.vimrc
 /.rgignore
 /Session.vim
