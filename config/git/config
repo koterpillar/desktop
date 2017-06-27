@@ -12,8 +12,8 @@
 	prune-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
 	max-release = !echo $((echo v0.0.0 && git tag -l 'v*.*.*') | sed 's/v//g' | sort -s -t . -k 1,1n -k 2,2n -k 3,3n | tail -n 1)
 [url "ssh://git@github.com"]
-	insteadOf = https://github.com
-	insteadOf = git://github.com
+	pushInsteadOf = https://github.com
+	pushInsteadOf = git://github.com
 
 [tig]
 	line-graphics = utf-8
