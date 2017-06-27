@@ -369,6 +369,8 @@ you should place your code here."
 
   (add-to-list 'exec-path "~/.local/bin")
 
+  (spacemacs/set-leader-keys-for-major-mode 'haskell-mode "C-f" 'hindent-reformat-buffer)
+
   (when (eq system-type 'darwin)
     ;; macOS key fixing
     (define-key global-map [home] 'beginning-of-line)
