@@ -4,6 +4,7 @@
 .~lock.*#
 /tags
 /.dir-locals.el
+/.stack-work
 /.vimrc
 /.rgignore
 /Session.vim
