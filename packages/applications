@@ -20,7 +20,7 @@ mencoder
 mplayer
 aur:obnam
 pandoc
-aur:pepper-flash
+pepper-flash
 perl-image-exiftool
 pidgin
 aur:pidgin-extprefs
