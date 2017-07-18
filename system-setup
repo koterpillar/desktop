@@ -136,9 +136,9 @@ PROMPT 0
 DEFAULT Arch
 
 LABEL Arch
-        LINUX ../vmlinuz-linux
-        APPEND $BOOT_OPTIONS
-        INITRD ../intel-ucode.img, ../initramfs-linux.img
+    LINUX ../vmlinuz-linux
+    APPEND $BOOT_OPTIONS
+    INITRD ../initramfs-linux.img,../intel-ucode.img
 EOF
 fi
 
