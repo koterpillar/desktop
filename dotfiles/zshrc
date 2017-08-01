@@ -36,9 +36,14 @@ bindkey '^[^[[C' vi-forward-word
 # Edit the command line with Ctrl-V
 bindkey '^V' edit-command-line
 
+export ZGEN_RESET_ON_CHANGE=($DESKTOP_ROOT/dotfiles/zshrc)
+
 source ~/.zgen/zgen.zsh
 
+# Disable oh-my-zsh autoupdate, rely on zgen
 DISABLE_UPDATE_PROMPT=true
+DISABLE_AUTO_UPDATE=true
+
 if ! zgen saved; then
     echo 'Creating a zgen save'
 
@@ -55,6 +60,8 @@ if ! zgen saved; then
     zgen load zsh-users/zsh-syntax-highlighting
 
     zgen load petervanderdoes/git-flow-completion
+
+    zgen load unixorn/autoupdate-zgen
 
     zgen save
 fi
