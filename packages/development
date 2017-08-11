@@ -18,8 +18,6 @@ nodejs
 aur:nodejs-jshint
 aur:nodejs-tern
 npm
-pulp
-purescript
 python
 python-virtualenv
 python-virtualenvwrapper
