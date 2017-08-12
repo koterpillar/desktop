@@ -41,8 +41,7 @@ export ZGEN_RESET_ON_CHANGE=($DESKTOP_ROOT/dotfiles/zshrc)
 source ~/.zgen/zgen.zsh
 
 # Disable oh-my-zsh autoupdate, rely on zgen
-DISABLE_UPDATE_PROMPT=true
-DISABLE_AUTO_UPDATE=true
+export DISABLE_AUTO_UPDATE=true
 
 if ! zgen saved; then
     echo 'Creating a zgen save'
