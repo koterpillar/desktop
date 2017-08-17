@@ -18,6 +18,7 @@
 /dotfiles/stack/lockfile
 /dotfiles/stack/precompiled
 /dotfiles/stack/programs
+/dotfiles/stack/script
 /dotfiles/stack/setup-exe-cache
 /dotfiles/stack/setup-exe-src
 /dotfiles/stack/snapshots
