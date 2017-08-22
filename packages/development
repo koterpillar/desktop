@@ -3,7 +3,6 @@ docker
 emacs
 eslint
 ghc
-ghc-mod
 git
 gitg
 happy
