@@ -2,6 +2,7 @@
 .*.sw?
 .#*
 .~lock.*#
+.DS_Store
 /tags
 /.dir-locals.el
 /.stack-work
