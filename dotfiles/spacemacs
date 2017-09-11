@@ -384,6 +384,9 @@ you should place your code here."
     (define-key global-map [home] 'beginning-of-line)
     (define-key global-map [end] 'end-of-line)
     )
+
+  ;; https://github.com/syl20bnr/spacemacs/issues/9549
+  (require 'helm-bookmark)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
