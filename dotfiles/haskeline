@@ -1,0 +1,2 @@
+keyseq: "\ESC[1;5D" ctrl-left
+keyseq: "\ESC[1;5C" ctrl-right
