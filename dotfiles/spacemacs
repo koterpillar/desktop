@@ -389,6 +389,8 @@ you should place your code here."
 
   ;; https://github.com/syl20bnr/spacemacs/issues/9549
   (require 'helm-bookmark)
+
+  (put 'intero-targets 'safe-local-variable (lambda (x) t))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
