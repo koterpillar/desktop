@@ -4,7 +4,7 @@
 .~lock.*#
 .DS_Store
 /tags
-/.dir-locals.el
+.dir-locals.el
 /.stack-work
 /.vimrc
 /.rgignore
