@@ -2,10 +2,12 @@
 .*.sw?
 .#*
 .~lock.*#
-.DS_Store
-/tags
 .dir-locals.el
+.DS_Store
+.ensime
+.ensime_cache
 /.stack-work
 /.vimrc
 /.rgignore
 /Session.vim
+/tags
