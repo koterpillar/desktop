@@ -380,6 +380,9 @@ you should place your code here."
   (add-to-list 'exec-path "~/.local/bin")
 
   (spacemacs/set-leader-keys-for-major-mode 'haskell-mode "C-f" 'hindent-reformat-buffer)
+  ;; Work around https://github.com/commercialhaskell/hindent/issues/468
+  (with-eval-after-load 'hindent
+    (setq hindent-extra-args '()))
   (with-eval-after-load 'intero
     (with-eval-after-load 'flycheck
       (flycheck-add-next-checker 'intero '(warning . haskell-hlint))))
