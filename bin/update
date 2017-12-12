@@ -1,8 +1,13 @@
 #!/bin/sh -e
-sudo true
-IP=$(curl -s https://api.ipify.org)
-COUNTRY=$(geoiplookup $IP | awk -F ', ' '{print $2}')
-sudo reflector --country $COUNTRY -l 200 -p http --sort rate \
-  --save /etc/pacman.d/mirrorlist || true
-sudo pacman -Syuw --noconfirm
-pacaur -Su --noconfirm
+if (echo $OSTYPE | grep -q darwin)
+then
+    brew upgrade
+else
+    sudo true
+    IP=$(curl -s https://api.ipify.org)
+    COUNTRY=$(geoiplookup $IP | awk -F ', ' '{print $2}')
+    sudo reflector --country $COUNTRY -l 200 -p http --sort rate \
+    --save /etc/pacman.d/mirrorlist || true
+    sudo pacman -Syuw --noconfirm
+    pacaur -Su --noconfirm
+fi
