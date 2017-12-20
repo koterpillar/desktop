@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+git checkout master
+git pull
+git remote prune origin
+git branch --merged master | grep -v master | xargs git branch --delete
