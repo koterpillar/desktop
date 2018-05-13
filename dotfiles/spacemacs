@@ -398,6 +398,9 @@ you should place your code here."
   (put 'intero-targets 'safe-local-variable (lambda (x) t))
 
   (setq ensime-startup-notification nil)
+
+  ;; https://github.com/jaypei/emacs-neotree/issues/226
+  (setq helm-split-window-inside-p t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
