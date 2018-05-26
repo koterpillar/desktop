@@ -1,5 +1,19 @@
 #!/bin/sh -e
 
-chmod -x *
+weixin_timestamp() {
+    echo "$1" | sed -r 's/[^0-9]//g;s/...$//'
+}
+
+timestamp2date() {
+    date -d @"$1" '+%Y:%m:%d %H:%M:%s'
+}
+
+chmod -x *.*
 find . -name '*.JPG' -exec sh -c 'mv "{}" $(echo "{}" | sed s/JPG/jpg/)' \;
+
+for f in mmexport*.jpg
+do
+    exiftool -CreateDate="$(timestamp2date $(weixin_timestamp $f))" "$f" -overwrite_original
+done
+
 exiftool '-FileName<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%e .
