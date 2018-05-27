@@ -25,7 +25,7 @@ python2-virtualenv
 qemu
 ripgrep
 sshfs
-stack
+aur:stack-bin
 stylish-haskell
 tcpdump
 tig
