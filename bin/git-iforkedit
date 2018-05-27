@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+UPSTREAM=$(git remote get-url origin)
+USERNAME=$(ssh -T git@github.com | sed -E 's/Hi (.+)!.+$/\1/')
+ORIGIN=$(echo $UPSTREAM | sed -E "s#github.com:[^/]+#github.com:$USERNAME#")
+if [ $ORIGIN = $UPSTREAM ]
+then
+   exit 0
+fi
+git remote add upstream $UPSTREAM
+git fetch upstream
+git remote set-url origin $ORIGIN
