@@ -1,3 +1,4 @@
+bower
 cabal-install
 docker
 emacs
@@ -7,6 +8,7 @@ git
 gitg
 happy
 hindent
+hlint
 hoogle
 inotify-tools
 jq
