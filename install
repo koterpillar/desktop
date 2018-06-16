@@ -53,9 +53,6 @@ AUR_INSTALL='pacaur -y --needed --noconfirm'
 $INSTALL $(cat $DIR/packages/* | grep -v '^[a-z]\+:')
 $AUR_INSTALL $(cat $DIR/packages/* | sed '/^aur:/!d;s/^aur://g')
 
-ln -sfnT $DIR/dotfiles/stack $HOME/.stack
-stack setup
-
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
 then
