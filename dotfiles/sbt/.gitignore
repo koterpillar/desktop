@@ -1,5 +1,7 @@
-/1.0/plugins/project
-/1.0/plugins/target
-/1.0/zinc
+/0.13
+/1.0
+/1.0
+/1.0
 /boot
 /preloaded
+!/1.0/plugins/build.sbt
