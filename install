@@ -94,7 +94,7 @@ sudo systemctl disable --no-reload systemd-rfkill
 sudo systemctl daemon-reload || true
 
 # GSettings
-gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'ru'), ('ibus', 'sunpinyin'), ('ibus', 'hangul')]"
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'ru'), ('ibus', 'sunpinyin')]"
 gsettings set org.gnome.desktop.interface clock-format '24h'
 gsettings set org.gnome.desktop.interface clock-show-date true
 gsettings set org.gnome.desktop.interface monospace-font-name 'Fira Mono 11'
