@@ -95,9 +95,9 @@ sudo systemctl daemon-reload || true
 
 # dconf
 dconf write /org/gnome/desktop/input-sources/sources "[('xkb', 'us'), ('xkb', 'ru'), ('ibus', 'sunpinyin')]"
-dconf write /org/gnome/desktop/interface/clock-format '24h'
+dconf write /org/gnome/desktop/interface/clock-format "'24h'"
 dconf write /org/gnome/desktop/interface/clock-show-date true
-dconf write /org/gnome/desktop/interface/monospace-font-name 'Fira Mono 11'
+dconf write /org/gnome/desktop/interface/monospace-font-name "'Fira Mono 11'"
 # To enlarge text on higher DPI displays
 # dconf write org/gnome/desktop/interface text-scaling-factor 1.25
 dconf write /org/gnome/system/location/enabled true
