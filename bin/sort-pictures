@@ -11,9 +11,12 @@ timestamp2date() {
 chmod -x *.*
 find . -name '*.JPG' -exec sh -c 'mv "{}" $(echo "{}" | sed s/JPG/jpg/)' \;
 
-for f in mmexport*.jpg
-do
-    exiftool -CreateDate="$(timestamp2date $(weixin_timestamp $f))" "$f" -overwrite_original
-done
+if ls mmexport*.jpg >/dev/null 2>&1
+then
+    for f in mmexport*.jpg
+    do
+        exiftool -CreateDate="$(timestamp2date $(weixin_timestamp $f))" "$f" -overwrite_original
+    done
+fi
 
 exiftool '-FileName<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%e .
