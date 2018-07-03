@@ -17,8 +17,8 @@ then
 	sudo pacman -Sy
 fi
 
-# Install pacaur from AUR manually
-if ! which pacaur >/dev/null 2>&1
+# Install aura from AUR manually
+if ! which aura >/dev/null 2>&1
 then
 	function aur_install () {
 		PACKAGE=$1
@@ -34,20 +34,11 @@ then
 
 	$INSTALL wget base-devel
 
-	$INSTALL expac yajl
-	gpg --recv-keys 1EB2638FF56C0C53  # pacaur/cower key
-	aur_install cower
-	aur_install pacaur
-
-	if [ ! -f $HOME/.config/pacaur/config ]
-	then
-		mkdir -p $HOME/.config
-		ln -sfnT $DIR/config/pacaur $HOME/.config/pacaur
-	fi
+	aur_install aura-bin
 fi
 
-INSTALL='pacaur -S --needed --noconfirm'
-AUR_INSTALL='pacaur -y --needed --noconfirm'
+INSTALL='sudo pacman -S --needed --noconfirm'
+AUR_INSTALL='sudo aura -A --needed --noconfirm'
 
 # Packages
 $INSTALL $(cat $DIR/packages/* | grep -v '^[a-z]\+:')
