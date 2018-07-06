@@ -376,6 +376,7 @@ you should place your code here."
   (setq-default magit-log-arguments '("--graph" "--color" "--decorate" "-n256"))
 
   (setq-default web-mode-markup-indent-offset 2)
+  (setq-default js-indent-level 2)
 
   (use-package sparql-mode :defer t :mode "\\.rq\\'")
   (spacemacs|add-company-hook sparql-mode)
