@@ -2,5 +2,10 @@
 
 git checkout master
 git pull
+if git remote get-url upstream >/dev/null 2>&1
+then
+    git remote prune upstream
+    git pull upstream master
+fi
 git remote prune origin
 git branch --merged master | grep -v master | xargs git branch --delete
