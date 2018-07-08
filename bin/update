@@ -2,6 +2,7 @@
 if (echo $OSTYPE | grep -q darwin)
 then
     brew upgrade
+    brew cask upgrade
 else
     sudo true
     IP=$(curl -s https://api.ipify.org)
