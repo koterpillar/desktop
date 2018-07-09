@@ -1,7 +1,6 @@
-/0.13
-/1.0
-/1.0
-/1.0
-/boot
-/preloaded
-!/1.0/plugins/build.sbt
+/*
+!/1.0
+/1.0/*
+!/1.0/plugins
+/1.0/plugins/*
+!/1.0/plugins/plugins.sbt
