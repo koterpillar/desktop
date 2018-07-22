@@ -4,7 +4,7 @@ export PATH
 
 export PAGER=less
 export LESS='-RFX'
-export EDITOR="emacsclient --alternate-editor emacs"
+export EDITOR="emacsclient --alternate-editor vim"
 export TERM=xterm-256color
 
 e() {
