@@ -6,6 +6,7 @@
 .DS_Store
 .ensime
 .ensime_cache
+/.idea
 /.stack-work
 /.vimrc
 /.rgignore
