@@ -5,6 +5,7 @@ emacs
 eslint
 ghc
 git
+git-lfs
 gitg
 happy
 hindent
