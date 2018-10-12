@@ -23,12 +23,15 @@ def main():
         description="Merge the current pull request and remove the branch",
     )
     parser.add_argument('branch', nargs='?', help="The branch to merge")
+    parser.add_argument('--to', help="Branch to merge to")
     parser.add_argument('--master', action='store_true',
                         help="Merge into master instead of develop")
 
     args = parser.parse_args()
 
-    if args.master:
+    if args.to:
+        base = args.to
+    elif args.master:
         base = 'master'
     else:
         try:
@@ -40,22 +43,33 @@ def main():
     current = args.branch or \
         git('rev-parse', '--abbrev-ref', 'HEAD').strip()
 
-    for protected_branch in ('master', 'develop'):
-        if current == protected_branch:
-            print("Cannot merge the {0} branch.".format(current),
-                  file=sys.stderr)
-            return 1
+    if current == base:
+        print("Cannot merge the {0} branch to itself.".format(current),
+              file=sys.stderr)
+        return 1
 
-    git('checkout', base)
-    git('fetch')
-    git('reset', '--hard', 'origin/{0}'.format(base))
-    git('merge', '--no-ff', '--no-edit', current)
-    git('push')
+    if current in ('master', 'develop'):
+        print("Cannot merge the {0} branch.".format(current),
+                file=sys.stderr)
+        return 1
+
     try:
-        git('push', 'origin', '--delete', current)
-    except subprocess.CalledProcessError:
-        pass
-    git('branch', '-d', current)
+        git('checkout', base)
+        git('fetch')
+        git('reset', '--hard', 'origin/{0}'.format(base))
+        git('merge', '--no-ff', '--no-edit', current)
+        git('push')
+        try:
+            git('push', 'origin', '--delete', current)
+        except subprocess.CalledProcessError:
+            pass
+        git('branch', '-d', current)
+    except (subprocess.CalledProcessError, KeyboardInterrupt):
+        try:
+            git('checkout', current)
+        except subprocess.CalledProcessError:
+            pass
+        raise
 
     return 0
 
