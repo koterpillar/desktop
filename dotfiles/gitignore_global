@@ -2,6 +2,7 @@
 .*.sw?
 .#*
 .~lock.*#
+~$*
 .dir-locals.el
 .DS_Store
 .ensime
