@@ -11,5 +11,6 @@
 /.stack-work
 /.vimrc
 /.rgignore
+/dist-newstyle
 /Session.vim
 /tags
