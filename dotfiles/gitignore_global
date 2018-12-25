@@ -7,10 +7,10 @@
 .DS_Store
 .ensime
 .ensime_cache
+dist-newstyle
 /.idea
 /.stack-work
 /.vimrc
 /.rgignore
-/dist-newstyle
 /Session.vim
 /tags
