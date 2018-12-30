@@ -7,6 +7,7 @@
 .DS_Store
 .ensime
 .ensime_cache
+*.iml
 dist-newstyle
 /.idea
 /.stack-work
