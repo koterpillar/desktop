@@ -389,7 +389,7 @@ you should place your code here."
   (with-eval-after-load 'intero
     (with-eval-after-load 'flycheck
       (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
-      (flycheck-add-next-checker 'intero '(warning . haskell-stack-ghc)))))
+      (flycheck-add-next-checker 'intero '(warning . haskell-stack-ghc))))
 
   (when (eq system-type 'darwin)
     ;; macOS key fixing
