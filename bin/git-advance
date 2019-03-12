@@ -1,14 +1,20 @@
 #!/bin/sh -e
 
-git checkout master
+MASTER=master
+if git rev-parse origin/develop >/dev/null 2>&1
+then
+    MASTER=develop
+fi
+
+git checkout $MASTER
 git pull
 if git remote get-url upstream >/dev/null 2>&1
 then
     git remote prune upstream
-    git pull upstream master
+    git pull upstream $MASTER
 fi
 git remote prune origin
-MERGED_BRANCHES=$(git branch --merged master | grep -v master)
+MERGED_BRANCHES=$(git branch --merged $MASTER | grep -v $MASTER | grep -v master)
 if [ "$MERGED_BRANCHES" != "" ]
 then
     git branch --delete $MERGED_BRANCHES
