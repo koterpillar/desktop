@@ -65,6 +65,8 @@ values."
      html
      (javascript :variables
                  js2-strict-trailing-comma-warning nil)
+     (typescript :variables
+                 typescript-fmt-on-save t)
 
      python
 
