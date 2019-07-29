@@ -102,6 +102,8 @@ ZSH_THEME_GIT_PROMPT_DIRTY="⚡"
 
 ZSH_THEME_TERM_TITLE_IDLE="$PROMPT_HOST: %~"
 
+ZSH_COMMAND_TIME_COLOR="cyan"
+
 # global /etc/zshprofile overrides $PATH
 # oh-my-zsh overrides $PAGER
 source $HOME/.zshenv
