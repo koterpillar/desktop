@@ -62,6 +62,8 @@ if ! zgen saved; then
 
     zgen load petervanderdoes/git-flow-completion
 
+    zgen load popstas/zsh-command-time
+
     zgen load unixorn/autoupdate-zgen
 
     zgen save
