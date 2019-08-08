@@ -1,18 +1,26 @@
 #!/bin/sh -e
 
+advance_branch() {
+    BRANCH=$1
+
+    git checkout $BRANCH
+    git pull
+    if git remote get-url upstream >/dev/null 2>&1
+    then
+        git remote prune upstream
+        git pull upstream $BRANCH
+    fi
+}
+
 MASTER=master
 if git rev-parse origin/develop >/dev/null 2>&1
 then
+    advance_branch $MASTER
     MASTER=develop
 fi
 
-git checkout $MASTER
-git pull
-if git remote get-url upstream >/dev/null 2>&1
-then
-    git remote prune upstream
-    git pull upstream $MASTER
-fi
+advance_branch $MASTER
+
 git remote prune origin
 MERGED_BRANCHES=$(git branch --merged $MASTER | grep -v $MASTER | grep -v master)
 if [ "$MERGED_BRANCHES" != "" ]
