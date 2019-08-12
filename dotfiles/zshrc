@@ -41,6 +41,12 @@ ZGEN_RESET_ON_CHANGE=($DESKTOP_ROOT/dotfiles/zshrc)
 # Disable oh-my-zsh autoupdate, rely on zgen
 DISABLE_AUTO_UPDATE=true
 
+if [ ! -d $HOME/.zgen ]
+then
+    DEST=$HOME/.zgen
+    HOME=/dev/null XDG_CONFIG_HOME=/dev/null git clone "https://github.com/tarjoilija/zgen.git" "$DEST"
+fi
+
 source ~/.zgen/zgen.zsh
 
 if ! zgen saved; then
@@ -89,7 +95,14 @@ else
     PROMPT_HOST=$HOST
 fi
 
-PROMPT='%{$fg[green]%}$PROMPT_HOST%{$reset_color%} %~ \
+if [ $USER = root ]
+then
+    PROMPT_HOST_COLOR=red
+else
+    PROMPT_HOST_COLOR=green
+fi
+
+PROMPT='%{$fg[$PROMPT_HOST_COLOR]%}$PROMPT_HOST%{$reset_color%} %~ \
 $(git_prompt_info)\
 %{$fg[red]%}%(!.#.»)%{$reset_color%} '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'

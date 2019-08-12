@@ -17,6 +17,10 @@ ls $DIR/config | xargs -I FILE $LN -sfnT $DIR/config/FILE $HOME/.config/FILE
 ls $DIR/dotfiles | xargs -I FILE $LN -sfnT $DIR/dotfiles/FILE $HOME/.FILE
 $LN -sfnT $DIR/bin $HOME/bin
 
+# Root shell config
+sudo sh -c "$LN -sfnT $DIR/dotfiles/zshrc "'$HOME'"/.zshrc"
+sudo sh -c "$LN -sfnT $DIR/dotfiles/zshenv "'$HOME'"/.zshenv"
+
 # Git repositories
 submodule () {
     if [ ! -d "$1"/.git ]
@@ -28,7 +32,6 @@ submodule () {
 
 submodule $HOME/.emacs.d https://github.com/syl20bnr/spacemacs
 submodule $HOME/.vim https://github.com/koterpillar/vim.git
-submodule $HOME/.zgen https://github.com/tarjoilija/zgen.git
 
 if (echo $OSTYPE | grep -q linux)
 then
