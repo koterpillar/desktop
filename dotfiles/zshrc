@@ -95,7 +95,7 @@ else
     PROMPT_HOST=$HOST
 fi
 
-if [ $USER = root ]
+if [ $UID = 0 ]
 then
     PROMPT_HOST_COLOR=red
 else

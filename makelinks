@@ -18,8 +18,8 @@ ls $DIR/dotfiles | xargs -I FILE $LN -sfnT $DIR/dotfiles/FILE $HOME/.FILE
 $LN -sfnT $DIR/bin $HOME/bin
 
 # Root shell config
-sudo sh -c "$LN -sfnT $DIR/dotfiles/zshrc "'$HOME'"/.zshrc"
-sudo sh -c "$LN -sfnT $DIR/dotfiles/zshenv "'$HOME'"/.zshenv"
+sudo sh -x -c "$LN -sfnT $DIR/dotfiles/zshrc ~root/.zshrc"
+sudo sh -x -c "$LN -sfnT $DIR/dotfiles/zshenv ~root/.zshenv"
 
 # Git repositories
 submodule () {
