@@ -75,6 +75,8 @@ if ! zgen saved; then
     zgen save
 fi
 
+eval "$(jenv init -)"
+
 if which stack >/dev/null
 then
     eval "$(stack --bash-completion-script stack)"

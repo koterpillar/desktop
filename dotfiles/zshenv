@@ -1,5 +1,5 @@
 typeset -U path
-path=(~/bin ~/.local/bin $path)
+path=(~/bin ~/.local/bin ~/.jenv/bin $path)
 export PATH
 
 export PAGER=less
