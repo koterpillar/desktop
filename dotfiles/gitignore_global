@@ -3,6 +3,7 @@
 .#*
 .~lock.*#
 ~$*
+.bloop
 .dir-locals.el
 .DS_Store
 .ensime
