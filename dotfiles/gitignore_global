@@ -8,10 +8,10 @@
 .DS_Store
 .ensime
 .ensime_cache
+.idea
 .mypy_cache
 *.iml
 dist-newstyle
-/.idea
 /.stack-work
 /.vimrc
 /.rgignore
