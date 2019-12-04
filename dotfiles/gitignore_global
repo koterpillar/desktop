@@ -13,6 +13,7 @@
 *.iml
 dist-newstyle
 /.stack-work
+/.vscode
 /.vimrc
 /.rgignore
 /Session.vim
