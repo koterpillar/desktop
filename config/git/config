@@ -5,8 +5,6 @@
 	ui = auto
 [push]
 	default = simple
-[core]
-	excludesfile = ~/.gitignore_global
 [alias]
 	taga = !git tag -a -m $1
 	prune-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
