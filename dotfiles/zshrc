@@ -60,7 +60,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/npm
 
-    zgen load skywind3000/z.lua
+    zgen load agkozak/zsh-z
 
     zgen load zsh-users/zsh-autosuggestions
 
