@@ -5,6 +5,7 @@ then
     brew cask upgrade
 else
     sudo true
+    echo Updating...
     IP=$(curl -s https://api.ipify.org)
     COUNTRY=$(geoiplookup $IP | awk -F ', ' '{print $2}')
     sudo reflector --country $COUNTRY -l 200 -p http --sort rate \
