@@ -2,5 +2,13 @@
 
 set -e
 
-git diff --name-only | grep '\.hs$' | xargs -n 1 hindent
-git diff --name-only | grep '\.hs$' | xargs -n 1 stylish-haskell -i
+NAMES=$(git diff --name-only "$@" | grep '\.hs$')
+
+for NAME in $NAMES
+do
+  if [ -f "$NAME" ]
+  then
+    hindent $NAME
+    stylish-haskell -i $NAME
+  fi
+done
