@@ -59,6 +59,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/docker
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/npm
+    zgen oh-my-zsh plugins/virtualenvwrapper
 
     zgen load agkozak/zsh-z
 
