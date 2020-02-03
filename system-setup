@@ -6,7 +6,7 @@ set -e
 : ${COMPUTER_LOCALE:=ru_RU}
 : ${DISK:=/dev/sda}
 
-GEOIP_INFO=$(curl -s https://geoip.nekudo.com/api)
+GEOIP_INFO=$(curl -s http://free.ipwhois.io/json/)
 # No jq available on live ISO, only Perl
 function jq {
     echo "$1" | perl -e "
@@ -19,8 +19,8 @@ for my \$selector (split /\\./, '$2') {
 print \$data;
 "
 }
-COUNTRY=$(jq "$GEOIP_INFO" country.code)
-COMPUTER_TIMEZONE=$(jq "$GEOIP_INFO" location.time_zone)
+COUNTRY=$(jq "$GEOIP_INFO" country_code)
+COMPUTER_TIMEZONE=$(jq "$GEOIP_INFO" timezone)
 
 if [ -z $COMPUTER_NAME ]
 then
