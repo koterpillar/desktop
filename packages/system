@@ -1,4 +1,5 @@
 acpi_call
+aur:autosuspend
 curl
 dnsutils
 geoip

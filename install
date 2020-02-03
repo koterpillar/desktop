@@ -52,7 +52,7 @@ then
 fi
 
 # System config
-sudo install $DIR/etc/default/tlp /etc/default/tlp
+find $DIR/etc -type f | sed "s#^$DIR/##g" | xargs -I file sudo install $DIR/file /file
 
 # Fontconfig
 # https://gist.github.com/cryzed/4f64bb79e80d619866ee0b18ba2d32fc
@@ -71,6 +71,7 @@ then
 fi
 ls $DIR/config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable --no-reload
 sudo systemctl enable --no-reload \
+  autosuspend
   docker \
   gdm \
   NetworkManager \
