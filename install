@@ -30,6 +30,7 @@ then
     makepkg
     sudo pacman -U --noconfirm $PACKAGE-*.pkg.tar.xz
     popd >/dev/null
+    rm -rf $TMPDIR
   }
 
   $INSTALL wget base-devel
