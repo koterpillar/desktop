@@ -8,33 +8,33 @@ DIR=$(readlink -f $(dirname $0))
 PACMAN_CONF=/etc/pacman.conf
 if ! diff -q $PACMAN_CONF $DIR/etc/pacman.conf >/dev/null
 then
-	sudo install $DIR/etc/pacman.conf $PACMAN_CONF
+  sudo install $DIR/etc/pacman.conf $PACMAN_CONF
 
-	sudo rm -rf /etc/pacman.d/gnupg
-	sudo pacman-key --init
-	sudo pacman-key --populate archlinux
+  sudo rm -rf /etc/pacman.d/gnupg
+  sudo pacman-key --init
+  sudo pacman-key --populate archlinux
 
-	sudo pacman -Sy
+  sudo pacman -Sy
 fi
 
 # Install aura from AUR manually
 if ! which aura >/dev/null 2>&1
 then
-	function aur_install () {
-		PACKAGE=$1
-		TMPDIR=$(mktemp -d)
-		trap "rm -rf $TMPDIR" EXIT
-		curl -s https://aur.archlinux.org/cgit/aur.git/snapshot/$PACKAGE.tar.gz | \
-			tar xz -C $TMPDIR
-		pushd $TMPDIR/$PACKAGE >/dev/null
-		makepkg
-		sudo pacman -U --noconfirm $PACKAGE-*.pkg.tar.xz
-		popd >/dev/null
-	}
+  function aur_install () {
+    PACKAGE=$1
+    TMPDIR=$(mktemp -d)
+    trap "rm -rf $TMPDIR" EXIT
+    curl -s https://aur.archlinux.org/cgit/aur.git/snapshot/$PACKAGE.tar.gz | \
+      tar xz -C $TMPDIR
+    pushd $TMPDIR/$PACKAGE >/dev/null
+    makepkg
+    sudo pacman -U --noconfirm $PACKAGE-*.pkg.tar.xz
+    popd >/dev/null
+  }
 
-	$INSTALL wget base-devel
+  $INSTALL wget base-devel
 
-	aur_install aura-bin
+  aur_install aura-bin
 fi
 
 INSTALL='sudo pacman -S --needed --noconfirm'
@@ -47,7 +47,7 @@ $AUR_INSTALL $(cat $DIR/packages/* | sed '/^aur:/!d;s/^aur://g')
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
 then
-	chsh -s /bin/zsh
+  chsh -s /bin/zsh
 fi
 
 # System config
@@ -70,16 +70,16 @@ then
 fi
 ls $DIR/config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable --no-reload
 sudo systemctl enable --no-reload \
-	docker \
-	gdm \
-	NetworkManager \
-	nfs-client.target \
-	rpcbind \
-	sshd \
+  docker \
+  gdm \
+  NetworkManager \
+  nfs-client.target \
+  rpcbind \
+  sshd \
   systemd-timesyncd \
-	tlp \
-	tlp-sleep \
-	&& true
+  tlp \
+  tlp-sleep \
+  && true
 sudo systemctl disable --no-reload systemd-rfkill
 # Ignore reload errors if running in chroot
 sudo systemctl daemon-reload || true
