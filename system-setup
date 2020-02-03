@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/bin/bash
+
+set -e
 
 : ${COMPUTER_USER:=alex}
 : ${COMPUTER_LOCALE:=ru_RU}
