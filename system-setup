@@ -110,14 +110,14 @@ cat > /mnt/etc/mkinitcpio.conf <<EOF
 MODULES=()
 BINARIES=()
 FILES=()
-HOOKS=(base systemd autodetect modconf block sd-encrypt filesystems keyboard fsck)
+HOOKS=(base systemd sd-plymouth autodetect modconf block sd-encrypt filesystems keyboard fsck)
 EOF
 $CHROOT mkinitcpio -p linux
 
 # Boot loader
 $CHROOT_INSTALL intel-ucode
 CRYPT_UUID=$(blkid -s UUID -o value $CRYPTPART)
-BOOT_OPTIONS="cryptdevice=UUID=${CRYPT_UUID}:cryptroot root=/dev/mapper/cryptroot rw quiet"
+BOOT_OPTIONS="cryptdevice=UUID=${CRYPT_UUID}:cryptroot root=/dev/mapper/cryptroot rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"
 if [ -d /sys/firmware/efi ]
 then
     mkdir -p /mnt/boot/loader/entries

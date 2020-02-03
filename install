@@ -73,7 +73,7 @@ ls $DIR/config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --
 sudo systemctl enable --no-reload \
   autosuspend
   docker \
-  gdm \
+  gdm-plymouth \
   NetworkManager \
   nfs-client.target \
   rpcbind \

@@ -15,6 +15,7 @@ nmap
 ntp
 openssh
 pkgfile
+aur:plymouth
 reflector
 rsync
 screen
