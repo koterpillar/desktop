@@ -106,7 +106,12 @@ echo "$COMPUTER_LOCALE.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 $CHROOT locale-gen
 echo "LANG=$COMPUTER_LOCALE.UTF-8" > /mnt/etc/locale.conf
 
-sed -i '/^HOOKS/ s/filesystems/encrypt filesystems/g' /mnt/etc/mkinitcpio.conf
+cat > /mnt/etc/mkinitcpio.conf <<EOF
+MODULES=()
+BINARIES=()
+FILES=()
+HOOKS=(base systemd autodetect modconf block sd-encrypt filesystems keyboard fsck)
+EOF
 $CHROOT mkinitcpio -p linux
 
 # Boot loader
