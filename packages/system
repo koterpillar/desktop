@@ -1,7 +1,9 @@
 acpi_call
 aur:autosuspend
+aur:check-git
 curl
 dnsutils
+aur:gdm-plymouth
 geoip
 htop
 iftop
