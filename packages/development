@@ -35,6 +35,6 @@ tcpdump
 tig
 vim
 virt-manager
-wireshark-gtk
+wireshark-qt
 xorg-server-xvfb
 zeal

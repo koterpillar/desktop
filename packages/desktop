@@ -1,4 +1,3 @@
-autojump
 bc
 aur:chrome-gnome-shell-git
 dialog
@@ -16,7 +15,6 @@ polkit-gnome
 pulseaudio
 ttf-arphic-ukai
 ttf-arphic-uming
-aur:ttf-emojione-color
 wl-clipboard
 wqy-microhei
 wqy-zenhei
