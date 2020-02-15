@@ -2,7 +2,12 @@
 
 set -e
 
-NAMES=$(git diff --name-only "$@" | grep '\.hs$')
+if [ "$1" = "--all" ]
+then
+  NAMES=$(find * -name \*.hs)
+else
+  NAMES=$(git diff --name-only "$@" | grep '\.hs$')
+fi
 
 for NAME in $NAMES
 do
