@@ -1,9 +1,17 @@
-#!/bin/sh -e
+#!/bin/sh
+
+set -e
+
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+fi
+
 if (echo $OSTYPE | grep -q darwin)
 then
     brew upgrade
     brew cask upgrade
-else
+elif [ "$NAME" = "Arch Linux" ]
+then
     sudo true
     echo Updating...
     COUNTRY=$(curl -s http://free.ipwhois.io/json/ | jq -r .country)
@@ -12,4 +20,11 @@ else
     sudo pacman -Syuw --noconfirm
     sudo pacman -Su --noconfirm
     sudo aura -Au --noconfirm
+elif [ "$NAME" = "Debian GNU/Linux" ]
+then
+    sudo true
+    echo Updating...
+    sudo apt update
+    sudo apt -y full-upgrade
+    sudo apt -y autoremove
 fi
