@@ -78,6 +78,10 @@ fi
 
 eval "$(jenv init -)"
 
+if [ -d $HOME/.gvm ]; then
+    source "$HOME/.gvm/scripts/gvm"
+fi
+
 if which stack >/dev/null
 then
     eval "$(stack --bash-completion-script stack)"
