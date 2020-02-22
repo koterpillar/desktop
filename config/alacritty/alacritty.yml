@@ -7,6 +7,16 @@ window:
 
   dynamic_padding: true
 
+font:
+  normal:
+    family: "Fira Mono"
+  bold:
+    family: "Fira Mono"
+  italic:
+    family: "Fira Mono"
+
+  size: 11
+
 colors:
   primary:
     background: '0xffffff'
