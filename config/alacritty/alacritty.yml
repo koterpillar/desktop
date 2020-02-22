@@ -37,12 +37,14 @@ colors:
     white:   '0xFFFEFE'
 
 # Live config reload (changes require restart)
-live_config_reload: true
+#live_config_reload: true
+
+dynamic_title: true
 
 shell:
-  program: /bin/zsh
+  program: /usr/bin/env
   args:
-    - --login
+    - tmux
 
 mouse:
   #hide_when_typing: false
