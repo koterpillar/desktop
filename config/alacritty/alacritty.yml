@@ -56,6 +56,10 @@ shell:
   program: /usr/bin/env
   args:
     - tmux
+    - new
+    - -A
+    - -s
+    - alacritty
 
 mouse:
   #hide_when_typing: false
