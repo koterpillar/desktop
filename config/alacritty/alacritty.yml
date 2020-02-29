@@ -189,34 +189,30 @@ mouse:
 # binding with the same triggers is defined. To unset a default binding, it can
 # be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
 # a no-op if you do not wish to receive input characters for that binding.
-#key_bindings:
-  # (Windows, Linux, and BSD only)
-  #- { key: V,        mods: Control|Shift, action: Paste            }
-  #- { key: C,        mods: Control|Shift, action: Copy             }
-  #- { key: Insert,   mods: Shift,         action: PasteSelection   }
-  #- { key: Key0,     mods: Control,       action: ResetFontSize    }
-  #- { key: Equals,   mods: Control,       action: IncreaseFontSize }
-  #- { key: Add,      mods: Control,       action: IncreaseFontSize }
-  #- { key: Subtract, mods: Control,       action: DecreaseFontSize }
-  #- { key: Minus,    mods: Control,       action: DecreaseFontSize }
+key_bindings:
+  - { key: V,        mods: Control|Shift, action: Paste            }
+  - { key: C,        mods: Control|Shift, action: Copy             }
+  - { key: Insert,   mods: Shift,         action: ReceiveChar      }
+  - { key: Key0,     mods: Control,       action: ResetFontSize    }
+  - { key: Equals,   mods: Control,       action: IncreaseFontSize }
+  - { key: Add,      mods: Control,       action: IncreaseFontSize }
+  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  - { key: Minus,    mods: Control,       action: DecreaseFontSize }
 
-  # (Windows only)
-  #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
-
-  # (macOS only)
-  #- { key: Key0,   mods: Command,         action: ResetFontSize    }
-  #- { key: Equals, mods: Command,         action: IncreaseFontSize }
-  #- { key: Add,    mods: Command,         action: IncreaseFontSize }
-  #- { key: Minus,  mods: Command,         action: DecreaseFontSize }
-  #- { key: K,      mods: Command,         action: ClearHistory     }
-  #- { key: K,      mods: Command,         chars: "\x0c"            }
-  #- { key: V,      mods: Command,         action: Paste            }
-  #- { key: C,      mods: Command,         action: Copy             }
-  #- { key: H,      mods: Command,         action: Hide             }
-  #- { key: M,      mods: Command,         action: Minimize         }
-  #- { key: Q,      mods: Command,         action: Quit             }
-  #- { key: W,      mods: Command,         action: Quit             }
-  #- { key: F,      mods: Command|Control, action: ToggleFullscreen }
+  # Disable macOS keybindings
+  - { key: Key0,   mods: Command,         action: ReceiveChar      }
+  - { key: Equals, mods: Command,         action: ReceiveChar      }
+  - { key: Add,    mods: Command,         action: ReceiveChar      }
+  - { key: Minus,  mods: Command,         action: ReceiveChar      }
+  - { key: K,      mods: Command,         action: ReceiveChar      }
+  - { key: K,      mods: Command,         action: ReceiveChar      }
+  - { key: V,      mods: Command,         action: ReceiveChar      }
+  - { key: C,      mods: Command,         action: ReceiveChar      }
+  - { key: H,      mods: Command,         action: ReceiveChar      }
+  - { key: M,      mods: Command,         action: ReceiveChar      }
+  - { key: Q,      mods: Command,         action: ReceiveChar      }
+  - { key: W,      mods: Command,         action: ReceiveChar      }
+  - { key: F,      mods: Command|Control, action: ReceiveChar      }
 
   #- { key: Paste,                    action: Paste                            }
   #- { key: Copy,                     action: Copy                             }
