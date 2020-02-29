@@ -2,7 +2,6 @@ aur:bloop
 bower
 cabal-install
 docker
-emacs
 eslint
 ghc
 git

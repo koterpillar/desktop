@@ -30,7 +30,6 @@ submodule () {
     fi
 }
 
-submodule $HOME/.emacs.d https://github.com/syl20bnr/spacemacs
 submodule $HOME/.vim https://github.com/koterpillar/vim.git
 submodule $HOME/.jenv https://github.com/gcuisinier/jenv.git
 
