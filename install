@@ -60,7 +60,7 @@ then
 fi
 ls $DIR/config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable --no-reload
 sudo systemctl enable --no-reload \
-  autosuspend
+  autosuspend \
   docker \
   gdm-plymouth \
   NetworkManager \
@@ -69,7 +69,6 @@ sudo systemctl enable --no-reload \
   sshd \
   systemd-timesyncd \
   tlp \
-  tlp-sleep \
   && true
 sudo systemctl disable --no-reload systemd-rfkill
 # Ignore reload errors if running in chroot

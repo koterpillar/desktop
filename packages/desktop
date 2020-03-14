@@ -2,7 +2,6 @@ bc
 aur:chrome-gnome-shell-git
 dialog
 aur:fonts-meta-extended-lt
-gnome
 gnome-tweak-tool
 ibus
 ibus-hangul

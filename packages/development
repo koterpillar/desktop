@@ -8,7 +8,6 @@ git
 git-lfs
 gitg
 happy
-hindent
 hlint
 hoogle
 inotify-tools
