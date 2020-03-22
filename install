@@ -5,9 +5,10 @@ set -e
 DIR=$(readlink -f $(dirname $0))
 
 # Packages
-# TODO: obnam stack
+# TODO: obnam
 sudo dnf copr enable -y pschyska/alacritty
 sudo dnf copr enable -y mikelo2/keeweb
+sudo dnf copr enable -y petersen/stack2
 sudo dnf install -y \
   alacritty \
   curl \
@@ -33,6 +34,7 @@ sudo dnf install -y \
   ripgrep \
   rlwrap \
   rsync \
+  stack \
   strace \
   tcpdump \
   tig \
