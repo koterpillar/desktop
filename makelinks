@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/bin/bash
+
+set -e
 
 if (echo $OSTYPE | grep -q darwin)
 then
@@ -33,9 +35,3 @@ submodule () {
 submodule $HOME/.vim https://github.com/koterpillar/vim.git
 submodule $HOME/.jenv https://github.com/gcuisinier/jenv.git
 
-if (echo $OSTYPE | grep -q linux)
-then
-    # xdg-mime ignores $XDG_CONFIG_HOME/mimeapps.list
-    mkdir -p $HOME/.local/share/applications
-    $LN -sf $HOME/.config/mimeapps.list $HOME/.local/share/applications/mimeapps.list
-fi
