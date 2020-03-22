@@ -34,6 +34,7 @@ sudo dnf install -y \
   ripgrep \
   rlwrap \
   rsync \
+  snapd \
   stack \
   strace \
   tcpdump \
@@ -45,6 +46,7 @@ sudo dnf install -y \
   youtube-dl \
   zsh \
   && true
+sudo ln -sf /var/lib/snapd/snap /snap
 
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
