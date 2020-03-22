@@ -1,38 +1,48 @@
-#!/bin/bash -e
+#!/bin/bash
 
-INSTALL='sudo pacman -S --needed --noconfirm'
+set -e
 
 DIR=$(readlink -f $(dirname $0))
 
-. $DIR/functions.sh
-
-# Pacman configuration
-PACMAN_CONF=/etc/pacman.conf
-if ! diff -q $PACMAN_CONF $DIR/etc/pacman.conf >/dev/null
-then
-  sudo install $DIR/etc/pacman.conf $PACMAN_CONF
-
-  sudo rm -rf /etc/pacman.d/gnupg
-  sudo pacman-key --init
-  sudo pacman-key --populate archlinux
-
-  sudo pacman -Sy
-fi
-
-# Install aura from AUR manually
-if ! which aura >/dev/null 2>&1
-then
-  $INSTALL wget base-devel
-
-  aur_install aura-bin
-fi
-
-INSTALL='sudo pacman -S --needed --noconfirm'
-AUR_INSTALL='sudo aura -A --needed --noconfirm'
-
 # Packages
-$INSTALL $(cat $DIR/packages/* | grep -v '^[a-z]\+:')
-$AUR_INSTALL $(cat $DIR/packages/* | sed '/^aur:/!d;s/^aur://g')
+# TODO: obnam stack
+sudo dnf copr enable -y pschyska/alacritty
+sudo dnf copr enable -y mikelo2/keeweb
+sudo dnf install -y \
+  alacritty \
+  curl \
+  docker \
+  ghc \
+  git \
+  git-lfs \
+  hlint \
+  htop \
+  jq \
+  lsof \
+  KeeWeb \
+  meld \
+  moreutils \
+  mosh \
+  mozilla-fira-mono-fonts \
+  nmap \
+  nodejs \
+  npm \
+  pwgen \
+  python \
+  python3 \
+  ripgrep \
+  rlwrap \
+  rsync \
+  strace \
+  tcpdump \
+  tig \
+  tmux \
+  util-linux-user \
+  vim \
+  wget \
+  youtube-dl \
+  zsh \
+  && true
 
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
