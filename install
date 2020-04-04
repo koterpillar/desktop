@@ -1,38 +1,55 @@
-#!/bin/bash -e
+#!/bin/bash
 
-INSTALL='sudo pacman -S --needed --noconfirm'
+set -e
 
 DIR=$(readlink -f $(dirname $0))
 
-. $DIR/functions.sh
-
-# Pacman configuration
-PACMAN_CONF=/etc/pacman.conf
-if ! diff -q $PACMAN_CONF $DIR/etc/pacman.conf >/dev/null
-then
-  sudo install $DIR/etc/pacman.conf $PACMAN_CONF
-
-  sudo rm -rf /etc/pacman.d/gnupg
-  sudo pacman-key --init
-  sudo pacman-key --populate archlinux
-
-  sudo pacman -Sy
-fi
-
-# Install aura from AUR manually
-if ! which aura >/dev/null 2>&1
-then
-  $INSTALL wget base-devel
-
-  aur_install aura-bin
-fi
-
-INSTALL='sudo pacman -S --needed --noconfirm'
-AUR_INSTALL='sudo aura -A --needed --noconfirm'
-
 # Packages
-$INSTALL $(cat $DIR/packages/* | grep -v '^[a-z]\+:')
-$AUR_INSTALL $(cat $DIR/packages/* | sed '/^aur:/!d;s/^aur://g')
+# TODO: obnam
+sudo dnf copr enable -y pschyska/alacritty
+sudo dnf copr enable -y mikelo2/keeweb
+sudo dnf copr enable -y petersen/stack2
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install -y \
+  alacritty \
+  curl \
+  docker \
+  ghc \
+  git \
+  git-lfs \
+  hlint \
+  htop \
+  jq \
+  lsof \
+  KeeWeb \
+  meld \
+  moreutils \
+  mosh \
+  mozilla-fira-mono-fonts \
+  nmap \
+  nodejs \
+  npm \
+  pwgen \
+  python \
+  python3 \
+  ripgrep \
+  rlwrap \
+  rsync \
+  snapd \
+  stack \
+  strace \
+  tcpdump \
+  tig \
+  tmux \
+  util-linux-user \
+  vim \
+  vlc \
+  wget \
+  youtube-dl \
+  zsh \
+  && true
+sudo ln -sf /var/lib/snapd/snap /snap
 
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
@@ -40,58 +57,12 @@ then
   chsh -s /bin/zsh
 fi
 
-# System config
-find $DIR/etc -type f | sed "s#^$DIR/##g" | xargs -I file sudo install $DIR/file /file
-
-# Fontconfig
-# https://gist.github.com/cryzed/4f64bb79e80d619866ee0b18ba2d32fc
-sudo ln -sfn /etc/fonts/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
-sudo ln -sfn /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
-sudo ln -sfn /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
-sudo ln -sfn /etc/fonts/conf.avail/30-infinality-aliases.conf /etc/fonts/conf.d/
-
 $DIR/makelinks
 
 # Systemd
-if [ ! -f $HOME/.config/systemd ]
-then
-  mkdir -p $HOME/.config
-  ln -sfnT $DIR/config/systemd $HOME/.config/systemd
-fi
-ls $DIR/config/systemd/user/*.service | xargs -n 1 basename | xargs systemctl --user enable --no-reload
 sudo systemctl enable --no-reload \
-  autosuspend \
   docker \
-  gdm-plymouth \
-  NetworkManager \
-  nfs-client.target \
-  rpcbind \
   sshd \
-  systemd-timesyncd \
-  tlp \
   && true
-sudo systemctl disable --no-reload systemd-rfkill
 # Ignore reload errors if running in chroot
 sudo systemctl daemon-reload || true
-
-# dconf
-dconf write /org/gnome/desktop/input-sources/sources "[('xkb', 'us'), ('xkb', 'ru'), ('ibus', 'sunpinyin')]"
-dconf write /org/gnome/desktop/interface/clock-format "'24h'"
-dconf write /org/gnome/desktop/interface/clock-show-date true
-dconf write /org/gnome/desktop/interface/monospace-font-name "'Fira Mono 11'"
-# To enlarge text on higher DPI displays
-# dconf write org/gnome/desktop/interface text-scaling-factor 1.25
-dconf write /org/gnome/system/location/enabled true
-# This isn't in a schema
-dconf load /org/gnome/terminal/legacy/profiles:/ <<END
-[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
-font='Fira Mono 11'
-palette=['rgb(0,0,0)', 'rgb(200,40,41)', 'rgb(113,140,0)', 'rgb(234,183,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(255,255,255)', 'rgb(0,0,0)', 'rgb(200,40,41)', 'rgb(113,140,0)', 'rgb(234,183,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(255,255,255)']
-use-system-font=false
-use-theme-colors=true
-visible-name='alex'
-END
-# TODO: Why not dconf here? What's the difference between dconf and gsettings?
-gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
-gsettings set org.gnome.Terminal.ProfilesList list "['b1dcc9dd-5262-4d8d-a863-c897e6d979b9']"
-gsettings set org.gnome.Terminal.ProfilesList default 'b1dcc9dd-5262-4d8d-a863-c897e6d979b9'

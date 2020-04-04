@@ -1,8 +1,0 @@
-[Unit]
-Description=Zeitgeist Daemon
-
-[Service]
-ExecStart=/usr/bin/zeitgeist-daemon
-
-[Install]
-WantedBy=default.target
