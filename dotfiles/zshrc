@@ -74,6 +74,8 @@ if ! zgen saved; then
 
     zgen load unixorn/autoupdate-zgen
 
+    zgen load lukechilds/zsh-nvm
+
     zgen save
 fi
 
