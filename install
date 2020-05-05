@@ -8,7 +8,6 @@ DIR=$(readlink -f $(dirname $0))
 # TODO: obnam
 sudo dnf copr enable -y pschyska/alacritty
 sudo dnf copr enable -y mikelo2/keeweb
-sudo dnf copr enable -y petersen/stack2
 sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install -y \
@@ -37,7 +36,6 @@ sudo dnf install -y \
   rlwrap \
   rsync \
   snapd \
-  stack \
   strace \
   tcpdump \
   tig \
@@ -50,6 +48,7 @@ sudo dnf install -y \
   zsh \
   && true
 sudo ln -sf /var/lib/snapd/snap /snap
+curl -sSL https://get.haskellstack.org/ | sh
 
 # Shell
 if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
