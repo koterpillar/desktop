@@ -127,7 +127,16 @@ ZSH_THEME_TERM_TITLE_IDLE="$PROMPT_HOST: %~"
 
 ZSH_COMMAND_TIME_COLOR="cyan"
 
-export LS_COLORS=$(gdircolors -b ~/.dircolors | head -n 1 | sed "s/LS_COLORS='//;s/';//")
+if type -f dircolors >/dev/null
+then
+    DIRCOLORS=dircolors
+elif type -f gdircolors >/dev/null
+then
+    DIRCOLORS=gdircolors
+else
+    DIRCOLORS=true
+fi
+export LS_COLORS=$($DIRCOLORS -b ~/.dircolors | head -n 1 | sed "s/LS_COLORS='//;s/';//")
 
 # global /etc/zshprofile overrides $PATH
 # oh-my-zsh overrides $PAGER
