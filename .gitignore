@@ -1,4 +1,4 @@
-/config/gtk-3.0/bookmarks
-/config/systemd/user/default.target.wants/
+/config/karabiner/assets
+/config/karabiner/automatic_backups
 /dotfiles/stack
 !/dotfiles/stack/config.yaml
