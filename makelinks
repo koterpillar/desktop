@@ -20,8 +20,10 @@ ls $DIR/dotfiles | xargs -I FILE $LN -sfnT $DIR/dotfiles/FILE $HOME/.FILE
 $LN -sfnT $DIR/bin $HOME/bin
 
 # Root shell config
-sudo sh -c "$LN -sfnT $DIR/dotfiles/zshrc ~root/.zshrc"
-sudo sh -c "$LN -sfnT $DIR/dotfiles/zshenv ~root/.zshenv"
+for FILE in dircolors zshrc zshenv
+do
+    sudo sh -c "$LN -sfnT $DIR/dotfiles/$FILE ~root/.$FILE"
+done
 
 # Git repositories
 submodule () {
