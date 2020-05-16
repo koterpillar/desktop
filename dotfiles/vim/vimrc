@@ -8,8 +8,9 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-sleuth'
-Plug 'editorconfig/editorconfig-vim'
+Plug 'sgur/vim-editorconfig'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 call plug#end()
