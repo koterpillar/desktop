@@ -79,7 +79,10 @@ if ! zgen saved; then
     zgen save
 fi
 
-eval "$(jenv init -)"
+if type jenv >/dev/null
+then
+    eval "$(jenv init -)"
+fi
 
 if [ -d $HOME/.gvm ]; then
     source "$HOME/.gvm/scripts/gvm"
