@@ -2,3 +2,7 @@
 /config/karabiner/automatic_backups
 /dotfiles/stack
 !/dotfiles/stack/config.yaml
+/dotfiles/vim/autoload
+/dotfiles/vim/.netrwhist
+/dotfiles/vim/plugged
+/dotfiles/vim/spell

@@ -14,13 +14,17 @@ fi
 DIR=$($READLINK -f $(dirname $0))
 
 # Config and dotfiles
+if [ -d $HOME/.vim/.git ]
+then
+    rm -rf $HOME/.vim
+fi
 mkdir -p $HOME/.config
 ls $DIR/config | xargs -I FILE $LN -sfnT $DIR/config/FILE $HOME/.config/FILE
 ls $DIR/dotfiles | xargs -I FILE $LN -sfnT $DIR/dotfiles/FILE $HOME/.FILE
 $LN -sfnT $DIR/bin $HOME/bin
 
 # Root shell config
-for FILE in dircolors zshrc zshenv
+for FILE in dircolors vim zshrc zshenv
 do
     sudo sh -c "$LN -sfnT $DIR/dotfiles/$FILE ~root/.$FILE"
 done
@@ -34,6 +38,5 @@ submodule () {
     fi
 }
 
-submodule $HOME/.vim https://github.com/koterpillar/vim.git
 submodule $HOME/.jenv https://github.com/gcuisinier/jenv.git
 
