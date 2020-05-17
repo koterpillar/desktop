@@ -58,6 +58,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/bower
     zgen oh-my-zsh plugins/docker
     zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/gradle
     zgen oh-my-zsh plugins/npm
     zgen oh-my-zsh plugins/virtualenvwrapper
     zgen oh-my-zsh plugins/colored-man-pages
