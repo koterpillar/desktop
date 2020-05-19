@@ -5,6 +5,7 @@ setopt appendhistory nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
 
 autoload -Uz compinit
+FPATH=$(echo $FPATH | sed 's!/usr/local/share/zsh/site-functions:!!')
 compinit
 autoload -Uz bashcompinit
 bashcompinit
