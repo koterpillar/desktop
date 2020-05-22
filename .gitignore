@@ -1,6 +1,6 @@
 /config/karabiner/assets
 /config/karabiner/automatic_backups
-/config/karabiner/config.json
+/config/karabiner/karabiner.json
 /dotfiles/stack
 !/dotfiles/stack/config.yaml
 /dotfiles/vim/autoload
