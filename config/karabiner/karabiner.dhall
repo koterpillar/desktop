@@ -19,7 +19,7 @@ let fromModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> {
     key_code = key_code,
     modifiers = Some {
         mandatory = Some modifiers,
-        optional = None Modifiers
+        optional = Some ["any"]
     }
 }
 
@@ -153,14 +153,6 @@ in
                     controlToOption "delete_or_backspace",
                     -- Delete
                     controlToOption "delete_forward",
-                    -- Win
-                    {
-                        conditions = None (List Condition),
-                        type = "basic",
-                        from = fromKeyCode "command",
-                        to_if_alone = Some [toKeyCode "launchpad"],
-                        to = None (List To)
-                    },
                     controlToCommand "a",
                     controlToCommand "b",
                     controlToCommand "c",
@@ -173,15 +165,16 @@ in
                     controlToCommand "s",
                     controlToCommand "t",
                     manipulatorFor browser (fromCtrl "l") (toCommand "l"),
+                    manipulatorFor browser (fromModifiers ["control", "shift"] "p") (toModifiers ["command", "shift"] "p"),
                     controlToCommand "u",
                     controlToCommand "v",
                     controlToCommand "w",
                     controlToCommand "x",
                     controlToCommand "y",
                     controlToCommand "z",
-                    controlToCommand "slash", -- TODO: even nice applications are included?
-                    manipulator (fromKeyCode "f1") (toModifiers ["command", "shift"] "slash"),
-                    manipulator (fromKeyCode "f3") (toCommand "g"),
+                    controlToCommand "hyphen",
+                    controlToCommand "equal_sign",
+                    controlToCommand "0",
                     manipulatorForAll (fromModifier "option" "f4") (toCommand "q"),
                     manipulatorForAll (fromModifier "option" "grave_accent_and_tilde") (toModifier "left_command" "grave_accent_and_tilde"),
                     manipulatorForAll (fromModifier "option" "tab") (toModifier "left_command" "tab")
