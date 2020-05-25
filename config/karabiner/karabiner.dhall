@@ -70,6 +70,17 @@ let unlessNiceApp: Condition = {
     type = "frontmost_application_unless"
 }
 
+let vimApps = [
+    "^com\\.microsoft\\.VSCode$"
+]
+
+let concat = https://prelude.dhall-lang.org/List/concat
+
+let unlessVim: Condition = {
+    bundle_identifiers = concat Text [niceApps, vimApps],
+    type = "frontmost_application_unless"
+}
+
 let browser: Condition = {
     bundle_identifiers = [
         "^org\\.mozilla\\.firefox$"
@@ -161,7 +172,7 @@ in
                     controlToCommand "n",
                     controlToCommand "o",
                     controlToCommand "p",
-                    controlToCommand "r",
+                    manipulatorFor unlessVim (fromCtrl "r") (toCommand "r"),
                     controlToCommand "s",
                     controlToCommand "t",
                     manipulatorFor browser (fromCtrl "l") (toCommand "l"),
