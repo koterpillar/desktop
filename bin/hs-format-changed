@@ -6,7 +6,7 @@ if [ "$1" = "--all" ]
 then
   NAMES=$(find * -name \*.hs)
 else
-  NAMES=$(git diff --name-only "$@" | grep '\.hs$')
+  NAMES=$(git diff --name-only "$@" | grep '\.hs$' || true)
 fi
 
 for NAME in $NAMES
