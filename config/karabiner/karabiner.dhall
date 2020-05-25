@@ -178,7 +178,7 @@ in
                     manipulatorFor browser (fromCtrl "l") (toCommand "l"),
                     manipulatorFor browser (fromModifiers ["control", "shift"] "p") (toModifiers ["command", "shift"] "p"),
                     controlToCommand "u",
-                    controlToCommand "v",
+                    manipulatorFor unlessVim (fromCtrl "v") (toCommand "v"),
                     controlToCommand "w",
                     controlToCommand "x",
                     controlToCommand "y",
