@@ -169,6 +169,7 @@ in
                     controlToCommand "c",
                     controlToCommand "f",
                     controlToCommand "i",
+                    controlToCommand "k",
                     controlToCommand "n",
                     controlToCommand "o",
                     controlToCommand "p",
