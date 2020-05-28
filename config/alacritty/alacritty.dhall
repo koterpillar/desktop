@@ -11,7 +11,7 @@ in
   { decorations = "none"
   , dynamic_padding = True
   , padding = { x = 2, y = 2 }
-  , startup_mode = merge { Linux = "Maximized", Macos = "SimpleFullscreen" } os
+  , startup_mode = "Maximized"
   }
 , colors =
   { bright =
