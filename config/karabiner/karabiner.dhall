@@ -1,9 +1,21 @@
+let optionFold = https://prelude.dhall-lang.org/Optional/fold
+
+let showOptional = \(t: Type) -> \(show: t -> Text) -> \(value: Optional t) -> optionFold t value Text show ""
+
 let Modifiers = List Text
+
+let concatSep = https://prelude.dhall-lang.org/Text/concatSep
+
+let showModifiers = \(m: Modifiers) -> concatSep " " m
+
+let showOptionalModifiers = showOptional Modifiers showModifiers
 
 let FromModifiers = {
     mandatory: Optional Modifiers,
     optional: Optional Modifiers
 }
+
+let showFromModifiers = \(fm: FromModifiers) -> showOptionalModifiers fm.mandatory
 
 let modifiers: FromModifiers = {
     mandatory = None Modifiers,
@@ -14,6 +26,8 @@ let From = {
     key_code: Text,
     modifiers: Optional FromModifiers
 }
+
+let showFrom = \(f: From) -> showOptional FromModifiers showFromModifiers f.modifiers ++ " " ++ f.key_code
 
 let fromModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> {
     key_code = key_code,
@@ -36,6 +50,12 @@ let To = {
     key_code: Text,
     modifiers: Optional Modifiers
 }
+
+let showTo = \(f: To) -> showOptional Modifiers showModifiers f.modifiers ++ " " ++ f.key_code
+
+let concatMapSep = https://prelude.dhall-lang.org/Text/concatMapSep
+
+let showListTo = concatMapSep " " To showTo
 
 let toModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> {
     key_code = key_code,
@@ -96,6 +116,8 @@ let Manipulator = {
     type: Text
 }
 
+let showManip = \(m: Manipulator) -> showFrom m.from ++ " -> " ++ showOptional (List To) showListTo m.to
+
 let manipulatorForConditions = \(conditions: Optional (List Condition)) -> \(from: From) -> \(to: To) -> {
     type = "basic",
     conditions = conditions,
@@ -119,7 +141,7 @@ let Rule = {
     manipulators: List Manipulator
 }
 
-let rule = \(manipulator: Manipulator) -> { description = "Rule", manipulators = [manipulator] }: Rule
+let rule = \(manipulator: Manipulator) -> { description = showManip manipulator, manipulators = [manipulator] }: Rule
 
 let map = https://prelude.dhall-lang.org/List/map
 
