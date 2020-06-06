@@ -10,6 +10,7 @@ sudo dnf copr enable -y pschyska/alacritty
 # sudo dnf copr enable -y mikelo2/keeweb
 sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
 sudo dnf install -y \
   alacritty \
   curl \
@@ -44,6 +45,7 @@ sudo dnf install -y \
   vim \
   vlc \
   wget \
+  yarn \
   youtube-dl \
   zsh \
   && true
