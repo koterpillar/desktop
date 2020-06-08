@@ -1,10 +1,13 @@
 [user]
 	name = Alexey Kotlyarov
 	email = a@koterpillar.com
+
 [color]
 	ui = auto
+
 [push]
 	default = simple
+
 [alias]
 	taga = !git tag -a -m $1
 	prune-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
