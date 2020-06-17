@@ -90,7 +90,7 @@ if [ -d $HOME/.gvm ]; then
     source "$HOME/.gvm/scripts/gvm"
 fi
 
-if which stack >/dev/null
+if type stack >/dev/null
 then
     eval "$(stack --bash-completion-script stack)"
 fi
