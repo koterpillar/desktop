@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+if !(git remote | grep -q upstream)
+then
+   exit 0
+fi
+UPSTREAM=$(git remote get-url upstream)
+git remote rm upstream
+git remote set-url origin $UPSTREAM
+git fetch origin
