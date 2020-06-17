@@ -51,11 +51,11 @@ sudo dnf install -y \
 sudo ln -sf /var/lib/snapd/snap /snap
 
 # Systemd
+sudo systemctl daemon-reload || true
 sudo systemctl enable --no-reload \
   docker \
   sshd \
   && true
-# Ignore reload errors if running in chroot
 sudo systemctl daemon-reload || true
 
 # Inotify limits
