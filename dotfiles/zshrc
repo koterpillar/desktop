@@ -1,4 +1,4 @@
-HISTFILE=~/.histfile
+HISTFILE=$HOME/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory nomatch hist_ignore_all_dups hist_ignore_space
@@ -53,7 +53,7 @@ then
     HOME=/dev/null XDG_CONFIG_HOME=/dev/null git clone "https://github.com/tarjoilija/zgen.git" "$DEST"
 fi
 
-source ~/.zgen/zgen.zsh
+source $HOME/.zgen/zgen.zsh
 
 if ! zgen saved; then
     echo 'Creating a zgen save'
@@ -143,7 +143,7 @@ then
 else
     DIRCOLORS=true
 fi
-export LS_COLORS=$($DIRCOLORS -b ~/.dircolors | head -n 1 | sed "s/LS_COLORS='//;s/';//")
+export LS_COLORS=$($DIRCOLORS -b $HOME/.dircolors | head -n 1 | sed "s/LS_COLORS='//;s/';//")
 
 # global /etc/zshprofile overrides $PATH
 # oh-my-zsh overrides $PAGER
