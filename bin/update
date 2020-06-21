@@ -2,29 +2,33 @@
 
 set -e
 
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-fi
-
 if (echo $OSTYPE | grep -q darwin)
 then
     brew upgrade
     brew cask upgrade
-elif [ "$NAME" = "Arch Linux" ]
+elif type pkcon >/dev/null
 then
-    sudo true
-    echo Updating...
-    COUNTRY=$(curl -s http://free.ipwhois.io/json/ | jq -r .country)
-    sudo reflector --country $COUNTRY -l 200 -p http --sort rate \
-    --save /etc/pacman.d/mirrorlist || true
-    sudo pacman -Syuw --noconfirm
-    sudo pacman -Su --noconfirm
-    sudo aura -Au --noconfirm
-elif [ "$NAME" = "Debian GNU/Linux" ]
-then
-    sudo true
-    echo Updating...
-    sudo apt update
-    sudo apt -y full-upgrade
-    sudo apt -y autoremove
+    pkcon update
+else
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+    fi
+    if [ "$NAME" = "Arch Linux" ]
+    then
+        sudo true
+        echo Updating...
+        COUNTRY=$(curl -s http://free.ipwhois.io/json/ | jq -r .country)
+        sudo reflector --country $COUNTRY -l 200 -p http --sort rate \
+            --save /etc/pacman.d/mirrorlist || true
+        sudo pacman -Syuw --noconfirm
+        sudo pacman -Su --noconfirm
+        sudo aura -Au --noconfirm
+    elif [ "$NAME" = "Debian GNU/Linux" ]
+    then
+        sudo true
+        echo Updating...
+        sudo apt update
+        sudo apt -y full-upgrade
+        sudo apt -y autoremove
+    fi
 fi
