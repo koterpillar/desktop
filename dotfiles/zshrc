@@ -14,6 +14,11 @@ export DESKTOP_ROOT=$(dirname $(dirname $(readlink ~/.zshrc)))
 
 alias grep='grep --color=auto'
 
+if ! type open >/dev/null
+then
+    alias open=xdg-open
+fi
+
 bindkey -e
 
 # X terminal keys
