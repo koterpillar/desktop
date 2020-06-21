@@ -66,7 +66,6 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/gradle
     zgen oh-my-zsh plugins/npm
-    zgen oh-my-zsh plugins/virtualenvwrapper
     zgen oh-my-zsh plugins/colored-man-pages
 
     zgen load agkozak/zsh-z
@@ -81,24 +80,22 @@ if ! zgen saved; then
 
     zgen load unixorn/autoupdate-zgen
 
-    zgen load lukechilds/zsh-nvm
-
     zgen save
 fi
 
-if type jenv >/dev/null
-then
-    eval "$(jenv init -)"
-fi
+autoload -U add-zsh-hook
+load-version-managers() {
+    if [-z "$NVM_LOADED" ] && [ -d $HOME/.nvm ] && [ -f .nvmrc ]; then
+        source "$HOME/.nvm/nvm.sh"
+        NVM_LOADED=1
+    fi
 
-if [ -d $HOME/.gvm ]; then
-    source "$HOME/.gvm/scripts/gvm"
-fi
-
-if type stack >/dev/null
-then
-    eval "$(stack --bash-completion-script stack)"
-fi
+    if [ -z "$JENV_LOADED" ] && type jenv >/dev/null && [ -f .java-version ]; then
+        eval "$(jenv init -)"
+        JENV_LOADED=1
+    fi
+}
+add-zsh-hook chpwd load-version-managers
 
 # FIXME: Docker plugin isn't registering for autocomplete
 autoload _docker
