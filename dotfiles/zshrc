@@ -85,7 +85,7 @@ fi
 
 autoload -U add-zsh-hook
 load-version-managers() {
-    if [-z "$NVM_LOADED" ] && [ -d $HOME/.nvm ] && [ -f .nvmrc ]; then
+    if [ -z "$NVM_LOADED" ] && [ -d $HOME/.nvm ] && [ -f .nvmrc ]; then
         source "$HOME/.nvm/nvm.sh"
         NVM_LOADED=1
     fi
