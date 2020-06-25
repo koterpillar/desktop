@@ -23,10 +23,20 @@ if [ -d $HOME/.vim/.git ]
 then
     rm -rf $HOME/.vim
 fi
+makelink () {
+    MAKELINK_SOURCE="$1"
+    MAKELINK_TARGET="$2"
+    mkdir -p $(dirname "$MAKELINK_TARGET")
+    $LN -sfnT "$MAKELINK_SOURCE" "$MAKELINK_TARGET"
+}
+for DOTFILE in $(find $DIR/dotfiles -type f)
+do
+    TARGET=$(echo $DOTFILE | sed -E 's!^'$DIR'/dotfiles/(.+)$!.\1!')
+    makelink "$DOTFILE" "$HOME/$TARGET"
+done
 mkdir -p $HOME/.config
 ls $DIR/config | xargs -I FILE $LN -sfnT $DIR/config/FILE $HOME/.config/FILE
-ls $DIR/dotfiles | xargs -I FILE $LN -sfnT $DIR/dotfiles/FILE $HOME/.FILE
-$LN -sfnT $DIR/bin $HOME/bin
+makelink $DIR/bin $HOME/bin
 
 # Root shell config
 for FILE in dircolors vim zshrc zshenv
