@@ -29,6 +29,7 @@ sudo dnf install -y \
   nmap \
   nodejs \
   npm \
+  perl-Image-ExifTool \
   pwgen \
   python \
   python3 \
