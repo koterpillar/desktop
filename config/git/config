@@ -2,14 +2,14 @@
 	name = Alexey Kotlyarov
 	email = a@koterpillar.com
 
-[color]
-	ui = auto
-
 [pull]
 	ff = only
 
 [push]
 	default = simple
+
+[color]
+	ui = auto
 
 [alias]
 	taga = !git tag -a -m $1
@@ -22,12 +22,12 @@
 	required = true
 	clean = git-lfs clean -- %f
 
+[tig]
+	line-graphics = utf-8
+
 [url "ssh://git@github.com"]
 	pushInsteadOf = https://github.com
 	pushInsteadOf = git://github.com
-
-[tig]
-	line-graphics = utf-8
 
 [github]
 	user = koterpillar
