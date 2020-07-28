@@ -2,6 +2,9 @@
 	name = Alexey Kotlyarov
 	email = a@koterpillar.com
 
+[init]
+	defaultBranch = main
+
 [pull]
 	ff = only
 
