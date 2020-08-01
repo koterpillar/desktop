@@ -10,6 +10,7 @@ in
 { window =
   { decorations = "none"
   , dynamic_padding = True
+  , dynamic_title = True
   , padding = { x = 2, y = 2 }
   , startup_mode = "Maximized"
   }
@@ -37,7 +38,6 @@ in
     }
   , primary = { background = "0xffffff", foreground = "0x4d4d4c" }
   }
-, dynamic_title = True
 , font =
   { bold.family = font
   , italic.family = font
