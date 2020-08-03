@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+# Reorder a GHC profile by timestamps, needed by older GHC
+
+import os
+import sys
+
+
+sections = {}
+
+result = []
+
+with open(sys.argv[1]) as infile:
+    while True:
+        line = infile.readline()
+        if not line:
+            break
+        if line.startswith('BEGIN_SAMPLE'):
+            section = line
+            sample = [line]
+            while not line.startswith('END_SAMPLE'):
+                line = infile.readline()
+                sample.append(line)
+            sections[line] = sample
+        else:
+            result.append(line)
+
+def sort_time(s: str):
+    return float(s.split()[1])
+
+for section in sorted(sections.keys(), key=sort_time):
+    for line in sections[section]:
+        result.append(line)
+
+with open(sys.argv[1], 'w') as outfile:
+    for line in result:
+        outfile.write(line)
