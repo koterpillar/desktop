@@ -8,6 +8,7 @@ then
     brew cask upgrade
 elif type pkcon >/dev/null
 then
+    pkcon refresh
     pkcon update
 else
     if [ -f /etc/os-release ]; then
