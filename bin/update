@@ -8,8 +8,8 @@ then
     brew cask upgrade
 elif type pkcon >/dev/null
 then
-    pkcon refresh
-    pkcon update
+    pkcon refresh --noninteractive
+    pkcon update --noninteractive
 else
     if [ -f /etc/os-release ]; then
         . /etc/os-release
@@ -24,12 +24,8 @@ else
         sudo pacman -Syuw --noconfirm
         sudo pacman -Su --noconfirm
         sudo aura -Au --noconfirm
-    elif [ "$NAME" = "Debian GNU/Linux" ]
-    then
-        sudo true
-        echo Updating...
-        sudo apt update
-        sudo apt -y full-upgrade
-        sudo apt -y autoremove
+    else
+        echo "No PackageKit, don't know how to update." >&2
+        exit 1
     fi
 fi
