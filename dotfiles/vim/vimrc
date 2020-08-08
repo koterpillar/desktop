@@ -12,6 +12,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-sleuth'
 Plug 'sgur/vim-editorconfig'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'sirtaj/vim-openscad'
 
 call plug#end()
 
