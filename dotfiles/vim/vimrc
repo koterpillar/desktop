@@ -26,7 +26,7 @@ au FileType yaml setlocal tabstop=2 expandtab
 
 au FileType json setlocal tabstop=2 expandtab
 
-set wildignore+=node_modules,bower_components
+set wildignore+=node_modules
 
 au FileType haskell setlocal tabstop=4 expandtab
 au FileType haskell setlocal formatprg=hindent
