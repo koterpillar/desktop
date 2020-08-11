@@ -5,7 +5,6 @@ set -e
 if (echo $OSTYPE | grep -q darwin)
 then
     brew upgrade
-    brew cask upgrade
 elif type pkcon >/dev/null
 then
     pkcon refresh --noninteractive
