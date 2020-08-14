@@ -16,6 +16,19 @@ def git(*args):
     return subprocess.check_output(('git',) + args).decode()
 
 
+def branch_exists(branch):
+    """Determine whether a branch with the given name exists."""
+
+    try:
+        git('show-ref', branch)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+DEFAULT_BRANCHES = ['develop', 'main', 'master']
+
+
 def main():
     """Main entry point."""
 
@@ -24,21 +37,16 @@ def main():
     )
     parser.add_argument('branch', nargs='?', help="The branch to merge")
     parser.add_argument('--to', help="Branch to merge to")
-    parser.add_argument('--master', action='store_true',
-                        help="Merge into master instead of develop")
 
     args = parser.parse_args()
 
     if args.to:
         base = args.to
-    elif args.master:
-        base = 'master'
     else:
-        try:
-            git('show-ref', 'develop')
-            base = 'develop'
-        except subprocess.CalledProcessError:
-            base = 'master'
+        for branch in DEFAULT_BRANCHES:
+            if branch_exists(branch):
+                base = branch
+                break
 
     current = args.branch or \
         git('rev-parse', '--abbrev-ref', 'HEAD').strip()
@@ -48,7 +56,7 @@ def main():
               file=sys.stderr)
         return 1
 
-    if current in ('master', 'develop'):
+    if current in DEFAULT_BRANCHES:
         print("Cannot merge the {0} branch.".format(current),
                 file=sys.stderr)
         return 1
