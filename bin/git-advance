@@ -19,7 +19,7 @@ branch_exists() {
 }
 
 MAIN=main
-if !branch_exists $MAIN
+if !(branch_exists $MAIN)
 then
     MAIN=master
 fi
