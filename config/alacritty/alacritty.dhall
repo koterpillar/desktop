@@ -69,7 +69,7 @@ in
   ]
 , mouse.url.modifiers = "Control"
 , shell =
-  { args = [ "tmux", "new", "-A", "-s", "alacritty" ]
-  , program = "/usr/bin/env"
+  { args = [ "-c", "tmux new -A -s alacritty" ]
+  , program = merge { Linux = "/usr/bin/zsh", Macos = "/usr/local/bin/zsh" } os
   }
 }
