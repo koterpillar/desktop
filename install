@@ -17,6 +17,7 @@ sudo dnf install -y \
   docker \
   ghc \
   git \
+  git-delta \
   git-lfs \
   hlint \
   htop \
