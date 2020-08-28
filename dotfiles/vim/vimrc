@@ -78,8 +78,13 @@ set number relativenumber
 set completeopt-=preview
 
 " Autosave
+function! Autosave()
+  if @% != ""
+    update
+  endif
+endfunction
 set updatetime=250
-autocmd CursorHold * update
+autocmd CursorHold * call Autosave()
 
 imap <C-BS> <C-W>
 imap <C-Del> <C-O>de
