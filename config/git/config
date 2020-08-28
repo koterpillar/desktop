@@ -1,8 +1,8 @@
 [core]
-	pager = delta --light
+	pager = delta
 
 [interactive]
-	diffFilter = delta --light --color-only
+	diffFilter = delta --color-only
 
 [user]
 	name = Alexey Kotlyarov
@@ -40,3 +40,6 @@
 
 [github]
 	user = koterpillar
+
+[delta]
+	syntax-theme = GitHub
