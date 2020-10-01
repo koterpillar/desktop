@@ -13,6 +13,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'sgur/vim-editorconfig'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'sirtaj/vim-openscad'
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
