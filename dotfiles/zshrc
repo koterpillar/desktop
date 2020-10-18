@@ -145,17 +145,19 @@ else
     fi
 fi
 
+PROJECT_SYMBOL='♦'
+
 omz_termsupport_precmd() {
     case $PWD in
         ($HOME/Projects)
         ($HOME/projects)
-            PROMPT_PWD='𝔭'
+            PROMPT_PWD=$PROJECT_SYMBOL
             ;;
         ($HOME/projects/*)
-            PROMPT_PWD='𝔭 '${PWD#$HOME/projects/*}
+            PROMPT_PWD="${PROJECT_SYMBOL} ${PWD#$HOME/projects/*}"
             ;;
         ($HOME/Projects/*)
-            PROMPT_PWD='𝔭 '${PWD#$HOME/Projects/*}
+            PROMPT_PWD="${PROJECT_SYMBOL} ${PWD#$HOME/Projects/*}"
             ;;
         ($HOME*)
             PROMPT_PWD='~'${PWD#$HOME}
