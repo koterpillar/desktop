@@ -74,8 +74,6 @@ if ! zgen saved; then
 
     zgen load zsh-users/zsh-syntax-highlighting
 
-    zgen load petervanderdoes/git-flow-completion
-
     zgen load popstas/zsh-command-time
 
     zgen load unixorn/autoupdate-zgen
