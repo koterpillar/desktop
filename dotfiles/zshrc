@@ -90,6 +90,10 @@ load-version-managers() {
         NVM_LOADED=1
     fi
 
+    if [ -d $HOME/.nvm ] && [ -f .nvmrc ]; then
+        nvm use
+    fi
+
     if [ -z "$JENV_LOADED" ] && type jenv >/dev/null && [ -f .java-version ]; then
         eval "$(jenv init -)"
         JENV_LOADED=1
