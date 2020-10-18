@@ -121,7 +121,7 @@ else
     PROMPT_HOST_COLOR=green
 fi
 
-PROMPT='%{$fg[$PROMPT_HOST_COLOR]%}$PROMPT_HOST%{$reset_color%} %~ \
+PROMPT='%{$fg[$PROMPT_HOST_COLOR]%}$PROMPT_HOST%{$reset_color%} $PROMPT_PWD \
 $(git_prompt_info)\
 %{$fg[red]%}%(!.#.»)%{$reset_color%} '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
@@ -134,10 +134,38 @@ ZSH_THEME_GIT_PROMPT_DIRTY="⚡"
 
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [ $UID != 0 ]
 then
-    ZSH_THEME_TERM_TITLE_IDLE="%~"
+    TERM_TITLE_IDLE=""
 else
-    ZSH_THEME_TERM_TITLE_IDLE="$PROMPT_HOST: %~"
+    TERM_TITLE_IDLE="$PROMPT_HOST"
+    if [ $UID = 0 ]
+    then
+        TERM_TITLE_IDLE="${TERM_TITLE_IDLE}# "
+    else
+        TERM_TITLE_IDLE="${TERM_TITLE_IDLE}: "
+    fi
 fi
+
+omz_termsupport_precmd() {
+    case $PWD in
+        ($HOME/Projects)
+        ($HOME/projects)
+            PROMPT_PWD='𝔭'
+            ;;
+        ($HOME/projects/*)
+            PROMPT_PWD='𝔭 '${PWD#$HOME/projects/*}
+            ;;
+        ($HOME/Projects/*)
+            PROMPT_PWD='𝔭 '${PWD#$HOME/Projects/*}
+            ;;
+        ($HOME*)
+            PROMPT_PWD='~'${PWD#$HOME}
+            ;;
+        (*)
+            PROMPT_PWD=$PWD
+            ;;
+    esac
+    title "${TERM_TITLE_IDLE}${PROMPT_PWD}"
+}
 
 ZSH_COMMAND_TIME_COLOR="cyan"
 
