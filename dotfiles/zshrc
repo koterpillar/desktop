@@ -145,28 +145,56 @@ else
     fi
 fi
 
-PROJECT_SYMBOL='♦'
+DIAMOND='♦'
+TILDE='~'
+DIR_DECORATIONS=("$HOME/projects" "$DIAMOND" "$HOME/Projects" "$DIAMOND" "$HOME/Downloads" '⤓' "$HOME" '~')
+
+desktop_func_join() {
+    if [ -z "$1" ]
+    then
+        echo "$2"
+    elif [ -z "$2" ]
+    then
+        echo "$1"
+    else
+        echo "$1${3:- }$2"
+    fi
+}
+
+ellipsis='…'
+desktop_func_ellipsis() {
+    maxlength=$(($2 - ${#ellipsis}))
+    if [ "${#1}" -gt "$maxlength" ]
+    then
+        echo "${1[0,$maxlength]}$ellipsis"
+    else
+        echo "$1"
+    fi
+}
 
 omz_termsupport_precmd() {
-    case $PWD in
-        ($HOME/Projects)
-        ($HOME/projects)
-            PROMPT_PWD=$PROJECT_SYMBOL
-            ;;
-        ($HOME/projects/*)
-            PROMPT_PWD="${PROJECT_SYMBOL} ${PWD#$HOME/projects/*}"
-            ;;
-        ($HOME/Projects/*)
-            PROMPT_PWD="${PROJECT_SYMBOL} ${PWD#$HOME/Projects/*}"
-            ;;
-        ($HOME*)
-            PROMPT_PWD='~'${PWD#$HOME}
-            ;;
-        (*)
-            PROMPT_PWD=$PWD
-            ;;
-    esac
-    title "${TERM_TITLE_IDLE}${PROMPT_PWD}"
+    PWD_SYMBOL=''
+    PWD_DIR=$PWD
+    for (( i = 1; i <= $#DIR_DECORATIONS; i += 2 )) do
+        THIS_DIR=$DIR_DECORATIONS[i]
+        THIS_SYM=$DIR_DECORATIONS[$((i + 1))]
+        case $PWD in
+            ($THIS_DIR)
+                PWD_SYMBOL=$THIS_SYM
+                PWD_DIR=''
+                break
+                ;;
+            ($THIS_DIR/*)
+                PWD_SYMBOL=$THIS_SYM
+                PWD_DIR="${PWD#$THIS_DIR/}"
+                break
+                ;;
+        esac
+    done
+    PROMPT_PWD=$(desktop_func_join "$PWD_SYMBOL" "$PWD_DIR")
+    TITLE_DIR=$(desktop_func_ellipsis "$PWD_DIR" 25)
+    TITLE_PWD=$(desktop_func_join "$PWD_SYMBOL" "$TITLE_DIR")
+    title "${TERM_TITLE_IDLE}${TITLE_PWD}"
 }
 
 ZSH_COMMAND_TIME_COLOR="cyan"
