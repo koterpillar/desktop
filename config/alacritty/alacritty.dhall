@@ -6,6 +6,8 @@ let os = env:DHALL_OS
 
 let font = "Fira Mono"
 
+let kb = { action = None Text, chars = None Text }
+
 in
 { window =
   { decorations = "none"
@@ -45,27 +47,31 @@ in
   , size = merge { Linux = 10, Macos = 12 } os
   }
 , key_bindings =
-  [ { action = "Paste", key = "V", mods = "Control|Shift" }
-  , { action = "Copy", key = "C", mods = "Control|Shift" }
-  , { action = "ReceiveChar", key = "Insert", mods = "Shift" }
-  , { action = "ResetFontSize", key = "Key0", mods = "Control" }
-  , { action = "IncreaseFontSize", key = "Equals", mods = "Control" }
-  , { action = "IncreaseFontSize", key = "Add", mods = "Control" }
-  , { action = "DecreaseFontSize", key = "Subtract", mods = "Control" }
-  , { action = "DecreaseFontSize", key = "Minus", mods = "Control" }
-  , { action = "ReceiveChar", key = "Key0", mods = "Command" }
-  , { action = "ReceiveChar", key = "Equals", mods = "Command" }
-  , { action = "ReceiveChar", key = "Add", mods = "Command" }
-  , { action = "ReceiveChar", key = "Minus", mods = "Command" }
-  , { action = "ReceiveChar", key = "K", mods = "Command" }
-  , { action = "ReceiveChar", key = "K", mods = "Command" }
-  , { action = "ReceiveChar", key = "V", mods = "Command" }
-  , { action = "ReceiveChar", key = "C", mods = "Command" }
-  , { action = "ReceiveChar", key = "H", mods = "Command" }
-  , { action = "ReceiveChar", key = "M", mods = "Command" }
-  , { action = "ReceiveChar", key = "Q", mods = "Command" }
-  , { action = "ReceiveChar", key = "W", mods = "Command" }
-  , { action = "ReceiveChar", key = "F", mods = "Command|Control" }
+  [ kb // { action = Some "Paste", key = "V", mods = "Control|Shift" }
+  , kb // { action = Some "Copy", key = "C", mods = "Control|Shift" }
+  -- Translate Ctrl-Shift-T to Ctrl-Shift-F12, otherwise tmux can't tell it
+  -- from Ctrl-T
+  -- to obtain the scancode, use 'showkeys -a' and press the desired key combo
+  , kb // { chars = Some "\u001b[24;6~", key = "T", mods = "Control|Shift" }
+  , kb // { action = Some "ReceiveChar", key = "Insert", mods = "Shift" }
+  , kb // { action = Some "ResetFontSize", key = "Key0", mods = "Control" }
+  , kb // { action = Some "IncreaseFontSize", key = "Equals", mods = "Control" }
+  , kb // { action = Some "IncreaseFontSize", key = "Add", mods = "Control" }
+  , kb // { action = Some "DecreaseFontSize", key = "Subtract", mods = "Control" }
+  , kb // { action = Some "DecreaseFontSize", key = "Minus", mods = "Control" }
+  , kb // { action = Some "ReceiveChar", key = "Key0", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "Equals", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "Add", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "Minus", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "K", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "K", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "V", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "C", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "H", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "M", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "Q", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "W", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "F", mods = "Command|Control" }
   ]
 , mouse.url.modifiers = "Control"
 , shell =
