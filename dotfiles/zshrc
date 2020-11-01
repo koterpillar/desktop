@@ -1,7 +1,7 @@
 HISTFILE=$HOME/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
-setopt appendhistory nomatch hist_ignore_all_dups hist_ignore_space
+setopt share_history nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
 
 autoload -Uz compinit
