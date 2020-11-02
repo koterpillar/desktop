@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -euo pipefail
+
+CACHE_FILE=~/.cache/aws-account-info
+CACHE_AGE=60
+
+CREDENTIALS_FILE=~/.aws/credentials
+
+if echo $OSTYPE | grep -q darwin
+then
+  STAT='stat -f %m'
+else
+  STAT='stat -c %Y'
+fi
+
+newer_than() {
+  AGE=$1
+  FILE=$2
+  [ -f $FILE ] && [ "$(( $(date +"%s") - $($STAT $FILE) ))" -le $AGE ]
+}
+
+if newer_than $CACHE_AGE $CACHE_FILE && ! newer_than $CACHE_AGE $CREDENTIALS_FILE
+then
+  cat $CACHE_FILE
+  exit 0
+fi
+
+ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+
+echo $ACCOUNT > $CACHE_FILE
+
+echo $ACCOUNT
