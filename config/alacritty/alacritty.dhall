@@ -56,12 +56,11 @@ in
   , kb // { action = Some "ReceiveChar", key = "Insert", mods = "Shift" }
   , kb // { action = Some "ResetFontSize", key = "Key0", mods = "Control" }
   , kb // { action = Some "IncreaseFontSize", key = "Equals", mods = "Control" }
-  , kb // { action = Some "IncreaseFontSize", key = "Add", mods = "Control" }
-  , kb // { action = Some "DecreaseFontSize", key = "Subtract", mods = "Control" }
+  , kb // { action = Some "IncreaseFontSize", key = "Plus", mods = "Control" }
   , kb // { action = Some "DecreaseFontSize", key = "Minus", mods = "Control" }
   , kb // { action = Some "ReceiveChar", key = "Key0", mods = "Command" }
   , kb // { action = Some "ReceiveChar", key = "Equals", mods = "Command" }
-  , kb // { action = Some "ReceiveChar", key = "Add", mods = "Command" }
+  , kb // { action = Some "ReceiveChar", key = "Plus", mods = "Command" }
   , kb // { action = Some "ReceiveChar", key = "Minus", mods = "Command" }
   , kb // { action = Some "ReceiveChar", key = "K", mods = "Command" }
   , kb // { action = Some "ReceiveChar", key = "K", mods = "Command" }
