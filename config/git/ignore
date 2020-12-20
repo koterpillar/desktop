@@ -12,6 +12,7 @@
 .mypy_cache
 *.iml
 dist-newstyle
+metals.sbt
 /.stack-work
 /.vscode
 /.vimrc
