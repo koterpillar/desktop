@@ -41,9 +41,9 @@ in
   , primary = { background = "0xffffff", foreground = "0x4d4d4c" }
   }
 , font =
-  { bold.family = font
-  , italic.family = font
-  , normal.family = font
+  { bold = { family = font, style = "Bold" }
+  , italic = { family = font, style = "Regular" }
+  , normal = { family = font, style = "Regular" }
   , size = merge { Linux = 10, Macos = 12 } os
   }
 , key_bindings =
