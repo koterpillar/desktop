@@ -9,6 +9,7 @@
 .ensime
 .ensime_cache
 .idea
+.metals
 .mypy_cache
 *.iml
 dist-newstyle
