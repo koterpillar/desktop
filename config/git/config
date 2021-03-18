@@ -1,4 +1,5 @@
 [core]
+	hooksPath = ~/.config/githooks
 	pager = delta
 
 [interactive]
