@@ -45,6 +45,8 @@ in
   , italic = { family = font, style = "Regular" }
   , normal = { family = font, style = "Regular" }
   , size = merge { Linux = 10, Macos = 12 } os
+  -- , offset = merge { Linux = { x = +0, y = +0 }, Macos = { x = +0, y = +0 } } os
+  , use_thin_strokes = True
   }
 , key_bindings =
   [ kb // { action = Some "Paste", key = "V", mods = "Control|Shift" }
