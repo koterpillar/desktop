@@ -89,5 +89,7 @@ DHALL_OS=linux
 curl -sSL https://github.com/dhall-lang/dhall-haskell/releases/download/${DHALL_VERSION}/dhall-json-${DHALL_JSON_VERSION}-x86_64-${DHALL_OS}.tar.bz2 | tar -j -x -C $HOME/.local './bin/*dhall*'
 curl -sSL https://github.com/dhall-lang/dhall-haskell/releases/download/${DHALL_VERSION}/dhall-yaml-${DHALL_YAML_VERSION}-x86_64-${DHALL_OS}.tar.bz2 | tar -j -x -C $HOME/.local './bin/*dhall*'
 
+sudo dnf install -y $(curl -s https://wezfurlong.org/wezterm/install/linux.html | grep -oE 'https://[^"]+\.fc'${FEDORA_VERSION}'\.[^"]+\.rpm')
+
 # User configuration
 $DIR/makelinks
