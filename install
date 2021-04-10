@@ -44,7 +44,6 @@ sudo dnf install -y \
   rlwrap \
   rsync \
   sbt \
-  snapd \
   strace \
   tcpdump \
   tig \
@@ -57,7 +56,6 @@ sudo dnf install -y \
   youtube-dl \
   zsh \
   && true
-sudo ln -sf /var/lib/snapd/snap /snap
 
 # Systemd
 sudo systemctl daemon-reload || true
