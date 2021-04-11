@@ -82,6 +82,7 @@ let niceApps = [
     "^com\\.apple\\.Terminal$",
     "^com\\.googlecode\\.iterm2$",
     "^io\\.alacritty$",
+    "^com\\.github\\.wez\\.wezterm$",
     "^com\\.jetbrains\\.intellij\\.ce$",
     "^com\\.parallels\\.desktop\\.console$"
 ]

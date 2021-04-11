@@ -23,10 +23,12 @@ end
 
 local WINDOW_PADDING = 8;
 
+local IS_MACOS = not not string.find(wezterm.target_triple, "apple");
+
 return {
   -- Appearance
   font = wezterm.font("Fira Mono"),
-  font_size = 10.0,
+  font_size = IS_MACOS and 12.0 or 10.0,
   colors = {
     background = "#ffffff",
     foreground = "#4d4d4c",
@@ -72,7 +74,7 @@ return {
     saturation = 0.9,
     brightness = 0.97,
   },
-  window_decorations = "NONE",
+  window_decorations = "RESIZE",
   window_padding = {
     left = WINDOW_PADDING,
     right = WINDOW_PADDING,
