@@ -21,9 +21,6 @@ function tab_style_right(bg_color)
   });
 end
 
-local TAB_STYLE_LEFT = tab_style_left(TAB_BAR_CONTENT);
-local TAB_STYLE_RIGHT = tab_style_right(TAB_BAR_CONTENT);
-
 local WINDOW_PADDING = 8;
 
 return {
@@ -87,12 +84,12 @@ return {
   tab_bar_style = {
     active_tab_left = tab_style_left(TAB_BAR_ACTIVE),
     active_tab_right = tab_style_right(TAB_BAR_ACTIVE),
-    inactive_tab_left = TAB_STYLE_LEFT,
-    inactive_tab_right = TAB_STYLE_RIGHT,
-    inactive_tab_hover_left = TAB_STYLE_LEFT,
-    inactive_tab_hover_right = TAB_STYLE_RIGHT,
-    new_tab_left = TAB_STYLE_LEFT,
-    new_tab_hover_left = TAB_STYLE_LEFT,
+    inactive_tab_left = tab_style_left(TAB_BAR_CONTENT),
+    inactive_tab_right = tab_style_right(TAB_BAR_CONTENT),
+    inactive_tab_hover_left = tab_style_left(TAB_BAR_HOVER),
+    inactive_tab_hover_right = tab_style_right(TAB_BAR_HOVER),
+    new_tab_left = tab_style_left(TAB_BAR_CONTENT),
+    new_tab_hover_left = tab_style_left(TAB_BAR_HOVER),
   },
 
   -- Keyboard and mouse
