@@ -93,6 +93,7 @@ return {
     new_tab_left = tab_style_left(TAB_BAR_CONTENT),
     new_tab_hover_left = tab_style_left(TAB_BAR_HOVER),
   },
+  tab_max_width = 100,
 
   -- Keyboard and mouse
   use_ime = true,
