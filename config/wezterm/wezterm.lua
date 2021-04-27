@@ -102,6 +102,7 @@ return {
     { key = "PageDown", mods = "CTRL", action = wezterm.action{ ActivateTabRelative=1 } },
     { key = "E", mods = "CTRL|SHIFT", action = wezterm.action{ SplitVertical={ domain="CurrentPaneDomain" } } },
     { key = "O", mods = "CTRL|SHIFT", action = wezterm.action{ SplitHorizontal={ domain="CurrentPaneDomain" } } },
+    { key = "W", mods = "CTRL|SHIFT", action = wezterm.action{ CloseCurrentPane={ confirm=true } } },
     { key = "H", mods = "SUPER", action = "Nop" },
   },
 
