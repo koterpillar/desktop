@@ -80,11 +80,11 @@ let Condition = {
 
 let niceApps = [
     "^com\\.apple\\.Terminal$",
-    "^com\\.googlecode\\.iterm2$",
-    "^io\\.alacritty$",
     "^com\\.github\\.wez\\.wezterm$",
+    "^com\\.googlecode\\.iterm2$",
     "^com\\.jetbrains\\.intellij\\.ce$",
-    "^com\\.parallels\\.desktop\\.console$"
+    "^com\\.parallels\\.desktop\\.console$",
+    "^io\\.alacritty$"
 ]
 
 let unlessNiceApp: Condition = {
