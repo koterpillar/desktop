@@ -1,0 +1,100 @@
+terminal:
+  searchOptions: {}
+  colorScheme:
+    name: ayu_light
+    foreground: '#5c6773'
+    background: '#fafafa'
+    cursor: '#ff6a00'
+    colors:
+      - '#000000'
+      - '#ff3333'
+      - '#86b300'
+      - '#f29718'
+      - '#41a6d9'
+      - '#f07178'
+      - '#4dbf99'
+      - '#ffffff'
+      - '#323232'
+      - '#ff6565'
+      - '#b8e532'
+      - '#ffc94a'
+      - '#73d8ff'
+      - '#ffa3aa'
+      - '#7ff1cb'
+      - '#ffffff'
+  font: Fira Code
+  fontSize: 12
+  ligatures: true
+  environment: {}
+  autoOpen: true
+  bracketedPaste: true
+  background: colorScheme
+  recoverTabs: false
+  warnOnMultilinePaste: false
+hotkeys:
+  toggle-window: []
+  shell: {}
+  profile: {}
+  copy:
+    - - Ctrl-Shift-C
+  paste:
+    - - Ctrl-Shift-V
+  home:
+    - - Home
+  end:
+    - - End
+  previous-word:
+    - - Ctrl-Left
+  next-word:
+    - - Ctrl-Right
+  zoom-in:
+    - - Ctrl-Shift-=
+    - - Ctrl-=
+  zoom-out:
+    - - Ctrl--
+  reset-zoom:
+    - - Ctrl-0
+  new-tab:
+    - - Ctrl-Shift-T
+  search:
+    - - Ctrl-F
+  new-window:
+    - - Ctrl-Shift-N
+  toggle-fullscreen: []
+  rename-tab: []
+  split-right:
+    - - Ctrl-Shift-O
+  split-bottom:
+    - - Ctrl-Shift-E
+  pane-maximize: []
+  close-pane:
+    - - Ctrl-Shift-W
+  pane-nav-right:
+    - - Ctrl-Shift-Right
+  pane-nav-left:
+    - - Ctrl-Shift-Left
+  pane-nav-down:
+    - - Ctrl-Shift-Down
+  pane-nav-up:
+    - - Ctrl-Shift-Up
+  next-tab:
+    - - Ctrl-PageDown
+  move-tab-left:
+    - - Ctrl-Shift-PageUp
+  move-tab-right:
+    - - Ctrl-Shift-PageDown
+  previous-tab:
+    - - Ctrl-PageUp
+  reopen-tab: []
+  close-tab: []
+serial: {}
+ssh: {}
+appearance:
+  theme: Paper
+  frame: thin
+enableWelcomeTab: false
+pluginBlacklist:
+  - ssh
+  - serial
+clickableLinks:
+  modifier: shiftKey
