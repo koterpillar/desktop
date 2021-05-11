@@ -7,23 +7,41 @@ local TAB_BAR_HOVER = "#8e8db0";
 local TAB_BAR_ACTIVE = "#5f87af";
 
 function tab_style_left(bg_color)
-  return wezterm.format({
+  return {
     {Background = {Color=TAB_BAR_BACKGROUND}},
     {Foreground = {Color=bg_color}},
     {Text = utf8.char(0x2590)},
-  }) .. " ";
-end
-function tab_style_right(bg_color)
-  return " " .. wezterm.format({
-    {Background = {Color=TAB_BAR_BACKGROUND}},
-    {Foreground = {Color=bg_color}},
-    {Text = utf8.char(0x258C)},
-  });
+    {Background = {Color=TAB_BAR_CONTENT}},
+    {Text = " "},
+  }
 end
 
 local WINDOW_PADDING = 8;
 
 local IS_MACOS = not not string.find(wezterm.target_triple, "apple");
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+  local tab_color = TAB_BAR_CONTENT
+  if tab.is_active then
+    tab_color = TAB_BAR_ACTIVE
+  elseif hover then
+    tab_color = TAB_BAR_HOVER
+  end
+
+  return {
+    {Background = {Color=TAB_BAR_BACKGROUND}},
+    {Foreground = {Color=tab_color}},
+    {Text = utf8.char(0x2590)},
+    {Background = {Color=tab_color}},
+    {Foreground = {Color=TAB_BAR_FOREGROUND}},
+    {Text = " "},
+    {Text = tab.active_pane.title},
+    {Text = " "},
+    {Background = {Color=TAB_BAR_BACKGROUND}},
+    {Foreground = {Color=tab_color}},
+    {Text = utf8.char(0x258C)},
+  }
+end)
 
 return {
   -- Appearance
@@ -84,14 +102,8 @@ return {
   enable_scroll_bar = true,
   show_tab_index_in_tab_bar = false,
   tab_bar_style = {
-    active_tab_left = tab_style_left(TAB_BAR_ACTIVE),
-    active_tab_right = tab_style_right(TAB_BAR_ACTIVE),
-    inactive_tab_left = tab_style_left(TAB_BAR_CONTENT),
-    inactive_tab_right = tab_style_right(TAB_BAR_CONTENT),
-    inactive_tab_hover_left = tab_style_left(TAB_BAR_HOVER),
-    inactive_tab_hover_right = tab_style_right(TAB_BAR_HOVER),
-    new_tab_left = tab_style_left(TAB_BAR_CONTENT),
-    new_tab_hover_left = tab_style_left(TAB_BAR_HOVER),
+    new_tab_left = wezterm.format(tab_style_left(TAB_BAR_CONTENT)),
+    new_tab_hover_left = wezterm.format(tab_style_left(TAB_BAR_HOVER)),
   },
   tab_max_width = 100,
 
