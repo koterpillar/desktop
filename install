@@ -92,5 +92,7 @@ github_release_url() {
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-linux.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-linux.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
 
+sudo dnf install -y $(github_release_url Eugeny/terminus '' .rpm)
+
 # User configuration
 $DIR/makelinks
