@@ -80,7 +80,6 @@ let Condition = {
 
 let niceApps = [
     "^com\\.apple\\.Terminal$",
-    "^com\\.github\\.wez\\.wezterm$",
     "^com\\.googlecode\\.iterm2$",
     "^com\\.jetbrains\\.intellij\\.ce$",
     "^com\\.parallels\\.desktop\\.console$",
