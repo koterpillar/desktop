@@ -5,71 +5,117 @@ set -eou pipefail
 source $(dirname $0)/functions.sh
 
 # Packages
-if [ "$OS" = linux ]
-then
-  FEDORA_VERSION=$(rpm -E %fedora)
-  sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
-  sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
-  curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-  curl --silent --location https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
-  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-  sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-  sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-  sudo dnf install -y \
-    alacritty \
-    code \
-    curl \
-    docker \
-    gh \
-    ghc \
-    git \
-    git-delta \
-    git-lfs \
-    hlint \
-    htop \
-    jq \
-    lsof \
-    make \
-    meld \
-    moreutils \
-    mosh \
-    mozilla-fira-mono-fonts \
-    nmap \
-    nodejs \
-    npm \
-    perl-Image-ExifTool \
-    pwgen \
-    python \
-    python3 \
-    ripgrep \
-    rlwrap \
-    rsync \
-    sbt \
-    strace \
-    tcpdump \
-    tig \
-    tmux \
-    util-linux-user \
-    vim \
-    vlc \
-    wget \
-    yarn \
-    youtube-dl \
-    zsh \
-    && true
+case "$OS" in
+  linux)
+    FEDORA_VERSION=$(rpm -E %fedora)
+    sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
+    sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
+    curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+    curl --silent --location https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+    sudo dnf install -y \
+      alacritty \
+      code \
+      curl \
+      docker \
+      gh \
+      ghc \
+      git \
+      git-delta \
+      git-lfs \
+      hlint \
+      htop \
+      jq \
+      lsof \
+      make \
+      meld \
+      moreutils \
+      mosh \
+      mozilla-fira-mono-fonts \
+      nmap \
+      nodejs \
+      npm \
+      perl-Image-ExifTool \
+      pwgen \
+      python \
+      python3 \
+      ripgrep \
+      rlwrap \
+      rsync \
+      sbt \
+      strace \
+      tcpdump \
+      tig \
+      tmux \
+      util-linux-user \
+      vim \
+      vlc \
+      wget \
+      yarn \
+      youtube-dl \
+      zsh \
+      && true
 
-  # Systemd
-  sudo systemctl daemon-reload || true
-  sudo systemctl enable --no-reload \
-    docker \
-    sshd \
-    && true
-  sudo systemctl daemon-reload || true
+    # Systemd
+    sudo systemctl daemon-reload || true
+    sudo systemctl enable --no-reload \
+      docker \
+      sshd \
+      && true
+        sudo systemctl daemon-reload || true
 
-  # Inotify limits
-  echo 'fs.inotify.max_user_watches = 524288' | sudo tee /etc/sysctl.d/50-inotify.conf
-  sudo sysctl -p --system
-fi
+    # Inotify limits
+    echo 'fs.inotify.max_user_watches = 524288' | sudo tee /etc/sysctl.d/50-inotify.conf
+    sudo sysctl -p --system
+    ;;
+  macos)
+    # TODO: install brew
+    brew install \
+      ammonite-repl \
+      colordiff \
+      coreutils \
+      gcc \
+      ghc \
+      git \
+      git-delta \
+      git-lfs \
+      gnu-sed \
+      gradle \
+      htop \
+      ipython \
+      jq \
+      nmap \
+      ripgrep \
+      rlwrap \
+      sbt \
+      shellcheck \
+      shfmt \
+      tig \
+      tmux \
+      unrar \
+      vim \
+      wget \
+      youtube-dl \
+      zsh \
+      && true
+    brew install -cask \
+      alacritty \
+      docker \
+      firefox \
+      font-fira-code \
+      font-fira-mono \
+      font-fira-sans \
+      intellij-idea-ce \
+      monitorcontrol \
+      rectangle \
+      spectacle \
+      terminus \
+      visual-studio-code \
+      && true
+    ;;
+esac
 
 # Shell
 case "$OS" in
