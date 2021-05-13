@@ -4,95 +4,113 @@ set -eou pipefail
 
 source $(dirname $0)/functions.sh
 
-FEDORA_VERSION=$(rpm -E %fedora)
-
 # Packages
-sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
-sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
-curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-curl --silent --location https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-sudo dnf install -y \
-  alacritty \
-  code \
-  curl \
-  docker \
-  gh \
-  ghc \
-  git \
-  git-delta \
-  git-lfs \
-  hlint \
-  htop \
-  jq \
-  lsof \
-  make \
-  meld \
-  moreutils \
-  mosh \
-  mozilla-fira-mono-fonts \
-  nmap \
-  nodejs \
-  npm \
-  perl-Image-ExifTool \
-  pwgen \
-  python \
-  python3 \
-  ripgrep \
-  rlwrap \
-  rsync \
-  sbt \
-  strace \
-  tcpdump \
-  tig \
-  tmux \
-  util-linux-user \
-  vim \
-  vlc \
-  wget \
-  yarn \
-  youtube-dl \
-  zsh \
-  && true
+if [ "$OS" = linux ]
+then
+  FEDORA_VERSION=$(rpm -E %fedora)
+  sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
+  sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
+  curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+  curl --silent --location https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+  sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+  sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+  sudo dnf install -y \
+    alacritty \
+    code \
+    curl \
+    docker \
+    gh \
+    ghc \
+    git \
+    git-delta \
+    git-lfs \
+    hlint \
+    htop \
+    jq \
+    lsof \
+    make \
+    meld \
+    moreutils \
+    mosh \
+    mozilla-fira-mono-fonts \
+    nmap \
+    nodejs \
+    npm \
+    perl-Image-ExifTool \
+    pwgen \
+    python \
+    python3 \
+    ripgrep \
+    rlwrap \
+    rsync \
+    sbt \
+    strace \
+    tcpdump \
+    tig \
+    tmux \
+    util-linux-user \
+    vim \
+    vlc \
+    wget \
+    yarn \
+    youtube-dl \
+    zsh \
+    && true
 
-# Systemd
-sudo systemctl daemon-reload || true
-sudo systemctl enable --no-reload \
-  docker \
-  sshd \
-  && true
-sudo systemctl daemon-reload || true
+  # Systemd
+  sudo systemctl daemon-reload || true
+  sudo systemctl enable --no-reload \
+    docker \
+    sshd \
+    && true
+  sudo systemctl daemon-reload || true
 
-# Inotify limits
-echo 'fs.inotify.max_user_watches = 524288' | sudo tee /etc/sysctl.d/50-inotify.conf
-sudo sysctl -p --system
+  # Inotify limits
+  echo 'fs.inotify.max_user_watches = 524288' | sudo tee /etc/sysctl.d/50-inotify.conf
+  sudo sysctl -p --system
+fi
 
 # Shell
-if [ $(getent passwd $USER | cut -d: -f7) != "/bin/zsh" ]
+case "$OS" in
+  linux)
+    CURRENT_SHELL="$(getent passwd $USER | cut -d: -f7)"
+    DESIRED_SHELL="/bin/zsh"
+    ;;
+  macos)
+    CURRENT_SHELL="$(dscl . -read ~/ UserShell | sed 's/UserShell: //')"
+    DESIRED_SHELL="/usr/local/bin/zsh"
+    ;;
+esac
+if [ "$CURRENT_SHELL" != "$DESIRED_SHELL" ]
 then
-  chsh -s /bin/zsh
+  chsh -s "$DESIRED_SHELL"
 fi
 
 # User packages
 mkdir -p $HOME/.local/bin
 
-STACK_OS=linux
-curl -sSL https://get.haskellstack.org/stable/${STACK_OS}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin '*/stack'
+curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin '*/stack'
 
 github_release_url() {
   REPO="$1"
   START="$2"
   END="$3"
 
-  $(curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url')
+  curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url'
 }
 
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-linux.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-linux.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
 
-sudo dnf install -y $(github_release_url Eugeny/terminus '' .rpm)
+case "$OS" in
+  linux)
+    sudo dnf install -y $(github_release_url Eugeny/terminus '' .rpm)
+    ;;
+  macos)
+    brew install terminus
+    ;;
+esac
 
 # User configuration
 $DIR/makelinks
