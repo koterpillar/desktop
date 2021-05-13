@@ -1,20 +1,16 @@
 #!/bin/bash
 
-set -e
+set -eou pipefail
 
-if (echo $OSTYPE | grep -q darwin)
+source $(dirname $0)/functions.sh
+
+if [ "$OS" = "macos" ]
 then
-    LN=gln
-    READLINK=greadlink
     DHALL_OS='let OS = ./common/OS.dhall in OS.Macos'
 else
-    LN=ln
-    READLINK=readlink
     DHALL_OS='let OS = ./common/OS.dhall in OS.Linux'
 fi
 export DHALL_OS
-
-DIR=$($READLINK -f $(dirname $0))
 
 # Config and dotfiles
 dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json

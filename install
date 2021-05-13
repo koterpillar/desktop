@@ -1,8 +1,8 @@
 #!/bin/bash
 
-set -e
+set -eou pipefail
 
-DIR=$(readlink -f $(dirname $0))
+source $(dirname $0)/functions.sh
 
 FEDORA_VERSION=$(rpm -E %fedora)
 
