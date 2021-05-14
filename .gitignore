@@ -2,3 +2,5 @@
 /config/karabiner/assets
 /config/karabiner/automatic_backups
 /config/karabiner/karabiner.json
+/config/terminus/*
+!/config/terminus/config.yaml
