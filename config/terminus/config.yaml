@@ -27,7 +27,6 @@ terminal:
   ligatures: true
   environment: {}
   autoOpen: true
-  bracketedPaste: true
   background: colorScheme
   recoverTabs: false
   warnOnMultilinePaste: false
