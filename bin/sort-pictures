@@ -8,15 +8,22 @@ timestamp2date() {
     date -d @"$1" '+%Y:%m:%d %H:%M:%s'
 }
 
+weixin_add_dates() {
+    pattern="$1"
+
+    if ls $pattern*.jpg >/dev/null 2>&1
+    then
+        for f in $pattern*.jpg
+        do
+            exiftool -CreateDate="$(timestamp2date $(weixin_timestamp $f))" "$f" -overwrite_original
+        done
+    fi
+}
+
 chmod -x *.*
 find . -name '*.JPG' -exec sh -c 'mv "{}" $(echo "{}" | sed s/JPG/jpg/)' \;
 
-if ls mmexport*.jpg >/dev/null 2>&1
-then
-    for f in mmexport*.jpg
-    do
-        exiftool -CreateDate="$(timestamp2date $(weixin_timestamp $f))" "$f" -overwrite_original
-    done
-fi
+weixin_add_dates mmexport
+weixin_add_dates wx_camera_
 
 exiftool '-FileName<CreateDate' -d %Y%m%d_%H%M%S%%-c.%%e .

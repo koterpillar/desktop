@@ -27,6 +27,7 @@ case "$OS" in
       git-lfs \
       hlint \
       htop \
+      ImageMagick \
       jq \
       lsof \
       make \
