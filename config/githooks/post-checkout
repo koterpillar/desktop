@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Configure local settings based on remote
+# Based on https://github.com/DrVanScott/git-clone-init/blob/da03d904b7a3fe0da74c29ec74d428539db08875/post-checkout
+
+set -euo pipefail
+
+if [ "$1" != "0000000000000000000000000000000000000000" ]
+then
+    exit 0
+fi
+
+remote=$(git remote get-url origin || true)
+
+case "$remote" in
+    git@github.com:SEEK-Jobs/*)
+        git config user.email $USER@seek.com.au
+        git config commit.gpgsign true
+        ;;
+esac
