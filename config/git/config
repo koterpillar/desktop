@@ -1,45 +1,45 @@
 [core]
-	pager = delta
+    pager = delta
 
 [interactive]
-	diffFilter = delta --color-only
+    diffFilter = delta --color-only
 
 [user]
-	name = Alexey Kotlyarov
-	email = a@koterpillar.com
+    name = Alexey Kotlyarov
+    email = a@koterpillar.com
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 [pull]
-	ff = only
+    ff = only
 
 [push]
-	default = simple
+    default = simple
 
 [color]
-	ui = auto
+    ui = auto
 
 [alias]
-	taga = !git tag -a -m $1
-	prune-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
-	max-release = !echo $((echo v0.0.0 && git tag -l 'v*.*.*') | sed 's/v//g' | sort -s -t . -k 1,1n -k 2,2n -k 3,3n | tail -n 1)
+    taga = !git tag -a -m $1
+    prune-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
+    max-release = !echo $((echo v0.0.0 && git tag -l 'v*.*.*') | sed 's/v//g' | sort -s -t . -k 1,1n -k 2,2n -k 3,3n | tail -n 1)
 
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
 
 [tig]
-	line-graphics = utf-8
+    line-graphics = utf-8
 
 [url "ssh://git@github.com"]
-	pushInsteadOf = https://github.com
-	pushInsteadOf = git://github.com
+    pushInsteadOf = https://github.com
+    pushInsteadOf = git://github.com
 
 [github]
-	user = koterpillar
+    user = koterpillar
 
 [delta]
-	syntax-theme = GitHub
+    syntax-theme = GitHub
