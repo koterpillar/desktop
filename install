@@ -112,7 +112,6 @@ case "$OS" in
       monitorcontrol \
       rectangle \
       spectacle \
-      terminus \
       visual-studio-code \
       && true
     ;;
@@ -152,10 +151,10 @@ curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.ta
 
 case "$OS" in
   linux)
-    sudo dnf install -y $(github_release_url Eugeny/terminus '' .rpm)
+    sudo dnf install -y $(github_release_url Eugeny/tabby '' .rpm)
     ;;
   macos)
-    brew install terminus
+    brew install tabby
     ;;
 esac
 

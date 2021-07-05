@@ -84,7 +84,7 @@ let niceApps = [
     "^com\\.jetbrains\\.intellij\\.ce$",
     "^com\\.parallels\\.desktop\\.console$",
     "^io\\.alacritty$",
-    "^org\\.terminus$"
+    "^org\\.tabby$"
 ]
 
 let unlessNiceApp: Condition = {

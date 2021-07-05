@@ -50,8 +50,8 @@ ls $DIR/config | xargs -I FILE $LN -sfnT $DIR/config/FILE $HOME/.config/FILE
 if (echo $OSTYPE | grep -q darwin)
 then
     SUPPORT=$HOME/Library/Application\ Support
-    mkdir -p "$SUPPORT/terminus"
-    $LN -sfnT $DIR/config/terminus/config.yaml "$SUPPORT/terminus/config.yaml"
+    mkdir -p "$SUPPORT/tabby"
+    $LN -sfnT $DIR/config/tabby/config.yaml "$SUPPORT/tabby/config.yaml"
 fi
 
 makelink $DIR/bin $HOME/bin
