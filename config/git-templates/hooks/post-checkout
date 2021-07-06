@@ -1,2 +1,2 @@
 #!/bin/sh
-exec ~/.config/githooks/post-checkout
+exec ~/.config/githooks/post-checkout "$@"
