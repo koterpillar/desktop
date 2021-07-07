@@ -5,11 +5,6 @@
 
 set -euo pipefail
 
-if [ "$1" != "0000000000000000000000000000000000000000" ]
-then
-    exit 0
-fi
-
 remote=$(git remote get-url origin || true)
 
 case "$remote" in
