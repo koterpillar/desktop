@@ -97,3 +97,4 @@ pluginBlacklist:
   - serial
 clickableLinks:
   modifier: shiftKey
+version: 1
