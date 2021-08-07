@@ -66,10 +66,6 @@ case "$OS" in
       sshd \
       && true
         sudo systemctl daemon-reload || true
-
-    # Inotify limits
-    echo 'fs.inotify.max_user_watches = 524288' | sudo tee /etc/sysctl.d/50-inotify.conf
-    sudo sysctl -p --system
     ;;
   macos)
     # TODO: install brew
