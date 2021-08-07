@@ -4,68 +4,88 @@ set -eou pipefail
 
 source $(dirname $0)/functions.sh
 
+INSTALL_DESKTOP=true
+if [ "${1-}" == "--no-desktop" ]
+then
+  INSTALL_DESKTOP=
+  shift
+fi
+
+github_release_url() {
+  REPO="$1"
+  START="$2"
+  END="$3"
+
+  curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url'
+}
+
 # Packages
 case "$OS" in
   linux)
-    FEDORA_VERSION=$(rpm -E %fedora)
-    sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
-    sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
-    curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-    curl --silent --location https://www.scala-sbt.org/sbt-rpm.repo | sudo tee /etc/yum.repos.d/sbt.repo
-    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-    sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-    sudo dnf install -y \
-      alacritty \
-      code \
-      curl \
-      docker \
-      gh \
-      ghc \
-      git \
-      git-delta \
-      git-lfs \
-      hlint \
-      htop \
-      ImageMagick \
-      jq \
-      lsof \
-      make \
-      meld \
-      moreutils \
-      mosh \
-      mozilla-fira-mono-fonts \
-      nmap \
-      nodejs \
-      npm \
-      perl-Image-ExifTool \
-      pwgen \
-      python \
-      python3 \
-      ripgrep \
-      rlwrap \
-      rsync \
-      sbt \
-      strace \
-      tcpdump \
-      tig \
-      tmux \
-      util-linux-user \
-      vim \
-      vlc \
-      wget \
-      yarn \
-      youtube-dl \
-      zsh \
-      && true
+    if [ -n "$INSTALL_DESKTOP" ]
+    then
+      FEDORA_VERSION=$(rpm -E %fedora)
+      sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
+      sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
+      curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+      curl --silent --location https://www.scala-sbt.org/sbt-rpm.repo | sudo tee /etc/yum.repos.d/sbt.repo
+      sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+      sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+      sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+      sudo dnf install -y \
+        alacritty \
+        code \
+        curl \
+        docker \
+        gh \
+        ghc \
+        git \
+        git-delta \
+        git-lfs \
+        hlint \
+        htop \
+        ImageMagick \
+        jq \
+        lsof \
+        make \
+        meld \
+        moreutils \
+        mosh \
+        mozilla-fira-mono-fonts \
+        nmap \
+        nodejs \
+        npm \
+        perl-Image-ExifTool \
+        pwgen \
+        python \
+        python3 \
+        ripgrep \
+        rlwrap \
+        rsync \
+        sbt \
+        strace \
+        tcpdump \
+        tig \
+        tmux \
+        util-linux-user \
+        vim \
+        vlc \
+        wget \
+        yarn \
+        youtube-dl \
+        zsh \
+        && true
 
-    # Systemd
-    sudo systemctl daemon-reload || true
-    sudo systemctl enable --no-reload \
-      docker \
-      sshd \
-      && true
-        sudo systemctl daemon-reload || true
+      sudo dnf install -y $(github_release_url Eugeny/tabby '' .rpm)
+
+      # Systemd
+      sudo systemctl daemon-reload || true
+      sudo systemctl enable --no-reload \
+        docker \
+        sshd \
+        && true
+          sudo systemctl daemon-reload || true
+    fi
     ;;
   macos)
     # TODO: install brew
@@ -108,6 +128,7 @@ case "$OS" in
       monitorcontrol \
       rectangle \
       spectacle \
+      tabby \
       visual-studio-code \
       && true
     ;;
@@ -131,28 +152,12 @@ fi
 
 # User packages
 mkdir -p $HOME/.local/bin
+export PATH="$HOME/.local/bin:$PATH"
 
 curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
 
-github_release_url() {
-  REPO="$1"
-  START="$2"
-  END="$3"
-
-  curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url'
-}
-
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local --wildcards './bin/*dhall*'
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local --wildcards './bin/*dhall*'
-
-case "$OS" in
-  linux)
-    sudo dnf install -y $(github_release_url Eugeny/tabby '' .rpm)
-    ;;
-  macos)
-    brew install tabby
-    ;;
-esac
 
 # User configuration
 $DIR/makelinks
