@@ -132,7 +132,7 @@ fi
 # User packages
 mkdir -p $HOME/.local/bin
 
-curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin '*/stack'
+curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
 
 github_release_url() {
   REPO="$1"
@@ -142,8 +142,8 @@ github_release_url() {
   curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url'
 }
 
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local './bin/*dhall*'
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local --wildcards './bin/*dhall*'
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local --wildcards './bin/*dhall*'
 
 case "$OS" in
   linux)
