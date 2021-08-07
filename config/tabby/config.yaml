@@ -28,7 +28,6 @@ terminal:
   environment: {}
   autoOpen: true
   background: colorScheme
-  recoverTabs: false
   warnOnMultilinePaste: false
 hotkeys:
   toggle-window: []
@@ -86,6 +85,65 @@ hotkeys:
     - - Ctrl-PageUp
   reopen-tab: []
   close-tab: []
+  copy-current-path: []
+  ctrl-c:
+    - Ctrl-C
+  select-all:
+    - Ctrl-Shift-A
+  clear: []
+  delete-previous-word:
+    - Ctrl-Backspace
+  delete-next-word:
+    - Ctrl-Delete
+  pane-focus-all:
+    - Ctrl-Shift-I
+  telnet-profile-selector: []
+  restart-telnet-session: []
+  settings:
+    - Ctrl-,
+  toggle-last-tab: []
+  rearrange-panes:
+    - Ctrl-Shift
+  tab-1:
+    - Alt-1
+  tab-2:
+    - Alt-2
+  tab-3:
+    - Alt-3
+  tab-4:
+    - Alt-4
+  tab-5:
+    - Alt-5
+  tab-6:
+    - Alt-6
+  tab-7:
+    - Alt-7
+  tab-8:
+    - Alt-8
+  tab-9:
+    - Alt-9
+  tab-10:
+    - Alt-0
+  tab-11: []
+  tab-12: []
+  tab-13: []
+  tab-14: []
+  tab-15: []
+  tab-16: []
+  tab-17: []
+  tab-18: []
+  tab-19: []
+  tab-20: []
+  split-left: []
+  split-top: []
+  pane-nav-previous:
+    - Ctrl-Alt-[
+  pane-nav-next:
+    - Ctrl-Alt-]
+  switch-profile:
+    - Ctrl-Alt-T
+  profile-selector:
+    - Ctrl-Shift-T
 serial: {}
 ssh: {}
 appearance:
@@ -97,4 +155,8 @@ pluginBlacklist:
   - serial
 clickableLinks:
   modifier: shiftKey
-version: 1
+version: 3
+profiles: []
+recoverTabs: false
+configSync:
+  parts: {}
