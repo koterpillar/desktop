@@ -22,13 +22,14 @@ terminal:
       - '#ffa3aa'
       - '#7ff1cb'
       - '#ffffff'
-  font: Fira Code
+  font: FiraCode Nerd Font
   fontSize: 12
   ligatures: true
   environment: {}
   autoOpen: true
   background: colorScheme
   warnOnMultilinePaste: false
+  fallbackFont: Fira Code
 hotkeys:
   toggle-window: []
   shell: {}
@@ -144,6 +145,7 @@ hotkeys:
     - Ctrl-Alt-T
   profile-selector:
     - Ctrl-Shift-T
+  profile-selectors: {}
 serial: {}
 ssh: {}
 appearance:
@@ -160,3 +162,4 @@ profiles: []
 recoverTabs: false
 configSync:
   parts: {}
+profileDefaults: {}
