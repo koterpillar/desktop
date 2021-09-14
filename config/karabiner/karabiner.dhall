@@ -46,6 +46,8 @@ let fromModifier = \(modifier: Text) -> fromModifiers [modifier]
 
 let fromCtrl = fromModifier "control"
 
+let fromCtrlShift = fromModifiers ["control", "shift"]
+
 let To = {
     key_code: Text,
     modifiers: Optional Modifiers
@@ -78,37 +80,44 @@ let Condition = {
     type: Text
 }
 
-let niceApps = [
-    "^com\\.apple\\.Terminal$",
-    "^com\\.googlecode\\.iterm2$",
-    "^com\\.jetbrains\\.intellij\\.ce$",
-    "^com\\.parallels\\.desktop\\.console$",
-    "^io\\.alacritty$",
-    "^org\\.tabby$"
-]
-
-let unlessNiceApp: Condition = {
-    bundle_identifiers = niceApps,
+let unlessApp = \(apps: List Text) -> {
+    bundle_identifiers = apps,
     type = "frontmost_application_unless"
 }
+
+let ifApp = \(apps: List Text) -> {
+    bundle_identifiers = apps,
+    type = "frontmost_application_if"
+}
+
+let concat = https://prelude.dhall-lang.org/List/concat
+
+let terminalApps = [
+    "^com\\.apple\\.Terminal$",
+    "^com\\.googlecode\\.iterm2$"
+]
+
+let terminals: Condition = ifApp terminalApps
+
+let niceApps = [
+    "^com\\.jetbrains\\.intellij\\.ce$",
+    "^com\\.parallels\\.desktop\\.console$",
+    "^io\\.alacritty$"
+]
+
+let unlessNiceApp: Condition = unlessApp niceApps
+
+let unlessNiceAppOrTerminal: Condition = unlessApp (concat Text [terminalApps, niceApps])
 
 let vimApps = [
     "^com\\.microsoft\\.VSCode$"
 ]
 
-let concat = https://prelude.dhall-lang.org/List/concat
+let unlessVim: Condition = unlessApp (concat Text [terminalApps, niceApps, vimApps])
 
-let unlessVim: Condition = {
-    bundle_identifiers = concat Text [niceApps, vimApps],
-    type = "frontmost_application_unless"
-}
-
-let browser: Condition = {
-    bundle_identifiers = [
-        "^org\\.mozilla\\.firefox$"
-    ],
-    type = "frontmost_application_if"
-}
+let browser: Condition = ifApp [
+    "^org\\.mozilla\\.firefox$"
+]
 
 let Manipulator = {
     conditions: Optional (List Condition),
@@ -132,7 +141,7 @@ let manipulatorFor = \(condition: Condition) -> manipulatorForConditions (Some [
 
 let manipulatorForAll = manipulatorForConditions (None (List Condition))
 
-let manipulator = manipulatorFor unlessNiceApp
+let manipulator = manipulatorFor unlessNiceAppOrTerminal
 
 let controlToCommand = \(key_code: Text) -> manipulator (fromCtrl key_code) (toCommand key_code)
 
@@ -172,26 +181,31 @@ in
                     manipulator (fromKeyCode "home") (toCommand "left_arrow"),  -- TODO: Exclude Firefox
                     manipulator (fromCtrl "home") (toCommand "up_arrow"),
                     manipulator (fromModifier "shift" "home") (toModifiers ["command", "shift"] "left_arrow"), -- TODO: above with shift
-                    manipulator (fromModifiers ["control", "shift"] "home") (toModifiers ["command", "shift"] "up_arrow"), -- TODO: above with shift
+                    manipulator (fromCtrlShift "home") (toModifiers ["command", "shift"] "up_arrow"), -- TODO: above with shift
                     -- End
                     manipulator (fromKeyCode "end") (toCommand "right_arrow"),  -- TODO: Exclude Firefox
                     manipulator (fromCtrl "end") (toCommand "down_arrow"),
                     manipulator (fromModifier "shift" "end") (toModifiers ["command", "shift"] "right_arrow"), -- TODO: above with shift
-                    manipulator (fromModifiers ["control", "shift"] "end") (toModifiers ["command", "shift"] "down_arrow"), -- TODO: above with shift
+                    manipulator (fromCtrlShift "end") (toModifiers ["command", "shift"] "down_arrow"), -- TODO: above with shift
                     -- Left arrow
                     manipulator (fromCtrl "left_arrow") (toOption "left_arrow"),
-                    manipulator (fromModifiers ["control", "shift"] "left_arrow") (toModifiers ["option", "shift"] "left_arrow"),
+                    manipulator (fromCtrlShift "left_arrow") (toModifiers ["option", "shift"] "left_arrow"),
                     -- Right arrow
                     manipulator (fromCtrl "right_arrow") (toOption "right_arrow"),
-                    manipulator (fromModifiers ["control", "shift"] "right_arrow") (toModifiers ["option", "shift"] "right_arrow"),
+                    manipulator (fromCtrlShift "right_arrow") (toModifiers ["option", "shift"] "right_arrow"),
                     -- Backspace
                     controlToOption "delete_or_backspace",
                     -- Delete
                     controlToOption "delete_forward",
+                    -- Page Up/Down
+                    manipulatorFor terminals (fromCtrl "page_down") (toCommand "left_arrow"),
+                    manipulatorFor terminals (fromCtrl "page_up") (toCommand "right_arrow"),
+                    --
                     controlToCommand "a",
                     controlToCommand "b",
                     controlToCommand "c",
-                    controlToCommand "f",
+                    manipulatorFor terminals (fromCtrlShift "c") (toCommand "c"),
+                    manipulatorFor unlessNiceApp (fromCtrl "f") (toCommand "f"),
                     controlToCommand "i",
                     controlToCommand "k",
                     controlToCommand "n",
@@ -199,11 +213,12 @@ in
                     controlToCommand "p",
                     manipulatorFor unlessVim (fromCtrl "r") (toCommand "r"),
                     controlToCommand "s",
-                    controlToCommand "t",
+                    manipulatorFor unlessNiceApp (fromCtrl "t") (toCommand "t"),
                     manipulatorFor browser (fromCtrl "l") (toCommand "l"),
-                    manipulatorFor browser (fromModifiers ["control", "shift"] "p") (toModifiers ["command", "shift"] "p"),
+                    manipulatorFor browser (fromCtrlShift "p") (toModifiers ["command", "shift"] "p"),
                     controlToCommand "u",
                     manipulatorFor unlessVim (fromCtrl "v") (toCommand "v"),
+                    manipulatorFor terminals (fromCtrlShift "v") (toCommand "v"),
                     controlToCommand "w",
                     controlToCommand "x",
                     controlToCommand "y",

@@ -76,8 +76,6 @@ case "$OS" in
         zsh \
         && true
 
-      sudo dnf install -y $(github_release_url Eugeny/tabby '' .rpm)
-
       # Systemd
       sudo systemctl daemon-reload || true
       sudo systemctl enable --no-reload \
@@ -128,7 +126,6 @@ case "$OS" in
       monitorcontrol \
       rectangle \
       spectacle \
-      tabby \
       visual-studio-code \
       && true
     ;;
