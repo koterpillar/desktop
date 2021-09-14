@@ -198,8 +198,8 @@ in
                     -- Delete
                     controlToOption "delete_forward",
                     -- Page Up/Down
-                    manipulatorFor terminals (fromCtrl "page_down") (toCommand "left_arrow"),
-                    manipulatorFor terminals (fromCtrl "page_up") (toCommand "right_arrow"),
+                    manipulatorFor terminals (fromCtrl "page_up") (toCommand "left_arrow"),
+                    manipulatorFor terminals (fromCtrl "page_down") (toCommand "right_arrow"),
                     --
                     controlToCommand "a",
                     controlToCommand "b",
