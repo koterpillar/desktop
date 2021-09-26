@@ -14,7 +14,6 @@ export DHALL_OS
 
 # Config and dotfiles
 dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json
-dhall-to-yaml-ng < config/alacritty/alacritty.dhall > config/alacritty/alacritty.yml
 
 if [ -d $HOME/.vim/.git ]
 then

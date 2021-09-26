@@ -101,8 +101,7 @@ let terminals: Condition = ifApp terminalApps
 
 let niceApps = [
     "^com\\.jetbrains\\.intellij\\.ce$",
-    "^com\\.parallels\\.desktop\\.console$",
-    "^io\\.alacritty$"
+    "^com\\.parallels\\.desktop\\.console$"
 ]
 
 let unlessNiceApp: Condition = unlessApp niceApps
