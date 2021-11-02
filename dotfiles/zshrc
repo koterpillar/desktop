@@ -222,6 +222,7 @@ function parse_git_dirty() {
   STAGED=
   UNSTAGED=
   UNTRACKED=
+  # https://git-scm.com/docs/git-status#_porcelain_format_version_2
   # https://unix.stackexchange.com/a/29748/11020
   for STATUS ("${(@f)$(__git_prompt_git status --porcelain=v2 2>/dev/null)}")
   do
