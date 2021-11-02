@@ -195,7 +195,20 @@ omz_termsupport_precmd() {
     title "${TERM_TITLE_IDLE}${TITLE_PWD}"
 }
 
-ZSH_COMMAND_TIME_COLOR="cyan"
+zsh_command_time() {
+    if [ -n "$ZSH_COMMAND_TIME" ]; then
+        min=$(($ZSH_COMMAND_TIME/60))
+        sec=$(($ZSH_COMMAND_TIME%60))
+        if [ "$min" -lt 60 ]; then
+            timer_show=$(printf '%02d:%02d\n' $min $sec)
+        else
+            hours=$(($min/60))
+            min=$(($min%60))
+            timer_show=$(printf '%d:%02d:%02d\n' $hours $min $sec)
+        fi
+        echo "$fg[cyan]⏲ $timer_show$reset_color"
+    fi
+}
 
 if type -f dircolors >/dev/null
 then
