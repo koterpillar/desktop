@@ -121,7 +121,10 @@ else
     PROMPT_HOST_COLOR=green
 fi
 
-PROMPT='%(?..%{$fg[red]%}🗙 %?%{$reset_color%}'$'\n'')%{$fg[$PROMPT_HOST_COLOR]%}$PROMPT_HOST%{$reset_color%} $PROMPT_PWD \
+PROMPT='\
+%(?..%{$fg[red]%}🗙 %?%{$reset_color%}'$'\n'')\
+%{$fg[$PROMPT_HOST_COLOR]%}$PROMPT_HOST%{$reset_color%} \
+$PROMPT_PWD \
 $(git_prompt_info)\
 %{$fg[red]%}%(!.#.»)%{$reset_color%} '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
