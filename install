@@ -30,12 +30,12 @@ dpkg_from_url() {
 # Packages
 case "$OS" in
   linux)
-    DISTRO=$(lsb_release -s -i)
+    DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
     case $DISTRO in
-      Debian)
+      debian)
         INSTALLER=apt
         ;;
-      Fedora)
+      fedora)
         INSTALLER=dnf
         ;;
       *)
@@ -63,7 +63,7 @@ case "$OS" in
       ;
 
     case $DISTRO in
-      Debian)
+      debian)
         dpkg_from_url $(github_release_url dandavison/delta git-delta_ amd64.deb)
         ;;
       *)
