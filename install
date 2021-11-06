@@ -82,6 +82,8 @@ case "$OS" in
         && true
           sudo systemctl daemon-reload || true
     fi
+
+    curl -sSL $(github_release_url neovim/neovim nvim appimage) > $HOME/.local/bin/nvim && chmod +x $HOME/.local/bin/nvim
     ;;
   macos)
     # TODO: install brew
@@ -99,6 +101,7 @@ case "$OS" in
       htop \
       ipython \
       jq \
+      neovim \
       nmap \
       ripgrep \
       rlwrap \
@@ -107,7 +110,6 @@ case "$OS" in
       shfmt \
       tig \
       unrar \
-      vim \
       wget \
       youtube-dl \
       zsh \
