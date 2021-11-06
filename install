@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eou pipefail
+set -euo pipefail
 
 source $(dirname $0)/functions.sh
 
@@ -19,9 +19,62 @@ github_release_url() {
   curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url'
 }
 
+dpkg_from_url() {
+  URL="$1"
+  DEB=$(mktemp)
+  curl -sSL -o "$DEB" "$URL"
+  sudo dpkg --skip-same-version -i "$DEB"
+  rm -f "$DEB"
+}
+
 # Packages
 case "$OS" in
   linux)
+    DISTRO=$(lsb_release -s -i)
+    case $DISTRO in
+      Debian)
+        INSTALLER=apt
+        ;;
+      Fedora)
+        INSTALLER=dnf
+        ;;
+      *)
+        echo "Can't find a package manager." >&2
+        exit 1
+        ;;
+    esac
+
+    sudo $INSTALLER install -y \
+      curl \
+      gcc \
+      git \
+      git-lfs \
+      htop \
+      lsof \
+      make \
+      moreutils \
+      python3 \
+      ripgrep \
+      rsync \
+      strace \
+      tig \
+      wget \
+      zsh \
+      ;
+
+    case $DISTRO in
+      Debian)
+        dpkg_from_url $(github_release_url dandavison/delta git-delta_ amd64.deb)
+        ;;
+      *)
+        sudo $INSTALLER install git-delta
+        ;;
+    esac
+
+
+    curl -sSL $(github_release_url neovim/neovim nvim appimage) | sudo tee /usr/local/bin/nvim >/dev/null
+    sudo chmod +x /usr/local/bin/nvim
+
     if [ -n "$INSTALL_DESKTOP" ]
     then
       FEDORA_VERSION=$(rpm -E %fedora)
@@ -34,45 +87,28 @@ case "$OS" in
       sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
       sudo dnf install -y \
         code \
-        curl \
         docker \
         gh \
         ghc \
-        git \
-        git-delta \
-        git-lfs \
         hlint \
-        htop \
         ImageMagick \
         jq \
-        lsof \
-        make \
         meld \
-        moreutils \
-        mosh \
         mozilla-fira-mono-fonts \
         nmap \
         nodejs \
         npm \
         perl-Image-ExifTool \
         pwgen \
-        python \
-        python3 \
-        ripgrep \
         rlwrap \
-        rsync \
         sbt \
-        strace \
         tcpdump \
-        tig \
         util-linux-user \
         vim \
         vlc \
-        wget \
         yarn \
         youtube-dl \
-        zsh \
-        && true
+        ;
 
       # Systemd
       sudo systemctl daemon-reload || true
@@ -82,8 +118,6 @@ case "$OS" in
         && true
           sudo systemctl daemon-reload || true
     fi
-
-    curl -sSL $(github_release_url neovim/neovim nvim appimage) > $HOME/.local/bin/nvim && chmod +x $HOME/.local/bin/nvim
     ;;
   macos)
     # TODO: install brew
