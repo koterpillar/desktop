@@ -15,10 +15,7 @@ export DHALL_OS
 # Config and dotfiles
 dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json
 
-if [ -d $HOME/.vim/.git ]
-then
-    rm -rf $HOME/.vim
-fi
+rm -rf $HOME/.vim
 
 makelink () {
     MAKELINK_SOURCE="$1"
@@ -49,15 +46,15 @@ ls $DIR/config | xargs -I FILE $LN -sfnT $DIR/config/FILE $HOME/.config/FILE
 makelink $DIR/bin $HOME/bin
 
 # Root shell config
-sudo sh -c '[ -L ~root/.vim ] && rm ~root/.vim || true'
-sudo mkdir -p ~root/.vim
-for FILE in dircolors vim/vimrc vim/undo zshrc zshenv
+sudo sh -c 'rm -rf ~root/.vim'
+for FILE in dircolors zshrc zshenv
 do
     sudo sh -c "$LN -sfnT $DIR/dotfiles/$FILE ~root/.$FILE"
 done
 sudo mkdir -p ~root/.config/git
-for FILE in git/config
+for FILE in git/config nvim
 do
+    sudo sh -c "mkdir -p ~root/.config/$(dirname $FILE)"
     sudo sh -c "$LN -sfnT $DIR/config/$FILE ~root/.config/$FILE"
 done
 

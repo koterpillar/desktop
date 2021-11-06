@@ -104,7 +104,6 @@ case "$OS" in
         sbt \
         tcpdump \
         util-linux-user \
-        vim \
         vlc \
         yarn \
         youtube-dl \
