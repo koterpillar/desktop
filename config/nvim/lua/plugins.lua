@@ -19,8 +19,15 @@ return require('packer').startup(function()
   use 'tpope/vim-sleuth' -- detect indentation
   use 'sgur/vim-editorconfig'
   use 'junegunn/vim-easy-align' -- align e.g. text in Markdown tables
+
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
+  }
+
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    branch = '0.5-compat',
+    run = ':TSUpdate'
   }
 end)
