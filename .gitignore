@@ -1,7 +1,4 @@
-/config/alacritty/alacritty.yml
 /config/karabiner/assets
 /config/karabiner/automatic_backups
 /config/karabiner/karabiner.json
 /config/nvim/plugin
-/config/tabby/*
-!/config/tabby/config.yaml
