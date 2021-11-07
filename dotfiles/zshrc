@@ -122,7 +122,6 @@ else
 fi
 
 PROMPT='\
-%(?..%{$fg[red]%}🗙 %?%{$reset_color%}'$'\n'')\
 %{$fg[$PROMPT_HOST_COLOR]%}$PROMPT_HOST%{$reset_color%} \
 $PROMPT_PWD \
 $(git_prompt_info)\
@@ -192,6 +191,23 @@ omz_termsupport_precmd() {
     TITLE_PWD=$(desktop_func_join "$PWD_SYMBOL" "$TITLE_DIR")
     title "${TERM_TITLE_IDLE}${TITLE_PWD}"
 }
+
+ZSH_RECORD_EXIT_STATUS=
+exit_status_preexec() {
+  ZSH_RECORD_EXIT_STATUS=1
+}
+exit_status_precmd() {
+  _EXIT_STATUS_PRECMD="$?"
+  if [ -n "${ZSH_RECORD_EXIT_STATUS:-}" ]
+  then
+    ZSH_RECORD_EXIT_STATUS=
+    if [ "$_EXIT_STATUS_PRECMD" -gt 0 ]; then
+      echo "$fg[red]🗙 ${_EXIT_STATUS_PRECMD}${reset_color}"
+    fi
+  fi
+}
+preexec_functions+=(exit_status_preexec)
+precmd_functions+=(exit_status_precmd)
 
 zsh_command_time() {
     if [ -n "$ZSH_COMMAND_TIME" ]; then
