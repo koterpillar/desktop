@@ -30,4 +30,5 @@ return require('packer').startup(function()
     branch = '0.5-compat',
     run = ':TSUpdate'
   }
+  use 'p00f/nvim-ts-rainbow'
 end)
