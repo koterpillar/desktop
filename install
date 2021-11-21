@@ -88,6 +88,7 @@ case "$OS" in
       sudo dnf install -y \
         code \
         docker \
+        fcitx5{,-{chinese-addons,m17n,mozc,configtool}} \
         gh \
         ghc \
         hlint \

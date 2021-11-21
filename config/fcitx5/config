@@ -1,0 +1,65 @@
+[Hotkey]
+# Enumerate when press trigger key repeatedly
+EnumerateWithTriggerKeys=True
+# Skip first input method while enumerating
+EnumerateSkipFirst=True
+# Перечислить группы методов ввода в прямом порядке
+EnumerateGroupForwardKeys=
+# Перечислить группы методов ввода в обратном порядке
+EnumerateGroupBackwardKeys=
+# Активировать метод ввода
+ActivateKeys=
+# Деактивация метода ввода
+DeactivateKeys=
+
+[Hotkey/TriggerKeys]
+0=Control+space
+
+[Hotkey/AltTriggerKeys]
+0=Shift_L
+
+[Hotkey/EnumerateForwardKeys]
+0=Control+Shift+Shift_L
+
+[Hotkey/EnumerateBackwardKeys]
+0=Control+Shift_R
+
+[Hotkey/PrevPage]
+0=Up
+
+[Hotkey/NextPage]
+0=Down
+
+[Hotkey/PrevCandidate]
+0=Shift+Tab
+
+[Hotkey/NextCandidate]
+0=Tab
+
+[Hotkey/TogglePreedit]
+0=Control+Alt+P
+
+[Behavior]
+# Активен по умолчанию
+ActiveByDefault=False
+# Share Input State
+ShareInputState=No
+# Show preedit in application
+PreeditEnabledByDefault=True
+# Показывать информацию о методе ввода при переключении
+ShowInputMethodInformation=True
+# Show Input Method Information when changing focus
+showInputMethodInformationWhenFocusIn=False
+# Show compact input method information
+CompactInputMethodInformation=True
+# Show first input method information
+ShowFirstInputMethodInformation=True
+# Размер страницы по умолчанию
+DefaultPageSize=5
+# Force Enabled Addons
+EnabledAddons=
+# Force Disabled Addons
+DisabledAddons=
+# Preload input method to be used by default
+PreloadInputMethod=True
+
