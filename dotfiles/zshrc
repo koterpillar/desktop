@@ -109,7 +109,7 @@ then
     PROMPT_HOST=桃花
 elif [ $HOST = liushu ]
 then
-    PROMPT_HOST=柳树
+    PROMPT_HOST=💽柳树
 else
     PROMPT_HOST=$HOST
 fi
