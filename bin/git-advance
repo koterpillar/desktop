@@ -5,7 +5,10 @@ set -e
 advance_branch() {
     BRANCH=$1
 
-    git checkout $BRANCH
+    if [ "$(git rev-parse --abbrev-ref HEAD)" != "$BRANCH" ]
+    then
+        git checkout $BRANCH
+    fi
     git pull
     if git remote get-url upstream >/dev/null 2>&1
     then
