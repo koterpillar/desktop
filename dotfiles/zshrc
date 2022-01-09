@@ -274,8 +274,3 @@ export LS_COLORS=$($DIRCOLORS -b $HOME/.dircolors | head -n 1 | sed "s/LS_COLORS
 # global /etc/zshprofile overrides $PATH
 # oh-my-zsh overrides $PAGER
 source $HOME/.zshenv
-
-if [ -f /etc/profile.d/vte.sh ]
-then
-    source /etc/profile.d/vte.sh
-fi
