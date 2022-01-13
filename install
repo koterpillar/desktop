@@ -106,6 +106,7 @@ case "$OS" in
         tcpdump \
         util-linux-user \
         vlc \
+        wl-clipboard \
         yarn \
         youtube-dl \
         ;
