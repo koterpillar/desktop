@@ -121,7 +121,11 @@ case "$OS" in
     fi
     ;;
   macos)
-    # TODO: install brew
+    if ! command -v brew >/dev/null 2>&1
+    then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
     brew install \
       ammonite-repl \
       colordiff \
@@ -132,34 +136,30 @@ case "$OS" in
       git-delta \
       git-lfs \
       gnu-sed \
+      gnu-tar \
       gradle \
+      homebrew/cask-fonts/font-fira-code \
+      homebrew/cask-fonts/font-fira-mono \
+      homebrew/cask-fonts/font-fira-sans \
       htop \
       ipython \
+      iterm2 \
       jq \
+      monitorcontrol \
       neovim \
       nmap \
+      rar \
+      rectangle \
       ripgrep \
       rlwrap \
       sbt \
       shellcheck \
       shfmt \
       tig \
-      unrar \
+      visual-studio-code \
       wget \
       youtube-dl \
       zsh \
-      && true
-    brew install -cask \
-      docker \
-      firefox \
-      font-fira-code \
-      font-fira-mono \
-      font-fira-sans \
-      intellij-idea-ce \
-      monitorcontrol \
-      rectangle \
-      spectacle \
-      visual-studio-code \
       && true
     ;;
 esac
@@ -175,6 +175,7 @@ case "$OS" in
     DESIRED_SHELL="/usr/local/bin/zsh"
     ;;
 esac
+# FIXME: add desired shell to /etc/shells
 if [ "$CURRENT_SHELL" != "$DESIRED_SHELL" ]
 then
   chsh -s "$DESIRED_SHELL"
@@ -186,8 +187,9 @@ export PATH="$HOME/.local/bin:$PATH"
 
 curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
 
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local --wildcards './bin/*dhall*'
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -j -x -C $HOME/.local --wildcards './bin/*dhall*'
+# https://github.com/dhall-lang/dhall-haskell/pull/2367
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -C $HOME/.local --wildcards 'bin/*dhall*'
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -C $HOME/.local --wildcards 'bin/*dhall*'
 
 # User configuration
 $DIR/makelinks
