@@ -175,9 +175,13 @@ case "$OS" in
     DESIRED_SHELL="/usr/local/bin/zsh"
     ;;
 esac
-# FIXME: add desired shell to /etc/shells
+set -x
 if [ "$CURRENT_SHELL" != "$DESIRED_SHELL" ]
 then
+  if ! grep -qx "$DESIRED_SHELL" /etc/shells
+  then
+    echo "$DESIRED_SHELL" | sudo tee -a /etc/shells >/dev/null
+  fi
   chsh -s "$DESIRED_SHELL"
 fi
 
