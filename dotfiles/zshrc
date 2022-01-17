@@ -104,25 +104,34 @@ autoload _docker
 compdef _docker docker
 
 # Theme
+if [ $UID = 0 ]
+then
+    PROMPT_HOST_COLOR=$fg[red]
+else
+    PROMPT_HOST_COLOR=$fg[green]
+fi
+
 if [ $HOST = taohua ]
 then
     PROMPT_HOST=桃花
 elif [ $HOST = liushu ]
 then
     PROMPT_HOST=💽柳树
+elif [[ $HOST =~ C02G ]]
+then
+    # Atlassian
+    PROMPT_HOST=▲
+    if [ $UID != 0 ]
+    then
+        # https://atlassian.design/foundations/color
+        PROMPT_HOST_COLOR=$'\e[38;2;0;82;204m'
+    fi
 else
     PROMPT_HOST=$HOST
 fi
 
-if [ $UID = 0 ]
-then
-    PROMPT_HOST_COLOR=red
-else
-    PROMPT_HOST_COLOR=green
-fi
-
 PROMPT='\
-%{$fg[$PROMPT_HOST_COLOR]%}$PROMPT_HOST%{$reset_color%} \
+$PROMPT_HOST_COLOR$PROMPT_HOST%{$reset_color%} \
 $PROMPT_PWD \
 $(git_prompt_info)\
 %{$fg[red]%}%(!.#.»)%{$reset_color%} '
