@@ -8,8 +8,7 @@ set -euo pipefail
 remote=$(git remote get-url origin || true)
 
 case "$remote" in
-    git@github.com:SEEK-Jobs/*)
-        git config user.email $USER@seek.com.au
-        git config commit.gpgsign true
+    git@bitbucket.org:atlassian/*)
+        git config user.email $USER@atlassian.com
         ;;
 esac
