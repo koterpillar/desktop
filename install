@@ -138,6 +138,7 @@ case "$OS" in
       gnu-sed \
       gnu-tar \
       gradle \
+      homebrew/cask/docker \
       homebrew/cask-fonts/font-fira-code \
       homebrew/cask-fonts/font-fira-mono \
       homebrew/cask-fonts/font-fira-sans \
@@ -145,9 +146,12 @@ case "$OS" in
       ipython \
       iterm2 \
       jq \
+      maven \
       monitorcontrol \
       neovim \
       nmap \
+      nvm \
+      node \
       rar \
       rectangle \
       ripgrep \
@@ -158,6 +162,7 @@ case "$OS" in
       tig \
       visual-studio-code \
       wget \
+      yarn \
       youtube-dl \
       zsh \
       && true
@@ -193,6 +198,8 @@ curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | ta
 # https://github.com/dhall-lang/dhall-haskell/pull/2367
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -C $HOME/.local --wildcards 'bin/*dhall*'
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -C $HOME/.local --wildcards 'bin/*dhall*'
+
+yarn global add bolt
 
 # User configuration
 $DIR/makelinks
