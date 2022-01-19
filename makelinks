@@ -69,3 +69,4 @@ submodule () {
 
 submodule $HOME/.jenv https://github.com/gcuisinier/jenv.git
 
+submodule $HOME/.nvm https://github.com/nvm-sh/nvm.git

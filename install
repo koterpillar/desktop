@@ -150,7 +150,6 @@ case "$OS" in
       monitorcontrol \
       neovim \
       nmap \
-      nvm \
       node \
       rar \
       rectangle \
