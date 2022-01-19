@@ -175,7 +175,6 @@ case "$OS" in
     DESIRED_SHELL="/usr/local/bin/zsh"
     ;;
 esac
-set -x
 if [ "$CURRENT_SHELL" != "$DESIRED_SHELL" ]
 then
   if ! grep -qx "$DESIRED_SHELL" /etc/shells
