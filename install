@@ -201,5 +201,7 @@ curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.ta
 
 yarn global add bolt
 
+curl -sSL https://statlas.prod.atl-paas.net/atlas-cli/darwin/atlas-latest-${OS/macos/darwin}-amd64.tar.gz | tar -z -x -C $HOME/.local/bin atlas
+
 # User configuration
 $DIR/makelinks
