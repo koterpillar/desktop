@@ -101,6 +101,7 @@ let terminals: Condition = ifApp terminalApps
 
 let niceApps = [
     "^com\\.jetbrains\\.intellij\\.ce$",
+    "^net\\.kovidgoyal\\.kitty$",
     "^org\\.virtualbox\\.app\\.VirtualBoxVM$"
 ]
 

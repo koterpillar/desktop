@@ -144,8 +144,8 @@ case "$OS" in
       homebrew/cask-fonts/font-fira-sans \
       htop \
       ipython \
-      iterm2 \
       jq \
+      kitty \
       maven \
       monitorcontrol \
       neovim \
