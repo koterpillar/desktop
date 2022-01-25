@@ -192,6 +192,19 @@ fi
 mkdir -p $HOME/.local/bin
 export PATH="$HOME/.local/bin:$PATH"
 
+if [ "$OS" == "linux" ] && [ -n "$INSTALL_DESKTOP" ]
+then
+  # Kitty
+  KITTY=$HOME/.local/kitty.app
+  mkdir -p $KITTY
+  curl -sSL $(github_release_url kovidgoyal/kitty kitty x86_64.txz) | tar -J -x -C $KITTY
+  ln -sfnT $KITTY/bin/kitty $HOME/.local/bin/kitty
+  cat $KITTY/share/applications/kitty.desktop \
+    | sed "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" \
+    > $HOME/.local/share/applications/kitty.desktop
+  exit 0
+fi
+
 curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
 
 # https://github.com/dhall-lang/dhall-haskell/pull/2367
