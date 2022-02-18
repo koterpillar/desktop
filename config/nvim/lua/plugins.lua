@@ -32,7 +32,3 @@ return require('packer').startup(function()
   }
   use 'p00f/nvim-ts-rainbow'
 end)
-
--- EasyAlign for Markdown tables
-cmd [[command! -range AlignMarkdownTable <line1>,<line2>EasyAlign *|]]
-cmd [[command! AlignThisMarkdownTable '{,'}AlignMarkdownTable]]
