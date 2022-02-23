@@ -207,9 +207,8 @@ fi
 
 curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
 
-# https://github.com/dhall-lang/dhall-haskell/pull/2367
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -C $HOME/.local --wildcards 'bin/*dhall*'
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -C $HOME/.local --wildcards 'bin/*dhall*'
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local --wildcards 'bin/*dhall*'
+curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local --wildcards 'bin/*dhall*'
 
 yarn global add bolt
 
