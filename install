@@ -147,7 +147,6 @@ case "$OS" in
       jq \
       kitty \
       maven \
-      monitorcontrol \
       neovim \
       nmap \
       node \
