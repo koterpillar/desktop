@@ -46,6 +46,7 @@ case "$OS" in
 
     sudo $INSTALLER install -y \
       curl \
+      g++ \
       gcc \
       git \
       git-lfs \
