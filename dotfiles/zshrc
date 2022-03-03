@@ -210,7 +210,7 @@ exit_status_precmd() {
   then
     ZSH_RECORD_EXIT_STATUS=
     if [ "$_EXIT_STATUS_PRECMD" -gt 0 ]; then
-      echo "$fg[red]🗙 ${_EXIT_STATUS_PRECMD}${reset_color}"
+      echo "$fg[red]❌ ${_EXIT_STATUS_PRECMD}${reset_color}"
     fi
   fi
 }
@@ -228,7 +228,7 @@ zsh_command_time() {
             min=$(($min%60))
             timer_show=$(printf '%d:%02d:%02d\n' $hours $min $sec)
         fi
-        echo "$fg[cyan]⏱ $timer_show$reset_color"
+        echo "$fg[cyan]⌛ $timer_show$reset_color"
     fi
 }
 ZSH_COMMAND_TIME_EXCLUDE=(vim nvim)
