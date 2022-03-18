@@ -274,6 +274,19 @@ function parse_git_dirty() {
   fi
 }
 
+BACK_STYLE='bg=#fbf0ff'  # see PROMPT_BACKGROUND
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,'$BACK_STYLE
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+for key value in ${(kv)ZSH_HIGHLIGHT_STYLES}
+do
+  if [[ $value =~ fg ]]
+  then
+    ZSH_HIGHLIGHT_STYLES[$key]=$BACK_STYLE,$value
+  fi
+done
+
 if type -f dircolors >/dev/null
 then
     DIRCOLORS=dircolors
