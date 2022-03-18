@@ -73,7 +73,7 @@ if ! zgen saved; then
 
     zgen load zsh-users/zsh-autosuggestions
 
-    # zgen load zsh-users/zsh-syntax-highlighting
+    zgen load zsh-users/zsh-syntax-highlighting
 
     zgen load popstas/zsh-command-time
 
@@ -131,11 +131,11 @@ else
     PROMPT_HOST=$HOST
 fi
 
-PROMPT_BACKGROUND=$'\e[48;2;251;240;255m'
-PROMPT_RESET=$'\e[m'$PROMPT_BACKGROUND
+PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
+PROMPT_RESET=%{$'\e[m'%}$PROMPT_BACKGROUND
 
 PROMPT='\
-$PROMPT_BACKGROUND$PROMPT_HOST_COLOR$PROMPT_HOST$PROMPT_RESET \
+$PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST$PROMPT_RESET \
 $PROMPT_PWD \
 $(git_prompt_info)\
 %{$fg[red]%}%(!.#.») $PROMPT_RESET'
@@ -241,9 +241,9 @@ ZSH_COMMAND_TIME_EXCLUDE=(vim nvim)
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}±%{$fg[yellow]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="$PROMPT_RESET "
-ZSH_CUSTOM_GIT_PROMPT_STAGED=$fg[green]✦
-ZSH_CUSTOM_GIT_PROMPT_UNSTAGED=$fg[red]✧
-ZSH_CUSTOM_GIT_PROMPT_UNTRACKED=$fg[yellow]✧
+ZSH_CUSTOM_GIT_PROMPT_STAGED=%{$fg[green]%}✦
+ZSH_CUSTOM_GIT_PROMPT_UNSTAGED=%{$fg[red]%}✧
+ZSH_CUSTOM_GIT_PROMPT_UNTRACKED=%{$fg[yellow]%}✧
 
 function parse_git_dirty() {
   local STATUS
