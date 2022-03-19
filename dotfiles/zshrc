@@ -19,6 +19,8 @@ then
     alias open=xdg-open
 fi
 
+alias cat=bat
+
 bindkey -e
 
 # X terminal keys

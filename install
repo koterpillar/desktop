@@ -45,6 +45,7 @@ case "$OS" in
     esac
 
     sudo $INSTALLER install -y \
+      bat \
       curl \
       g++ \
       gcc \
@@ -129,6 +130,7 @@ case "$OS" in
 
     brew install \
       ammonite-repl \
+      bat \
       colordiff \
       coreutils \
       gcc \
