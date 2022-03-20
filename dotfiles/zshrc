@@ -42,45 +42,40 @@ bindkey '^[^[[D' vi-backward-word
 bindkey '^[^[[C' vi-forward-word
 
 # Edit the command line with Ctrl-V
+autoload edit-command-line
+zle -N edit-command-line
 bindkey '^V' edit-command-line
 
-ZGEN_RESET_ON_CHANGE=($DESKTOP_ROOT/dotfiles/zshrc)
-
-# Disable oh-my-zsh autoupdate, rely on zgen
+# Disable oh-my-zsh autoupdate, rely on ZI
 DISABLE_AUTO_UPDATE=true
 
-if [ ! -d $HOME/.zgen ]
+zi_home="${HOME}/.zi"
+if [ ! -d $zi_home ]
 then
-    DEST=$HOME/.zgen
-    HOME=/dev/null XDG_CONFIG_HOME=/dev/null git clone "https://github.com/tarjoilija/zgen.git" "$DEST"
+  mkdir -p $zi_home
+  HOME=/dev/null XDG_CONFIG_HOME=/dev/null git clone https://github.com/z-shell/zi.git "${zi_home}/bin"
 fi
 
-source $HOME/.zgen/zgen.zsh
+source "${zi_home}/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
 
-if ! zgen saved; then
-    echo 'Creating a zgen save'
+zi load z-shell/H-S-MW
+zi load zsh-users/zsh-syntax-highlighting
 
-    zgen oh-my-zsh
+zi load ohmyzsh/ohmyzsh
+zi snippet OMZ::plugins/aws/aws.plugin.zsh
+zi snippet OMZ::plugins/docker/_docker
+zi snippet OMZ::plugins/git/git.plugin.zsh
+zi snippet OMZ::plugins/gradle/gradle.plugin.zsh
+zi snippet OMZ::plugins/npm/npm.plugin.zsh
+zi snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
-    zgen oh-my-zsh plugins/aws
-    zgen oh-my-zsh plugins/docker
-    zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/gradle
-    zgen oh-my-zsh plugins/npm
-    zgen oh-my-zsh plugins/colored-man-pages
+zi load agkozak/zsh-z
 
-    zgen load agkozak/zsh-z
+zi load zsh-users/zsh-autosuggestions
 
-    zgen load zsh-users/zsh-autosuggestions
-
-    zgen load zsh-users/zsh-syntax-highlighting
-
-    zgen load popstas/zsh-command-time
-
-    zgen load unixorn/autoupdate-zgen
-
-    zgen save
-fi
+zi load popstas/zsh-command-time
 
 autoload -U add-zsh-hook
 load-version-managers() {
@@ -99,10 +94,6 @@ load-version-managers() {
     fi
 }
 add-zsh-hook chpwd load-version-managers
-
-# FIXME: Docker plugin isn't registering for autocomplete
-autoload _docker
-compdef _docker docker
 
 # Theme
 if [ $UID = 0 ]
