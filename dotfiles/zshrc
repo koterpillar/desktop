@@ -5,21 +5,11 @@ setopt share_history nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
 
 autoload -Uz compinit
+# On macOS, this isn't owned by root and zsh complains. Don't load it.
 FPATH=$(echo $FPATH | sed 's!/usr/local/share/zsh/site-functions:!!')
 compinit
 autoload -Uz bashcompinit
 bashcompinit
-
-export DESKTOP_ROOT=$(dirname $(dirname $(readlink ~/.zshrc)))
-
-alias grep='grep --color=auto'
-
-if ! type open >/dev/null
-then
-    alias open=xdg-open
-fi
-
-alias cat=bat
 
 bindkey -e
 
@@ -46,8 +36,17 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey '^V' edit-command-line
 
-# Disable oh-my-zsh autoupdate, rely on ZI
-DISABLE_AUTO_UPDATE=true
+# Handy and pretty aliases
+alias grep='grep --color=auto'
+
+if ! type open >/dev/null
+then
+    alias open=xdg-open
+fi
+
+alias cat=bat
+
+# Plugin framework
 
 zi_home="${HOME}/.zi"
 if [ ! -d $zi_home ]
@@ -60,10 +59,14 @@ source "${zi_home}/bin/zi.zsh"
 autoload -Uz _zi
 (( ${+_comps} )) && _comps[zi]=_zi
 
-zi load z-shell/H-S-MW
-zi load zsh-users/zsh-syntax-highlighting
+# Plugins
+zi light z-shell/H-S-MW
+zi light zsh-users/zsh-syntax-highlighting
 
-zi load ohmyzsh/ohmyzsh
+# Disable oh-my-zsh autoupdate, rely on ZI
+DISABLE_AUTO_UPDATE=true
+zi snippet OMZ::lib/git.zsh
+zi snippet OMZ::lib/termsupport.zsh
 zi snippet OMZ::plugins/aws/aws.plugin.zsh
 zi snippet OMZ::plugins/docker/_docker
 zi snippet OMZ::plugins/git/git.plugin.zsh
@@ -96,6 +99,9 @@ load-version-managers() {
 add-zsh-hook chpwd load-version-managers
 
 # Theme
+autoload -U colors
+colors
+
 if [ $UID = 0 ]
 then
     PROMPT_HOST_COLOR=$fg[red]
@@ -125,13 +131,15 @@ fi
 PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
 PROMPT_RESET=%{$reset_color%}$PROMPT_BACKGROUND
 
+setopt PROMPT_SUBST
 PROMPT='\
 $PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST$PROMPT_RESET \
 $PROMPT_PWD \
 $(git_prompt_info)\
 %{$fg[red]%}%(!.#.»)%{$reset_color%} '
+
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
-RPROMPT='$PROMPT_BACKGROUND                                      %{$reset_color%}'
+# RPROMPT='$PROMPT_BACKGROUND                                      %{$reset_color%}'
 
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [ $UID != 0 ]
 then
@@ -172,7 +180,7 @@ desktop_func_ellipsis() {
     fi
 }
 
-omz_termsupport_precmd() {
+pwd_precmd() {
     PWD_SYMBOL=''
     PWD_DIR=$PWD
     for (( i = 1; i <= $#DIR_DECORATIONS; i += 2 )) do
@@ -196,6 +204,7 @@ omz_termsupport_precmd() {
     TITLE_PWD=$(desktop_func_join "$PWD_SYMBOL" "$TITLE_DIR")
     title "${TERM_TITLE_IDLE}${TITLE_PWD}"
 }
+precmd_functions+=(pwd_precmd)
 
 ZSH_RECORD_EXIT_STATUS=
 exit_status_preexec() {
