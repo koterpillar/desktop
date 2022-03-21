@@ -1,9 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Merge the current pull request and remove the branch.
 """
-
-from __future__ import print_function
 
 import argparse
 import subprocess
@@ -62,7 +60,7 @@ def main():
         return 1
 
     try:
-        git('checkout', base)
+        git('switch', base)
         git('fetch')
         git('reset', '--hard', 'origin/{0}'.format(base))
         git('merge', '--no-ff', '--no-edit', current)
@@ -71,10 +69,10 @@ def main():
             git('push', 'origin', '--delete', current)
         except subprocess.CalledProcessError:
             pass
-        git('branch', '-d', current)
+        git('branch', '--delete', current)
     except (subprocess.CalledProcessError, KeyboardInterrupt):
         try:
-            git('checkout', current)
+            git('switch', current)
         except subprocess.CalledProcessError:
             pass
         raise
