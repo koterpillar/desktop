@@ -30,6 +30,8 @@ bindkey '^[[1~' vi-beginning-of-line
 # macOS terminal keys, where different
 bindkey '^[^[[D' vi-backward-word
 bindkey '^[^[[C' vi-forward-word
+bindkey '^[[H' beginning-of-line  # FIXME: same on X?
+bindkey '^[[F' end-of-line  # FIXME: same on X?
 
 # Edit the command line with Ctrl-V
 autoload edit-command-line
