@@ -131,12 +131,16 @@ else
     PROMPT_HOST=$HOST
 fi
 
+PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
+PROMPT_RESET=%{$reset_color%}$PROMPT_BACKGROUND
+
 PROMPT='\
-$PROMPT_HOST_COLOR$PROMPT_HOST%{$reset_color%} \
+$PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST$PROMPT_RESET \
 $PROMPT_PWD \
 $(git_prompt_info)\
 %{$fg[red]%}%(!.#.»)%{$reset_color%} '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
+RPROMPT='$PROMPT_BACKGROUND                                      %{$reset_color%}'
 
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [ $UID != 0 ]
 then
@@ -236,10 +240,10 @@ zsh_command_time() {
 ZSH_COMMAND_TIME_EXCLUDE=(vim nvim)
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}±%{$fg[yellow]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-ZSH_CUSTOM_GIT_PROMPT_STAGED=$fg[green]✦
-ZSH_CUSTOM_GIT_PROMPT_UNSTAGED=$fg[red]✧
-ZSH_CUSTOM_GIT_PROMPT_UNTRACKED=$fg[yellow]✧
+ZSH_THEME_GIT_PROMPT_SUFFIX="$PROMPT_RESET "
+ZSH_CUSTOM_GIT_PROMPT_STAGED=%{$fg[green]%}✦
+ZSH_CUSTOM_GIT_PROMPT_UNSTAGED=%{$fg[red]%}✧
+ZSH_CUSTOM_GIT_PROMPT_UNTRACKED=%{$fg[yellow]%}✧
 
 function parse_git_dirty() {
   local STATUS
@@ -266,7 +270,7 @@ function parse_git_dirty() {
   done
   if [ -n "$STAGED$UNSTAGED$UNTRACKED" ]
   then
-    echo "${STAGED:+$ZSH_CUSTOM_GIT_PROMPT_STAGED}${UNSTAGED:+$ZSH_CUSTOM_GIT_PROMPT_UNSTAGED}${UNTRACKED:+$ZSH_CUSTOM_GIT_PROMPT_UNTRACKED}$reset_color"
+    echo "${STAGED:+$ZSH_CUSTOM_GIT_PROMPT_STAGED}${UNSTAGED:+$ZSH_CUSTOM_GIT_PROMPT_UNSTAGED}${UNTRACKED:+$ZSH_CUSTOM_GIT_PROMPT_UNTRACKED}$PROMPT_RESET"
   fi
 }
 
