@@ -132,15 +132,15 @@ else
 fi
 
 PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
-PROMPT_RESET=%{$'\e[m'%}$PROMPT_BACKGROUND
+PROMPT_RESET=%{$reset_color%}$PROMPT_BACKGROUND
 
 PROMPT='\
 $PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST$PROMPT_RESET \
 $PROMPT_PWD \
 $(git_prompt_info)\
-%{$fg[red]%}%(!.#.») $PROMPT_RESET'
-PROMPT2='$PROMPT_BACKGROUND%{$fg[red]%}\ $PROMPT_RESET'
-POSTEDIT=$'\e[m'
+%{$fg[red]%}%(!.#.»)%{$reset_color%} '
+PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
+RPROMPT='$PROMPT_BACKGROUND                                      %{$reset_color%}'
 
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [ $UID != 0 ]
 then
@@ -273,19 +273,6 @@ function parse_git_dirty() {
     echo "${STAGED:+$ZSH_CUSTOM_GIT_PROMPT_STAGED}${UNSTAGED:+$ZSH_CUSTOM_GIT_PROMPT_UNSTAGED}${UNTRACKED:+$ZSH_CUSTOM_GIT_PROMPT_UNTRACKED}$PROMPT_RESET"
   fi
 }
-
-BACK_STYLE='bg=#fbf0ff'  # see PROMPT_BACKGROUND
-
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,'$BACK_STYLE
-
-typeset -A ZSH_HIGHLIGHT_STYLES
-for key value in ${(kv)ZSH_HIGHLIGHT_STYLES}
-do
-  if [[ $value =~ fg ]]
-  then
-    ZSH_HIGHLIGHT_STYLES[$key]=$BACK_STYLE,$value
-  fi
-done
 
 if type -f dircolors >/dev/null
 then
