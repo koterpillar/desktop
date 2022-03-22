@@ -137,6 +137,7 @@ else
 fi
 
 PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
+PROMPT_ARROW=%{$'\e[38;2;251;240;255m'%}$'\UE0B0'%{$reset_color%}
 PROMPT_RESET=%{$reset_color%}$PROMPT_BACKGROUND
 
 setopt PROMPT_SUBST
@@ -144,10 +145,10 @@ PROMPT='\
 $PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST$PROMPT_RESET \
 $PROMPT_PWD \
 $(git_prompt_info)\
-%{$fg[red]%}%(!.#.»)%{$reset_color%} '
+%{$fg[red]%}%(!.#.»)%{$reset_color%}\
+$PROMPT_ARROW'
 
-PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
-# RPROMPT='$PROMPT_BACKGROUND                                      %{$reset_color%}'
+PROMPT2='$PROMPT_BACKGROUND%{$fg[red]%}\%{$reset_color%} '
 
 if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [ $UID != 0 ]
 then

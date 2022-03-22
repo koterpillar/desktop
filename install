@@ -170,6 +170,26 @@ case "$OS" in
     ;;
 esac
 
+# Powerline fonts
+if [ -n "$INSTALL_DESKTOP" ]
+then
+  case "$OS" in
+    linux)
+      FONT_DIR="$HOME/.local/share/fonts"
+      ;;
+    macos)
+      FONT_DIR="$HOME/Library/Fonts"
+      ;;
+  esac
+
+  curl -sSL -o $FONT_DIR/PowerlineSymbols.otf https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+
+  if type -f fc-cache >/dev/null 2>&1
+  then
+    fc-cache -f $FONT_DIR
+  fi
+fi
+
 # Shell
 case "$OS" in
   linux)
