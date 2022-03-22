@@ -69,6 +69,8 @@ autoload -Uz _zi
 
 # Plugins
 zi light z-shell/H-S-MW
+zstyle ":history-search-multi-word" highlight-color "bg=#ffd9a8,bold"
+
 zi light zsh-users/zsh-syntax-highlighting
 
 # Disable oh-my-zsh autoupdate, rely on ZI
