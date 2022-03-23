@@ -39,8 +39,12 @@ zle -N edit-command-line
 bindkey '^V' edit-command-line
 
 # Handy and pretty aliases
+command_exists() {
+    type -f "$1" >/dev/null 2>&1
+}
+
 alias grep='grep --color=auto'
-if type -f gls >/dev/null
+if command_exists gls
 then
     alias ls='gls --color=auto'
 else
@@ -52,7 +56,13 @@ then
     alias open=xdg-open
 fi
 
-alias cat=bat
+if command_exists batcat
+then
+    alias cat=batcat
+elif command_exists bat
+then
+    alias cat=bat
+fi
 
 # Plugin framework
 
@@ -285,10 +295,10 @@ function parse_git_dirty() {
   fi
 }
 
-if type -f dircolors >/dev/null
+if command_exists dircolors
 then
     DIRCOLORS=dircolors
-elif type -f gdircolors >/dev/null
+elif command_exists gdircolors
 then
     DIRCOLORS=gdircolors
 else
