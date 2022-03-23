@@ -22,8 +22,8 @@ bindkey '^[[3~' delete-char
 bindkey '^[[3;5~' delete-word
 
 # Non-X terminal keys, where different
-bindkey '^[[D' vi-backward-word
-bindkey '^[[C' vi-forward-word
+# bindkey '^[[D' vi-backward-word  # FIXME: this is normal left arrow on macOS
+# bindkey '^[[C' vi-forward-word  # FIXME: this is normal right arrow on macOS
 bindkey '^[[4~' vi-end-of-line
 bindkey '^[[1~' vi-beginning-of-line
 
