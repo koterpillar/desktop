@@ -56,10 +56,7 @@ then
     alias open=xdg-open
 fi
 
-if command_exists batcat
-then
-    alias cat=batcat
-elif command_exists bat
+if command_exists bat
 then
     alias cat=bat
 fi

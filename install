@@ -45,7 +45,6 @@ case "$OS" in
     esac
 
     sudo $INSTALLER install -y \
-      bat \
       curl \
       g++ \
       gcc \
@@ -130,7 +129,6 @@ case "$OS" in
 
     brew install \
       ammonite-repl \
-      bat \
       colordiff \
       coreutils \
       gcc \
@@ -231,6 +229,8 @@ curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | ta
 
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
+
+curl -sSL $(github_release_url sharkdp/bat bat x86_64-$(echo $OS | sed 's/macos/apple-darwin/;s/linux/unknown-linux-gnu/').tar.gz) | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/bat'
 
 # User configuration
 $DIR/makelinks
