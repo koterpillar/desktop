@@ -19,6 +19,8 @@ opt.smartcase = true
 opt.undofile = true
 opt.updatetime = 250
 
+opt.title = true
+
 opt.wildignore = { "node_modules", "__pycache__", "*.pyc" }
 
 opt.langmap = "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
