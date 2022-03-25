@@ -179,6 +179,7 @@ then
       FONT_DIR="$HOME/Library/Fonts"
       ;;
   esac
+  mkdir -p $FONT_DIR
 
   curl -sSL -o $FONT_DIR/PowerlineSymbols.otf https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
 
