@@ -3,7 +3,11 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt share_history nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
+WORDCHARS=${WORDCHARS/\//}
 
+zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu yes select
+setopt complete_in_word
 autoload -Uz compinit
 # On macOS, this isn't owned by root and zsh complains. Don't load it.
 FPATH=$(echo $FPATH | sed 's!/usr/local/share/zsh/site-functions:!!')
@@ -37,6 +41,8 @@ bindkey '^[[F' end-of-line  # FIXME: same on X?
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^V' edit-command-line
+
+bindkey '^I' expand-or-complete-prefix
 
 # Handy and pretty aliases
 command_exists() {
