@@ -45,6 +45,7 @@ case "$OS" in
     esac
 
     sudo $INSTALLER install -y \
+      cargo \
       curl \
       g++ \
       gcc \
@@ -155,6 +156,7 @@ case "$OS" in
       rectangle \
       ripgrep \
       rlwrap \
+      rust \
       sbt \
       shellcheck \
       shfmt \
@@ -223,7 +225,6 @@ then
   cat $KITTY/share/applications/kitty.desktop \
     | sed "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" \
     > $HOME/.local/share/applications/kitty.desktop
-  exit 0
 fi
 
 curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
@@ -232,6 +233,8 @@ curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.ta
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
 
 curl -sSL $(github_release_url sharkdp/bat bat x86_64-$(echo $OS | sed 's/macos/apple-darwin/;s/linux/unknown-linux-gnu/').tar.gz) | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/bat'
+
+cargo install difftastic && ln -sf $HOME/.cargo/bin/difft  $HOME/.local/bin
 
 # User configuration
 $DIR/makelinks
