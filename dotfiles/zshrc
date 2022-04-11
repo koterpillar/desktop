@@ -105,18 +105,23 @@ zi load popstas/zsh-command-time
 
 autoload -U add-zsh-hook
 load-version-managers() {
-    if [ -z "$NVM_LOADED" ] && [ -d $HOME/.nvm ] && [ -f .nvmrc ]; then
-        source "$HOME/.nvm/nvm.sh"
-        NVM_LOADED=1
+    if [ -d $HOME/.nvm ] && \
+        ([ -f .nvmrc ] || [ -f package.json ]); then
+        if [ -z "$NVM_LOADED" ]; then
+            source "$HOME/.nvm/nvm.sh"
+            NVM_LOADED=1
+        fi
+        if [ -f .nvmrc ]; then
+            nvm use
+        fi
     fi
 
-    if [ -d $HOME/.nvm ] && [ -f .nvmrc ]; then
-        nvm use
-    fi
-
-    if [ -z "$JENV_LOADED" ] && type jenv >/dev/null && [ -f .java-version ]; then
-        eval "$(jenv init -)"
-        JENV_LOADED=1
+    if type jenv >/dev/null && \
+        ([ -f .java-version ] || [ -f build.gradle ] || [ -f build.gradle.kts ]); then
+        if [ -z "$JENV_LOADED" ]; then
+            eval "$(jenv init -)"
+            JENV_LOADED=1
+        fi
     fi
 }
 add-zsh-hook chpwd load-version-managers
