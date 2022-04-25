@@ -3,7 +3,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt share_history nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
-WORDCHARS=${WORDCHARS/\//}
+WORDCHARS=${WORDCHARS//[\/-]}
 
 zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu yes select
