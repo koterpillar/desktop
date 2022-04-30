@@ -82,8 +82,6 @@ case "$OS" in
       FEDORA_VERSION=$(rpm -E %fedora)
       sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
       sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
-      curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-      curl --silent --location https://www.scala-sbt.org/sbt-rpm.repo | sudo tee /etc/yum.repos.d/sbt.repo
       sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
       sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
       sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
@@ -104,12 +102,10 @@ case "$OS" in
         perl-Image-ExifTool \
         pwgen \
         rlwrap \
-        sbt \
         tcpdump \
         util-linux-user \
         vlc \
         wl-clipboard \
-        yarn \
         youtube-dl \
         ;
 
@@ -157,7 +153,6 @@ case "$OS" in
       ripgrep \
       rlwrap \
       rust \
-      sbt \
       shellcheck \
       shfmt \
       tig \
@@ -228,6 +223,20 @@ then
 fi
 
 curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
+
+if [ -n "$INSTALL_DESKTOP" ]
+then
+  curl -sSL $(github_release_url sbt/sbt sbt .tgz) | tar -z -x --strip 2 -C $HOME/.local/bin --wildcards 'sbt/bin/*'
+fi
+
+if [ -n "$INSTALL_DESKTOP" ]
+then
+  # Yarn
+  YARN=$HOME/.local/yarn.app
+  mkdir -p $YARN
+  curl -sSL https://yarnpkg.com/latest.tar.gz | tar -x -z --strip 1 -C $YARN
+  ln -sfnT $YARN/bin/yarn $HOME/.local/bin/yarn
+fi
 
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
 curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
