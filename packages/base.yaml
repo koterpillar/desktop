@@ -37,6 +37,8 @@
   applicable: darwin
 - name: nodejs
   applicable: linux
+- name: npm
+  applicable: linux
 - name: rar
   applicable: darwin
 - name: ripgrep

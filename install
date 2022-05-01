@@ -60,18 +60,12 @@ case "$OS" in
         docker \
         fcitx5{,-{chinese-addons,m17n,mozc,configtool}} \
         gh \
-        ghc \
         hlint \
         ImageMagick \
-        jq \
         meld \
         mozilla-fira-mono-fonts \
-        nmap \
-        nodejs \
-        npm \
         perl-Image-ExifTool \
         pwgen \
-        rlwrap \
         tcpdump \
         util-linux-user \
         vlc \
