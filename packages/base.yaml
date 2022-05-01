@@ -8,6 +8,9 @@
 - name: ghc
 - name: git
 - name: git-lfs
+- repo: dandavison/delta
+  binary: delta
+  strip: 1
 - name: gnu-sed
   applicable: darwin
 - name: gnu-tar
