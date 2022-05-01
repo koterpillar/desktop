@@ -1,0 +1,6 @@
+- name: homebrew/cask-fonts/font-fira-code
+  applicable: darwin
+- name: homebrew/cask-fonts/font-fira-mono
+  applicable: darwin
+- name: homebrew/cask-fonts/font-fira-sans
+  applicable: darwin

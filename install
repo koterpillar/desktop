@@ -2,6 +2,25 @@
 
 set -euo pipefail
 
+# Prerequisites
+case "$OSTYPE" in
+  darwin*)
+    if ! command -v brew >/dev/null 2>&1
+    then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    brew install -y python3
+  ;;
+esac
+
+HERE=$(dirname "$0")
+
+PYTHON_ENV="$HERE/python_env"
+if ! [ -d "$PYTHON_ENV" ]; then python3 -m venv "$PYTHON_ENV"; fi
+"$PYTHON_ENV/bin/pip" install -r "$HERE/requirements.txt"
+
+exec "$PYTHON_ENV/bin/python" "$HERE/install.py"
+
 source $(dirname $0)/functions.sh
 
 INSTALL_DESKTOP=true
@@ -30,46 +49,12 @@ dpkg_from_url() {
 # Packages
 case "$OS" in
   linux)
-    DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
-    case $DISTRO in
-      debian)
-        INSTALLER=apt
-        ;;
-      fedora)
-        INSTALLER=dnf
-        ;;
-      *)
-        echo "Can't find a package manager." >&2
-        exit 1
-        ;;
-    esac
-
-    sudo $INSTALLER install -y \
-      cargo \
-      curl \
-      g++ \
-      gcc \
-      git \
-      git-lfs \
-      htop \
-      lsof \
-      make \
-      moreutils \
-      python3 \
-      ripgrep \
-      rsync \
-      strace \
-      tig \
-      wget \
-      zsh \
-      ;
-
     case $DISTRO in
       debian)
         dpkg_from_url $(github_release_url dandavison/delta git-delta_ amd64.deb)
         ;;
       *)
-        sudo $INSTALLER install git-delta
+        $INSTALLER install git-delta
         ;;
     esac
 
@@ -128,41 +113,14 @@ case "$OS" in
 
     brew install \
       ammonite-repl \
-      colordiff \
-      coreutils \
-      gcc \
-      ghc \
-      git \
       git-delta \
-      git-lfs \
-      gnu-sed \
-      gnu-tar \
-      gradle \
       homebrew/cask/docker \
-      homebrew/cask-fonts/font-fira-code \
-      homebrew/cask-fonts/font-fira-mono \
-      homebrew/cask-fonts/font-fira-sans \
-      htop \
-      ipython \
-      jq \
       kitty \
       maven \
-      neovim \
-      nmap \
-      node \
-      rar \
       rectangle \
-      ripgrep \
-      rlwrap \
-      rust \
       shellcheck \
       shfmt \
-      tig \
       visual-studio-code \
-      wget \
-      yarn \
-      youtube-dl \
-      zsh \
       && true
     ;;
 esac
