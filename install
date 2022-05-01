@@ -19,7 +19,7 @@ PYTHON_ENV="$HERE/python_env"
 if ! [ -d "$PYTHON_ENV" ]; then python3 -m venv "$PYTHON_ENV"; fi
 "$PYTHON_ENV/bin/pip" install -r "$HERE/requirements.txt"
 
-exec "$PYTHON_ENV/bin/python" "$HERE/install.py"
+exec "$PYTHON_ENV/bin/python" "$HERE/install.py" "$@"
 
 source $(dirname $0)/functions.sh
 
