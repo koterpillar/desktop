@@ -25,16 +25,18 @@ Some = Optional[Union[T, Sequence[T]]]
 
 ApplicableArg = Some[OS]
 
+def unsome(x: Some[T]) -> Optional[list[T]]:
+    if x is None:
+        return None
+    if isinstance(x, list):
+        return x
+    return [x]
+
 class Package:
     applicable: Optional[frozenset[OS]]
 
     def __init__(self, applicable: ApplicableArg = None) -> None:
-        if applicable is None:
-            self.applicable = None
-        elif isinstance(applicable, str):
-            self.applicable = frozenset([applicable])
-        else:
-            self.applicable = frozenset(applicable)
+        self.applicable = unsome(applicable)
 
     def install(self):
         raise NotImplementedError
@@ -94,9 +96,13 @@ class LocalPackage(Package):
         raise ValueError(f"Cannot find {binary} in {self.package_directory()}.")
 
     def makelinks(self) -> None:
+        os.makedirs(local('bin'), exist_ok=True)
         for binary in self.binaries:
             source = self.find_binary(binary)
-            os.symlink(source, local('bin', binary))
+            target = local('bin', binary)
+            if os.path.exists(target):
+                os.unlink(target)
+            os.symlink(source, target)
 
 class ArchivePackage(LocalPackage):
     def __init__(self, *, strip: int = 0, **kwargs) -> None:
@@ -140,8 +146,8 @@ class GitHubPackage(ArchivePackage):
 
     def __init__(self, *, repo: str, prefix: Some[str] = None, suffix: Some[str] = None, **kwargs) -> None:
         self.repo = repo
-        self.prefixes = prefix or []
-        self.suffixes = suffix or []
+        self.prefixes = unsome(prefix) or []
+        self.suffixes = unsome(suffix) or []
         super().__init__(**kwargs)
 
     def releases(self) -> list[GitHubRelease]:

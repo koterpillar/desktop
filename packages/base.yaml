@@ -1,8 +1,17 @@
+- repo: sharkdp/bat
+  binary: bat
+  strip: 1
 - name: cargo
 - name: colordiff
 - name: coreutils
   applicable: darwin
 - name: curl
+- repo: dhall-lang/dhall-haskell
+  prefix: dhall-json
+  binary: dhall-to-json
+- repo: dhall-lang/dhall-haskell
+  prefix: dhall-yaml
+  binary: dhall-to-yaml
 - name: g++
 - name: gcc
 - name: ghc

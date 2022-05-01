@@ -49,15 +49,6 @@ dpkg_from_url() {
 # Packages
 case "$OS" in
   linux)
-    case $DISTRO in
-      debian)
-        dpkg_from_url $(github_release_url dandavison/delta git-delta_ amd64.deb)
-        ;;
-      *)
-        $INSTALLER install git-delta
-        ;;
-    esac
-
     NVIM=$(mktemp)
     curl -sSL $(github_release_url neovim/neovim nvim appimage) -o "$NVIM"
     sudo mv "$NVIM" /usr/local/bin/nvim
@@ -197,11 +188,6 @@ then
   curl -sSL https://yarnpkg.com/latest.tar.gz | tar -x -z --strip 1 -C $YARN
   ln -sfnT $YARN/bin/yarn $HOME/.local/bin/yarn
 fi
-
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
-
-curl -sSL $(github_release_url sharkdp/bat bat x86_64-$(echo $OS | sed 's/macos/apple-darwin/;s/linux/unknown-linux-gnu/').tar.gz) | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/bat'
 
 cargo install difftastic && ln -sf $HOME/.cargo/bin/difft  $HOME/.local/bin
 
