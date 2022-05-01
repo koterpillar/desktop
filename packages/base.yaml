@@ -41,6 +41,7 @@
   applicable: linux
 - name: npm
   applicable: linux
+- name: pwgen
 - name: rar
   applicable: darwin
 - name: ripgrep

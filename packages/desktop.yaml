@@ -4,3 +4,26 @@
   applicable: darwin
 - name: homebrew/cask-fonts/font-fira-sans
   applicable: darwin
+- name: fcitx5
+  applicable: linux
+- name: fcitx5-chinese-addons
+  applicable: linux
+- name: fcitx5-m17n
+  applicable: linux
+- name: fcitx5-mozc
+  applicable: linux
+- name: fcitx5-configtool
+  applicable: linux
+- name: ImageMagick
+  applicable: linux
+- name: perl-Image-ExifTool
+  applicable: linux
+- name: meld
+- name: mozilla-fira-mono-fonts
+  applicable: linux
+- name: util-linux-user  # chsh
+- name: vlc
+  applicable: linux
+- name: wl-clipboard
+  applicable: linux
+- name: youtube-dl
