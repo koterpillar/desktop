@@ -138,7 +138,6 @@ then
 fi
 
 # User packages
-mkdir -p $HOME/.local/bin
 export PATH="$HOME/.local/bin:$PATH"
 
 if [ "$OS" == "linux" ] && [ -n "$INSTALL_DESKTOP" ]
@@ -159,8 +158,6 @@ if [ -n "$INSTALL_DESKTOP" ]
 then
   curl -sSL $(github_release_url sbt/sbt sbt .tgz) | tar -z -x --strip 2 -C $HOME/.local/bin --wildcards 'sbt/bin/*'
 fi
-
-cargo install difftastic && ln -sf $HOME/.cargo/bin/difft  $HOME/.local/bin
 
 # User configuration
 $DIR/makelinks

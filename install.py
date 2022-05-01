@@ -73,6 +73,12 @@ class InstallerPackage(Package):
 def local(*path: str) -> str:
     return os.path.join(os.environ['HOME'], '.local', *path)
 
+def install_binary(name: str, source: str) -> None:
+    os.makedirs(local('bin'), exist_ok=True)
+    target = local('bin', name)
+    if os.path.exists(target):
+        os.unlink(target)
+    os.symlink(source, target)
 
 class LocalPackage(Package):
     binaries: list[str]
@@ -83,26 +89,24 @@ class LocalPackage(Package):
             self.binaries = binary
         super().__init__(**kwargs)
 
-    def package_directory(self) -> str:
-        result = local(f'{self.package_name()}.app')
-        os.makedirs(result, exist_ok=True)
-        return result
+    def binary_path(self, binary: str) -> str:
+        raise NotImplementedError()
 
-    def find_binary(self, binary: str) -> str:
-        for relative_path in [[], ['bin']]:
-            candidate = os.path.join(self.package_directory(), *relative_path, binary)
-            if os.path.exists(candidate):
-                return candidate
-        raise ValueError(f"Cannot find {binary} in {self.package_directory()}.")
-
-    def makelinks(self) -> None:
-        os.makedirs(local('bin'), exist_ok=True)
+    def install(self) -> None:
         for binary in self.binaries:
-            source = self.find_binary(binary)
-            target = local('bin', binary)
-            if os.path.exists(target):
-                os.unlink(target)
-            os.symlink(source, target)
+            install_binary(binary, self.binary_path(binary))
+
+class CargoPackage(LocalPackage):
+    def __init__(self, *, cargo: str, **kwargs) -> None:
+        self.name = cargo
+        super().__init__(**kwargs)
+
+    def binary_path(self, binary: str) -> str:
+        return os.path.join(os.environ['HOME'], '.cargo', 'bin', binary)
+
+    def install(self):
+        subprocess.run(['cargo', 'install', self.name], check=True)
+        super().install()
 
 class ArchivePackage(LocalPackage):
     def __init__(self, *, strip: int = 0, **kwargs) -> None:
@@ -111,6 +115,11 @@ class ArchivePackage(LocalPackage):
 
     def archive_url(self) -> str:
         raise NotImplementedError()
+
+    def package_directory(self) -> str:
+        result = local(f'{self.package_name()}.app')
+        os.makedirs(result, exist_ok=True)
+        return result
 
     def tar_args(self, *extra: str) -> Sequence[str]:
         return ['tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f']
@@ -128,12 +137,19 @@ class ArchivePackage(LocalPackage):
         else:
             raise ValueError(f"Unknown archive format: {url}")
 
+    def binary_path(self, binary: str) -> str:
+        for relative_path in [[], ['bin']]:
+            candidate = os.path.join(self.package_directory(), *relative_path, binary)
+            if os.path.exists(candidate):
+                return candidate
+        raise ValueError(f"Cannot find {binary} in {self.package_directory()}.")
+
     def install(self):
         url = self.archive_url()
         with tempfile.NamedTemporaryFile() as archive_file:
             subprocess.run(['curl', '-sSL', url], stdout=archive_file, check=True)
             subprocess.run([*self.extractor(url), archive_file.name], check=True)
-        self.makelinks()
+        super().install()
 
 class URLPackage(ArchivePackage):
     def __init__(self, *, url: str, **kwargs) -> None:
@@ -211,8 +227,10 @@ def parse_package(package: Any) -> Package:
         return GitHubPackage(**package)
     elif 'url' in package:
         return URLPackage(**package)
+    elif 'cargo' in package:
+        return CargoPackage(**package)
     else:
-        raise ValueError(f"Either 'name', 'repo' or 'url' must be present, got: {package}.")
+        raise ValueError(f"Either 'name', 'repo', 'url' or 'cargo' must be present, got: {package}.")
 
 def load_packages(component: str) -> list[Package]:
     with open(os.path.join(os.path.dirname(__file__), 'packages', f'{component}.yaml')) as f:

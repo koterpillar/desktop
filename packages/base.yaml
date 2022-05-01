@@ -12,6 +12,8 @@
 - repo: dhall-lang/dhall-haskell
   prefix: dhall-yaml
   binary: dhall-to-yaml
+- cargo: difftastic
+  binary: difft
 - name: g++
 - name: gcc
 - name: ghc
