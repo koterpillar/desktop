@@ -34,6 +34,9 @@
   applicable: darwin
 - name: nmap
 - name: node
+  applicable: darwin
+- name: nodejs
+  applicable: linux
 - name: rar
   applicable: darwin
 - name: ripgrep
@@ -45,4 +48,7 @@
 - name: unrar
   applicable: linux
 - name: wget
+- url: https://yarnpkg.com/latest.tar.gz
+  binary: yarn
+  strip: 1
 - name: zsh

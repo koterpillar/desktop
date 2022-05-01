@@ -135,6 +135,17 @@ class ArchivePackage(LocalPackage):
             subprocess.run([*self.extractor(url), archive_file.name], check=True)
         self.makelinks()
 
+class URLPackage(ArchivePackage):
+    def __init__(self, *, url: str, **kwargs) -> None:
+        self.url = url
+        super().__init__(**kwargs)
+
+    def archive_url(self) -> str:
+        return self.url
+
+    def package_name(self):
+        return self.url.split('/')[2]
+
 @dataclass
 class GitHubRelease:
     name: str
@@ -198,8 +209,10 @@ def parse_package(package: Any) -> Package:
         return InstallerPackage(**package)
     elif 'repo' in package:
         return GitHubPackage(**package)
+    elif 'url' in package:
+        return URLPackage(**package)
     else:
-        raise ValueError(f"Either 'name' or 'repo' must be present, got: {package}.")
+        raise ValueError(f"Either 'name', 'repo' or 'url' must be present, got: {package}.")
 
 def load_packages(component: str) -> list[Package]:
     with open(os.path.join(os.path.dirname(__file__), 'packages', f'{component}.yaml')) as f:
