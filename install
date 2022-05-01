@@ -73,9 +73,11 @@ case "$OS" in
         ;;
     esac
 
-
-    curl -sSL $(github_release_url neovim/neovim nvim appimage) | sudo tee /usr/local/bin/nvim >/dev/null
+    NVIM=$(mktemp)
+    curl -sSL $(github_release_url neovim/neovim nvim appimage) -o "$NVIM"
+    sudo mv "$NVIM" /usr/local/bin/nvim
     sudo chmod +x /usr/local/bin/nvim
+    rm -f "$NVIM"
 
     if [ -n "$INSTALL_DESKTOP" ]
     then
