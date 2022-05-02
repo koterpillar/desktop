@@ -141,7 +141,5 @@ then
     > $HOME/.local/share/applications/kitty.desktop
 fi
 
-curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
-
 # User configuration
 $DIR/makelinks

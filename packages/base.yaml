@@ -49,6 +49,10 @@
 - name: rlwrap
 - name: rust
 - name: rsync
+- repo: commercialhaskell/stack
+  suffix: tar.gz
+  strip: 1
+  binary: stack
 - name: strace
   applicable: linux
 - name: tig
