@@ -2,6 +2,7 @@ import argparse
 from dataclasses import dataclass
 import os
 import platform
+import shutil
 import sys
 import subprocess
 import tempfile
@@ -20,6 +21,14 @@ OS = Literal['linux', 'darwin']
 CURRENT_OS: OS = sys.platform
 
 T = TypeVar('T')
+
+def with_os(*, linux: T, macos: T) -> T:
+    if CURRENT_OS == 'linux':
+        return linux
+    elif CURRENT_OS == 'darwin':
+        return macos
+    else:
+        raise ValueError(f"Unexpected OS {CURRENT_OS}.")
 
 Some = Optional[Union[T, Sequence[T]]]
 
@@ -54,47 +63,65 @@ class InstallerPackage(Package):
         self.name = name
         super().__init__(**kwargs)
 
-    def install(self):
-        if CURRENT_OS == 'linux':
-            distro = platform.freedesktop_os_release()['ID']
-            if distro == 'fedora':
-                installer = ['sudo', 'dnf', 'install', '-y']
-            elif distro == 'debian':
-                installer = ['sudo', 'apt', 'install', '--yes']
-            else:
-                raise NotImplementedError(f"Unknown Linux distribution: {distro}.")
-        elif CURRENT_OS == 'darwin':
-            installer = ['brew', 'install']
+    def linux_installer(self) -> list[str]:
+        distro = platform.freedesktop_os_release()['ID']
+        if distro == 'fedora':
+            return ['sudo', 'dnf', 'install', '-y']
+        elif distro == 'debian':
+            return ['sudo', 'apt', 'install', '--yes']
         else:
-            raise NotImplementedError(f"Unknown platform {CURRENT_OS}.")
+            raise NotImplementedError(f"Unknown Linux distribution: {distro}.")
+
+    def install(self):
+        installer = with_os(
+            linux=self.linux_installer,
+            macos=lambda: ['brew', 'install'],
+        )()
         subprocess.run([*installer, self.name], check=True)
 
 
-def local(*path: str) -> str:
-    return os.path.join(os.environ['HOME'], '.local', *path)
+def home(*path: str) -> str:
+    return os.path.join(os.environ['HOME'], *path)
 
-def install_binary(name: str, source: str) -> None:
-    os.makedirs(local('bin'), exist_ok=True)
-    target = local('bin', name)
-    if os.path.exists(target):
+def local(*path: str) -> str:
+    return home('.local', *path)
+
+def symlink(source: str, target: str) -> None:
+    if os.path.lexists(target):
         os.unlink(target)
     os.symlink(source, target)
 
 class LocalPackage(Package):
     binaries: list[str]
-    def __init__(self, *, binary: Union[str, list[str]], **kwargs) -> None:
-        if isinstance(binary, str):
-            self.binaries = [binary]
-        else:
-            self.binaries = binary
+    fonts: list[str]
+    def __init__(self, *, binary: Some[str] = None, font: Some[str] = None, **kwargs) -> None:
+        self.binaries = unsome(binary) or []
+        self.fonts = unsome(font) or []
         super().__init__(**kwargs)
 
     def binary_path(self, binary: str) -> str:
         raise NotImplementedError()
 
+    def install_binary(self, name: str) -> None:
+        os.makedirs(local('bin'), exist_ok=True)
+        target = local('bin', name)
+        symlink(self.binary_path(name), target)
+
+    def install_font(self, name: str) -> None:
+        font_dir = with_os(linux=local('share', 'fonts'), macos=home('Library', 'Fonts'))
+        os.makedirs(font_dir, exist_ok=True)
+        source = os.path.join(self.package_directory(), name)
+        target = os.path.join(font_dir, name)
+        symlink(source, target)
+        if shutil.which('fc-cache'):
+            subprocess.run(['fc-cache', '-f', font_dir], check=True)
+
     def install(self) -> None:
         for binary in self.binaries:
-            install_binary(binary, self.binary_path(binary))
+            self.install_binary(binary)
+        for font in self.fonts:
+            self.install_font(font)
+
 
 class CargoPackage(LocalPackage):
     def __init__(self, *, cargo: str, **kwargs) -> None:
@@ -102,14 +129,15 @@ class CargoPackage(LocalPackage):
         super().__init__(**kwargs)
 
     def binary_path(self, binary: str) -> str:
-        return os.path.join(os.environ['HOME'], '.cargo', 'bin', binary)
+        return home('.cargo', 'bin', binary)
 
     def install(self):
         subprocess.run(['cargo', 'install', self.name], check=True)
         super().install()
 
 class ArchivePackage(LocalPackage):
-    def __init__(self, *, strip: int = 0, **kwargs) -> None:
+    def __init__(self, *, raw: bool = False, strip: int = 0, **kwargs) -> None:
+        self.raw = raw
         self.strip = strip
         super().__init__(**kwargs)
 
@@ -121,19 +149,22 @@ class ArchivePackage(LocalPackage):
         os.makedirs(result, exist_ok=True)
         return result
 
-    def tar_args(self, *extra: str) -> Sequence[str]:
-        return ['tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f']
+    def tar_args(self, source: str, *extra: str) -> Sequence[str]:
+        return ['tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f', source]
 
-    def extractor(self, url: str) -> Sequence[str]:
+    def extractor(self, url: str, source: str) -> Sequence[str]:
+        if self.raw:
+            filename = url.rsplit('/', 1)[-1]
+            return ['cp', source, os.path.join(self.package_directory(), filename)]
         if '.tar' in url:
             if '.gz' in url:
-                return self.tar_args('-z')
+                return self.tar_args(source, '-z')
             elif '.bz2' in url:
-                return self.tar_args('-j')
+                return self.tar_args(source, '-j')
             else:
-                return self.tar_args()
+                return self.tar_args(source)
         elif '.tgz' in url:
-            return self.tar_args('-z')
+            return self.tar_args(source, '-z')
         else:
             raise ValueError(f"Unknown archive format: {url}")
 
@@ -148,7 +179,7 @@ class ArchivePackage(LocalPackage):
         url = self.archive_url()
         with tempfile.NamedTemporaryFile() as archive_file:
             subprocess.run(['curl', '-sSL', url], stdout=archive_file, check=True)
-            subprocess.run([*self.extractor(url), archive_file.name], check=True)
+            subprocess.run(self.extractor(url, archive_file.name), check=True)
         super().install()
 
 class URLPackage(ArchivePackage):
@@ -190,12 +221,10 @@ class GitHubPackage(ArchivePackage):
             yield lambda name: name.startswith(prefix)
         for suffix in self.suffixes:
             yield lambda name: name.endswith(suffix)
-        if CURRENT_OS == 'linux':
-            os_hints = ['linux', 'gnu']
-        elif CURRENT_OS == 'darwin':
-            os_hints = ['macos', 'darwin', 'osx']
-        else:
-            raise ValueError(f"Unexpected OS {CURRENT_OS}.")
+        os_hints = with_os(
+            linux=['linux', 'gnu'],
+            macos=['macos', 'darwin', 'osx'],
+        )
         for os_hint in os_hints:
             yield lambda name: os_hint in name.lower()
         arch_hints = ['x86_64', 'amd64']

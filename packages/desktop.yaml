@@ -16,11 +16,18 @@
   applicable: linux
 - name: ImageMagick
   applicable: linux
+- name: kitty
+  applicable: darwin
 - name: perl-Image-ExifTool
   applicable: linux
+- url: https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+  raw: true
+  font: PowerlineSymbols.otf
 - name: meld
 - name: mozilla-fira-mono-fonts
   applicable: linux
+- name: rectangle
+  applicable: darwin
 - name: util-linux-user  # chsh
   applicable: linux
 - name: vlc
