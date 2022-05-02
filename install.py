@@ -1,7 +1,6 @@
 import argparse
 from dataclasses import dataclass
 import os
-import platform
 import shutil
 import sys
 import subprocess
@@ -67,13 +66,12 @@ class InstallerPackage(Package):
         super().__init__(**kwargs)
 
     def linux_installer(self) -> list[str]:
-        distro = platform.freedesktop_os_release()['ID']
-        if distro == 'fedora':
+        if shutil.which('dnf'):
             return ['sudo', 'dnf', 'install', '-y']
-        elif distro == 'debian':
+        elif shutil.which('apt'):
             return ['sudo', 'apt', 'install', '--yes']
         else:
-            raise NotImplementedError(f"Unknown Linux distribution: {distro}.")
+            raise NotImplementedError("Cannot find a package manager.")
 
     def install(self):
         installer = with_os(

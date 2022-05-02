@@ -11,6 +11,13 @@ case "$OSTYPE" in
     fi
     brew install python3
   ;;
+  linux*)
+    DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
+    case $DISTRO in
+      debian)
+        sudo apt install --yes python3{,-{pip,venv}}
+        ;;
+    esac
 esac
 
 HERE=$(dirname "$0")
