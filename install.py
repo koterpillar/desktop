@@ -58,6 +58,9 @@ class Package:
             return
         self.install()
 
+def run(*args, **kwargs) -> None:
+    subprocess.run(args, check=True, **kwargs)
+
 class InstallerPackage(Package):
     def __init__(self, *, name: str, **kwargs) -> None:
         self.name = name
@@ -77,7 +80,7 @@ class InstallerPackage(Package):
             linux=self.linux_installer,
             macos=lambda: ['brew', 'install'],
         )()
-        subprocess.run([*installer, self.name], check=True)
+        run(*installer, self.name)
 
 
 def home(*path: str) -> str:
@@ -114,7 +117,7 @@ class LocalPackage(Package):
         target = os.path.join(font_dir, name)
         symlink(source, target)
         if shutil.which('fc-cache'):
-            subprocess.run(['fc-cache', '-f', font_dir], check=True)
+            run('fc-cache', '-f', font_dir)
 
     def install(self) -> None:
         for binary in self.binaries:
@@ -132,7 +135,7 @@ class CargoPackage(LocalPackage):
         return home('.cargo', 'bin', binary)
 
     def install(self):
-        subprocess.run(['cargo', 'install', self.name], check=True)
+        run('cargo', 'install', self.name)
         super().install()
 
 class ArchivePackage(LocalPackage):
@@ -151,7 +154,7 @@ class ArchivePackage(LocalPackage):
         return result
 
     def untar(self, source: str, *extra: str) -> Sequence[str]:
-        subprocess.run(['tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f', source], check=True)
+        run('tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f', source)
 
     def extract(self, url: str, source: str) -> None:
         if self.raw:
@@ -160,9 +163,9 @@ class ArchivePackage(LocalPackage):
             else:
                 filename = url.rsplit('/', 1)[-1]
             target = os.path.join(self.package_directory(), filename)
-            subprocess.run(['cp', source, target], check=True)
+            run('cp', source, target)
             if self.raw_executable:
-                subprocess.run(['chmod', '+x', target], check=True)
+                run('chmod', '+x', target)
         elif '.tar' in url:
             if '.gz' in url:
                 return self.untar(source, '-z')
@@ -185,7 +188,7 @@ class ArchivePackage(LocalPackage):
     def install(self):
         url = self.archive_url()
         with tempfile.NamedTemporaryFile() as archive_file:
-            subprocess.run(['curl', '-sSL', url], stdout=archive_file, check=True)
+            run('curl', '-sSL', url, stdout=archive_file)
             self.extract(url, archive_file.name)
         super().install()
 
