@@ -92,11 +92,15 @@ def symlink(source: str, target: str) -> None:
         os.unlink(target)
     os.symlink(source, target)
 
+def make_executable(path: str) -> None:
+    run('chmod', '+x', path)
+
 class LocalPackage(Package):
     binaries: list[str]
     fonts: list[str]
-    def __init__(self, *, binary: Some[str] = None, font: Some[str] = None, **kwargs) -> None:
+    def __init__(self, *, binary: Some[str] = None, binary_wrapper: bool = False, font: Some[str] = None, **kwargs) -> None:
         self.binaries = unsome(binary) or []
+        self.binary_wrapper = binary_wrapper
         self.fonts = unsome(font) or []
         super().__init__(**kwargs)
 
@@ -105,8 +109,16 @@ class LocalPackage(Package):
 
     def install_binary(self, name: str) -> None:
         os.makedirs(local('bin'), exist_ok=True)
+        path = self.binary_path(name)
         target = local('bin', name)
-        symlink(self.binary_path(name), target)
+        if self.binary_wrapper:
+            if os.path.lexists(target):
+                os.unlink(target)
+            with open(target, 'w') as wrapper_file:
+                print(f"#!/bin/sh\nexec \"{path}\" \"$@\"", file=wrapper_file)
+            make_executable(target)
+        else:
+            symlink(path, target)
 
     def install_font(self, name: str) -> None:
         font_dir = with_os(linux=local('share', 'fonts'), macos=home('Library', 'Fonts'))
@@ -163,7 +175,7 @@ class ArchivePackage(LocalPackage):
             target = os.path.join(self.package_directory(), filename)
             run('cp', source, target)
             if self.raw_executable:
-                run('chmod', '+x', target)
+                make_executable(target)
         elif '.tar' in url:
             if '.gz' in url:
                 return self.untar(source, '-z')
