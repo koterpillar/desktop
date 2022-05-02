@@ -28,7 +28,6 @@
   applicable: darwin
 - name: gnu-tar
   applicable: darwin
-- name: ipython
 - name: jq
 - name: htop
 - name: lsof
@@ -44,20 +43,21 @@
 - name: npm
   applicable: linux
 - name: pwgen
+- name: python3-ipython
 - name: rar
   applicable: darwin
 - name: ripgrep
 - name: rlwrap
-- name: rust
 - name: rsync
 - repo: commercialhaskell/stack
   suffix: tar.gz
+  exclude: static
   strip: 1
   binary: stack
 - name: strace
   applicable: linux
 - name: tig
-- name: unrar
+- name: unrar-free
   applicable: linux
 - name: wget
 - url: https://yarnpkg.com/latest.tar.gz

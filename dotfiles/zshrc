@@ -67,6 +67,11 @@ then
     alias cat=bat
 fi
 
+if command_exists unrar-free
+then
+    alias unrar=unrar-free
+fi
+
 # Plugin framework
 
 zi_home="${HOME}/.zi"
