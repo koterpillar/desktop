@@ -74,7 +74,6 @@ case "$OS" in
     ;;
   macos)
     brew install \
-      ammonite-repl \
       homebrew/cask/docker \
       shellcheck \
       shfmt \

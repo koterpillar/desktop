@@ -136,8 +136,9 @@ class CargoPackage(LocalPackage):
         super().install()
 
 class ArchivePackage(LocalPackage):
-    def __init__(self, *, raw: bool = False, strip: int = 0, **kwargs) -> None:
+    def __init__(self, *, raw: Union[bool, str] = False, raw_executable: bool = False, strip: int = 0, **kwargs) -> None:
         self.raw = raw
+        self.raw_executable = raw_executable
         self.strip = strip
         super().__init__(**kwargs)
 
@@ -149,29 +150,35 @@ class ArchivePackage(LocalPackage):
         os.makedirs(result, exist_ok=True)
         return result
 
-    def tar_args(self, source: str, *extra: str) -> Sequence[str]:
-        return ['tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f', source]
+    def untar(self, source: str, *extra: str) -> Sequence[str]:
+        subprocess.run(['tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f', source], check=True)
 
-    def extractor(self, url: str, source: str) -> Sequence[str]:
+    def extract(self, url: str, source: str) -> None:
         if self.raw:
-            filename = url.rsplit('/', 1)[-1]
-            return ['cp', source, os.path.join(self.package_directory(), filename)]
-        if '.tar' in url:
-            if '.gz' in url:
-                return self.tar_args(source, '-z')
-            elif '.bz2' in url:
-                return self.tar_args(source, '-j')
+            if isinstance(self.raw, str):
+                filename = self.raw
             else:
-                return self.tar_args(source)
+                filename = url.rsplit('/', 1)[-1]
+            target = os.path.join(self.package_directory(), filename)
+            subprocess.run(['cp', source, target], check=True)
+            if self.raw_executable:
+                subprocess.run(['chmod', '+x', target], check=True)
+        elif '.tar' in url:
+            if '.gz' in url:
+                return self.untar(source, '-z')
+            elif '.bz2' in url:
+                return self.untar(source, '-j')
+            else:
+                return self.untar(source)
         elif '.tgz' in url:
-            return self.tar_args(source, '-z')
+            return self.untar(source, '-z')
         else:
             raise ValueError(f"Unknown archive format: {url}")
 
     def binary_path(self, binary: str) -> str:
         for relative_path in [[], ['bin']]:
             candidate = os.path.join(self.package_directory(), *relative_path, binary)
-            if os.path.isfile(candidate):
+            if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
                 return candidate
         raise ValueError(f"Cannot find {binary} in {self.package_directory()}.")
 
@@ -179,7 +186,7 @@ class ArchivePackage(LocalPackage):
         url = self.archive_url()
         with tempfile.NamedTemporaryFile() as archive_file:
             subprocess.run(['curl', '-sSL', url], stdout=archive_file, check=True)
-            subprocess.run(self.extractor(url, archive_file.name), check=True)
+            self.extract(url, archive_file.name)
         super().install()
 
 class URLPackage(ArchivePackage):
@@ -201,11 +208,13 @@ class GitHubRelease:
 class GitHubPackage(ArchivePackage):
     prefixes: list[str]
     suffixes: list[str]
+    excludes: list[str]
 
-    def __init__(self, *, repo: str, prefix: Some[str] = None, suffix: Some[str] = None, **kwargs) -> None:
+    def __init__(self, *, repo: str, prefix: Some[str] = None, suffix: Some[str] = None, exclude: Some[str] = None, **kwargs) -> None:
         self.repo = repo
         self.prefixes = unsome(prefix) or []
         self.suffixes = unsome(suffix) or []
+        self.excludes = unsome(exclude) or []
         super().__init__(**kwargs)
 
     def releases(self) -> list[GitHubRelease]:
@@ -221,6 +230,8 @@ class GitHubPackage(ArchivePackage):
             yield lambda name: name.startswith(prefix)
         for suffix in self.suffixes:
             yield lambda name: name.endswith(suffix)
+        for exclude in self.excludes:
+            yield lambda name: exclude not in name
         os_hints = with_os(
             linux=['linux', 'gnu'],
             macos=['macos', 'darwin', 'osx'],
