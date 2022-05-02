@@ -1,0 +1,5 @@
+- name: maven
+- repo: sbt/sbt
+  suffix: tgz
+  strip: 1
+  binary: sbt

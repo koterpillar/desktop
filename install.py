@@ -140,7 +140,7 @@ class ArchivePackage(LocalPackage):
     def binary_path(self, binary: str) -> str:
         for relative_path in [[], ['bin']]:
             candidate = os.path.join(self.package_directory(), *relative_path, binary)
-            if os.path.exists(candidate):
+            if os.path.isfile(candidate):
                 return candidate
         raise ValueError(f"Cannot find {binary} in {self.package_directory()}.")
 

@@ -77,7 +77,6 @@ case "$OS" in
       ammonite-repl \
       homebrew/cask/docker \
       kitty \
-      maven \
       rectangle \
       shellcheck \
       shfmt \
@@ -143,11 +142,6 @@ then
 fi
 
 curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
-
-if [ -n "$INSTALL_DESKTOP" ]
-then
-  curl -sSL $(github_release_url sbt/sbt sbt .tgz) | tar -z -x --strip 2 -C $HOME/.local/bin --wildcards 'sbt/bin/*'
-fi
 
 # User configuration
 $DIR/makelinks
