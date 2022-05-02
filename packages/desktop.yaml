@@ -22,6 +22,7 @@
 - name: mozilla-fira-mono-fonts
   applicable: linux
 - name: util-linux-user  # chsh
+  applicable: linux
 - name: vlc
   applicable: linux
 - name: wl-clipboard

@@ -192,8 +192,10 @@ class GitHubPackage(ArchivePackage):
             yield lambda name: name.endswith(suffix)
         if CURRENT_OS == 'linux':
             os_hints = ['linux', 'gnu']
-        elif CURRENT_OS == 'macos':
+        elif CURRENT_OS == 'darwin':
             os_hints = ['macos', 'darwin', 'osx']
+        else:
+            raise ValueError(f"Unexpected OS {CURRENT_OS}.")
         for os_hint in os_hints:
             yield lambda name: os_hint in name.lower()
         arch_hints = ['x86_64', 'amd64']

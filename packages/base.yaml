@@ -15,6 +15,7 @@
 - cargo: difftastic
   binary: difft
 - name: g++
+  applicable: linux
 - name: gcc
 - name: ghc
 - name: git
@@ -49,6 +50,7 @@
 - name: rust
 - name: rsync
 - name: strace
+  applicable: linux
 - name: tig
 - name: unrar
   applicable: linux
