@@ -7,17 +7,7 @@ import sys
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import (
-    Any,
-    Callable,
-    Iterable,
-    Literal,
-    Optional,
-    Sequence,
-    TypeVar,
-    Union,
-    cast,
-)
+from typing import Any, Callable, Iterable, Literal, Optional, TypeVar, Union, cast
 
 import requests
 import yaml
@@ -76,8 +66,51 @@ class Package:
         self.install()
 
 
-def run(*args, **kwargs) -> None:
-    subprocess.run(args, check=True, **kwargs)
+def run(*args, **kwargs) -> subprocess.CompletedProcess:
+    return subprocess.run(args, check=True, **kwargs)
+
+
+class Installer:
+    def install(self, *packages: str) -> None:
+        raise NotImplementedError()
+
+    def is_installed(self, package: str) -> bool:
+        raise NotImplementedError()
+
+
+class Brew(Installer):
+    def install(self, *packages: str) -> None:
+        run("brew", "install", *packages)
+
+
+class DNF(Installer):
+    def install(self, *packages: str) -> None:
+        run("sudo", "dnf", "install", *packages)
+
+    def is_installed(self, package: str) -> bool:
+        return (
+            subprocess.run(
+                ["rpm", "-q", package], check=False, stdout=subprocess.DEVNULL
+            ).returncode
+            == 0
+        )
+
+
+class Apt(Installer):
+    def install(self, *packages: str) -> None:
+        run("sudo", "apt", "install", *packages)
+
+
+def linux_installer() -> Installer:
+    if shutil.which("dnf"):
+        return DNF()
+    elif shutil.which("apt"):
+        return Apt()
+    else:
+        raise NotImplementedError("Cannot find a package manager.")
+
+
+INSTALLER = with_os(linux=linux_installer, macos=Brew)()
 
 
 class InstallerPackage(Package):
@@ -85,20 +118,9 @@ class InstallerPackage(Package):
         self.name = name
         super().__init__(**kwargs)
 
-    def linux_installer(self) -> list[str]:
-        if shutil.which("dnf"):
-            return ["sudo", "dnf", "install", "-y"]
-        elif shutil.which("apt"):
-            return ["sudo", "apt", "install", "--yes"]
-        else:
-            raise NotImplementedError("Cannot find a package manager.")
-
     def install(self):
-        installer = with_os(
-            linux=self.linux_installer,
-            macos=lambda: ["brew", "install"],
-        )()
-        run(*installer, self.name)
+        if not INSTALLER.is_installed(self.name):
+            INSTALLER.install(self.name)
 
 
 def home(*path: str) -> str:

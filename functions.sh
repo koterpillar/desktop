@@ -39,5 +39,6 @@ venv() {
     PYTHON_ENV="$DIR/python_env"
     if ! [ -d "$PYTHON_ENV" ]; then python3 -m venv "$PYTHON_ENV"; fi
     PATH="$PYTHON_ENV/bin:$PATH"
-    pip install -r "$DIR/requirements.txt"
+    pip --quiet install --upgrade pip
+    pip --quiet install -r "$DIR/requirements.txt"
 }
