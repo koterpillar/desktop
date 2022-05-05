@@ -6,6 +6,5 @@ source $(dirname $0)/functions.sh
 
 venv
 
-isort --check $DIR/*.py
-black --check $DIR/*.py
-mypy $DIR/*.py
+isort $DIR/*.py
+black $DIR/*.py

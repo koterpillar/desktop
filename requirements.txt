@@ -1,6 +1,8 @@
 PyYAML
 requests
 
+black
+isort
 mypy
 types-PyYAML
 types-requests
