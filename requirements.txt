@@ -1,2 +1,6 @@
 PyYAML
 requests
+
+mypy
+types-PyYAML
+types-requests

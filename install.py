@@ -136,22 +136,30 @@ class LocalPackage(Package):
     def app_path(self, name: str) -> str:
         raise NotImplementedError()
 
+    def icon_directory(self) -> Optional[str]:
+        return None
+
     def install_app(self, name: str) -> None:
         path = self.app_path(name)
         target = local('share', 'applications', f'{name}.desktop')
         symlink(path, target)
-        icon = icon_name(path)
-        if icon:
-            icons_path = Path(self.package_directory()) / 'share' / 'icons'
-            for icon_path in icons_path.rglob(f'{icon}.*'):
-                package_icon = str(icon_path)
-                target = os.path.join(local(), icon_path.relative_to(self.package_directory()))
-                symlink(package_icon, target)
+        icon_directory = self.icon_directory()
+        if icon_directory:
+            icons_target = local('share', 'icons')
+            icon = icon_name(path)
+            if icon:
+                for icon_path in Path(icon_directory).rglob(f'{icon}.*'):
+                    package_icon = str(icon_path)
+                    target = os.path.join(icons_target, icon_path.relative_to(icon_directory))
+                    symlink(package_icon, target)
+
+    def font_path(self, name: str) -> str:
+        raise NotImplementedError()
 
     def install_font(self, name: str) -> None:
         font_dir = with_os(linux=local('share', 'fonts'), macos=home('Library', 'Fonts'))
         makedirs(font_dir)
-        source = os.path.join(self.package_directory(), name)
+        source = self.font_path(name)
         target = os.path.join(font_dir, name)
         symlink(source, target)
         if shutil.which('fc-cache'):
@@ -232,6 +240,18 @@ class ArchivePackage(LocalPackage):
         if os.path.isfile(candidate):
             return candidate
         raise ValueError(f"Cannot find application '{name}' in {self.package_directory()}.")
+
+    def icon_directory(self) -> Optional[str]:
+        candidate = os.path.join(self.package_directory(), 'share', 'icons')
+        if os.path.isdir(candidate):
+            return candidate
+        return None
+
+    def font_path(self, name: str) -> str:
+        candidate = os.path.join(self.package_directory(), name)
+        if os.path.isfile(candidate):
+            return candidate
+        raise ValueError(f"Cannot find font '{name}' in {self.package_directory()}.")
 
     def install(self):
         url = self.archive_url()

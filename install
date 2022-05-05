@@ -2,33 +2,11 @@
 
 set -euo pipefail
 
-# Prerequisites
-case "$OSTYPE" in
-  darwin*)
-    if ! command -v brew >/dev/null 2>&1
-    then
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-    brew install python3
-  ;;
-  linux*)
-    DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
-    case $DISTRO in
-      debian)
-        sudo apt install --yes python3{,-{pip,venv}}
-        ;;
-    esac
-esac
-
-HERE=$(dirname "$0")
-
-PYTHON_ENV="$HERE/python_env"
-if ! [ -d "$PYTHON_ENV" ]; then python3 -m venv "$PYTHON_ENV"; fi
-"$PYTHON_ENV/bin/pip" install -r "$HERE/requirements.txt"
-
-exec "$PYTHON_ENV/bin/python" "$HERE/install.py" "$@"
-
 source $(dirname $0)/functions.sh
+
+venv
+
+exec python "$DIR/install.py" "$@"
 
 INSTALL_DESKTOP=true
 if [ "${1-}" == "--no-desktop" ]

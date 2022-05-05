@@ -1,26 +1,43 @@
-if (echo $OSTYPE | grep -q darwin)
-then
+command_exists() {
+    type -f "$1" >/dev/null 2>&1
+}
+
+# Prerequisites
+case "$OSTYPE" in
+  darwin*)
     OS=macos
     DIR=$(cd $(dirname $0); pwd -P)
+
     PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
-    INSTALLER=brew
-else
+    if ! command_exists python3
+    then
+        if ! command_exists brew
+        then
+
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        fi
+        brew install python3
+    fi
+  ;;
+  linux*)
     OS=linux
-    OS_DISTRIBUTION=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
     DIR=$(readlink -f $(dirname $0))
 
-    DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
-    case $DISTRO in
-      debian)
-        INSTALLER="sudo apt"
-        ;;
-      fedora)
-        INSTALLER="sudo dnf"
-        ;;
-      *)
-        echo "Can't find a package manager." >&2
-        exit 1
-        ;;
-    esac
-fi
+    if ! command_exists python3
+    then
+        DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
+        case $DISTRO in
+          debian)
+            sudo apt install --yes python3{,-{pip,venv}}
+            ;;
+        esac
+    fi
+esac
+
+venv() {
+    PYTHON_ENV="$DIR/python_env"
+    if ! [ -d "$PYTHON_ENV" ]; then python3 -m venv "$PYTHON_ENV"; fi
+    PATH="$PYTHON_ENV/bin:$PATH"
+    pip install -r "$DIR/requirements.txt"
+}
