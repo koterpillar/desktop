@@ -18,6 +18,11 @@
   applicable: linux
 - name: kitty
   applicable: darwin
+- repo: kovidgoyal/kitty
+  exclude: sig
+  binary: kitty
+  app: kitty
+  applicable: linux
 - name: perl-Image-ExifTool
   applicable: linux
 - url: https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf

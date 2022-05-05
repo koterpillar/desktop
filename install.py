@@ -1,6 +1,8 @@
 import argparse
+import configparser
 from dataclasses import dataclass
 import os
+from pathlib import Path
 import shutil
 import sys
 import subprocess
@@ -87,7 +89,11 @@ def home(*path: str) -> str:
 def local(*path: str) -> str:
     return home('.local', *path)
 
+def makedirs(path: str) -> None:
+    os.makedirs(path, exist_ok=True)
+
 def symlink(source: str, target: str) -> None:
+    makedirs(os.path.dirname(target))
     if os.path.lexists(target):
         os.unlink(target)
     os.symlink(source, target)
@@ -95,12 +101,19 @@ def symlink(source: str, target: str) -> None:
 def make_executable(path: str) -> None:
     run('chmod', '+x', path)
 
+def icon_name(app_path: str) -> Optional[str]:
+    app = configparser.ConfigParser()
+    app.read(app_path)
+    return app['Desktop Entry'].get('Icon')
+
 class LocalPackage(Package):
     binaries: list[str]
+    apps: list[str]
     fonts: list[str]
-    def __init__(self, *, binary: Some[str] = None, binary_wrapper: bool = False, font: Some[str] = None, **kwargs) -> None:
+    def __init__(self, *, binary: Some[str] = None, binary_wrapper: bool = False, app: Some[str] = None, font: Some[str] = None, **kwargs) -> None:
         self.binaries = unsome(binary) or []
         self.binary_wrapper = binary_wrapper
+        self.apps = unsome(app) or []
         self.fonts = unsome(font) or []
         super().__init__(**kwargs)
 
@@ -108,10 +121,10 @@ class LocalPackage(Package):
         raise NotImplementedError()
 
     def install_binary(self, name: str) -> None:
-        os.makedirs(local('bin'), exist_ok=True)
         path = self.binary_path(name)
         target = local('bin', name)
         if self.binary_wrapper:
+            makedirs(local('bin'))
             if os.path.lexists(target):
                 os.unlink(target)
             with open(target, 'w') as wrapper_file:
@@ -120,9 +133,24 @@ class LocalPackage(Package):
         else:
             symlink(path, target)
 
+    def app_path(self, name: str) -> str:
+        raise NotImplementedError()
+
+    def install_app(self, name: str) -> None:
+        path = self.app_path(name)
+        target = local('share', 'applications', f'{name}.desktop')
+        symlink(path, target)
+        icon = icon_name(path)
+        if icon:
+            icons_path = Path(self.package_directory()) / 'share' / 'icons'
+            for icon_path in icons_path.rglob(f'{icon}.*'):
+                package_icon = str(icon_path)
+                target = os.path.join(local(), icon_path.relative_to(self.package_directory()))
+                symlink(package_icon, target)
+
     def install_font(self, name: str) -> None:
         font_dir = with_os(linux=local('share', 'fonts'), macos=home('Library', 'Fonts'))
-        os.makedirs(font_dir, exist_ok=True)
+        makedirs(font_dir)
         source = os.path.join(self.package_directory(), name)
         target = os.path.join(font_dir, name)
         symlink(source, target)
@@ -132,6 +160,8 @@ class LocalPackage(Package):
     def install(self) -> None:
         for binary in self.binaries:
             self.install_binary(binary)
+        for app in self.apps:
+            self.install_app(app)
         for font in self.fonts:
             self.install_font(font)
 
@@ -160,7 +190,7 @@ class ArchivePackage(LocalPackage):
 
     def package_directory(self) -> str:
         result = local(f'{self.package_name()}.app')
-        os.makedirs(result, exist_ok=True)
+        makedirs(result)
         return result
 
     def untar(self, source: str, *extra: str) -> Sequence[str]:
@@ -185,6 +215,8 @@ class ArchivePackage(LocalPackage):
                 return self.untar(source)
         elif '.tgz' in url:
             return self.untar(source, '-z')
+        elif '.txz' in url:
+            return self.untar(source, '-J')
         else:
             raise ValueError(f"Unknown archive format: {url}")
 
@@ -194,6 +226,12 @@ class ArchivePackage(LocalPackage):
             if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
                 return candidate
         raise ValueError(f"Cannot find {binary} in {self.package_directory()}.")
+
+    def app_path(self, name: str) -> str:
+        candidate = os.path.join(self.package_directory(), 'share', 'applications', f'{name}.desktop')
+        if os.path.isfile(candidate):
+            return candidate
+        raise ValueError(f"Cannot find application '{name}' in {self.package_directory()}.")
 
     def install(self):
         url = self.archive_url()

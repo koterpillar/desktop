@@ -109,20 +109,6 @@ then
   chsh -s "$DESIRED_SHELL"
 fi
 
-# User packages
-export PATH="$HOME/.local/bin:$PATH"
-
-if [ "$OS" == "linux" ] && [ -n "$INSTALL_DESKTOP" ]
-then
-  # Kitty
-  KITTY=$HOME/.local/kitty.app
-  mkdir -p $KITTY
-  curl -sSL $(github_release_url kovidgoyal/kitty kitty x86_64.txz) | tar -J -x -C $KITTY
-  ln -sfnT $KITTY/bin/kitty $HOME/.local/bin/kitty
-  cat $KITTY/share/applications/kitty.desktop \
-    | sed "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" \
-    > $HOME/.local/share/applications/kitty.desktop
-fi
-
 # User configuration
+export PATH="$HOME/.local/bin:$PATH"
 $DIR/makelinks
