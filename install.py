@@ -7,7 +7,7 @@ import shutil
 import sys
 import subprocess
 import tempfile
-from typing import Any, Callable, Iterable, Literal, Optional, Sequence, TypeVar, Union
+from typing import Any, Callable, cast, Iterable, Literal, Optional, Sequence, TypeVar, Union
 
 import requests
 import yaml
@@ -19,7 +19,7 @@ def parser() -> argparse.ArgumentParser:
 
 OS = Literal['linux', 'darwin']
 
-CURRENT_OS: OS = sys.platform
+CURRENT_OS: OS = cast(OS, sys.platform)
 
 T = TypeVar('T')
 
@@ -31,7 +31,7 @@ def with_os(*, linux: T, macos: T) -> T:
     else:
         raise ValueError(f"Unexpected OS {CURRENT_OS}.")
 
-Some = Optional[Union[T, Sequence[T]]]
+Some = Optional[Union[T, list[T]]]
 
 ApplicableArg = Some[OS]
 
@@ -43,7 +43,7 @@ def unsome(x: Some[T]) -> Optional[list[T]]:
     return [x]
 
 class Package:
-    applicable: Optional[frozenset[OS]]
+    applicable: Optional[list[OS]]
 
     def __init__(self, applicable: ApplicableArg = None) -> None:
         self.applicable = unsome(applicable)
@@ -201,7 +201,7 @@ class ArchivePackage(LocalPackage):
         makedirs(result)
         return result
 
-    def untar(self, source: str, *extra: str) -> Sequence[str]:
+    def untar(self, source: str, *extra: str) -> None:
         run('tar', '-x', '--strip', str(self.strip), '-C', self.package_directory(), *extra, '-f', source)
 
     def extract(self, url: str, source: str) -> None:
@@ -216,20 +216,21 @@ class ArchivePackage(LocalPackage):
                 make_executable(target)
         elif '.tar' in url:
             if '.gz' in url:
-                return self.untar(source, '-z')
+                self.untar(source, '-z')
             elif '.bz2' in url:
-                return self.untar(source, '-j')
+                self.untar(source, '-j')
             else:
-                return self.untar(source)
+                self.untar(source)
         elif '.tgz' in url:
-            return self.untar(source, '-z')
+            self.untar(source, '-z')
         elif '.txz' in url:
-            return self.untar(source, '-J')
+            self.untar(source, '-J')
         else:
             raise ValueError(f"Unknown archive format: {url}")
 
     def binary_path(self, binary: str) -> str:
-        for relative_path in [[], ['bin']]:
+        paths: list[list[str]] = [[], ['bin']]
+        for relative_path in paths:
             candidate = os.path.join(self.package_directory(), *relative_path, binary)
             if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
                 return candidate
