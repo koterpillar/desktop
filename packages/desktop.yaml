@@ -1,3 +1,7 @@
+- name: docker
+  applicable: linux
+- name: homebrew/cask/docker
+  applicable: darwin
 - name: homebrew/cask-fonts/font-fira-code
   applicable: darwin
 - name: homebrew/cask-fonts/font-fira-mono
@@ -33,6 +37,8 @@
   applicable: linux
 - name: rectangle
   applicable: darwin
+- name: tcpdump
+  applicable: linux
 - name: util-linux-user  # chsh
   applicable: linux
 - name: vlc
