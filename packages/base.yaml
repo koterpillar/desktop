@@ -52,6 +52,9 @@
 - name: ripgrep
 - name: rlwrap
 - name: rsync
+- repo: koalaman/shellcheck
+  binary: shellcheck
+  strip: 1
 - repo: commercialhaskell/stack
   suffix: tar.gz
   exclude: static
