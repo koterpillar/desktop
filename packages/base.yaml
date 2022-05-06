@@ -28,6 +28,9 @@
   applicable: darwin
 - name: gnu-tar
   applicable: darwin
+- repo: ndmitchell/hlint
+  strip: 1
+  binary: hlint
 - name: ipython
   applicable: darwin
 - name: jq
