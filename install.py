@@ -109,10 +109,17 @@ class DNF(Installer):
 
 class Apt(Installer):
     def install(self, *packages: str) -> None:
-        run("sudo", "apt", "install", *packages)
+        run("sudo", "apt", "install", "--yes", *packages)
 
     def is_installed(self, package: str) -> bool:
-        raise NotImplementedError()
+        return (
+            subprocess.run(
+                ["dpkg", "-s", package],
+                check=False,
+                stdout=subprocess.DEVNULL,
+            ).returncode
+            == 0
+        )
 
 
 def linux_installer() -> Installer:
