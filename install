@@ -54,7 +54,7 @@ case "$OS" in
         docker \
         sshd \
         && true
-          sudo systemctl daemon-reload || true
+      sudo systemctl daemon-reload || true
     fi
     ;;
   macos)
