@@ -1,3 +1,5 @@
+#shellcheck shell=bash
+
 command_exists() {
     type -f "$1" >/dev/null 2>&1
 }
@@ -5,8 +7,8 @@ command_exists() {
 # Prerequisites
 case "$OSTYPE" in
   darwin*)
-    OS=macos
-    DIR=$(cd $(dirname $0); pwd -P)
+    export OS=macos
+    DIR=$(cd "$(dirname "$0")" || exit 1; pwd -P)
 
     PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
@@ -21,12 +23,12 @@ case "$OSTYPE" in
     fi
   ;;
   linux*)
-    OS=linux
-    DIR=$(readlink -f $(dirname $0))
+    export OS=linux
+    DIR=$(readlink -f "$(dirname "$0")")
 
     if ! command_exists python3
     then
-        DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
+        DISTRO=$(grep '^ID=' /etc/os-release | cut -d = -f 2)
         case $DISTRO in
           debian)
             sudo apt install --yes python3{,-{pip,venv}}

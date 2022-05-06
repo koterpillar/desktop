@@ -2,10 +2,19 @@
 
 set -euo pipefail
 
-source $(dirname $0)/functions.sh
+ISORT_ARGS=
+BLACK_ARGS=
+if [ "${1-}" == "--format" ]
+then
+    ISORT_ARGS=--check
+    BLACK_ARGS=--check
+fi
+
+source "$(dirname "$0")/functions.sh"
 
 venv
 
-isort --check $DIR/*.py
-black --check $DIR/*.py
-mypy $DIR/*.py
+# shellcheck "$DIR"/*.sh $(grep -l '^#!/bin/bash' "$DIR"/* 2>/dev/null)
+isort $ISORT_ARGS "$DIR"/*.py
+black $BLACK_ARGS "$DIR"/*.py
+mypy "$DIR"/*.py
