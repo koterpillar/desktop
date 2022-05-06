@@ -398,6 +398,8 @@ class GitHubPackage(ArchivePackage):
             yield lambda name: name.endswith(suffix)
         for exclude in self.excludes:
             yield lambda name: exclude not in name
+        for hint in [".tar.gz"]:
+            yield lambda name: hint in name.lower()
         os_hints = with_os(
             linux=["linux", "gnu"],
             macos=["macos", "darwin", "osx"],
