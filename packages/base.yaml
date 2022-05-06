@@ -18,6 +18,9 @@
 - name: g++
   applicable: linux
 - name: gcc
+- repo: cli/cli
+  strip: 1
+  binary: gh
 - name: ghc
 - name: git
 - name: git-lfs
