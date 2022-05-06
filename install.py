@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Literal, Optional, TypeVar, Union, cast
 
 import requests
+import tqdm  # type: ignore
 import yaml
 
 
@@ -501,9 +502,14 @@ def load_packages(component: str) -> list[Package]:
 def main():
     args = parser().parse_args()
     components: frozenset[str] = frozenset(args.component) | {"base"}
-    for component in components:
-        for package in load_packages(component):
+    packages = [
+        package for component in components for package in load_packages(component)
+    ]
+    with tqdm.tqdm(total=len(packages)) as progress:
+        for package in packages:
+            progress.set_description(package.package_name())
             package.ensure()
+            progress.update(1)
 
 
 if __name__ == "__main__":
