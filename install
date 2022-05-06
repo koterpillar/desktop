@@ -60,7 +60,6 @@ case "$OS" in
   macos)
     brew install \
       homebrew/cask/docker \
-      shfmt \
       visual-studio-code \
       && true
     ;;
