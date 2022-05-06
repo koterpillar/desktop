@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Iterable, Literal, Optional, TypeVar, Union, cast
@@ -48,17 +49,19 @@ def unsome(x: Some[T]) -> Optional[list[T]]:
     return [x]
 
 
-class Package:
+class Package(metaclass=ABCMeta):
     applicable: Optional[list[OS]]
 
     def __init__(self, applicable: ApplicableArg = None) -> None:
         self.applicable = unsome(applicable)
 
-    def install(self):
-        raise NotImplementedError
+    @abstractmethod
+    def install(self) -> None:
+        pass
 
-    def package_name(self):
-        raise NotImplementedError
+    @abstractmethod
+    def package_name(self) -> str:
+        pass
 
     def ensure(self):
         if self.applicable is not None and CURRENT_OS not in self.applicable:
@@ -70,27 +73,34 @@ def run(*args, **kwargs) -> subprocess.CompletedProcess:
     return subprocess.run(args, check=True, **kwargs)
 
 
-class Installer:
+class Installer(metaclass=ABCMeta):
+    @abstractmethod
     def install(self, *packages: str) -> None:
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def is_installed(self, package: str) -> bool:
-        raise NotImplementedError()
+        pass
 
 
 class Brew(Installer):
     def install(self, *packages: str) -> None:
         run("brew", "install", *packages)
 
+    def is_installed(self, package: str) -> bool:
+        raise NotImplementedError()
+
 
 class DNF(Installer):
     def install(self, *packages: str) -> None:
-        run("sudo", "dnf", "install", *packages)
+        run("sudo", "dnf", "install", "-y", *packages)
 
     def is_installed(self, package: str) -> bool:
         return (
             subprocess.run(
-                ["rpm", "-q", package], check=False, stdout=subprocess.DEVNULL
+                ["rpm", "-q", "--whatprovides", package],
+                check=False,
+                stdout=subprocess.DEVNULL,
             ).returncode
             == 0
         )
@@ -99,6 +109,9 @@ class DNF(Installer):
 class Apt(Installer):
     def install(self, *packages: str) -> None:
         run("sudo", "apt", "install", *packages)
+
+    def is_installed(self, package: str) -> bool:
+        raise NotImplementedError()
 
 
 def linux_installer() -> Installer:
@@ -110,13 +123,16 @@ def linux_installer() -> Installer:
         raise NotImplementedError("Cannot find a package manager.")
 
 
-INSTALLER = with_os(linux=linux_installer, macos=Brew)()
+INSTALLER = with_os(linux=linux_installer, macos=lambda: Brew())()
 
 
 class InstallerPackage(Package):
     def __init__(self, *, name: str, **kwargs) -> None:
         self.name = name
         super().__init__(**kwargs)
+
+    def package_name(self) -> str:
+        return self.name
 
     def install(self):
         if not INSTALLER.is_installed(self.name):
@@ -152,7 +168,7 @@ def icon_name(app_path: str) -> Optional[str]:
     return app["Desktop Entry"].get("Icon")
 
 
-class LocalPackage(Package):
+class LocalPackage(Package, metaclass=ABCMeta):
     binaries: list[str]
     apps: list[str]
     fonts: list[str]
@@ -172,8 +188,9 @@ class LocalPackage(Package):
         self.fonts = unsome(font) or []
         super().__init__(**kwargs)
 
+    @abstractmethod
     def binary_path(self, binary: str) -> str:
-        raise NotImplementedError()
+        pass
 
     def install_binary(self, name: str) -> None:
         path = self.binary_path(name)
@@ -188,8 +205,9 @@ class LocalPackage(Package):
         else:
             symlink(path, target)
 
+    @abstractmethod
     def app_path(self, name: str) -> str:
-        raise NotImplementedError()
+        pass
 
     def icon_directory(self) -> Optional[str]:
         return None
@@ -210,8 +228,9 @@ class LocalPackage(Package):
                     )
                     symlink(package_icon, target)
 
+    @abstractmethod
     def font_path(self, name: str) -> str:
-        raise NotImplementedError()
+        pass
 
     def install_font(self, name: str) -> None:
         font_dir = with_os(
@@ -238,15 +257,24 @@ class CargoPackage(LocalPackage):
         self.name = cargo
         super().__init__(**kwargs)
 
+    def package_name(self) -> str:
+        return self.name
+
     def binary_path(self, binary: str) -> str:
         return home(".cargo", "bin", binary)
+
+    def app_path(self, name: str) -> str:
+        raise NotImplementedError()
+
+    def font_path(self, name: str) -> str:
+        raise NotImplementedError()
 
     def install(self):
         run("cargo", "install", self.name)
         super().install()
 
 
-class ArchivePackage(LocalPackage):
+class ArchivePackage(LocalPackage, metaclass=ABCMeta):
     def __init__(
         self,
         *,
@@ -260,8 +288,9 @@ class ArchivePackage(LocalPackage):
         self.strip = strip
         super().__init__(**kwargs)
 
+    @abstractmethod
     def archive_url(self) -> str:
-        raise NotImplementedError()
+        pass
 
     def package_directory(self) -> str:
         result = local(f"{self.package_name()}.app")
