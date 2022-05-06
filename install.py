@@ -57,11 +57,11 @@ class Package(metaclass=ABCMeta):
         self.applicable = unsome(applicable)
 
     @abstractmethod
-    def install(self) -> None:
+    def package_name(self) -> str:
         pass
 
     @abstractmethod
-    def package_name(self) -> str:
+    def install(self) -> None:
         pass
 
     def ensure(self):
@@ -273,28 +273,6 @@ class ManualPackage(Package, metaclass=ABCMeta):
             self.install_font(font)
 
 
-class CargoPackage(ManualPackage):
-    def __init__(self, *, cargo: str, **kwargs) -> None:
-        self.name = cargo
-        super().__init__(**kwargs)
-
-    def package_name(self) -> str:
-        return self.name
-
-    def binary_path(self, binary: str) -> str:
-        return home(".cargo", "bin", binary)
-
-    def app_path(self, name: str) -> str:
-        raise NotImplementedError()
-
-    def font_path(self, name: str) -> str:
-        raise NotImplementedError()
-
-    def install(self):
-        run("cargo", "install", self.name)
-        super().install()
-
-
 class ArchivePackage(ManualPackage, metaclass=ABCMeta):
     def __init__(
         self,
@@ -314,7 +292,7 @@ class ArchivePackage(ManualPackage, metaclass=ABCMeta):
         pass
 
     def package_directory(self) -> str:
-        result = local(f"{self.package_name()}.app")
+        result = local(f"{self.package_name().replace('/', '--')}.app")
         makedirs(result)
         return result
 
@@ -402,7 +380,16 @@ class URLPackage(ArchivePackage):
         return self.url
 
     def package_name(self):
-        return self.url.split("/")[2]
+        parts = self.url.split("/")
+        while True:
+            if len(parts) == 0:
+                raise ValueError(f"Cannot parse package name from {self.url}.")
+            elif parts[0] in ("", "https:"):
+                parts.pop(0)
+            elif parts[0] == "github.com":
+                return "/".join(parts[1:2])
+            else:
+                return parts[0]
 
 
 @dataclass
@@ -478,7 +465,7 @@ class GitHubPackage(ArchivePackage):
         return self.release().url
 
     def package_name(self) -> str:
-        return self.repo.rsplit("/", 1)[-1]
+        return self.repo
 
 
 def parse_package(package: Any) -> Package:
@@ -490,11 +477,9 @@ def parse_package(package: Any) -> Package:
         return GitHubPackage(**package)
     elif "url" in package:
         return URLPackage(**package)
-    elif "cargo" in package:
-        return CargoPackage(**package)
     else:
         raise ValueError(
-            f"Either 'name', 'repo', 'url' or 'cargo' must be present, got: {package}."
+            f"Either 'name', 'repo' or 'url' must be present, got: {package}."
         )
 
 

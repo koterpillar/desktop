@@ -1,8 +1,6 @@
 - repo: sharkdp/bat
   binary: bat
   strip: 1
-- name: cargo
-  applicable: linux
 - name: colordiff
 - name: coreutils
   applicable: darwin
