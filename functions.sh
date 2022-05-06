@@ -25,16 +25,37 @@ case "$OSTYPE" in
   linux*)
     export OS=linux
     DIR=$(readlink -f "$(dirname "$0")")
+    DISTRO=$(grep '^ID=' /etc/os-release | cut -d = -f 2)
 
-    if ! command_exists python3
-    then
-        DISTRO=$(grep '^ID=' /etc/os-release | cut -d = -f 2)
-        case $DISTRO in
-          debian)
-            sudo apt install --yes python3{,-{pip,venv}}
-            ;;
-        esac
-    fi
+    case $DISTRO in
+      fedora)
+        FEDORA_VERSION=$(rpm -E %fedora)
+        for PART in free nonfree
+        do
+          if ! (rpm -q rpmfusion-$PART-release 2>/dev/null || true) | grep -q "$FEDORA_VERSION" >/dev/null
+          then
+            sudo dnf -y install "https://download1.rpmfusion.org/$PART/fedora/rpmfusion-$PART-release-${FEDORA_VERSION}.noarch.rpm"
+          fi
+        done
+
+        if ! rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep -q Microsoft >/dev/null
+        then
+          sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        fi
+
+        if ! [ -f /etc/yum.repos.d/vscode.repo ]
+        then
+          sudo cp repositories/vscode.repo /etc/yum.repos.d/vscode.repo
+        fi
+
+        ;;
+      debian)
+        if ! command_exists python3
+        then
+          sudo apt install --yes python3{,-{pip,venv}}
+        fi
+        ;;
+    esac
 esac
 
 venv() {

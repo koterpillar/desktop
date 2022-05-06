@@ -1,3 +1,5 @@
+- name: code
+  applicable: linux
 - name: docker
   applicable: linux
 - name: homebrew/cask/docker

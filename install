@@ -21,14 +21,6 @@ case "$OS" in
   linux)
     if [ -n "$INSTALL_DESKTOP" ]
     then
-      FEDORA_VERSION=$(rpm -E %fedora)
-      sudo dnf -y install "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm"
-      sudo dnf -y install "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm"
-
-      sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-      sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-      sudo dnf install -y code
-
       # Systemd
       sudo systemctl daemon-reload || true
       sudo systemctl enable --no-reload \
