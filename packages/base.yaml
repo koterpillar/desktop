@@ -41,6 +41,12 @@
 - name: lsof
 - name: make
 - name: moreutils
+- repo: neovim/neovim
+  exclude: sha256sum
+  strip: 1
+  binary: nvim
+  app: nvim
+  as_global: true
 - name: neovim
   applicable: darwin
 - name: nmap

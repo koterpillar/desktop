@@ -151,13 +151,6 @@ def makedirs(path: str) -> None:
     os.makedirs(path, exist_ok=True)
 
 
-def symlink(source: str, target: str) -> None:
-    makedirs(os.path.dirname(target))
-    if os.path.lexists(target):
-        os.unlink(target)
-    os.symlink(source, target)
-
-
 def make_executable(path: str) -> None:
     run("chmod", "+x", path)
 
@@ -168,7 +161,7 @@ def icon_name(app_path: str) -> Optional[str]:
     return app["Desktop Entry"].get("Icon")
 
 
-class LocalPackage(Package, metaclass=ABCMeta):
+class ManualPackage(Package, metaclass=ABCMeta):
     binaries: list[str]
     apps: list[str]
     fonts: list[str]
@@ -176,17 +169,45 @@ class LocalPackage(Package, metaclass=ABCMeta):
     def __init__(
         self,
         *,
+        as_global: bool = False,
         binary: Some[str] = None,
         binary_wrapper: bool = False,
         app: Some[str] = None,
         font: Some[str] = None,
         **kwargs,
     ) -> None:
+        self.as_global = as_global
         self.binaries = unsome(binary) or []
         self.binary_wrapper = binary_wrapper
         self.apps = unsome(app) or []
         self.fonts = unsome(font) or []
         super().__init__(**kwargs)
+
+    def local(self, *path: str) -> str:
+        if self.as_global:
+            return os.path.join("/usr/local", *path)
+        else:
+            return local(*path)
+
+    def link(self, source: str, target: str, wrapper: bool = False) -> None:
+        target_dir = os.path.dirname(target)
+        if self.as_global:
+            run("sudo", "mkdir", "-p", target_dir)
+        else:
+            makedirs(target_dir)
+        if os.path.lexists(target):
+            if self.as_global:
+                run("sudo", "rm", target)
+            else:
+                os.unlink(target)
+        if wrapper:
+            with open(target, "w") as wrapper_file:
+                print(f'#!/bin/sh\nexec "{source}" "$@"', file=wrapper_file)
+        else:
+            if self.as_global:
+                run("sudo", "ln", "-s", source, target)
+            else:
+                os.symlink(source, target)
 
     @abstractmethod
     def binary_path(self, binary: str) -> str:
@@ -194,16 +215,8 @@ class LocalPackage(Package, metaclass=ABCMeta):
 
     def install_binary(self, name: str) -> None:
         path = self.binary_path(name)
-        target = local("bin", name)
-        if self.binary_wrapper:
-            makedirs(local("bin"))
-            if os.path.lexists(target):
-                os.unlink(target)
-            with open(target, "w") as wrapper_file:
-                print(f'#!/bin/sh\nexec "{path}" "$@"', file=wrapper_file)
-            make_executable(target)
-        else:
-            symlink(path, target)
+        target = self.local("bin", name)
+        self.link(path, target, wrapper=self.binary_wrapper)
 
     @abstractmethod
     def app_path(self, name: str) -> str:
@@ -214,11 +227,11 @@ class LocalPackage(Package, metaclass=ABCMeta):
 
     def install_app(self, name: str) -> None:
         path = self.app_path(name)
-        target = local("share", "applications", f"{name}.desktop")
-        symlink(path, target)
+        target = self.local("share", "applications", f"{name}.desktop")
+        self.link(path, target)
         icon_directory = self.icon_directory()
         if icon_directory:
-            icons_target = local("share", "icons")
+            icons_target = self.local("share", "icons")
             icon = icon_name(path)
             if icon:
                 for icon_path in Path(icon_directory).rglob(f"{icon}.*"):
@@ -226,7 +239,7 @@ class LocalPackage(Package, metaclass=ABCMeta):
                     target = os.path.join(
                         icons_target, icon_path.relative_to(icon_directory)
                     )
-                    symlink(package_icon, target)
+                    self.link(package_icon, target)
 
     @abstractmethod
     def font_path(self, name: str) -> str:
@@ -234,12 +247,12 @@ class LocalPackage(Package, metaclass=ABCMeta):
 
     def install_font(self, name: str) -> None:
         font_dir = with_os(
-            linux=local("share", "fonts"), macos=home("Library", "Fonts")
+            linux=self.local("share", "fonts"), macos=home("Library", "Fonts")
         )
         makedirs(font_dir)
         source = self.font_path(name)
         target = os.path.join(font_dir, name)
-        symlink(source, target)
+        self.link(source, target)
         if shutil.which("fc-cache"):
             run("fc-cache", "-f", font_dir)
 
@@ -252,7 +265,7 @@ class LocalPackage(Package, metaclass=ABCMeta):
             self.install_font(font)
 
 
-class CargoPackage(LocalPackage):
+class CargoPackage(ManualPackage):
     def __init__(self, *, cargo: str, **kwargs) -> None:
         self.name = cargo
         super().__init__(**kwargs)
@@ -274,7 +287,7 @@ class CargoPackage(LocalPackage):
         super().install()
 
 
-class ArchivePackage(LocalPackage, metaclass=ABCMeta):
+class ArchivePackage(ManualPackage, metaclass=ABCMeta):
     def __init__(
         self,
         *,

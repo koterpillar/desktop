@@ -16,23 +16,9 @@ then
   shift
 fi
 
-github_release_url() {
-  REPO="$1"
-  START="$2"
-  END="$3"
-
-  curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url'
-}
-
 # Packages
 case "$OS" in
   linux)
-    NVIM=$(mktemp)
-    curl -sSL $(github_release_url neovim/neovim nvim appimage) -o "$NVIM"
-    sudo mv "$NVIM" /usr/local/bin/nvim
-    sudo chmod +x /usr/local/bin/nvim
-    rm -f "$NVIM"
-
     if [ -n "$INSTALL_DESKTOP" ]
     then
       FEDORA_VERSION=$(rpm -E %fedora)
