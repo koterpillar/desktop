@@ -41,6 +41,8 @@
   applicable: linux
 - name: util-linux-user  # chsh
   applicable: linux
+- name: visual-studio-code
+  applicable: darwin
 - name: vlc
   applicable: linux
 - name: wl-clipboard

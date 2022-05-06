@@ -52,11 +52,6 @@ case "$OS" in
       sudo systemctl daemon-reload || true
     fi
     ;;
-  macos)
-    brew install \
-      visual-studio-code \
-      && true
-    ;;
 esac
 
 # Shell
