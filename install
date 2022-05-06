@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC2046,SC2086,SC2093
+#shellcheck disable=SC2093
 
 set -euo pipefail
 
@@ -22,8 +22,8 @@ case "$OS" in
     if [ -n "$INSTALL_DESKTOP" ]
     then
       FEDORA_VERSION=$(rpm -E %fedora)
-      sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
-      sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
+      sudo dnf -y install "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm"
+      sudo dnf -y install "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm"
 
       sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
       sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
@@ -43,7 +43,7 @@ esac
 # Shell
 case "$OS" in
   linux)
-    CURRENT_SHELL="$(getent passwd $USER | cut -d: -f7)"
+    CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
     DESIRED_SHELL="/bin/zsh"
     ;;
   macos)
@@ -62,4 +62,4 @@ fi
 
 # User configuration
 export PATH="$HOME/.local/bin:$PATH"
-$DIR/makelinks
+"$DIR"/makelinks
