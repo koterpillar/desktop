@@ -1,0 +1,86 @@
+import shutil
+from abc import ABCMeta, abstractmethod
+
+from ..utils import *
+from .base import Package
+
+
+class Installer(metaclass=ABCMeta):
+    @abstractmethod
+    def install(self, *packages: str) -> None:
+        pass
+
+    @abstractmethod
+    def is_installed(self, package: str) -> bool:
+        pass
+
+
+class Brew(Installer):
+    def install(self, *packages: str) -> None:
+        run("brew", "install", *packages)
+
+    def is_installed(self, package: str) -> bool:
+        raise NotImplementedError()
+
+
+class DNF(Installer):
+    def install(self, *packages: str) -> None:
+        run("sudo", "dnf", "install", "-y", *packages)
+
+    def is_installed(self, package: str) -> bool:
+        return (
+            subprocess.run(
+                ["rpm", "-q", "--whatprovides", package],
+                check=False,
+                stdout=subprocess.DEVNULL,
+            ).returncode
+            == 0
+        )
+
+
+class Apt(Installer):
+    def install(self, *packages: str) -> None:
+        run("sudo", "apt", "install", "--yes", *packages)
+
+    def is_installed(self, package: str) -> bool:
+        return (
+            subprocess.run(
+                ["dpkg", "-s", package],
+                check=False,
+                stdout=subprocess.DEVNULL,
+            ).returncode
+            == 0
+        )
+
+
+def linux_installer() -> Installer:
+    if shutil.which("dnf"):
+        return DNF()
+    elif shutil.which("apt"):
+        return Apt()
+    else:
+        raise NotImplementedError("Cannot find a package manager.")
+
+
+INSTALLER = with_os(linux=linux_installer, macos=lambda: Brew())()
+
+
+class SystemPackage(Package):
+    def __init__(self, *, name: str, **kwargs) -> None:
+        self.name = name
+        super().__init__(**kwargs)
+
+    def package_name(self) -> str:
+        return self.name
+
+    def get_remote_version(self) -> str:
+        return "repository"
+
+    def local_version(self) -> Optional[str]:
+        if INSTALLER.is_installed(self.name):
+            return "repository"
+        else:
+            return None
+
+    def install(self):
+        INSTALLER.install(self.name)
