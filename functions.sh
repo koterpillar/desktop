@@ -7,7 +7,7 @@ command_exists() {
 # Prerequisites
 case "$OSTYPE" in
   darwin*)
-    export OS=macos
+    OS=macos
     DIR=$(cd "$(dirname "$0")" || exit 1; pwd -P)
 
     PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
@@ -23,7 +23,7 @@ case "$OSTYPE" in
     fi
   ;;
   linux*)
-    export OS=linux
+    OS=linux
     DIR=$(readlink -f "$(dirname "$0")")
     DISTRO=$(grep '^ID=' /etc/os-release | cut -d = -f 2)
 
@@ -57,6 +57,9 @@ case "$OSTYPE" in
         ;;
     esac
 esac
+
+export DIR
+export OS
 
 venv() {
     PYTHON_ENV="$DIR/python_env"

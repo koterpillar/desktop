@@ -7,7 +7,7 @@ source "$(dirname "$0")/functions.sh"
 
 venv
 
-exec python "$DIR/install.py" "$@"
+exec python -m mybox "$@"
 
 INSTALL_DESKTOP=true
 if [ "${1-}" == "--no-desktop" ]

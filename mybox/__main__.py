@@ -533,7 +533,7 @@ def parse_package(package: Any) -> Package:
 
 def load_packages(component: str) -> list[Package]:
     with open(
-        os.path.join(os.path.dirname(__file__), "packages", f"{component}.yaml")
+        os.path.join(os.environ['DIR'], "packages", f"{component}.yaml")
     ) as f:
         packages = yaml.safe_load(f)
         return list(map(parse_package, packages))
@@ -552,5 +552,4 @@ def main():
             progress.update(1)
 
 
-if __name__ == "__main__":
-    main()
+main()
