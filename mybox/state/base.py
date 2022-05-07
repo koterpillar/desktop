@@ -1,7 +1,8 @@
 import dataclasses
 import os
 import sqlite3
-from functools import cache, cached_property
+import threading
+from functools import cached_property
 from typing import Generic, Type, TypeVar
 
 T = TypeVar("T")
@@ -11,10 +12,17 @@ from ..utils import ROOT_DIR
 DB_PATH = os.path.join(ROOT_DIR, "state.sqlite")
 
 
-@cache
+DB_CACHE = threading.local()
+
+
 def db() -> sqlite3.Connection:
+    try:
+        return DB_CACHE.connection
+    except AttributeError:
+        pass
     connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
+    DB_CACHE.connection = connection
     return connection
 
 

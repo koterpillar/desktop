@@ -1,4 +1,5 @@
 import argparse
+import concurrent.futures
 import os
 
 import tqdm  # type: ignore
@@ -27,10 +28,13 @@ def main():
         package for component in components for package in load_packages(component)
     ]
     with tqdm.tqdm(total=len(packages)) as progress:
-        for package in packages:
-            progress.set_description(package.name)
-            package.ensure()
-            progress.update(1)
+        with concurrent.futures.ThreadPoolExecutor(20) as executor:
+
+            def ensure(package: Package) -> None:
+                package.ensure()
+                progress.update(1)
+
+            executor.map(ensure, packages)
 
 
 main()
