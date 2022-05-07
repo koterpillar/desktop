@@ -28,7 +28,7 @@ def main():
     ]
     with tqdm.tqdm(total=len(packages)) as progress:
         for package in packages:
-            progress.set_description(package.package_name())
+            progress.set_description(package.name)
             package.ensure()
             progress.update(1)
 

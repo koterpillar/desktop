@@ -40,6 +40,6 @@ class Package(metaclass=ABCMeta):
     def ensure(self) -> None:
         if self.applicable is not None and CURRENT_OS not in self.applicable:
             return
-        if self.is_installed():
+        if self.is_installed:
             return
         self.install()
