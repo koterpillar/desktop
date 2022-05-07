@@ -55,16 +55,18 @@ class SystemPackage(Package):
     services: list[str]
 
     def __init__(self, *, name: str, service: Some[str], **kwargs) -> None:
-        self.name = name
+        self._name = name
         self.services = unsome(service)
         super().__init__(**kwargs)
 
-    def package_name(self) -> str:
-        return self.name
+    @property
+    def name(self) -> str:
+        return self._name
 
     def get_remote_version(self) -> str:
         return "repository"
 
+    @property
     def local_version(self) -> Optional[str]:
         if INSTALLER.is_installed(self.name):
             return "repository"

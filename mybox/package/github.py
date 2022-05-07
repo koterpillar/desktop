@@ -104,7 +104,8 @@ class GitHubPackage(ArchivePackage):
     def archive_url(self) -> str:
         return self.artifact().url
 
-    def package_name(self) -> str:
+    @property
+    def name(self) -> str:
         return self.repo
 
     def get_remote_version(self) -> str:

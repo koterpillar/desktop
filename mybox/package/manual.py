@@ -61,9 +61,10 @@ class ManualPackage(Package, metaclass=ABCMeta):
     def get_remote_version(self) -> str:
         pass
 
+    @property
     def local_version(self) -> Optional[str]:
         try:
-            return VERSIONS[self.package_name()].version
+            return VERSIONS[self.name].version
         except KeyError:
             return None
 
@@ -147,7 +148,7 @@ class ManualPackage(Package, metaclass=ABCMeta):
             self.install_app(app)
         for font in self.fonts:
             self.install_font(font)
-        VERSIONS[self.package_name()] = Version(version=self.get_remote_version())
+        VERSIONS[self.name] = Version(version=self.get_remote_version())
 
 
 class ArchivePackage(ManualPackage, metaclass=ABCMeta):
@@ -169,7 +170,7 @@ class ArchivePackage(ManualPackage, metaclass=ABCMeta):
         pass
 
     def package_directory(self) -> str:
-        result = local(f"{self.package_name().replace('/', '--')}.app")
+        result = local(f"{self.name.replace('/', '--')}.app")
         makedirs(result)
         return result
 
@@ -256,7 +257,8 @@ class URLPackage(ArchivePackage):
     def archive_url(self) -> str:
         return self.url
 
-    def package_name(self):
+    @property
+    def name(self):
         parts = self.url.split("/")
         while True:
             if len(parts) == 0:
