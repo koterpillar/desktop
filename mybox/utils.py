@@ -30,8 +30,21 @@ def unsome(x: Some[T]) -> Optional[list[T]]:
     return [x]
 
 
-def run(*args, **kwargs) -> subprocess.CompletedProcess:
+def run(*args: str, **kwargs) -> subprocess.CompletedProcess:
     return subprocess.run(args, check=True, **kwargs)
+
+
+def run_ok(*args: str, **kwargs) -> bool:
+    return (
+        subprocess.run(
+            args,
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            **kwargs,
+        ).returncode
+        == 0
+    )
 
 
 ROOT_DIR = dirname(dirname(__file__))

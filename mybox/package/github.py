@@ -1,17 +1,26 @@
-import configparser
-import os
-import shutil
-import tempfile
-from abc import ABCMeta, abstractmethod
+import json
 from dataclasses import dataclass
 from functools import cache
-from pathlib import Path
-from typing import Callable, Iterable
+from typing import Any, Callable, Iterable
 
 import requests
 
 from ..utils import *
 from .manual import ArchivePackage
+
+
+@cache
+def have_github_auth() -> bool:
+    return run_ok("gh", "auth", "status")
+
+
+def github_api(url: str) -> Any:
+    if have_github_auth():
+        return json.loads(
+            subprocess.run(["gh", "api", url], stdout=subprocess.PIPE).stdout
+        )
+    else:
+        return requests.get(f"https://api.github.com/{url}").json()
 
 
 @dataclass
@@ -48,9 +57,7 @@ class GitHubPackage(ArchivePackage):
 
     @cache
     def latest_release(self) -> GitHubRelease:
-        latest = requests.get(
-            f"https://api.github.com/repos/{self.repo}/releases/latest"
-        ).json()
+        latest = github_api(f"repos/{self.repo}/releases/latest")
         return GitHubRelease(
             tag_name=latest["tag_name"],
             assets=[

@@ -28,14 +28,7 @@ class DNF(Installer):
         run("sudo", "dnf", "install", "-y", *packages)
 
     def is_installed(self, package: str) -> bool:
-        return (
-            subprocess.run(
-                ["rpm", "-q", "--whatprovides", package],
-                check=False,
-                stdout=subprocess.DEVNULL,
-            ).returncode
-            == 0
-        )
+        return run_ok("rpm", "-q", "--whatprovides", package)
 
 
 class Apt(Installer):
@@ -43,14 +36,7 @@ class Apt(Installer):
         run("sudo", "apt", "install", "--yes", *packages)
 
     def is_installed(self, package: str) -> bool:
-        return (
-            subprocess.run(
-                ["dpkg", "-s", package],
-                check=False,
-                stdout=subprocess.DEVNULL,
-            ).returncode
-            == 0
-        )
+        return run_ok("dpkg", "-s", package)
 
 
 def linux_installer() -> Installer:
