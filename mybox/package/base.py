@@ -9,7 +9,7 @@ class Package(metaclass=ABCMeta):
     applicable: Optional[list[OS]]
 
     def __init__(self, applicable: Some[OS] = None) -> None:
-        self.applicable = unsome(applicable)
+        self.applicable = unsome_(applicable)
 
     @abstractmethod
     def package_name(self) -> str:

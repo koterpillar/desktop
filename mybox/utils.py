@@ -22,12 +22,16 @@ def with_os(*, linux: T, macos: T) -> T:
 Some = Optional[Union[T, list[T]]]
 
 
-def unsome(x: Some[T]) -> Optional[list[T]]:
+def unsome_(x: Some[T]) -> Optional[list[T]]:
     if x is None:
         return None
     if isinstance(x, list):
         return x
     return [x]
+
+
+def unsome(x: Some[T]) -> list[T]:
+    return unsome_(x) or []
 
 
 def run(*args: str, **kwargs) -> subprocess.CompletedProcess:

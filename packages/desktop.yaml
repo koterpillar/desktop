@@ -2,6 +2,7 @@
   applicable: linux
 - name: docker
   applicable: linux
+  service: docker
 - name: homebrew/cask/docker
   applicable: darwin
 - name: homebrew/cask-fonts/font-fira-code
@@ -37,6 +38,9 @@
 - name: meld
 - name: mozilla-fira-mono-fonts
   applicable: linux
+- name: openssh-server
+  applicable: linux
+  service: sshd
 - name: rectangle
   applicable: darwin
 - name: tcpdump

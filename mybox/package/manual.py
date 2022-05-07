@@ -51,10 +51,10 @@ class ManualPackage(Package, metaclass=ABCMeta):
         **kwargs,
     ) -> None:
         self.as_global = as_global
-        self.binaries = unsome(binary) or []
+        self.binaries = unsome(binary)
         self.binary_wrapper = binary_wrapper
-        self.apps = unsome(app) or []
-        self.fonts = unsome(font) or []
+        self.apps = unsome(app)
+        self.fonts = unsome(font)
         super().__init__(**kwargs)
 
     @abstractmethod

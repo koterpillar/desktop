@@ -9,29 +9,6 @@ venv
 
 exec python -m mybox "$@"
 
-INSTALL_DESKTOP=true
-if [ "${1-}" == "--no-desktop" ]
-then
-  INSTALL_DESKTOP=
-  shift
-fi
-
-# Packages
-case "$OS" in
-  linux)
-    if [ -n "$INSTALL_DESKTOP" ]
-    then
-      # Systemd
-      sudo systemctl daemon-reload || true
-      sudo systemctl enable --no-reload \
-        docker \
-        sshd \
-        && true
-      sudo systemctl daemon-reload || true
-    fi
-    ;;
-esac
-
 # Shell
 case "$OS" in
   linux)

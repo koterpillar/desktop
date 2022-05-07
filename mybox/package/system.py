@@ -52,8 +52,11 @@ INSTALLER = with_os(linux=linux_installer, macos=lambda: Brew())()
 
 
 class SystemPackage(Package):
-    def __init__(self, *, name: str, **kwargs) -> None:
+    services: list[str]
+
+    def __init__(self, *, name: str, service: Some[str], **kwargs) -> None:
         self.name = name
+        self.services = unsome(service)
         super().__init__(**kwargs)
 
     def package_name(self) -> str:
@@ -70,3 +73,6 @@ class SystemPackage(Package):
 
     def install(self):
         INSTALLER.install(self.name)
+        run("sudo", "systemctl", "daemon-reload")
+        for service in self.services:
+            run("sudo", "systemctl", "enable", service)

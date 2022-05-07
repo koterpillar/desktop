@@ -50,9 +50,9 @@ class GitHubPackage(ArchivePackage):
         **kwargs,
     ) -> None:
         self.repo = repo
-        self.prefixes = unsome(prefix) or []
-        self.suffixes = unsome(suffix) or []
-        self.excludes = unsome(exclude) or []
+        self.prefixes = unsome(prefix)
+        self.suffixes = unsome(suffix)
+        self.excludes = unsome(exclude)
         super().__init__(**kwargs)
 
     @cache
