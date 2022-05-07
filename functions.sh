@@ -58,7 +58,6 @@ case "$OSTYPE" in
     esac
 esac
 
-export DIR
 export OS
 
 venv() {
