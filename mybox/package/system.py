@@ -54,7 +54,7 @@ INSTALLER = with_os(linux=linux_installer, macos=lambda: Brew())()
 class SystemPackage(Package):
     services: list[str]
 
-    def __init__(self, *, name: str, service: Some[str], **kwargs) -> None:
+    def __init__(self, *, name: str, service: Some[str] = None, **kwargs) -> None:
         self._name = name
         self.services = unsome(service)
         super().__init__(**kwargs)
