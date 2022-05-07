@@ -7,6 +7,7 @@ import sys
 import tempfile
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
+from functools import cache, cached_property
 from pathlib import Path
 from typing import Any, Callable, Iterable, Literal, Optional, TypeVar, Union, cast
 
@@ -61,11 +62,28 @@ class Package(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def get_remote_version(self) -> str:
+        pass
+
+    @cached_property
+    def remote_version(self) -> str:
+        return self.get_remote_version()
+
+    @abstractmethod
+    def local_version(self) -> Optional[str]:
+        pass
+
+    def is_installed(self) -> bool:
+        return self.remote_version == self.local_version()
+
+    @abstractmethod
     def install(self) -> None:
         pass
 
     def ensure(self):
         if self.applicable is not None and CURRENT_OS not in self.applicable:
+            return
+        if self.is_installed():
             return
         self.install()
 
@@ -142,9 +160,17 @@ class InstallerPackage(Package):
     def package_name(self) -> str:
         return self.name
 
+    def get_remote_version(self) -> str:
+        return "repository"
+
+    def local_version(self) -> Optional[str]:
+        if INSTALLER.is_installed(self.name):
+            return "repository"
+        else:
+            return None
+
     def install(self):
-        if not INSTALLER.is_installed(self.name):
-            INSTALLER.install(self.name)
+        INSTALLER.install(self.name)
 
 
 def home(*path: str) -> str:
@@ -190,6 +216,14 @@ class ManualPackage(Package, metaclass=ABCMeta):
         self.apps = unsome(app) or []
         self.fonts = unsome(font) or []
         super().__init__(**kwargs)
+
+    @abstractmethod
+    def get_remote_version(self) -> str:
+        pass
+
+    @abstractmethod
+    def local_version(self) -> Optional[str]:
+        pass
 
     def local(self, *path: str) -> str:
         if self.as_global:
@@ -393,9 +427,15 @@ class URLPackage(ArchivePackage):
 
 
 @dataclass
-class GitHubRelease:
+class GitHubReleaseArtifact:
     name: str
     url: str
+
+
+@dataclass
+class GitHubRelease:
+    tag_name: str
+    assets: list[GitHubReleaseArtifact]
 
 
 class GitHubPackage(ArchivePackage):
@@ -418,15 +458,20 @@ class GitHubPackage(ArchivePackage):
         self.excludes = unsome(exclude) or []
         super().__init__(**kwargs)
 
-    def releases(self) -> list[GitHubRelease]:
+    @cache
+    def latest_release(self) -> GitHubRelease:
         latest = requests.get(
             f"https://api.github.com/repos/{self.repo}/releases/latest"
         ).json()
-        results = latest["assets"]
-        return [
-            GitHubRelease(name=result["name"], url=result["browser_download_url"])
-            for result in results
-        ]
+        return GitHubRelease(
+            tag_name=latest["tag_name"],
+            assets=[
+                GitHubReleaseArtifact(
+                    name=result["name"], url=result["browser_download_url"]
+                )
+                for result in latest["assets"]
+            ],
+        )
 
     def filters(self) -> Iterable[Callable[[str], bool]]:
         for prefix in self.prefixes:
@@ -447,8 +492,8 @@ class GitHubPackage(ArchivePackage):
         for arch_hint in arch_hints:
             yield lambda name: arch_hint in name.lower()
 
-    def release(self) -> GitHubRelease:
-        candidates = self.releases()
+    def artifact(self) -> GitHubReleaseArtifact:
+        candidates = self.latest_release().assets
         for filter_fn in self.filters():
             if len(candidates) == 1:
                 return candidates[0]
@@ -462,10 +507,13 @@ class GitHubPackage(ArchivePackage):
         raise ValueError(f"Cannot choose between: {candidates}")
 
     def archive_url(self) -> str:
-        return self.release().url
+        return self.artifact().url
 
     def package_name(self) -> str:
         return self.repo
+
+    def get_remote_version(self) -> str:
+        return self.latest_release().tag_name
 
 
 def parse_package(package: Any) -> Package:
