@@ -6,6 +6,9 @@ from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from typing import Optional, Union
 
+import requests
+
+from ..state import VERSIONS, Version
 from ..utils import *
 from .base import Package
 
@@ -58,9 +61,11 @@ class ManualPackage(Package, metaclass=ABCMeta):
     def get_remote_version(self) -> str:
         pass
 
-    @abstractmethod
     def local_version(self) -> Optional[str]:
-        pass
+        try:
+            return VERSIONS[self.package_name()].version
+        except KeyError:
+            return None
 
     def local(self, *path: str) -> str:
         if self.as_global:
@@ -142,6 +147,7 @@ class ManualPackage(Package, metaclass=ABCMeta):
             self.install_app(app)
         for font in self.fonts:
             self.install_font(font)
+        VERSIONS[self.package_name()] = Version(version=self.get_remote_version())
 
 
 class ArchivePackage(ManualPackage, metaclass=ABCMeta):
@@ -261,3 +267,7 @@ class URLPackage(ArchivePackage):
                 return "/".join(parts[1:2])
             else:
                 return parts[0]
+
+    def get_remote_version(self) -> str:
+        head_response = requests.head(self.url, allow_redirects=True)
+        return head_response.headers["etag"]

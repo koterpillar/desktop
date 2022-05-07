@@ -5,6 +5,7 @@ import tqdm  # type: ignore
 import yaml
 
 from .package import Package, parse_package
+from .utils import ROOT_DIR
 
 
 def parser() -> argparse.ArgumentParser:
@@ -14,7 +15,7 @@ def parser() -> argparse.ArgumentParser:
 
 
 def load_packages(component: str) -> list[Package]:
-    with open(os.path.join(os.environ["DIR"], "packages", f"{component}.yaml")) as f:
+    with open(os.path.join(ROOT_DIR, "packages", f"{component}.yaml")) as f:
         packages = yaml.safe_load(f)
         return list(map(parse_package, packages))
 

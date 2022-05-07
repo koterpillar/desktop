@@ -1,5 +1,6 @@
 import subprocess
 import sys
+from os.path import dirname
 from typing import Literal, Optional, TypeVar, Union, cast
 
 OS = Literal["linux", "darwin"]
@@ -31,3 +32,6 @@ def unsome(x: Some[T]) -> Optional[list[T]]:
 
 def run(*args, **kwargs) -> subprocess.CompletedProcess:
     return subprocess.run(args, check=True, **kwargs)
+
+
+ROOT_DIR = dirname(dirname(__file__))
