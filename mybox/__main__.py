@@ -5,8 +5,9 @@ import os
 import tqdm  # type: ignore
 import yaml
 
+from .dotfiles import makelinks
 from .package import Package, parse_package
-from .utils import ROOT_DIR
+from .utils import ROOT_DIR, home
 
 
 def parser() -> argparse.ArgumentParser:
@@ -35,6 +36,10 @@ def main():
                 progress.update(1)
 
             executor.map(ensure, packages)
+
+    makelinks(os.path.join(ROOT_DIR, "dotfiles"), lambda path: home() + "/." + path)
+    makelinks(os.path.join(ROOT_DIR, "bin"), home(".local", "bin"), shallow=True)
+    makelinks(os.path.join(ROOT_DIR, "config"), home(".config"), shallow=True)
 
 
 main()

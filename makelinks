@@ -16,38 +16,7 @@ export DHALL_OS
 # Config and dotfiles
 dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json
 
-rm -rf $HOME/.vim
-
-makelink () {
-    MAKELINK_SOURCE="$1"
-    MAKELINK_TARGET="$2"
-    MAKELINK_DIR=$(dirname "$MAKELINK_TARGET")
-    CHECK_SYMLINK="$MAKELINK_DIR"
-    while [ "$CHECK_SYMLINK" != "$HOME" ]
-    do
-        if [ -L "$CHECK_SYMLINK" ]
-        then
-           rm "$CHECK_SYMLINK"
-        fi
-        CHECK_SYMLINK=$(dirname "$CHECK_SYMLINK")
-    done
-    mkdir -p "$MAKELINK_DIR"
-    ln -sfnT "$MAKELINK_SOURCE" "$MAKELINK_TARGET"
-}
-
-for DOTFILE in $(find $DIR/dotfiles -type f)
-do
-    TARGET=$(echo $DOTFILE | sed -E 's!^'$DIR'/dotfiles/(.+)$!.\1!')
-    makelink "$DOTFILE" "$HOME/$TARGET"
-done
-
-mkdir -p $HOME/.config
-ls $DIR/config | xargs -I FILE ln -sfnT $DIR/config/FILE $HOME/.config/FILE
-
-makelink $DIR/bin $HOME/bin
-
 # Root shell config
-sudo sh -c 'rm -rf ~root/.vim'
 for FILE in dircolors zshrc zshenv
 do
     sudo sh -c "ln -sfnT $DIR/dotfiles/$FILE ~root/.$FILE"

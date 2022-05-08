@@ -3,7 +3,7 @@ import subprocess
 import sys
 from os.path import dirname
 from pathlib import Path
-from typing import Iterator, Literal, Optional, TypeVar, Union, cast
+from typing import Callable, Iterator, Literal, Optional, TypeVar, Union, cast
 
 OS = Literal["linux", "darwin"]
 
@@ -75,8 +75,14 @@ def files_in_recursively(directory: str, glob: str = "*") -> Iterator[str]:
         yield str(path)
 
 
-def transplant_path(dir_from: str, dir_to: str, path: str) -> str:
-    return os.path.join(dir_to, os.path.relpath(path, dir_from))
+def transplant_path(
+    dir_from: str, dir_to: Union[str, Callable[[str], str]], path: str
+) -> str:
+    path = os.path.relpath(path, dir_from)
+    if isinstance(dir_to, str):
+        return os.path.join(dir_to, path)
+    else:
+        return dir_to(path)
 
 
 def makedirs(path: str, sudo: bool = False) -> None:
