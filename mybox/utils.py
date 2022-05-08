@@ -2,7 +2,8 @@ import os
 import subprocess
 import sys
 from os.path import dirname
-from typing import Literal, Optional, TypeVar, Union, cast
+from pathlib import Path
+from typing import Iterator, Literal, Optional, TypeVar, Union, cast
 
 OS = Literal["linux", "darwin"]
 
@@ -67,3 +68,12 @@ def home(*path: str) -> str:
 
 def local(*path: str) -> str:
     return home(".local", *path)
+
+
+def files_in_recursively(directory: str, glob: str = "*") -> Iterator[str]:
+    for path in Path(directory).rglob(glob):
+        yield str(path)
+
+
+def transplant_path(dir_from: str, dir_to: str, path: str) -> str:
+    return os.path.join(dir_to, os.path.relpath(path, dir_from))

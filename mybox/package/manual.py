@@ -106,17 +106,14 @@ class ManualPackage(Package, metaclass=ABCMeta):
         path = self.app_path(name)
         target = self.local("share", "applications", f"{name}.desktop")
         self.link(path, target)
-        icon_directory = self.icon_directory()
-        if icon_directory:
+        icons_source = self.icon_directory()
+        if icons_source:
             icons_target = self.local("share", "icons")
             icon = icon_name(path)
             if icon:
-                for icon_path in Path(icon_directory).rglob(f"{icon}.*"):
-                    package_icon = str(icon_path)
-                    target = os.path.join(
-                        icons_target, icon_path.relative_to(icon_directory)
-                    )
-                    self.link(package_icon, target)
+                for icon_path in files_in_recursively(icons_source, f"{icon}.*"):
+                    target = transplant_path(icons_source, icons_target, icon_path)
+                    self.link(icon_path, target)
 
     @abstractmethod
     def font_path(self, name: str) -> str:
