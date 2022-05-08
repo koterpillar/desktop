@@ -52,4 +52,9 @@ class Clone(Package):
             run("git", "clone", self.remote, self.destination)
         with self.in_directory():
             run("git", "remote", "set-url", "origin", self.remote)
-            run("git", "pull")
+            run("git", "fetch")
+            default_branch = run_output(
+                "git", "rev-parse", "--abbrev-ref", "origin/HEAD"
+            ).split("/")[1]
+            run("git", "switch", default_branch)
+            run("git", "reset", "--hard", f"origin/{default_branch}")
