@@ -5,19 +5,19 @@
   dest: .local/bin
   shallow: true
 - source: config
-  dest: config
+  dest: .config
   shallow: true
 - source: dotfiles
-  dest: /root
+  dest: ''
   dot: true
-  sudo: true
+  root: true
   only:
     - dircolors
     - zshrc
     - zshenv
 - source: config
-  dest: /root/.config
-  sudo: true
+  dest: .config
+  root: true
   shallow: true
   only:
     - bat

@@ -1,5 +1,4 @@
 import os
-from typing import Callable, Union
 
 import yaml
 
@@ -12,16 +11,19 @@ class Links:
         source: str,
         dest: str,
         dot: bool = False,
-        sudo: bool = False,
+        root: bool = False,
         shallow: bool = False,
         only: Some[str] = None,
     ) -> None:
+        self.root = root
         self.source = os.path.join(ROOT_DIR, source)
         if not dest.startswith("/"):
-            dest = os.path.join(home(), dest)
+            if self.root:
+                dest = os.path.join(with_os(linux="/root", macos="/var/root"), dest)
+            else:
+                dest = os.path.join(home(), dest)
         self.dest = dest
         self.dot = dot
-        self.sudo = sudo
         self.shallow = shallow
         self.only = unsome_(only)
 
@@ -41,8 +43,7 @@ class Links:
                 target = "." + target
             target = os.path.join(self.dest, target)
 
-            print(f"{path=} {target=}")
-            link(path, target, sudo=self.sudo)
+            link(path, target, sudo=self.root)
 
 
 def load_links() -> list[Links]:
