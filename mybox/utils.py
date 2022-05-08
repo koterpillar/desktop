@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 from os.path import dirname
@@ -51,4 +52,18 @@ def run_ok(*args: str, **kwargs) -> bool:
     )
 
 
+def run_output(*args: str, **kwargs) -> str:
+    return (
+        subprocess.run(args, stdout=subprocess.PIPE, **kwargs).stdout.decode().strip()
+    )
+
+
 ROOT_DIR = dirname(dirname(__file__))
+
+
+def home(*path: str) -> str:
+    return os.path.join(os.environ["HOME"], *path)
+
+
+def local(*path: str) -> str:
+    return home(".local", *path)

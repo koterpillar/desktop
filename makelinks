@@ -58,16 +58,3 @@ do
     sudo sh -c "mkdir -p ~root/.config/$(dirname $FILE)"
     sudo sh -c "ln -sfnT $DIR/config/$FILE ~root/.config/$FILE"
 done
-
-# Git repositories
-submodule () {
-    if [ ! -d "$1"/.git ]
-    then
-        # Ignore the config file as the SSH keys might not yet be there
-        HOME=/dev/null XDG_CONFIG_HOME=/dev/null git clone "$2" "$1"
-    fi
-}
-
-submodule $HOME/.jenv https://github.com/gcuisinier/jenv.git
-
-submodule $HOME/.nvm https://github.com/nvm-sh/nvm.git

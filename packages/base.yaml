@@ -35,6 +35,8 @@
 - name: ipython
   applicable: darwin
 - name: jq
+- clone: jenv/jenv
+  destination: .jenv
 - name: htop
 - name: lsof
 - name: make
@@ -54,6 +56,8 @@
   applicable: linux
 - name: npm
   applicable: linux
+- clone: nvm-sh/nvm
+  destination: .nvm
 - name: pwgen
 - name: python3-ipython
   applicable: linux

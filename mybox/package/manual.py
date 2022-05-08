@@ -13,14 +13,6 @@ from ..utils import *
 from .base import Package
 
 
-def home(*path: str) -> str:
-    return os.path.join(os.environ["HOME"], *path)
-
-
-def local(*path: str) -> str:
-    return home(".local", *path)
-
-
 def makedirs(path: str) -> None:
     os.makedirs(path, exist_ok=True)
 
