@@ -13,10 +13,6 @@ from ..utils import *
 from .base import Package
 
 
-def makedirs(path: str) -> None:
-    os.makedirs(path, exist_ok=True)
-
-
 def make_executable(path: str) -> None:
     run("chmod", "+x", path)
 
@@ -66,34 +62,17 @@ class ManualPackage(Package, metaclass=ABCMeta):
         else:
             return local(*path)
 
-    def link(self, source: str, target: str, wrapper: bool = False) -> None:
-        target_dir = os.path.dirname(target)
-        if self.as_global:
-            run("sudo", "mkdir", "-p", target_dir)
-        else:
-            makedirs(target_dir)
-        if os.path.lexists(target):
-            if self.as_global:
-                run("sudo", "rm", target)
-            else:
-                os.unlink(target)
-        if wrapper:
-            with open(target, "w") as wrapper_file:
-                print(f'#!/bin/sh\nexec "{source}" "$@"', file=wrapper_file)
-        else:
-            if self.as_global:
-                run("sudo", "ln", "-s", source, target)
-            else:
-                os.symlink(source, target)
-
     @abstractmethod
     def binary_path(self, binary: str) -> str:
         pass
 
     def install_binary(self, name: str) -> None:
-        path = self.binary_path(name)
-        target = self.local("bin", name)
-        self.link(path, target, wrapper=self.binary_wrapper)
+        link(
+            self.binary_path(name),
+            self.local("bin", name),
+            sudo=self.as_global,
+            method="binary_wrapper" if self.binary_wrapper else None,
+        )
 
     @abstractmethod
     def app_path(self, name: str) -> str:
@@ -105,7 +84,7 @@ class ManualPackage(Package, metaclass=ABCMeta):
     def install_app(self, name: str) -> None:
         path = self.app_path(name)
         target = self.local("share", "applications", f"{name}.desktop")
-        self.link(path, target)
+        link(path, target, sudo=self.as_global)
         icons_source = self.icon_directory()
         if icons_source:
             icons_target = self.local("share", "icons")
@@ -113,7 +92,7 @@ class ManualPackage(Package, metaclass=ABCMeta):
             if icon:
                 for icon_path in files_in_recursively(icons_source, f"{icon}.*"):
                     target = transplant_path(icons_source, icons_target, icon_path)
-                    self.link(icon_path, target)
+                    link(icon_path, target, sudo=self.as_global)
 
     @abstractmethod
     def font_path(self, name: str) -> str:
@@ -126,7 +105,7 @@ class ManualPackage(Package, metaclass=ABCMeta):
         makedirs(font_dir)
         source = self.font_path(name)
         target = os.path.join(font_dir, name)
-        self.link(source, target)
+        link(source, target, sudo=self.as_global)
         if shutil.which("fc-cache"):
             run("fc-cache", "-f", font_dir)
 

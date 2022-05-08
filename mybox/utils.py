@@ -77,3 +77,40 @@ def files_in_recursively(directory: str, glob: str = "*") -> Iterator[str]:
 
 def transplant_path(dir_from: str, dir_to: str, path: str) -> str:
     return os.path.join(dir_to, os.path.relpath(path, dir_from))
+
+
+def makedirs(path: str, sudo: bool = False) -> None:
+    if sudo:
+        run("sudo", "mkdir", "-p", path)
+    else:
+        os.makedirs(path, exist_ok=True)
+
+
+def rm(path: str, sudo: bool = False) -> None:
+    if os.path.lexists(path):
+        if sudo:
+            run("sudo", "rm", path)
+        else:
+            os.unlink(path)
+
+
+LinkMethod = Literal["binary_wrapper"]
+
+
+def link(
+    source: str, target: str, *, sudo: bool = False, method: Optional[LinkMethod] = None
+) -> None:
+    target_dir = os.path.dirname(target)
+    makedirs(target_dir, sudo=sudo)
+    rm(target, sudo=sudo)
+    if method == "binary_wrapper":
+        if sudo:
+            raise NotImplementedError()
+        else:
+            with open(target, "w") as wrapper_file:
+                print(f'#!/bin/sh\nexec "{source}" "$@"', file=wrapper_file)
+    else:
+        if sudo:
+            run("sudo", "ln", "-s", source, target)
+        else:
+            os.symlink(source, target)
