@@ -26,7 +26,7 @@ def main():
                 package.ensure()
                 progress.update(1)
 
-            executor.map(ensure, packages)
+            list(executor.map(ensure, packages))
 
     links = load_links()
     for link in links:
