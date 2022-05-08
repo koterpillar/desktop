@@ -1,6 +1,7 @@
 import argparse
 import concurrent.futures
 import os
+from typing import Callable
 
 import tqdm  # type: ignore
 import yaml
@@ -37,9 +38,29 @@ def main():
 
             executor.map(ensure, packages)
 
-    makelinks(os.path.join(ROOT_DIR, "dotfiles"), lambda path: home() + "/." + path)
+    def dotfile(home_dir: str) -> Callable[[str], str]:
+        return lambda path: os.path.join(home_dir, "." + path)
+
+    makelinks(os.path.join(ROOT_DIR, "dotfiles"), dotfile(home()))
     makelinks(os.path.join(ROOT_DIR, "bin"), home(".local", "bin"), shallow=True)
     makelinks(os.path.join(ROOT_DIR, "config"), home(".config"), shallow=True)
+
+    def basename_filter(*allowed: str) -> Callable[[str], bool]:
+        return lambda path: os.path.basename(path) in allowed
+
+    makelinks(
+        os.path.join(ROOT_DIR, "dotfiles"),
+        dotfile("/root"),
+        sudo=True,
+        file_filter=basename_filter("dircolors", "zshrc", "zshenv"),
+    )
+    makelinks(
+        os.path.join(ROOT_DIR, "config"),
+        "/root/.config",
+        sudo=True,
+        shallow=True,
+        file_filter=basename_filter("bat", "nvim", "git"),
+    )
 
 
 main()

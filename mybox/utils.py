@@ -93,10 +93,10 @@ def makedirs(path: str, sudo: bool = False) -> None:
 
 
 def rm(path: str, sudo: bool = False) -> None:
-    if os.path.lexists(path):
-        if sudo:
-            run("sudo", "rm", path)
-        else:
+    if sudo:
+        run("sudo", "rm", "-r", "-f", path)
+    else:
+        if os.path.lexists(path):
             os.unlink(path)
 
 
@@ -117,6 +117,6 @@ def link(
                 print(f'#!/bin/sh\nexec "{source}" "$@"', file=wrapper_file)
     else:
         if sudo:
-            run("sudo", "ln", "-s", source, target)
+            run("sudo", "ln", "-s", "-f", "-T", source, target)
         else:
             os.symlink(source, target)

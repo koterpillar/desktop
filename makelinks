@@ -1,9 +1,8 @@
 #!/bin/bash
-#shellcheck disable=SC2011,SC2044,SC2046,SC2086
 
 set -euo pipefail
 
-source $(dirname $0)/functions.sh
+source "$(dirname "$0")/functions.sh"
 
 if [ "$OS" = "macos" ]
 then
@@ -13,17 +12,5 @@ else
 fi
 export DHALL_OS
 
-# Config and dotfiles
+# Config interpolation
 dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json
-
-# Root shell config
-for FILE in dircolors zshrc zshenv
-do
-    sudo sh -c "ln -sfnT $DIR/dotfiles/$FILE ~root/.$FILE"
-done
-sudo mkdir -p ~root/.config/git
-for FILE in git/config nvim
-do
-    sudo sh -c "mkdir -p ~root/.config/$(dirname $FILE)"
-    sudo sh -c "ln -sfnT $DIR/config/$FILE ~root/.config/$FILE"
-done
