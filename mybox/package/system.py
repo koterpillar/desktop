@@ -20,7 +20,7 @@ class Brew(Installer):
         run("brew", "install", *packages)
 
     def is_installed(self, package: str) -> bool:
-        raise NotImplementedError()
+        return run_ok("brew", "list", package)
 
 
 class DNF(Installer):
