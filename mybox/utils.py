@@ -3,7 +3,7 @@ import subprocess
 import sys
 from os.path import dirname
 from pathlib import Path
-from typing import Callable, Iterator, Literal, Optional, TypeVar, Union, cast
+from typing import Iterator, Literal, Optional, TypeVar, Union, cast
 
 OS = Literal["linux", "darwin"]
 

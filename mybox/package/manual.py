@@ -3,7 +3,6 @@ import os
 import shutil
 import tempfile
 from abc import ABCMeta, abstractmethod
-from pathlib import Path
 from typing import Optional, Union
 
 import requests
