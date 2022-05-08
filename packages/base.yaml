@@ -47,6 +47,7 @@
   binary: nvim
   app: nvim
   as_global: true
+  applicable: linux
 - name: neovim
   applicable: darwin
 - name: nmap
