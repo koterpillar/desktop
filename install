@@ -1,5 +1,4 @@
 #!/bin/bash
-#shellcheck disable=SC2093
 
 set -euo pipefail
 
@@ -7,7 +6,7 @@ source "$(dirname "$0")/functions.sh"
 
 venv
 
-exec python -m mybox "$@"
+python -m mybox "$@"
 
 # Shell
 case "$OS" in
@@ -31,4 +30,14 @@ fi
 
 # User configuration
 export PATH="$HOME/.local/bin:$PATH"
-"$DIR"/makelinks
+
+# Config interpolation
+if [ "$OS" = "macos" ]
+then
+    DHALL_OS='let OS = ./common/OS.dhall in OS.Macos'
+else
+    DHALL_OS='let OS = ./common/OS.dhall in OS.Linux'
+fi
+export DHALL_OS
+
+dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json

@@ -22,5 +22,4 @@ def makelinks(
         if file_filter and not file_filter(path):
             continue
         target = transplant_path(source, dest, path)
-        print(f"makelinks: {path=}, {target=}, {sudo=}")
         link(path, target, sudo=sudo)
