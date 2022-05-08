@@ -2,196 +2,16 @@
 
 set -euo pipefail
 
-source $(dirname $0)/functions.sh
+source "$(dirname "$0")/functions.sh"
 
-INSTALL_DESKTOP=true
-if [ "${1-}" == "--no-desktop" ]
-then
-  INSTALL_DESKTOP=
-  shift
-fi
+venv
 
-github_release_url() {
-  REPO="$1"
-  START="$2"
-  END="$3"
-
-  curl -sSL https://api.github.com/repos/$REPO/releases/latest | jq -r '.assets[]|select(.name|startswith("'$START'"))|select(.name|endswith("'$END'")).browser_download_url'
-}
-
-dpkg_from_url() {
-  URL="$1"
-  DEB=$(mktemp)
-  curl -sSL -o "$DEB" "$URL"
-  sudo dpkg --skip-same-version -i "$DEB"
-  rm -f "$DEB"
-}
-
-# Packages
-case "$OS" in
-  linux)
-    DISTRO=$(cat /etc/os-release | grep '^ID=' | cut -d = -f 2)
-    case $DISTRO in
-      debian)
-        INSTALLER=apt
-        ;;
-      fedora)
-        INSTALLER=dnf
-        ;;
-      *)
-        echo "Can't find a package manager." >&2
-        exit 1
-        ;;
-    esac
-
-    sudo $INSTALLER install -y \
-      cargo \
-      curl \
-      g++ \
-      gcc \
-      git \
-      git-lfs \
-      htop \
-      lsof \
-      make \
-      moreutils \
-      python3 \
-      ripgrep \
-      rsync \
-      strace \
-      tig \
-      wget \
-      zsh \
-      ;
-
-    case $DISTRO in
-      debian)
-        dpkg_from_url $(github_release_url dandavison/delta git-delta_ amd64.deb)
-        ;;
-      *)
-        sudo $INSTALLER install git-delta
-        ;;
-    esac
-
-    NVIM=$(mktemp)
-    curl -sSL $(github_release_url neovim/neovim nvim appimage) -o "$NVIM"
-    sudo mv "$NVIM" /usr/local/bin/nvim
-    sudo chmod +x /usr/local/bin/nvim
-    rm -f "$NVIM"
-
-    if [ -n "$INSTALL_DESKTOP" ]
-    then
-      FEDORA_VERSION=$(rpm -E %fedora)
-      sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
-      sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm
-      sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-      sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-      sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-      sudo dnf install -y \
-        code \
-        docker \
-        fcitx5{,-{chinese-addons,m17n,mozc,configtool}} \
-        gh \
-        ghc \
-        hlint \
-        ImageMagick \
-        jq \
-        meld \
-        mozilla-fira-mono-fonts \
-        nmap \
-        nodejs \
-        npm \
-        perl-Image-ExifTool \
-        pwgen \
-        rlwrap \
-        tcpdump \
-        util-linux-user \
-        vlc \
-        wl-clipboard \
-        youtube-dl \
-        ;
-
-      # Systemd
-      sudo systemctl daemon-reload || true
-      sudo systemctl enable --no-reload \
-        docker \
-        sshd \
-        && true
-          sudo systemctl daemon-reload || true
-    fi
-    ;;
-  macos)
-    if ! command -v brew >/dev/null 2>&1
-    then
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-
-    brew install \
-      ammonite-repl \
-      colordiff \
-      coreutils \
-      gcc \
-      ghc \
-      git \
-      git-delta \
-      git-lfs \
-      gnu-sed \
-      gnu-tar \
-      gradle \
-      homebrew/cask/docker \
-      homebrew/cask-fonts/font-fira-code \
-      homebrew/cask-fonts/font-fira-mono \
-      homebrew/cask-fonts/font-fira-sans \
-      htop \
-      ipython \
-      jq \
-      kitty \
-      maven \
-      neovim \
-      nmap \
-      node \
-      rar \
-      rectangle \
-      ripgrep \
-      rlwrap \
-      rust \
-      shellcheck \
-      shfmt \
-      tig \
-      visual-studio-code \
-      wget \
-      yarn \
-      youtube-dl \
-      zsh \
-      && true
-    ;;
-esac
-
-# Powerline fonts
-if [ -n "$INSTALL_DESKTOP" ]
-then
-  case "$OS" in
-    linux)
-      FONT_DIR="$HOME/.local/share/fonts"
-      ;;
-    macos)
-      FONT_DIR="$HOME/Library/Fonts"
-      ;;
-  esac
-  mkdir -p $FONT_DIR
-
-  curl -sSL -o $FONT_DIR/PowerlineSymbols.otf https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-
-  if type -f fc-cache >/dev/null 2>&1
-  then
-    fc-cache -f $FONT_DIR
-  fi
-fi
+python -m mybox "$@"
 
 # Shell
 case "$OS" in
   linux)
-    CURRENT_SHELL="$(getent passwd $USER | cut -d: -f7)"
+    CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
     DESIRED_SHELL="/bin/zsh"
     ;;
   macos)
@@ -208,44 +28,16 @@ then
   chsh -s "$DESIRED_SHELL"
 fi
 
-# User packages
-mkdir -p $HOME/.local/bin
+# User configuration
 export PATH="$HOME/.local/bin:$PATH"
 
-if [ "$OS" == "linux" ] && [ -n "$INSTALL_DESKTOP" ]
+# Config interpolation
+if [ "$OS" = "macos" ]
 then
-  # Kitty
-  KITTY=$HOME/.local/kitty.app
-  mkdir -p $KITTY
-  curl -sSL $(github_release_url kovidgoyal/kitty kitty x86_64.txz) | tar -J -x -C $KITTY
-  ln -sfnT $KITTY/bin/kitty $HOME/.local/bin/kitty
-  cat $KITTY/share/applications/kitty.desktop \
-    | sed "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" \
-    > $HOME/.local/share/applications/kitty.desktop
+    DHALL_OS='let OS = ./common/OS.dhall in OS.Macos'
+else
+    DHALL_OS='let OS = ./common/OS.dhall in OS.Linux'
 fi
+export DHALL_OS
 
-curl -sSL https://get.haskellstack.org/stable/${OS/macos/osx}-x86_64.tar.gz | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/stack'
-
-if [ -n "$INSTALL_DESKTOP" ]
-then
-  curl -sSL $(github_release_url sbt/sbt sbt .tgz) | tar -z -x --strip 2 -C $HOME/.local/bin --wildcards 'sbt/bin/*'
-fi
-
-if [ -n "$INSTALL_DESKTOP" ]
-then
-  # Yarn
-  YARN=$HOME/.local/yarn.app
-  mkdir -p $YARN
-  curl -sSL https://yarnpkg.com/latest.tar.gz | tar -x -z --strip 1 -C $YARN
-  ln -sfnT $YARN/bin/yarn $HOME/.local/bin/yarn
-fi
-
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-json x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
-curl -sSL $(github_release_url dhall-lang/dhall-haskell dhall-yaml x86_64-$OS.tar.bz2) | tar -x -j -C $HOME/.local
-
-curl -sSL $(github_release_url sharkdp/bat bat x86_64-$(echo $OS | sed 's/macos/apple-darwin/;s/linux/unknown-linux-gnu/').tar.gz) | tar -z -x --strip 1 -C $HOME/.local/bin --wildcards '*/bat'
-
-cargo install difftastic && ln -sf $HOME/.cargo/bin/difft  $HOME/.local/bin
-
-# User configuration
-$DIR/makelinks
+dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json

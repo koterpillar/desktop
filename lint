@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -euo pipefail
+
+ISORT_ARGS=--check
+BLACK_ARGS=--check
+if [ "${1-}" == "--format" ]
+then
+    ISORT_ARGS=
+    BLACK_ARGS=
+fi
+
+source "$(dirname "$0")/functions.sh"
+
+venv
+
+# shellcheck disable=SC2046
+shellcheck "$DIR"/*.sh $(grep -l '^#!/bin/bash' "$DIR"/* 2>/dev/null)
+
+# shellcheck disable=SC2086
+isort $ISORT_ARGS "$DIR"/mybox
+# shellcheck disable=SC2086
+black $BLACK_ARGS "$DIR"/mybox
+mypy "$DIR"/mybox

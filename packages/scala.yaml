@@ -1,0 +1,11 @@
+- repo: com-lihaoyi/Ammonite
+  prefix: '2.13'
+  exclude: 'bootstrap'
+  raw: 'amm'
+  raw_executable: true
+  binary: amm
+- name: maven
+- repo: sbt/sbt
+  suffix: tgz
+  strip: 1
+  binary: sbt
