@@ -81,6 +81,9 @@ class ManualPackage(Package, metaclass=ABCMeta):
         return None
 
     def install_app(self, name: str) -> None:
+        with_os(linux=self.install_app_linux, macos=self.install_app_macos)(name)
+
+    def install_app_linux(self, name: str) -> None:
         path = self.app_path(name)
         target = self.local("share", "applications", f"{name}.desktop")
         link(path, target, sudo=self.as_global)
@@ -92,6 +95,11 @@ class ManualPackage(Package, metaclass=ABCMeta):
                 for icon_path in files_in_recursively(icons_source, f"{icon}.*"):
                     target = transplant_path(icons_source, icons_target, icon_path)
                     link(icon_path, target, sudo=self.as_global)
+
+    def install_app_macos(self, name: str) -> None:
+        # FIXME: copy to /Applications and/or ~/Applications; ensure names,
+        # etc. are correct
+        pass
 
     @abstractmethod
     def font_path(self, name: str) -> str:
