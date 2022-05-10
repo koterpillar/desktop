@@ -12,10 +12,6 @@ from ..utils import *
 from .base import Package
 
 
-def make_executable(path: str) -> None:
-    run("chmod", "+x", path)
-
-
 def icon_name(app_path: str) -> Optional[str]:
     app = configparser.ConfigParser()
     app.read(app_path)

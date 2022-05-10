@@ -95,6 +95,10 @@ def rm(path: str, sudo: bool = False) -> None:
             os.unlink(path)
 
 
+def make_executable(path: str) -> None:
+    run("chmod", "+x", path)
+
+
 LinkMethod = Literal["binary_wrapper"]
 
 
@@ -110,6 +114,7 @@ def link(
         else:
             with open(target, "w") as wrapper_file:
                 print(f'#!/bin/sh\nexec "{source}" "$@"', file=wrapper_file)
+            make_executable(target)
     else:
         if sudo:
             run("sudo", "ln", "-s", "-f", "-T", source, target)
