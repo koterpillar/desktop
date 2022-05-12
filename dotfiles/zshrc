@@ -9,9 +9,7 @@ zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu yes select
 setopt complete_in_word
 autoload -Uz compinit
-# On macOS, this isn't owned by root and zsh complains. Don't load it.
-FPATH=$(echo $FPATH | sed 's!/usr/local/share/zsh/site-functions:!!')
-compinit
+compinit -u
 autoload -Uz bashcompinit
 bashcompinit
 
