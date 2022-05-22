@@ -25,7 +25,7 @@ class Installer(metaclass=ABCMeta):
 
 class Brew(Installer):
     def install(self, *packages: str) -> None:
-        run("brew", "install", *packages)
+        run("brew", "reinstall", *packages)
 
     @cache
     def info(self, package: str) -> tuple[str, Optional[str]]:
@@ -87,9 +87,17 @@ INSTALLER = with_os(linux=linux_installer, macos=lambda: Brew())()
 class SystemPackage(Package):
     services: list[str]
 
-    def __init__(self, *, name: str, service: Some[str] = None, **kwargs) -> None:
+    def __init__(
+        self,
+        *,
+        name: str,
+        auto_updates: bool = False,
+        service: Some[str] = None,
+        **kwargs,
+    ) -> None:
         self._name = name
         self.services = unsome(service)
+        self.auto_updates = auto_updates
         super().__init__(**kwargs)
 
     @property
@@ -97,10 +105,14 @@ class SystemPackage(Package):
         return self._name
 
     def get_remote_version(self) -> str:
+        if self.auto_updates:
+            return "latest"
         return INSTALLER.latest_version(self.name)
 
     @property
     def local_version(self) -> Optional[str]:
+        if self.auto_updates:
+            return "latest" if INSTALLER.is_installed(self.name) else None
         return INSTALLER.installed_version(self.name)
 
     def postinstall_linux(self):

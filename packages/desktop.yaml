@@ -5,6 +5,7 @@
   service: docker
 - name: homebrew/cask/docker
   applicable: darwin
+  auto_updates: true
 - name: homebrew/cask-fonts/font-fira-code
   applicable: darwin
 - name: homebrew/cask-fonts/font-fira-mono
@@ -49,6 +50,7 @@
   applicable: linux
 - name: visual-studio-code
   applicable: darwin
+  auto_updates: true
 - name: vlc
   applicable: linux
 - name: wl-clipboard
