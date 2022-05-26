@@ -60,8 +60,31 @@ class DNF(Installer):
     def install(self, *packages: str) -> None:
         run("sudo", "dnf", "install", "-y", *packages)
 
-    def is_installed(self, package: str) -> bool:
-        return run_ok("rpm", "-q", "--whatprovides", package)
+    def installed_version(self, package: str) -> Optional[str]:
+        output = run_output(
+            "rpm", "--query", "--queryformat", "'%{VERSION}'", "--whatprovides", package
+        ).strip()
+        if not output:
+            return None
+        return output
+
+    def latest_version(self, package: str) -> str:
+        output = run_output(
+            "dnf",
+            "--quiet",
+            "repoquery",
+            "--queryformat",
+            "'%{VERSION}'",
+            "--latest-limit",
+            "1",
+            "--arch",
+            "x86_64,noarch",
+            "--whatprovides",
+            package,
+        ).strip()
+        if not output or "\n" in output:
+            raise Exception(f"Cannot determine version for {package}.")
+        return output
 
 
 class Apt(Installer):
