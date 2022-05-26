@@ -13,14 +13,16 @@ class Installer(metaclass=ABCMeta):
     def install(self, *packages: str) -> None:
         pass
 
-    def installed_version(self, package: str) -> Optional[str]:
-        raise NotImplementedError()
-
     def is_installed(self, package: str) -> bool:
         return self.installed_version(package) is not None
 
+    @abstractmethod
+    def installed_version(self, package: str) -> Optional[str]:
+        pass
+
+    @abstractmethod
     def latest_version(self, package: str) -> str:
-        return "repository"
+        pass
 
 
 class Brew(Installer):
@@ -63,7 +65,7 @@ class DNF(Installer):
 
     def installed_version(self, package: str) -> Optional[str]:
         output = run_output(
-            "rpm", "--query", "--queryformat", "'%{VERSION}'", "--whatprovides", package
+            "rpm", "--query", "--queryformat", "%{VERSION}", "--whatprovides", package
         ).strip()
         if not output:
             return None
@@ -75,7 +77,7 @@ class DNF(Installer):
             "--quiet",
             "repoquery",
             "--queryformat",
-            "'%{VERSION}'",
+            "%{VERSION}",
             "--latest-limit",
             "1",
             "--arch",
@@ -92,8 +94,23 @@ class Apt(Installer):
     def install(self, *packages: str) -> None:
         run("sudo", "apt", "install", "--yes", *packages)
 
-    def is_installed(self, package: str) -> bool:
-        return run_ok("dpkg", "-s", package)
+    def latest_version(self, package: str) -> str:
+        output = run_output(
+            "apt-cache", "show", "--quiet", "--no-all-versions", package
+        ).strip()
+        for line in output.splitlines():
+            line = line.strip()
+            if line.startswith("Version:"):
+                return line.split(": ", 1)[-1]
+        raise Exception(f"Cannot determine version for {package}.")
+
+    def installed_version(self, package: str) -> Optional[str]:
+        try:
+            return run_output(
+                "dpkg-query", "--showformat", "${Version}", "--show", package
+            ).strip()
+        except subprocess.CalledProcessError:
+            return None
 
 
 def linux_installer() -> Installer:
