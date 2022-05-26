@@ -59,6 +59,7 @@ class Brew(Installer):
 class DNF(Installer):
     def install(self, *packages: str) -> None:
         run("sudo", "dnf", "install", "-y", *packages)
+        run("sudo", "dnf", "upgrade", "-y", *packages)
 
     def installed_version(self, package: str) -> Optional[str]:
         output = run_output(
