@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+import configparser
+import sys
+
+config = configparser.ConfigParser()
+config.optionxform = str
+
+config.read_file(sys.stdin)
+
+config['Groups/0']['DefaultIM'] = config['Groups/0/Items/1']['Name']
+
+config.write(sys.stdout, space_around_delimiters=False)

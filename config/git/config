@@ -45,6 +45,10 @@
     required = true
     clean = git-lfs clean -- %f
 
+[filter "fcitx-config"]
+    clean = fcitx-config-clean
+    smudge = cat
+
 [tig]
     line-graphics = utf-8
 
