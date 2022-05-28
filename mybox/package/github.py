@@ -7,7 +7,7 @@ from typing import Any, Callable, Iterable
 import requests
 
 from ..utils import *
-from .manual import ArchivePackage
+from .archive import ArchivePackage
 
 
 @cache

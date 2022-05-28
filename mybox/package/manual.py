@@ -1,13 +1,10 @@
 import configparser
 import os
 import shutil
-import tempfile
 from abc import ABCMeta, abstractmethod
-from typing import Optional, Union
+from typing import Optional
 
-import requests
-
-from ..fs import files_in_recursively, link, make_executable, makedirs, transplant_path
+from ..fs import files_in_recursively, link, makedirs, transplant_path
 from ..state import VERSIONS, Version
 from ..utils import *
 from .base import Package
@@ -117,127 +114,3 @@ class ManualPackage(Package, metaclass=ABCMeta):
         for font in self.fonts:
             self.install_font(font)
         VERSIONS[self.name] = Version(version=self.get_remote_version())
-
-
-class ArchivePackage(ManualPackage, metaclass=ABCMeta):
-    def __init__(
-        self,
-        *,
-        raw: Union[bool, str] = False,
-        raw_executable: bool = False,
-        strip: int = 0,
-        **kwargs,
-    ) -> None:
-        self.raw = raw
-        self.raw_executable = raw_executable
-        self.strip = strip
-        super().__init__(**kwargs)
-
-    @abstractmethod
-    def archive_url(self) -> str:
-        pass
-
-    def package_directory(self) -> str:
-        result = local(f"{self.name.replace('/', '--')}.app")
-        makedirs(result)
-        return result
-
-    def untar(self, source: str, *extra: str) -> None:
-        run(
-            "tar",
-            "-x",
-            "--strip",
-            str(self.strip),
-            "-C",
-            self.package_directory(),
-            *extra,
-            "-f",
-            source,
-        )
-
-    def extract(self, url: str, source: str) -> None:
-        if self.raw:
-            if isinstance(self.raw, str):
-                filename = self.raw
-            else:
-                filename = url.rsplit("/", 1)[-1]
-            target = os.path.join(self.package_directory(), filename)
-            run("cp", source, target)
-            if self.raw_executable:
-                make_executable(target)
-        elif ".tar" in url:
-            if ".gz" in url:
-                self.untar(source, "-z")
-            elif ".bz2" in url:
-                self.untar(source, "-j")
-            else:
-                self.untar(source)
-        elif ".tgz" in url:
-            self.untar(source, "-z")
-        elif ".txz" in url:
-            self.untar(source, "-J")
-        else:
-            raise ValueError(f"Unknown archive format: {url}")
-
-    def binary_path(self, binary: str) -> str:
-        paths: list[list[str]] = [[], ["bin"]]
-        for relative_path in paths:
-            candidate = os.path.join(self.package_directory(), *relative_path, binary)
-            if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
-                return candidate
-        raise ValueError(f"Cannot find {binary} in {self.package_directory()}.")
-
-    def app_path(self, name: str) -> str:
-        candidate = os.path.join(
-            self.package_directory(), "share", "applications", f"{name}.desktop"
-        )
-        if os.path.isfile(candidate):
-            return candidate
-        raise ValueError(
-            f"Cannot find application '{name}' in {self.package_directory()}."
-        )
-
-    def icon_directory(self) -> Optional[str]:
-        candidate = os.path.join(self.package_directory(), "share", "icons")
-        if os.path.isdir(candidate):
-            return candidate
-        return None
-
-    def font_path(self, name: str) -> str:
-        candidate = os.path.join(self.package_directory(), name)
-        if os.path.isfile(candidate):
-            return candidate
-        raise ValueError(f"Cannot find font '{name}' in {self.package_directory()}.")
-
-    def install(self):
-        url = self.archive_url()
-        with tempfile.NamedTemporaryFile() as archive_file:
-            run("curl", "-sSL", url, stdout=archive_file)
-            self.extract(url, archive_file.name)
-        super().install()
-
-
-class URLPackage(ArchivePackage):
-    def __init__(self, *, url: str, **kwargs) -> None:
-        self.url = url
-        super().__init__(**kwargs)
-
-    def archive_url(self) -> str:
-        return self.url
-
-    @property
-    def name(self):
-        parts = self.url.split("/")
-        while True:
-            if len(parts) == 0:
-                raise ValueError(f"Cannot parse package name from {self.url}.")
-            elif parts[0] in ("", "https:"):
-                parts.pop(0)
-            elif parts[0] == "github.com":
-                return "/".join(parts[1:2])
-            else:
-                return parts[0]
-
-    def get_remote_version(self) -> str:
-        head_response = requests.head(self.url, allow_redirects=True)
-        return head_response.headers["etag"]

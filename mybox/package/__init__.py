@@ -7,8 +7,8 @@ from ..utils import ROOT_DIR
 from .base import Package
 from .clone import Clone
 from .github import GitHubPackage
-from .manual import URLPackage
 from .system import SystemPackage
+from .url import URLPackage
 
 
 def parse_package(package: Any) -> Package:
