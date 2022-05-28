@@ -41,10 +41,6 @@ class ManualPackage(Package, metaclass=ABCMeta):
         self.fonts = unsome(font)
         super().__init__(**kwargs)
 
-    @abstractmethod
-    def get_remote_version(self) -> str:
-        pass
-
     @property
     def local_version(self) -> Optional[str]:
         try:
