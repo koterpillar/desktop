@@ -1,10 +1,8 @@
 import argparse
-import concurrent.futures
-
-import tqdm  # type: ignore
 
 from .dotfiles import load_links
-from .package import Package, load_packages
+from .package import load_packages
+from .utils import flatten, parallel_map_tqdm
 
 
 def parser() -> argparse.ArgumentParser:
@@ -16,18 +14,8 @@ def parser() -> argparse.ArgumentParser:
 def main():
     args = parser().parse_args()
     components: frozenset[str] = frozenset(args.component) | {"base"}
-    packages = [
-        package for component in components for package in load_packages(component)
-    ]
-    with tqdm.tqdm(total=len(packages)) as progress:
-        with concurrent.futures.ThreadPoolExecutor(20) as executor:
-
-            def ensure(package: Package) -> None:
-                package.ensure()
-                progress.update(1)
-
-            list(executor.map(ensure, packages))
-
+    packages = flatten(map(load_packages, components))
+    parallel_map_tqdm(packages, lambda p: p.ensure())
     links = load_links()
     for link in links:
         link.install()

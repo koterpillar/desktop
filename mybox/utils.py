@@ -1,15 +1,18 @@
+import concurrent.futures
 import os
 import subprocess
 import sys
 from os.path import dirname
-from pathlib import Path
-from typing import Iterator, Literal, Optional, TypeVar, Union, cast
+from typing import Callable, Iterable, Literal, Optional, TypeVar, Union, cast
+
+import tqdm  # type: ignore
 
 OS = Literal["linux", "darwin"]
 
 CURRENT_OS: OS = cast(OS, sys.platform)
 
 T = TypeVar("T")
+U = TypeVar("U")
 
 
 def with_os(*, linux: T, macos: T) -> T:
@@ -68,3 +71,19 @@ def home(*path: str) -> str:
 
 def local(*path: str) -> str:
     return home(".local", *path)
+
+
+def flatten(items: Iterable[Iterable[T]]) -> list[T]:
+    return [item for sublist in items for item in sublist]
+
+
+def parallel_map_tqdm(items: list[T], action: Callable[[T], U]) -> list[U]:
+    with tqdm.tqdm(total=len(items)) as progress:
+        with concurrent.futures.ThreadPoolExecutor(20) as executor:
+
+            def action_and_update(item: T) -> U:
+                result = action(item)
+                progress.update(1)
+                return result
+
+            return list(executor.map(action_and_update, items))
