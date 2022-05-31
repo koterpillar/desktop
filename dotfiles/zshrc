@@ -128,6 +128,7 @@ load-version-managers() {
     fi
 }
 add-zsh-hook chpwd load-version-managers
+load-version-managers
 
 # Theme
 autoload -U colors
