@@ -8,6 +8,7 @@ config.optionxform = str
 
 config.read_file(sys.stdin)
 
-config['Groups/0']['DefaultIM'] = config['Groups/0/Items/1']['Name']
+if 'Groups/0' in config:
+    config['Groups/0']['DefaultIM'] = config['Groups/0/Items/1']['Name']
 
 config.write(sys.stdout, space_around_delimiters=False)
