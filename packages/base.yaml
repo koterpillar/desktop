@@ -56,6 +56,7 @@
   applicable: linux
 - clone: nvm-sh/nvm
   destination: .nvm
+- name: pv
 - name: pwgen
 - name: python3-ipython
   applicable: linux
