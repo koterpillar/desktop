@@ -57,6 +57,7 @@
 - clone: nvm-sh/nvm
   destination: .nvm
 - name: pipx
+- pipx: poetry
 - name: pv
 - name: pwgen
 - name: python3-ipython

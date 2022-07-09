@@ -7,6 +7,7 @@ from ..utils import ROOT_DIR
 from .base import Package
 from .clone import Clone
 from .github import GitHubPackage
+from .pipx import PipxPackage
 from .system import SystemPackage
 from .url import URLPackage
 
@@ -22,9 +23,11 @@ def parse_package(package: Any) -> Package:
         return URLPackage(**package)
     elif "clone" in package:
         return Clone(**package)
+    elif "pipx" in package:
+        return PipxPackage(**package)
     else:
         raise ValueError(
-            f"Either 'name', 'repo' 'url' or 'clone' must be present, got: {package}."
+            f"Either 'name', 'repo' 'url', 'clone' or 'pipx' must be present, got: {package}."
         )
 
 
