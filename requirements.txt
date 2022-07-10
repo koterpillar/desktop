@@ -1,9 +1,0 @@
-PyYAML
-requests
-tqdm
-
-black
-isort
-mypy
-types-PyYAML
-types-requests

@@ -2,11 +2,45 @@
 
 set -euo pipefail
 
-source "$(dirname "$0")/functions.sh"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/koterpillar/mybox/main/bootstrap)"
 
-venv
+# Prerequisites
+case "$OSTYPE" in
+  darwin*)
+    OS=macos
+  ;;
+  linux*)
+    OS=linux
+    DISTRO=$(grep '^ID=' /etc/os-release | cut -d = -f 2)
 
-python -m mybox "$@"
+    case $DISTRO in
+      fedora)
+        FEDORA_VERSION=$(rpm -E %fedora)
+        for PART in free nonfree
+        do
+          if ! (rpm -q rpmfusion-$PART-release 2>/dev/null || true) | grep -q "$FEDORA_VERSION" >/dev/null
+          then
+            sudo dnf -y install "https://download1.rpmfusion.org/$PART/fedora/rpmfusion-$PART-release-${FEDORA_VERSION}.noarch.rpm"
+          fi
+        done
+
+        if ! rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep -q Microsoft >/dev/null
+        then
+          sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        fi
+
+        if ! [ -f /etc/yum.repos.d/vscode.repo ]
+        then
+          sudo cp repositories/vscode.repo /etc/yum.repos.d/vscode.repo
+        fi
+
+        ;;
+    esac
+esac
+
+export OS
+
+mybox "$@"
 
 # Shell
 case "$OS" in
