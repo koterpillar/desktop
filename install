@@ -38,9 +38,9 @@ case "$OSTYPE" in
     esac
 esac
 
-export OS
-
 mybox "$@"
+
+export OS
 
 # Shell
 case "$OS" in
