@@ -3,7 +3,7 @@
   strip: 1
 - name: colordiff
 - name: coreutils
-  applicable: darwin
+  os: darwin
 - name: curl
 - repo: dhall-lang/dhall-haskell
   prefix: dhall-json
@@ -14,7 +14,7 @@
 - repo: Wilfred/difftastic
   binary: difft
 - name: g++
-  applicable: linux
+  os: linux
 - name: gcc
 - repo: cli/cli
   strip: 1
@@ -26,14 +26,14 @@
   binary: delta
   strip: 1
 - name: gnu-sed
-  applicable: darwin
+  os: darwin
 - name: gnu-tar
-  applicable: darwin
+  os: darwin
 - repo: ndmitchell/hlint
   strip: 1
   binary: hlint
 - name: ipython
-  applicable: darwin
+  os: darwin
 - name: jq
 - clone: jenv/jenv
   destination: .jenv
@@ -49,11 +49,11 @@
   as_global: true
 - name: nmap
 - name: node
-  applicable: darwin
+  os: darwin
 - name: nodejs
-  applicable: linux
+  os: linux
 - name: npm
-  applicable: linux
+  os: linux
 - clone: nvm-sh/nvm
   destination: .nvm
 - name: pipx
@@ -61,9 +61,9 @@
 - name: pv
 - name: pwgen
 - name: python3-ipython
-  applicable: linux
+  os: linux
 - name: rar
-  applicable: darwin
+  os: darwin
 - name: ripgrep
 - name: rlwrap
 - name: rsync
@@ -76,10 +76,10 @@
   strip: 1
   binary: stack
 - name: strace
-  applicable: linux
+  os: linux
 - name: tig
 - name: unrar-free
-  applicable: linux
+  os: linux
 - name: wget
 - url: https://yarnpkg.com/latest.tar.gz
   binary: yarn

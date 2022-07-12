@@ -1,58 +1,58 @@
 - name: code
-  applicable: linux
+  os: linux
 - name: docker
-  applicable: linux
+  os: linux
   service: docker
 - name: homebrew/cask/docker
-  applicable: darwin
+  os: darwin
   auto_updates: true
 - name: homebrew/cask-fonts/font-fira-code
-  applicable: darwin
+  os: darwin
 - name: homebrew/cask-fonts/font-fira-mono
-  applicable: darwin
+  os: darwin
 - name: homebrew/cask-fonts/font-fira-sans
-  applicable: darwin
+  os: darwin
 - name: fcitx5
-  applicable: linux
+  os: linux
 - name: fcitx5-chinese-addons
-  applicable: linux
+  os: linux
 - name: fcitx5-m17n
-  applicable: linux
+  os: linux
 - name: fcitx5-mozc
-  applicable: linux
+  os: linux
 - name: fcitx5-configtool
-  applicable: linux
+  os: linux
 - name: ImageMagick
-  applicable: linux
+  os: linux
 - name: kitty
-  applicable: darwin
+  os: darwin
 - repo: kovidgoyal/kitty
   exclude: sig
   binary: kitty
   app: kitty
-  applicable: linux
+  os: linux
 - name: perl-Image-ExifTool
-  applicable: linux
+  os: linux
 - url: https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
   raw: true
   font: PowerlineSymbols.otf
 - name: meld
 - name: mozilla-fira-mono-fonts
-  applicable: linux
+  os: linux
 - name: openssh-server
-  applicable: linux
+  os: linux
   service: sshd
 - name: rectangle
-  applicable: darwin
+  os: darwin
 - name: tcpdump
-  applicable: linux
+  os: linux
 - name: util-linux-user  # chsh
-  applicable: linux
+  os: linux
 - name: visual-studio-code
-  applicable: darwin
+  os: darwin
   auto_updates: true
 - name: vlc
-  applicable: linux
+  os: linux
 - name: wl-clipboard
-  applicable: linux
+  os: linux
 - name: youtube-dl
