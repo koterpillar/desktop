@@ -86,3 +86,7 @@
   binary_wrapper: true
   strip: 1
 - name: zsh
+- shell: /bin/zsh
+  os: linux
+- shell: /usr/local/bin/zsh
+  os: darwin

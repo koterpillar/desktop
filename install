@@ -42,26 +42,6 @@ mybox "$@"
 
 export OS
 
-# Shell
-case "$OS" in
-  linux)
-    CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
-    DESIRED_SHELL="/bin/zsh"
-    ;;
-  macos)
-    CURRENT_SHELL="$(dscl . -read ~/ UserShell | sed 's/UserShell: //')"
-    DESIRED_SHELL="/usr/local/bin/zsh"
-    ;;
-esac
-if [ "$CURRENT_SHELL" != "$DESIRED_SHELL" ]
-then
-  if ! grep -qx "$DESIRED_SHELL" /etc/shells
-  then
-    echo "$DESIRED_SHELL" | sudo tee -a /etc/shells >/dev/null
-  fi
-  chsh -s "$DESIRED_SHELL"
-fi
-
 # User configuration
 export PATH="$HOME/.local/bin:$PATH"
 
