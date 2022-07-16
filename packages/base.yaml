@@ -1,3 +1,28 @@
+- links: dotfiles
+  dest: ''
+  dot: true
+- links: bin
+  dest: .local/bin
+  shallow: true
+- links: config
+  dest: .config
+  shallow: true
+- links: dotfiles
+  dest: ''
+  dot: true
+  root: true
+  only:
+    - dircolors
+    - zshrc
+    - zshenv
+- links: config
+  dest: .config
+  root: true
+  shallow: true
+  only:
+    - bat
+    - nvim
+    - git
 - repo: sharkdp/bat
   binary: bat
   strip: 1
