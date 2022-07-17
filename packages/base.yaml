@@ -81,7 +81,7 @@
   os: linux
 - clone: nvm-sh/nvm
   destination: .nvm
-- name: pipx
+- pip: pipx
 - pipx: poetry
 - name: pv
 - name: pwgen
