@@ -52,6 +52,8 @@
   service: sshd
 - name: rectangle
   os: darwin
+- name: homebrew/cask/alt-tab
+  os: darwin
 - name: tcpdump
   os: linux
 - name: util-linux-user  # chsh

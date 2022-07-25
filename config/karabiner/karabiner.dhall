@@ -228,8 +228,7 @@ in
                     manipulatorFor unlessNiceApp (fromCtrl "equal_sign") (toCommand "equal_sign"),
                     manipulatorFor unlessNiceApp (fromCtrl "0") (toCommand "0"),
                     manipulatorForAll (fromModifier "option" "f4") (toCommand "q"),
-                    manipulatorForAll (fromModifier "option" "grave_accent_and_tilde") (toModifier "left_command" "grave_accent_and_tilde"),
-                    manipulatorForAll (fromModifier "option" "tab") (toModifier "left_command" "tab")
+                    manipulatorForAll (fromModifier "option" "grave_accent_and_tilde") (toModifier "left_command" "grave_accent_and_tilde")
                 ]: List Rule
             },
             devices = [
