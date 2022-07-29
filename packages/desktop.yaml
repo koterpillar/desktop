@@ -6,6 +6,11 @@
   url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-36.noarch.rpm
   os: linux
   distribution: fedora
+- yum_name: vscode
+  yum_url: https://packages.microsoft.com/yumrepos/vscode
+  gpg_key: https://packages.microsoft.com/keys/microsoft.asc
+  os: linux
+  distribution: fedora
 - name: code
   os: linux
 - name: docker

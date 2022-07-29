@@ -4,32 +4,9 @@ set -euo pipefail
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/koterpillar/mybox/main/bootstrap)"
 
-# Prerequisites
-case "$OSTYPE" in
-  darwin*)
-  ;;
-  linux*)
-    DISTRO=$(grep '^ID=' /etc/os-release | cut -d = -f 2)
-
-    case $DISTRO in
-      fedora)
-        if ! rpm -q gpg-pubkey --qf '%{NAME}-%{VERSION}-%{RELEASE}\t%{SUMMARY}\n' | grep -q Microsoft >/dev/null
-        then
-          sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-        fi
-
-        if ! [ -f /etc/yum.repos.d/vscode.repo ]
-        then
-          sudo cp repositories/vscode.repo /etc/yum.repos.d/vscode.repo
-        fi
-
-        ;;
-    esac
-esac
-
 mybox "$@"
 
-# User configuration
+# PATH for tools below might not be picked up yet
 export PATH="$HOME/.local/bin:$PATH"
 
 # Config interpolation
