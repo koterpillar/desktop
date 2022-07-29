@@ -61,8 +61,6 @@
   os: darwin
 - name: tcpdump
   os: linux
-- name: util-linux-user  # chsh
-  os: linux
 - name: visual-studio-code
   os: darwin
   auto_updates: true
