@@ -4,10 +4,10 @@ set -euo pipefail
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/koterpillar/mybox/main/bootstrap)"
 
-mybox "$@"
-
-# PATH for tools below might not be picked up yet
+# PATH for tools might not be picked up yet
 export PATH="$HOME/.local/bin:$PATH"
+
+mybox "$@"
 
 # Config interpolation
 dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json
