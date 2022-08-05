@@ -105,6 +105,8 @@
 - name: tig
 - name: unrar-free
   os: linux
+- repo: sachaos/viddy
+  binary: viddy
 - name: wget
 - url: https://yarnpkg.com/latest.tar.gz
   binary: yarn
