@@ -18,7 +18,6 @@
   service: docker
 - name: homebrew/cask/docker
   os: darwin
-  auto_updates: true
 - name: homebrew/cask-fonts/font-fira-code
   os: darwin
 - name: homebrew/cask-fonts/font-fira-mono
