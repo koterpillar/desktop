@@ -38,6 +38,8 @@
   binary: dhall-to-yaml
 - repo: Wilfred/difftastic
   binary: difft
+- repo: ogham/exa
+  binary: exa
 - name: g++
   os: linux
 - name: gcc
