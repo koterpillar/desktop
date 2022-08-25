@@ -32,16 +32,6 @@ map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', default_opts)
 cmd [[command! -range AlignMarkdownTable <line1>,<line2>EasyAlign *|]]
 cmd [[command! AlignThisMarkdownTable '{,'}AlignMarkdownTable]]
 
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
-  highlight = {
-    enable = true
-  },
-  rainbow = {
-    enable = true,
-    max_file_lines = 5000,
-  }
-}
 
 -- preservim/vim-markdown
 vim.g.vim_markdown_folding_disabled = 1
