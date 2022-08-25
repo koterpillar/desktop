@@ -31,4 +31,6 @@ return require('packer').startup(function()
     run = ':TSUpdate'
   }
   use 'p00f/nvim-ts-rainbow'
+
+  use 'preservim/vim-markdown'
 end)

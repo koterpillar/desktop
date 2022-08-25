@@ -42,3 +42,17 @@ require'nvim-treesitter.configs'.setup {
     max_file_lines = 5000,
   }
 }
+
+-- preservim/vim-markdown
+vim.g.vim_markdown_folding_disabled = 1
+vim.g.vim_markdown_fenced_languages = {
+  'haskell',
+  'java',
+  'javascript', 'js=javascript', 'jsx=javascript',
+  'json',
+  'markdown',
+  'python',
+  'sh', 'bash=sh', 'shell=sh', 'shell script=sh',
+  'typescript', 'ts=typescript', 'tsx=typescript',
+  'yaml', 'yml=yaml',
+}
