@@ -74,6 +74,8 @@
   binary: nvim
   app: nvim
   as_global: true
+- clone: savq/paq-nvim
+  destination: .local/share/nvim/site/pack/paqs/start/paq-nvim
 - name: nmap
 - name: node
   os: darwin
