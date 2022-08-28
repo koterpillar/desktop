@@ -2,5 +2,4 @@
 /config/karabiner/assets
 /config/karabiner/automatic_backups
 /config/karabiner/karabiner.json
-/config/nvim/plugin
 /state.sqlite
