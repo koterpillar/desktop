@@ -39,7 +39,6 @@
 - name: kitty
   os: darwin
 - repo: kovidgoyal/kitty
-  exclude: sig
   binary: kitty
   app: kitty
   os: linux

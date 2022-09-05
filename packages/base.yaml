@@ -69,7 +69,6 @@
 - name: make
 - name: moreutils
 - repo: neovim/neovim
-  exclude: sha256sum
   strip: 1
   binary: nvim
   app: nvim
@@ -100,7 +99,6 @@
   binary: shellcheck
   strip: 1
 - repo: commercialhaskell/stack
-  suffix: tar.gz
   exclude: static
   strip: 1
   binary: stack
