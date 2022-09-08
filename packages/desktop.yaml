@@ -36,7 +36,7 @@
   os: linux
 - name: ImageMagick
   os: linux
-- name: kitty
+- name: homebrew/cask/kitty
   os: darwin
 - repo: kovidgoyal/kitty
   binary: kitty
@@ -48,12 +48,15 @@
   raw: true
   font: PowerlineSymbols.otf
 - name: meld
+  os: linux
+- name: homebrew/cask/meld
+  os: darwin
 - name: mozilla-fira-mono-fonts
   os: linux
 - name: openssh-server
   os: linux
   service: sshd
-- name: rectangle
+- name: homebrew/cask/rectangle
   os: darwin
 - name: homebrew/cask/alt-tab
   os: darwin

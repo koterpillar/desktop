@@ -90,7 +90,7 @@
 - name: pwgen
 - name: python3-ipython
   os: linux
-- name: rar
+- name: homebrew/cask/rar
   os: darwin
 - name: ripgrep
 - name: rlwrap
