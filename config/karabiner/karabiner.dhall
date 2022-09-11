@@ -227,7 +227,8 @@ in
                     manipulatorFor unlessNiceApp (fromCtrl "hyphen") (toCommand "hyphen"),
                     manipulatorFor unlessNiceApp (fromCtrl "equal_sign") (toCommand "equal_sign"),
                     manipulatorFor unlessNiceApp (fromCtrl "0") (toCommand "0"),
-                    manipulatorForAll (fromModifier "option" "f4") (toCommand "q")
+                    manipulatorForAll (fromModifier "option" "f4") (toCommand "q"),
+                    manipulatorForAll (fromModifier "command" "l") (toModifiers ["control", "command"] "q")
                 ]: List Rule
             },
             devices = [
