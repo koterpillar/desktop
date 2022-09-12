@@ -32,18 +32,3 @@ map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', default_opts)
 
 cmd [[command! -range AlignMarkdownTable <line1>,<line2>EasyAlign *|]]
 cmd [[command! AlignThisMarkdownTable '{,'}AlignMarkdownTable]]
-
-
--- preservim/vim-markdown
-vim.g.vim_markdown_folding_disabled = 1
-vim.g.vim_markdown_fenced_languages = {
-  'haskell',
-  'java',
-  'javascript', 'js=javascript', 'jsx=javascript',
-  'json',
-  'markdown',
-  'python',
-  'sh', 'bash=sh', 'shell=sh', 'shell script=sh',
-  'typescript', 'ts=typescript', 'tsx=typescript',
-  'yaml', 'yml=yaml',
-}
