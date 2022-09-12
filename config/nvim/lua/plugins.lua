@@ -9,6 +9,7 @@ require "paq" {
 
   "nvim-lua/plenary.nvim";
   "nvim-telescope/telescope.nvim";
+  "smartpde/telescope-recent-files";
 
   {"nvim-treesitter/nvim-treesitter", run = function() vim.cmd("TSUpdate") end };
 
@@ -25,5 +26,14 @@ require("nvim-treesitter.configs").setup {
   rainbow = {
     enable = true,
     max_file_lines = 5000,
+  }
+}
+
+require("telescope").load_extension("recent_files")
+require("telescope").setup {
+  extensions = {
+    recent_files = {
+      only_cwd = true
+    }
   }
 }

@@ -29,6 +29,7 @@ map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', default_opts)
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', default_opts)
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', default_opts)
 map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', default_opts)
+map('n', '<leader>fr', '<cmd>lua require("telescope").extensions.recent_files.pick()<cr>', default_opts)
 
 cmd [[command! -range AlignMarkdownTable <line1>,<line2>EasyAlign *|]]
 cmd [[command! AlignThisMarkdownTable '{,'}AlignMarkdownTable]]
