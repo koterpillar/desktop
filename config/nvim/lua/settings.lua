@@ -24,6 +24,7 @@ opt.title = true
 opt.wildignore = { "node_modules", "__pycache__", "*.pyc" }
 
 opt.langmap = "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz"
+
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', default_opts)
 map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', default_opts)
 map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', default_opts)
