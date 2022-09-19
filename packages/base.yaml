@@ -1,14 +1,14 @@
 - links: dotfiles
-  dest: ''
+  destination: ''
   dot: true
 - links: bin
-  dest: .local/bin
+  destination: .local/bin
   shallow: true
 - links: config
-  dest: .config
+  destination: .config
   shallow: true
 - links: dotfiles
-  dest: ''
+  destination: ''
   dot: true
   root: true
   only:
@@ -16,7 +16,7 @@
     - zshrc
     - zshenv
 - links: config
-  dest: .config
+  destination: .config
   root: true
   shallow: true
   only:
