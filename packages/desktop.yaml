@@ -36,6 +36,8 @@
   os: linux
 - name: ImageMagick
   os: linux
+- name: homebrew/cask/karabiner-elements
+  os: darwin
 - name: homebrew/cask/kitty
   os: darwin
 - repo: kovidgoyal/kitty
