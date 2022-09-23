@@ -11,9 +11,14 @@
   gpg_key: https://packages.microsoft.com/keys/microsoft.asc
   os: linux
   distribution: fedora
+- yum_name: docker
+  yum_url: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
+  gpg_key: https://download.docker.com/linux/fedora/gpg
+  os: linux
+  distribution: fedora
 - name: code
   os: linux
-- name: docker
+- name: docker-ce
   os: linux
   service: docker
 - name: homebrew/cask/docker
