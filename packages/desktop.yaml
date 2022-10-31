@@ -69,7 +69,7 @@
   os: darwin
 - name: tcpdump
   os: linux
-- name: visual-studio-code
+- name: homebrew/cask/visual-studio-code
   os: darwin
   auto_updates: true
 - name: vlc
