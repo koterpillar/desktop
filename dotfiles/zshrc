@@ -89,7 +89,6 @@ autoload -Uz _zi
 
 # Plugins
 zi light z-shell/H-S-MW
-zstyle ":history-search-multi-word" highlight-color "bg=#ffd9a8,bold"
 
 zi light zsh-users/zsh-syntax-highlighting
 
@@ -321,6 +320,13 @@ else
     DIRCOLORS=true
 fi
 export LS_COLORS=$($DIRCOLORS -b $HOME/.dircolors | head -n 1 | sed "s/LS_COLORS='//;s/';//")
+
+if command_exists atuin
+then
+    ATUIN_NOBIND=true
+    eval "$(atuin init zsh)"
+    bindkey '^r' _atuin_search_widget
+fi
 
 # global /etc/zshprofile overrides $PATH
 # oh-my-zsh overrides $PAGER

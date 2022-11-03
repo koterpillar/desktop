@@ -23,6 +23,9 @@
     - bat
     - nvim
     - git
+- repo: ellie/atuin
+  binary: atuin
+  strip: 1
 - repo: sharkdp/bat
   binary: bat
   strip: 1
