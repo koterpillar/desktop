@@ -1,0 +1,6 @@
+- name: awscli
+  os: darwin
+- name: openjdk@11
+  os: darwin
+- name: gradle
+  os: darwin
