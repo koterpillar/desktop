@@ -18,6 +18,11 @@
   distribution: fedora
 - name: code
   os: linux
+- repo: Ultimaker/Cura
+  include: modern
+  os: linux
+- name: homebrew/cask/ultimaker-cura
+  os: darwin
 - name: docker-ce
   os: linux
   service: docker
