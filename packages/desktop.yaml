@@ -65,6 +65,10 @@
   os: darwin
 - name: mozilla-fira-mono-fonts
   os: linux
+- name: openscad
+  os: linux
+- name: homebrew/cask/openscad
+  os: darwin
 - name: openssh-server
   os: linux
   service: sshd
