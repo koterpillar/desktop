@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
 from glob import glob
 
 import requests
@@ -9,16 +8,18 @@ ADDRESS = "192.168.0.30"
 
 URL = f"http://{ADDRESS}:8080"
 
+
 def main():
-    for extension in ['epub']:
+    for extension in ["epub", "mobi"]:
         for file_name in glob(f"*.{extension}"):
             print(file_name)
             response = requests.post(
                 f"{URL}/files",
-                data={'fileName': file_name},
-                files={'newfile': open(file_name, 'rb')}
+                data={"fileName": file_name},
+                files={"newfile": open(file_name, "rb")},
             )
             response.raise_for_status()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
