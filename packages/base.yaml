@@ -68,6 +68,7 @@
 - clone: jenv/jenv
   destination: .jenv
 - name: htop
+- name: lftp
 - name: lsof
 - name: make
 - name: moreutils
