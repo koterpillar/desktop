@@ -102,10 +102,6 @@
 - repo: koalaman/shellcheck
   binary: shellcheck
   strip: 1
-- repo: commercialhaskell/stack
-  exclude: static
-  strip: 1
-  binary: stack
 - name: strace
   os: linux
 - name: tig

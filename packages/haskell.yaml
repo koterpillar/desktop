@@ -1,0 +1,12 @@
+- repo: commercialhaskell/stack
+  exclude: static
+  strip: 1
+  binary: stack
+- url: https://downloads.haskell.org/~ghcup/0.1.18.0/x86_64-linux-ghcup-0.1.18.0
+  raw: ghcup
+  raw_executable: true
+- repo: tweag/ormolu
+  binary: ormolu
+- repo: haskell/stylish-haskell
+  raw: stylish-haskell
+  raw_executable: true
