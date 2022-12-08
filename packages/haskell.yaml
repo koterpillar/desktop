@@ -1,3 +1,4 @@
+- name: ghc
 - repo: commercialhaskell/stack
   exclude: static
   strip: 1

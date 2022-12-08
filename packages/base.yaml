@@ -49,7 +49,6 @@
 - repo: cli/cli
   strip: 1
   binary: gh
-- name: ghc
 - name: git
 - name: git-lfs
 - repo: dandavison/delta
