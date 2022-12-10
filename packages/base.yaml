@@ -64,8 +64,6 @@
 - name: ipython
   os: darwin
 - name: jq
-- clone: jenv/jenv
-  destination: .jenv
 - name: htop
 - name: lftp
 - name: lsof

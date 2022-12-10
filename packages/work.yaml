@@ -2,5 +2,8 @@
   os: darwin
 - name: openjdk@11
   os: darwin
+- clone: jenv/jenv
+  destination: .jenv
+- name: maven
 - name: gradle
   os: darwin
