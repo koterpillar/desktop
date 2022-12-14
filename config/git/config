@@ -57,6 +57,10 @@
     pushInsteadOf = https://github.com
     pushInsteadOf = git://github.com
 
+[url "ssh://git@bitbucket.org"]
+    pushInsteadOf = https://bitbucket.org
+    pushInsteadOf = git://bitbucket.org
+
 [github]
     user = koterpillar
 
