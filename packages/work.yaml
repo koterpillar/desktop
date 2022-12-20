@@ -1,3 +1,8 @@
+- clone: git@bitbucket.org:akotlyarov-atlassian/local.git
+  destination: projects/local
+- links: ../local/dotfiles
+  destination: ''
+  dot: true
 - name: awscli
   os: darwin
 - name: openjdk@11
