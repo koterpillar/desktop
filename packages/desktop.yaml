@@ -48,6 +48,8 @@
   os: linux
 - repo: laurent22/joplin
   os: linux
+- name: homebrew/cask/joplin
+  os: darwin
 - name: homebrew/cask/karabiner-elements
   os: darwin
 - name: homebrew/cask/kitty
