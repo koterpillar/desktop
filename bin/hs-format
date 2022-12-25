@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+run () {
+    hindent | stylish-haskell
+}
+
+if [ "${1-}" = "--inline" ]
+then
+    run
+    exit 0
+fi
+
+trap '[ -n "$TEMPFILE" ] && rm -f "$TEMPFILE"' EXIT
+
+for FILE in "$@"
+do
+    TEMPFILE=$(mktemp)
+    run < "$FILE" > "$TEMPFILE"
+    if diff -q "$FILE" "$TEMPFILE" >/dev/null
+    then
+        rm "$TEMPFILE"
+    else
+        mv "$TEMPFILE" "$FILE"
+    fi
+done
