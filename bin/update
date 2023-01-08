@@ -15,7 +15,7 @@ then
     brew upgrade
 elif command_exists dnf
 then
-    sudo dnf upgrade
+    sudo dnf -y upgrade
 elif command_exists pkcon
 then
     pkcon refresh --noninteractive
