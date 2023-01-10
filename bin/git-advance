@@ -32,6 +32,10 @@ if branch_exists develop
 then
     advance_branch $MAIN
     TARGET=develop
+elif branch_exists dev
+then
+    advance_branch $MAIN
+    TARGET=dev
 fi
 
 advance_branch $TARGET
