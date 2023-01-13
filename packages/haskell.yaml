@@ -11,5 +11,5 @@
 - repo: tweag/ormolu
   binary: ormolu
 - repo: haskell/stylish-haskell
-  raw: stylish-haskell
-  raw_executable: true
+  strip: 1
+  binary: stylish-haskell
