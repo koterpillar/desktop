@@ -3,7 +3,9 @@
   exclude: static
   strip: 1
   binary: stack
-- url: https://downloads.haskell.org/~ghcup/0.1.18.0/x86_64-linux-ghcup-0.1.18.0
+- repo: haskell/ghcup-hs
+  exclude: json
+  binary: ghcup
   raw: ghcup
   raw_executable: true
 - repo: tweag/ormolu
