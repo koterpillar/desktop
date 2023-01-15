@@ -8,8 +8,6 @@
   binary: ghcup
   raw: ghcup
   raw_executable: true
-- repo: tweag/ormolu
-  binary: ormolu
 - repo: haskell/stylish-haskell
   strip: 1
   binary: stylish-haskell
