@@ -38,7 +38,7 @@
   binary: dhall-to-json
 - repo: dhall-lang/dhall-haskell
   prefix: dhall-yaml
-  binary: dhall-to-yaml
+  binary: dhall-to-yaml-ng
 - repo: Wilfred/difftastic
   binary: difft
 - repo: ogham/exa
