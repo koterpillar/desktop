@@ -13,3 +13,5 @@
 - name: gradle
   os: darwin
 - pipx: atlassian-bb-cli
+- pipx: keyring
+  os: linux
