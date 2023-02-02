@@ -57,6 +57,7 @@
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
+  exclude: 'kitten'
   os: linux
 - name: perl-Image-ExifTool
   os: linux
