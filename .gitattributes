@@ -1,2 +1,3 @@
 config/fcitx5/config filter=fcitx-config
 config/fcitx5/profile filter=fcitx-config
+config/fcitx5/conf/*.conf filter=fcitx-config
