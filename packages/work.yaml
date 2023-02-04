@@ -1,17 +1,1 @@
-- clone: git@bitbucket.org:akotlyarov-atlassian/local.git
-  destination: projects/local
-- links: ../local/dotfiles
-  destination: ''
-  dot: true
-- name: awscli
-  os: darwin
-- name: openjdk@11
-  os: darwin
-- clone: jenv/jenv
-  destination: .jenv
-- name: maven
-- name: gradle
-  os: darwin
-- pipx: atlassian-bb-cli
-- pipx: keyring
-  os: linux
+../local/packages/work.yaml

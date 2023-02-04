@@ -4,6 +4,14 @@ set -euo pipefail
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/koterpillar/mybox/main/bootstrap)"
 
+if [[ $HOSTNAME =~ atlassian ]] || [[ $HOSTNAME =~ C02G ]]
+then
+  if ! [ -d local ]
+  then
+    git clone git@bitbucket.org:akotlyarov-atlassian/local.git
+  fi
+fi
+
 # PATH for tools might not be picked up yet
 export PATH="$HOME/.local/bin:$PATH"
 
