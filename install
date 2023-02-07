@@ -16,6 +16,3 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 mybox "$@"
-
-# Config interpolation
-dhall-to-json < config/karabiner/karabiner.dhall > config/karabiner/karabiner.json

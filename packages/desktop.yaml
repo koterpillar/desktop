@@ -50,8 +50,6 @@
   os: linux
 - name: homebrew/cask/joplin
   os: darwin
-- name: homebrew/cask/karabiner-elements
-  os: darwin
 - name: homebrew/cask/kitty
   os: darwin
 - repo: kovidgoyal/kitty
