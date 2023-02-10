@@ -76,14 +76,7 @@ fi
 
 # Plugin framework
 
-zi_home="${HOME}/.zi"
-if [ ! -d $zi_home ]
-then
-  mkdir -p $zi_home
-  HOME=/dev/null XDG_CONFIG_HOME=/dev/null git clone https://github.com/z-shell/zi.git "${zi_home}/bin"
-fi
-
-source "${zi_home}/bin/zi.zsh"
+source "${HOME}/.zi/bin/zi.zsh"
 autoload -Uz _zi
 (( ${+_comps} )) && _comps[zi]=_zi
 

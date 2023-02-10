@@ -110,3 +110,5 @@
   os: linux
 - shell: /usr/local/bin/zsh
   os: darwin
+- clone: z-shell/zi
+  destination: .zi/bin
