@@ -150,9 +150,8 @@ then
 elif [ $HOST = liushu ]
 then
     PROMPT_HOST=💽柳树
-elif [[ $HOST =~ atlassian ]] || [[ $HOST =~ C02G ]]
+elif [[ $HOST =~ atlassian ]]
 then
-    # Atlassian
     PROMPT_HOST=▲
     if [ $UID != 0 ]
     then
