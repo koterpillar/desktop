@@ -74,6 +74,13 @@ then
     alias unrar=unrar-free
 fi
 
+# Colored man pages
+# https://wiki.archlinux.org/title/Color_output_in_console#man
+# https://man.archlinux.org/man/less.1#D
+# https://felipec.wordpress.com/2021/06/05/adventures-with-man-color/
+export MANPAGER="less -R --use-color --color=d+c --color=u+b"
+export MANROFFOPT="-c"
+
 # Plugin framework
 
 source "${HOME}/.zi/bin/zi.zsh"
@@ -94,7 +101,6 @@ zi snippet OMZ::plugins/docker/_docker
 zi snippet OMZ::plugins/git/git.plugin.zsh
 zi snippet OMZ::plugins/gradle/gradle.plugin.zsh
 zi snippet OMZ::plugins/npm/npm.plugin.zsh
-zi snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
 zi load agkozak/zsh-z
 
