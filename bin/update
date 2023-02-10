@@ -6,11 +6,7 @@ command_exists() {
   type "$1" >/dev/null 2>&1
 }
 
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-fi
-
-if (echo $OSTYPE | grep -q darwin)
+if command_exists brew
 then
     brew upgrade
 elif command_exists dnf
@@ -20,16 +16,6 @@ elif command_exists pkcon
 then
     pkcon refresh --noninteractive
     pkcon update --noninteractive
-elif [ "$NAME" = "Arch Linux" ]
-then
-    sudo true
-    echo Updating...
-    COUNTRY=$(curl -s http://free.ipwhois.io/json/ | jq -r .country)
-    sudo reflector --country $COUNTRY -l 200 -p http --sort rate \
-        --save /etc/pacman.d/mirrorlist || true
-    sudo pacman -Syuw --noconfirm
-    sudo pacman -Su --noconfirm
-    sudo aura -Au --noconfirm
 else
     echo "No PackageKit, don't know how to update." >&2
     exit 1
