@@ -44,7 +44,7 @@ bindkey '^I' expand-or-complete-prefix
 
 # Handy and pretty aliases
 command_exists() {
-    type -f "$1" >/dev/null 2>&1
+    type "$1" >/dev/null 2>&1
 }
 
 alias grep='grep --color=auto'
@@ -59,7 +59,7 @@ else
     alias ls='ls --color=auto'
 fi
 
-if ! type open >/dev/null
+if ! command_exists open
 then
     alias open=xdg-open
 fi
@@ -115,7 +115,7 @@ load-version-managers() {
         fi
     fi
 
-    if type jenv >/dev/null && \
+    if command_exists jenv && \
         ([ -f .java-version ] || [ -f build.gradle ] || [ -f build.gradle.kts ]); then
         if [ -z "$JENV_LOADED" ]; then
             eval "$(jenv init -)"
