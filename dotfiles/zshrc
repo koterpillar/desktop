@@ -81,15 +81,13 @@ fi
 export MANPAGER="less -R --use-color --color=d+c --color=u+b"
 export MANROFFOPT="-c"
 
-# Plugin framework
+# Plugins
 
 source "${HOME}/.zi/bin/zi.zsh"
 autoload -Uz _zi
 (( ${+_comps} )) && _comps[zi]=_zi
 
 # Plugins
-zi light z-shell/H-S-MW
-
 zi light zsh-users/zsh-syntax-highlighting
 
 # Disable oh-my-zsh autoupdate, rely on ZI
