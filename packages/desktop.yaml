@@ -26,6 +26,8 @@
 - name: docker-ce
   os: linux
   service: docker
+- name: docker-compose-plugin
+  os: linux
 - name: homebrew/cask/docker
   os: darwin
 - name: homebrew/cask-fonts/font-fira-code
