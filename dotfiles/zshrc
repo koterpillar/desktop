@@ -130,6 +130,13 @@ load-version-managers() {
 add-zsh-hook chpwd load-version-managers
 load-version-managers
 
+if [ -d "$HOME/.pyenv" ]
+then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
 # Theme
 autoload -U colors
 colors
