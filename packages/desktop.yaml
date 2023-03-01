@@ -16,6 +16,11 @@
   gpg_key: https://download.docker.com/linux/fedora/gpg
   os: linux
   distribution: fedora
+- yum_name: google-chrome
+  yum_url: https://dl.google.com/linux/chrome/rpm/stable/x86_64
+  gpg_key: https://dl.google.com/linux/linux_signing_key.pub
+  os: linux
+  distribution: fedora
 - name: code
   os: linux
 - repo: Ultimaker/Cura
@@ -45,6 +50,8 @@
 - name: fcitx5-mozc
   os: linux
 - name: fcitx5-configtool
+  os: linux
+- name: google-chrome-stable
   os: linux
 - name: ImageMagick
   os: linux
