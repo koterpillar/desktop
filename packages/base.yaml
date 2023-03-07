@@ -75,8 +75,12 @@
   os: darwin
 - name: nodejs
   os: linux
+- name: nodejs-npm
+  os: linux
+  distribution: fedora
 - name: npm
   os: linux
+  distribution: debian
 - clone: nvm-sh/nvm
   destination: .nvm
 - pip: pipx
