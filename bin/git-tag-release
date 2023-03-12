@@ -1,5 +1,7 @@
-#!/bin/sh -e
+#!/bin/sh
 # Make a release tag following the last one
+
+set -e
 
 CURRENT=v$(git max-release)
 

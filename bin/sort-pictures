@@ -1,4 +1,6 @@
-#!/bin/sh -e
+#!/bin/sh
+
+set -e
 
 weixin_timestamp() {
     echo "$1" | sed -r 's/[^0-9]//g;s/(^[0-9]{10}).+$/\1/g'
