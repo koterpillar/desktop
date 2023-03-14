@@ -17,8 +17,6 @@
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
   distribution: fedora
 - name: code
-- repo: Ultimaker/Cura
-  include: modern
 - name: docker-ce
   service: docker
 - name: docker-compose-plugin
@@ -40,7 +38,6 @@
   font: PowerlineSymbols.otf
 - name: meld
 - name: mozilla-fira-mono-fonts
-- name: openscad
 - name: openssh-server
   service: sshd
 - name: tcpdump
