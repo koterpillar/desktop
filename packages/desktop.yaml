@@ -1,100 +1,49 @@
 - name: rpmfusion-free-release
   url: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-37.noarch.rpm
-  os: linux
   distribution: fedora
 - name: rpmfusion-nonfree-release
   url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-37.noarch.rpm
-  os: linux
   distribution: fedora
 - yum_name: vscode
   yum_url: https://packages.microsoft.com/yumrepos/vscode
   gpg_key: https://packages.microsoft.com/keys/microsoft.asc
-  os: linux
   distribution: fedora
 - yum_name: docker
   yum_url: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
   gpg_key: https://download.docker.com/linux/fedora/gpg
-  os: linux
   distribution: fedora
 - yum_name: google-chrome
   yum_url: https://dl.google.com/linux/chrome/rpm/stable/x86_64
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
-  os: linux
   distribution: fedora
 - name: code
-  os: linux
 - repo: Ultimaker/Cura
   include: modern
-  os: linux
-- name: homebrew/cask/ultimaker-cura
-  os: darwin
 - name: docker-ce
-  os: linux
   service: docker
 - name: docker-compose-plugin
-  os: linux
-- name: homebrew/cask/docker
-  os: darwin
-- name: homebrew/cask-fonts/font-fira-code
-  os: darwin
-- name: homebrew/cask-fonts/font-fira-mono
-  os: darwin
-- name: homebrew/cask-fonts/font-fira-sans
-  os: darwin
 - name: fcitx5
-  os: linux
 - name: fcitx5-chinese-addons
-  os: linux
 - name: fcitx5-m17n
-  os: linux
 - name: fcitx5-mozc
-  os: linux
 - name: fcitx5-configtool
-  os: linux
 - name: google-chrome-stable
-  os: linux
 - name: ImageMagick
-  os: linux
 - repo: laurent22/joplin
-  os: linux
-- name: homebrew/cask/joplin
-  os: darwin
-- name: homebrew/cask/kitty
-  os: darwin
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
   exclude: 'kitten'
-  os: linux
 - name: perl-Image-ExifTool
-  os: linux
 - url: https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
   raw: true
   font: PowerlineSymbols.otf
 - name: meld
-  os: linux
-- name: homebrew/cask/meld
-  os: darwin
 - name: mozilla-fira-mono-fonts
-  os: linux
 - name: openscad
-  os: linux
-- name: homebrew/cask/openscad
-  os: darwin
 - name: openssh-server
-  os: linux
   service: sshd
-- name: homebrew/cask/rectangle
-  os: darwin
-- name: homebrew/cask/alt-tab
-  os: darwin
 - name: tcpdump
-  os: linux
-- name: homebrew/cask/visual-studio-code
-  os: darwin
-  auto_updates: true
 - name: vlc
-  os: linux
 - name: wl-clipboard
-  os: linux
 - name: youtube-dl

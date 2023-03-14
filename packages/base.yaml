@@ -30,15 +30,12 @@
   binary: bat
   strip: 1
 - name: colordiff
-- name: coreutils
-  os: darwin
 - name: curl
 - repo: Wilfred/difftastic
   binary: difft
 - repo: ogham/exa
   binary: exa
 - name: g++
-  os: linux
 - name: gcc
 - repo: cli/cli
   strip: 1
@@ -48,15 +45,9 @@
 - repo: dandavison/delta
   binary: delta
   strip: 1
-- name: gnu-sed
-  os: darwin
-- name: gnu-tar
-  os: darwin
 - repo: ndmitchell/hlint
   strip: 1
   binary: hlint
-- name: ipython
-  os: darwin
 - name: jq
 - name: htop
 - name: lftp
@@ -71,15 +62,10 @@
 - clone: savq/paq-nvim
   destination: .local/share/nvim/site/pack/paqs/start/paq-nvim
 - name: nmap
-- name: node
-  os: darwin
 - name: nodejs
-  os: linux
 - name: nodejs-npm
-  os: linux
   distribution: fedora
 - name: npm
-  os: linux
   distribution: debian
 - clone: nvm-sh/nvm
   destination: .nvm
@@ -88,9 +74,6 @@
 - name: pv
 - name: pwgen
 - name: python3-ipython
-  os: linux
-- name: homebrew/cask/rar
-  os: darwin
 - name: ripgrep
 - name: rlwrap
 - name: rsync
@@ -98,10 +81,8 @@
   binary: shellcheck
   strip: 1
 - name: strace
-  os: linux
 - name: tig
 - name: unrar-free
-  os: linux
 - repo: sachaos/viddy
   binary: viddy
 - name: wget
@@ -111,8 +92,5 @@
   strip: 1
 - name: zsh
 - shell: /bin/zsh
-  os: linux
-- shell: /usr/local/bin/zsh
-  os: darwin
 - clone: z-shell/zi
   destination: .zi/bin
