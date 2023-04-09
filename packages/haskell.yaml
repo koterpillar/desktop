@@ -4,7 +4,9 @@
   strip: 1
   binary: stack
 - repo: haskell/ghcup-hs
-  exclude: json
+  exclude:
+    - json
+    - src
   binary: ghcup
   raw: ghcup
   raw_executable: true
