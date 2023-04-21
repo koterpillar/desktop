@@ -1,8 +1,8 @@
 - name: rpmfusion-free-release
-  url: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-37.noarch.rpm
+  url: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-38.noarch.rpm
   distribution: fedora
 - name: rpmfusion-nonfree-release
-  url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-37.noarch.rpm
+  url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-38.noarch.rpm
   distribution: fedora
 - yum_name: vscode
   yum_url: https://packages.microsoft.com/yumrepos/vscode
