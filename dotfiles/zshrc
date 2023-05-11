@@ -94,7 +94,6 @@ zi light zsh-users/zsh-syntax-highlighting
 DISABLE_AUTO_UPDATE=true
 zi snippet OMZ::lib/git.zsh
 zi snippet OMZ::lib/termsupport.zsh
-zi snippet OMZ::plugins/aws/aws.plugin.zsh
 zi snippet OMZ::plugins/docker/_docker
 zi snippet OMZ::plugins/git/git.plugin.zsh
 zi snippet OMZ::plugins/gradle/gradle.plugin.zsh
