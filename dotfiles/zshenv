@@ -4,7 +4,7 @@ export PATH
 
 export PAGER=less
 export LESS='-RFX'
-export EDITOR="nvim"
+export EDITOR=nvim
 alias vim=nvim
 
 e() {
