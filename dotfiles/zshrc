@@ -162,6 +162,10 @@ print_image () {
     builtin printf "\e_Ga=p,i=$index,q=1,c=$width,r=1\e\\"
 }
 
+supports_images () {
+    [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [[ ${TERM:-} = xterm-kitty ]] 
+}
+
 if [ $HOST = taohua ]
 then
     if [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]
@@ -175,7 +179,7 @@ then
     PROMPT_HOST=💽柳树
 elif [[ $HOST =~ atlassian ]]
 then
-    if [[ ${TERM:-} = xterm-kitty ]]
+    if supports_images
     then
         load_image_resource 140 atlassian.png
         PROMPT_HOST=$(print_image 140 2)
@@ -192,7 +196,7 @@ else
 fi
 
 PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
-if [[ ${TERM:-} = xterm-kitty ]]
+if supports_images
 then
     load_image_resource 141 arrow.png
     PROMPT_ARROW=$(print_image 141 1)
