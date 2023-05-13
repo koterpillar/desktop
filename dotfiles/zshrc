@@ -149,6 +149,19 @@ else
     PROMPT_HOST_COLOR=$fg[green]
 fi
 
+load_image_resource () {
+    index=$1
+    resource=$2
+
+    builtin printf "\e_Gi=$index,f=100,a=t,q=1,t=f;$(echo -n "$DESKTOP_PATH/resources/$resource" | base64)\e\\"
+}
+
+print_image () {
+    index=$1
+    width=$2
+    builtin printf "\e_Ga=p,i=$index,q=1,c=$width,r=1\e\\"
+}
+
 if [ $HOST = taohua ]
 then
     PROMPT_HOST=桃花
@@ -159,9 +172,8 @@ elif [[ $HOST =~ atlassian ]]
 then
     if [[ ${TERM:-} = xterm-kitty ]]
     then
-        DESKTOP=$()
-        builtin printf "\e_Gi=148,f=100,a=t,q=1,t=f;$(echo -n "$DESKTOP_PATH/resources/atlassian.png" | base64)\e\\"
-        PROMPT_HOST=$(builtin printf "\e_Ga=p,i=148,q=1,c=2,r=1\e\\")
+        load_image_resource 140 atlassian.png
+        PROMPT_HOST=$(print_image 140 2)
     else
         PROMPT_HOST=▲
         if [ $UID != 0 ]
@@ -175,7 +187,13 @@ else
 fi
 
 PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
-PROMPT_ARROW=%{$'\e[38;2;251;240;255m'%}$'\UE0B0'%{$reset_color%}
+if [[ ${TERM:-} = xterm-kitty ]]
+then
+    load_image_resource 141 arrow.png
+    PROMPT_ARROW=$(print_image 141 1)
+else
+    PROMPT_ARROW=%{$'\e[38;2;251;240;255m'%}$'\UE0B0'%{$reset_color%}
+fi
 PROMPT_RESET=%{$reset_color%}$PROMPT_BACKGROUND
 
 setopt PROMPT_SUBST
