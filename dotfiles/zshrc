@@ -202,7 +202,7 @@ if supports_images
 then
     PROMPT_ARROW=$(print_image_resource arrow.png 1)
 else
-    PROMPT_ARROW=%{$'\e[38;2;251;240;255m'%}$'\UE0B0'%{$reset_color%}
+    PROMPT_ARROW=' '
 fi
 PROMPT_RESET=%{$reset_color%}$PROMPT_BACKGROUND
 
