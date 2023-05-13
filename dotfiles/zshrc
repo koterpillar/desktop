@@ -5,6 +5,8 @@ setopt share_history nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
 WORDCHARS=${WORDCHARS//[\/-]}
 
+DESKTOP_PATH=$(dirname $(dirname $(realpath ${(%):-%x})))
+
 zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu yes select
 setopt complete_in_word
@@ -155,11 +157,18 @@ then
     PROMPT_HOST=💽柳树
 elif [[ $HOST =~ atlassian ]]
 then
-    PROMPT_HOST=▲
-    if [ $UID != 0 ]
+    if [[ ${TERM:-} = xterm-kitty ]]
     then
-        # https://atlassian.design/foundations/color
-        PROMPT_HOST_COLOR=$'\e[38;2;0;82;204m'
+        DESKTOP=$()
+        builtin printf "\e_Gi=148,f=100,a=t,q=1,t=f;$(echo -n "$DESKTOP_PATH/resources/atlassian.png" | base64)\e\\"
+        PROMPT_HOST=$(builtin printf "\e_Ga=p,i=148,q=1,c=2,r=1\e\\")
+    else
+        PROMPT_HOST=▲
+        if [ $UID != 0 ]
+        then
+            # https://atlassian.design/foundations/color
+            PROMPT_HOST_COLOR=$'\e[38;2;0;82;204m'
+        fi
     fi
 else
     PROMPT_HOST=$HOST
