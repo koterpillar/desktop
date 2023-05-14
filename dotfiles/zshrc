@@ -166,7 +166,7 @@ print_image_resource () {
 }
 
 supports_images () {
-    [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [[ ${TERM:-} = xterm-kitty ]] 
+    [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [[ ${TERM:-} = xterm-kitty ]]
 }
 
 if [ $HOST = taohua ]
