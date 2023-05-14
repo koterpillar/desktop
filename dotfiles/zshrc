@@ -233,8 +233,7 @@ else
     fi
 fi
 
-DIAMOND='♦'
-DIR_DECORATIONS=("$HOME/projects" "$DIAMOND" "$HOME/Projects" "$DIAMOND" "$HOME/Downloads" '⤓' "$HOME" '~')
+DIR_DECORATIONS=("$HOME/projects" '♦' "$HOME/desktop" '🗔' "$HOME/pictures" '🖼' "$HOME/books" '🕮' "$HOME" '~')
 
 desktop_func_join() {
     if [ -z "$1" ]
