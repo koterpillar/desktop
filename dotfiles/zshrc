@@ -155,6 +155,8 @@ print_image_resource () {
     resource=$1
     width=$2
 
+    echo -n '%{'
+
     if [ -z "${PROMPT_IMAGE_INDICES[$resource]:-}"]
     then
         new_index=$RANDOM
@@ -163,6 +165,8 @@ print_image_resource () {
     fi
 
     builtin printf "\e_Ga=p,i=$PROMPT_IMAGE_INDICES[$resource],q=1,c=$width,r=1\e\\"
+
+    echo -n "%${width}G%}"
 }
 
 supports_images () {
