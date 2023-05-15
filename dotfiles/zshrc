@@ -149,24 +149,21 @@ else
     PROMPT_HOST_COLOR=$fg[green]
 fi
 
-declare -A PROMPT_IMAGE_INDICES
+typeset -A PROMPT_IMAGE_INDICES
 
 print_image_resource () {
     resource=$1
     width=$2
+    outvar=$3
 
-    echo -n '%{'
-
-    if [ -z "${PROMPT_IMAGE_INDICES[$resource]:-}"]
+    if [ -z "${PROMPT_IMAGE_INDICES[$resource]:-}" ]
     then
         new_index=$RANDOM
-        builtin printf "\e_Gi=$new_index,f=100,a=t,q=2,t=f;$(echo -n "$DESKTOP_PATH/resources/$resource" | base64)\e\\"
+        builtin printf "\e_Gi=$new_index,f=100,a=t,q=1,t=f;$(echo -n "$DESKTOP_PATH/resources/$resource" | base64)\e\\"
         PROMPT_IMAGE_INDICES[$resource]=$new_index
     fi
 
-    builtin printf "\e_Ga=p,i=$PROMPT_IMAGE_INDICES[$resource],q=1,c=$width,r=1\e\\"
-
-    echo -n "%${width}G%}"
+    builtin printf -v $outvar "%%{\e_Ga=p,i=$PROMPT_IMAGE_INDICES[$resource],q=1,c=$width,r=1\e\\%%${width}G%%}"
 }
 
 supports_images () {
@@ -188,7 +185,7 @@ elif [[ $HOST =~ atlassian ]]
 then
     if supports_images
     then
-        PROMPT_HOST=$(print_image_resource atlassian.png 2)
+        print_image_resource atlassian.png 2 PROMPT_HOST
     else
         PROMPT_HOST=▲
         if [ $UID != 0 ]
@@ -204,7 +201,7 @@ fi
 PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
 if supports_images
 then
-    PROMPT_ARROW=$(print_image_resource arrow.png 1)
+    print_image_resource arrow.png 1 PROMPT_ARROW
 else
     PROMPT_ARROW=' '
 fi
