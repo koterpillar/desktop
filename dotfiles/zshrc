@@ -163,7 +163,7 @@ print_image_resource () {
         PROMPT_IMAGE_INDICES[$resource]=$new_index
     fi
 
-    builtin printf -v $outvar "%%{\e_Ga=p,i=$PROMPT_IMAGE_INDICES[$resource],q=1,c=$width,r=1\e\\%%${width}G%%}"
+    builtin printf -v $outvar "%%{\e_Ga=p,i=$PROMPT_IMAGE_INDICES[$resource],q=2,c=$width,r=1\e\\%%${width}G%%}"
 }
 
 supports_images () {
