@@ -35,6 +35,9 @@
   binary: difft
 - repo: ogham/exa
   binary: exa
+- repo: sharkdp/hexyl
+  binary: hexyl
+  strip: 1
 - name: g++
 - name: gcc
 - repo: cli/cli
