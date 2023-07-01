@@ -27,7 +27,6 @@
 - name: fcitx5-configtool
 - name: google-chrome-stable
 - name: ImageMagick
-- repo: laurent22/joplin
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
