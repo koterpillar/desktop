@@ -72,7 +72,6 @@
   distribution: debian
 - clone: nvm-sh/nvm
   destination: .nvm
-- pip: pipx
 - pipx: poetry
 - name: pv
 - name: pwgen
