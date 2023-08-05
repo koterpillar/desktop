@@ -11,6 +11,4 @@ e() {
     ${(z)EDITOR} "$@"
 }
 
-export WORKON_HOME=~/.virtualenvs
-
 export _JAVA_AWT_WM_NONREPARENTING=1
