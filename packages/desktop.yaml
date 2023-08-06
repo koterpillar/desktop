@@ -42,4 +42,6 @@
 - name: tcpdump
 - name: vlc
 - name: wl-clipboard
-- name: youtube-dl
+- repo: yt-dlp/yt-dlp
+  strip: 1
+  binary: yt-dlp
