@@ -96,3 +96,5 @@
 - shell: /bin/zsh
 - clone: z-shell/zi
   destination: .zi/bin
+- npm: git-json-merge
+  binary: git-json-merge
