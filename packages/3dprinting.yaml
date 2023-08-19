@@ -1,3 +1,2 @@
-- repo: Ultimaker/Cura
-  include: modern
+- name: cura
 - name: openscad
