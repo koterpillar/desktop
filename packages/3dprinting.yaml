@@ -1,2 +1,12 @@
 - name: cura
 - name: openscad
+- repo: prusa3d/PrusaSlicer
+  binary:
+    - prusa-slicer
+    - prusa-gcodeviewer
+  exclude:
+    - aarch64
+    - armv7
+    - GTK2
+    - AppImage
+  strip: 1
