@@ -45,6 +45,10 @@
   binary: gh
 - name: git
 - name: git-lfs
+- repo: tummychow/git-absorb
+  binary: git-absorb
+  strip: 1
+  exclude: arm
 - repo: dandavison/delta
   binary: delta
   strip: 1
