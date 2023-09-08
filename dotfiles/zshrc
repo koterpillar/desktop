@@ -51,9 +51,9 @@ command_exists() {
 
 alias grep='grep --color=auto'
 
-if command_exists exa
+if command_exists eza
 then
-    alias ls=exa
+    alias ls=eza
 elif command_exists gls
 then
     alias ls='gls --color=auto'
