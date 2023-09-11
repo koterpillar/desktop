@@ -34,8 +34,6 @@
 - repo: Wilfred/difftastic
   binary: difft
 - repo: eza-community/eza
-  raw: eza
-  raw_executable: true
   binary: eza
 - repo: sharkdp/hexyl
   binary: hexyl
