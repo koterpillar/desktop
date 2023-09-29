@@ -40,6 +40,7 @@
 - name: openssh-server
   service: sshd
 - name: tcpdump
+- pipx: torrt
 - name: vlc
 - name: wl-clipboard
 - repo: yt-dlp/yt-dlp
