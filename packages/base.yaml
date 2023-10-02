@@ -35,6 +35,7 @@
   binary: difft
 - repo: eza-community/eza
   binary: eza
+  exclude: static
 - repo: sharkdp/hexyl
   binary: hexyl
   strip: 1
