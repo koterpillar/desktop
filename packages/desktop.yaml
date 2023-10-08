@@ -32,9 +32,6 @@
   app: kitty
   exclude: 'kitten'
 - system: perl-Image-ExifTool
-- url: https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-  raw: true
-  font: PowerlineSymbols.otf
 - system: meld
 - system: mozilla-fira-mono-fonts
 - system: openssh-server
