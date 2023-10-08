@@ -1,7 +1,7 @@
-- name: rpmfusion-free-release
+- system: rpmfusion-free-release
   url: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-38.noarch.rpm
   distribution: fedora
-- name: rpmfusion-nonfree-release
+- system: rpmfusion-nonfree-release
   url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-38.noarch.rpm
   distribution: fedora
 - yum_name: vscode
@@ -16,33 +16,33 @@
   yum_url: https://dl.google.com/linux/chrome/rpm/stable/x86_64
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
   distribution: fedora
-- name: code
-- name: docker-ce
+- system: code
+- system: docker-ce
   service: docker
-- name: docker-compose-plugin
-- name: fcitx5
-- name: fcitx5-chinese-addons
-- name: fcitx5-m17n
-- name: fcitx5-mozc
-- name: fcitx5-configtool
-- name: google-chrome-stable
-- name: ImageMagick
+- system: docker-compose-plugin
+- system: fcitx5
+- system: fcitx5-chinese-addons
+- system: fcitx5-m17n
+- system: fcitx5-mozc
+- system: fcitx5-configtool
+- system: google-chrome-stable
+- system: ImageMagick
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
   exclude: 'kitten'
-- name: perl-Image-ExifTool
+- system: perl-Image-ExifTool
 - url: https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
   raw: true
   font: PowerlineSymbols.otf
-- name: meld
-- name: mozilla-fira-mono-fonts
-- name: openssh-server
+- system: meld
+- system: mozilla-fira-mono-fonts
+- system: openssh-server
   service: sshd
-- name: tcpdump
+- system: tcpdump
 - pipx: torrt
-- name: vlc
-- name: wl-clipboard
+- system: vlc
+- system: wl-clipboard
 - repo: yt-dlp/yt-dlp
   strip: 1
   binary: yt-dlp

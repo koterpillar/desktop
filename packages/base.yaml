@@ -29,8 +29,8 @@
 - repo: sharkdp/bat
   binary: bat
   strip: 1
-- name: colordiff
-- name: curl
+- system: colordiff
+- system: curl
 - repo: Wilfred/difftastic
   binary: difft
 - repo: eza-community/eza
@@ -39,13 +39,13 @@
 - repo: sharkdp/hexyl
   binary: hexyl
   strip: 1
-- name: g++
-- name: gcc
+- system: g++
+- system: gcc
 - repo: cli/cli
   strip: 1
   binary: gh
-- name: git
-- name: git-lfs
+- system: git
+- system: git-lfs
 - repo: tummychow/git-absorb
   binary: git-absorb
   strip: 1
@@ -56,12 +56,12 @@
 - repo: ndmitchell/hlint
   strip: 1
   binary: hlint
-- name: jq
-- name: htop
-- name: lftp
-- name: lsof
-- name: make
-- name: moreutils
+- system: jq
+- system: htop
+- system: lftp
+- system: lsof
+- system: make
+- system: moreutils
 - repo: neovim/neovim
   strip: 1
   binary: nvim
@@ -69,35 +69,35 @@
   root: true
 - clone: savq/paq-nvim
   destination: .local/share/nvim/site/pack/paqs/start/paq-nvim
-- name: nmap
-- name: nodejs
-- name: nodejs-npm
+- system: nmap
+- system: nodejs
+- system: nodejs-npm
   distribution: fedora
-- name: npm
+- system: npm
   distribution: debian
 - clone: nvm-sh/nvm
   destination: .nvm
 - pipx: poetry
-- name: pv
-- name: pwgen
-- name: python3-ipython
-- name: ripgrep
-- name: rlwrap
-- name: rsync
+- system: pv
+- system: pwgen
+- system: python3-ipython
+- system: ripgrep
+- system: rlwrap
+- system: rsync
 - repo: koalaman/shellcheck
   binary: shellcheck
   strip: 1
-- name: strace
-- name: tig
-- name: unrar-free
+- system: strace
+- system: tig
+- system: unrar-free
 - repo: sachaos/viddy
   binary: viddy
-- name: wget
+- system: wget
 - url: https://yarnpkg.com/latest.tar.gz
   binary: yarn
   binary_wrapper: true
   strip: 1
-- name: zsh
+- system: zsh
 - shell: /bin/zsh
 - clone: z-shell/zi
   destination: .zi/bin

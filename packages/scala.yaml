@@ -4,7 +4,7 @@
   raw: 'amm'
   raw_executable: true
   binary: amm
-- name: maven
+- system: maven
 - repo: sbt/sbt
   suffix: tgz
   strip: 1
