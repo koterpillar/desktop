@@ -39,10 +39,6 @@
     prune-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
     showtool = "!showci () { rev=${1:-HEAD}; git difftool $rev~1 $rev; }; showci $1"
 
-[merge "json"]
-    name = custom merge driver for json files
-    driver = git-json-merge %A %O %B
-
 [filter "lfs"]
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
