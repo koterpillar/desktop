@@ -21,3 +21,4 @@ metals.sbt
 /.rgignore
 /Session.vim
 /tags
+/yarn-error.log
