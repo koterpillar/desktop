@@ -11,7 +11,7 @@ require "paq" {
   "nvim-telescope/telescope.nvim";
   "smartpde/telescope-recent-files";
 
-  {"nvim-treesitter/nvim-treesitter", run = function() vim.cmd("TSUpdate") end };
+  {"nvim-treesitter/nvim-treesitter", build = ':TSUpdate' };
 
   "p00f/nvim-ts-rainbow";
 }
