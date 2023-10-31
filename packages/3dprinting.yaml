@@ -1,4 +1,3 @@
-- system: cura
 - system: openscad
 - repo: prusa3d/PrusaSlicer
   binary:
