@@ -107,29 +107,8 @@ zi load zsh-users/zsh-autosuggestions
 
 zi load popstas/zsh-command-time
 
-autoload -U add-zsh-hook
-load-version-managers() {
-    if [ -d $HOME/.nvm ] && \
-        ([ -f .nvmrc ] || [ -f package.json ]); then
-        if [ -z "$NVM_LOADED" ]; then
-            source "$HOME/.nvm/nvm.sh"
-            NVM_LOADED=1
-        fi
-        if [ -f .nvmrc ]; then
-            nvm use
-        fi
-    fi
-
-    if command_exists jenv && \
-        ([ -f .java-version ] || [ -f build.gradle ] || [ -f build.gradle.kts ]); then
-        if [ -z "$JENV_LOADED" ]; then
-            eval "$(jenv init -)"
-            JENV_LOADED=1
-        fi
-    fi
-}
-add-zsh-hook chpwd load-version-managers
-load-version-managers
+export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_available
+. "$HOME/.asdf/asdf.sh"
 
 if [ -d "$HOME/.pyenv" ]
 then

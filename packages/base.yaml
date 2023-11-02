@@ -23,6 +23,12 @@
     - bat
     - nvim
     - git
+- clone: asdf-vm/asdf
+  destination: .asdf
+- clone: halcyon/asdf-java
+  destination: .asdf/plugins/java
+- clone: asdf-vm/asdf-nodejs
+  destination: .asdf/plugins/nodejs
 - repo: ellie/atuin
   binary: atuin
   strip: 1
@@ -75,8 +81,6 @@
   distribution: fedora
 - system: npm
   distribution: debian
-- clone: nvm-sh/nvm
-  destination: .nvm
 - pipx: poetry
 - system: pv
 - system: pwgen
