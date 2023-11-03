@@ -25,6 +25,8 @@
     - git
 - clone: asdf-vm/asdf
   destination: .asdf
+- clone: andrewthauer/asdf-alias
+  destination: .asdf/plugins/alias
 - clone: halcyon/asdf-java
   destination: .asdf/plugins/java
 - clone: asdf-vm/asdf-nodejs
