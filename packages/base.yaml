@@ -87,7 +87,14 @@
 - system: pv
 - system: pwgen
 - system: python3-ipython
-- system: ripgrep
+- repo: BurntSushi/ripgrep
+  exclude:
+    - aarch64
+    - i686
+    - powerpc64
+    - s390x
+  strip: 1
+  binary: rg
 - system: rlwrap
 - system: rsync
 - repo: koalaman/shellcheck
