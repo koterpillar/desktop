@@ -31,6 +31,8 @@
   destination: .asdf/plugins/java
 - clone: asdf-vm/asdf-nodejs
   destination: .asdf/plugins/nodejs
+- repo: ast-grep/ast-grep
+  binary: sg
 - repo: ellie/atuin
   binary: atuin
   strip: 1
