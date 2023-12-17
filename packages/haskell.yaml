@@ -10,6 +10,11 @@
   binary: ghcup
   raw: ghcup
   raw_executable: true
+- repo: mihaimaruseac/hindent
+  suffix: hindent
+  binary: hindent
+  raw: hindent
+  raw_executable: true
 - repo: haskell/stylish-haskell
   strip: 1
   binary: stylish-haskell
