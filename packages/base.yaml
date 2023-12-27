@@ -50,6 +50,7 @@
   binary: hexyl
   strip: 1
 - system: g++
+  os: linux
 - system: gcc
 - repo: cli/cli
   strip: 1
@@ -81,14 +82,26 @@
   destination: .local/share/nvim/site/pack/paqs/start/paq-nvim
 - system: nmap
 - system: nodejs
+  os: linux
 - system: nodejs-npm
+  os: linux
   distribution: fedora
 - system: npm
+  os: linux
   distribution: debian
+- system: node
+  os: darwin
 - pipx: poetry
 - system: pv
 - system: pwgen
 - system: python3-ipython
+  os: linux
+- system: ipython
+  os: darwin
+- system: homebrew/cask/rar
+  os: darwin
+- system: unrar-free
+  os: linux
 - repo: BurntSushi/ripgrep
   exclude:
     - aarch64
@@ -103,8 +116,8 @@
   binary: shellcheck
   strip: 1
 - system: strace
+  os: linux
 - system: tig
-- system: unrar-free
 - repo: sachaos/viddy
   binary: viddy
 - system: wget
