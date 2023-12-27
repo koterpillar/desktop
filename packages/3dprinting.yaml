@@ -8,4 +8,3 @@
     - arm
     - GTK2
     - AppImage
-  strip: 1

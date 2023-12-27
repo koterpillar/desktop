@@ -35,10 +35,8 @@
   binary: sg
 - repo: ellie/atuin
   binary: atuin
-  strip: 1
 - repo: sharkdp/bat
   binary: bat
-  strip: 1
 - system: colordiff
 - system: curl
 - repo: Wilfred/difftastic
@@ -48,24 +46,19 @@
   exclude: static
 - repo: sharkdp/hexyl
   binary: hexyl
-  strip: 1
 - system: g++
   os: linux
 - system: gcc
 - repo: cli/cli
-  strip: 1
   binary: gh
 - system: git
 - system: git-lfs
 - repo: tummychow/git-absorb
   binary: git-absorb
-  strip: 1
   exclude: arm
 - repo: dandavison/delta
   binary: delta
-  strip: 1
 - repo: ndmitchell/hlint
-  strip: 1
   binary: hlint
 - system: jq
 - system: htop
@@ -74,7 +67,6 @@
 - system: make
 - system: moreutils
 - repo: neovim/neovim
-  strip: 1
   binary: nvim
   app: nvim
   root: true
@@ -108,13 +100,11 @@
     - i686
     - powerpc64
     - s390x
-  strip: 1
   binary: rg
 - system: rlwrap
 - system: rsync
 - repo: koalaman/shellcheck
   binary: shellcheck
-  strip: 1
 - system: strace
   os: linux
 - system: tig
@@ -124,7 +114,6 @@
 - url: https://yarnpkg.com/latest.tar.gz
   binary: yarn
   binary_wrapper: true
-  strip: 1
 - system: zsh
 - shell: /bin/zsh
 - clone: z-shell/zi

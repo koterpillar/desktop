@@ -41,5 +41,4 @@
 - system: vlc
 - system: wl-clipboard
 - repo: yt-dlp/yt-dlp
-  strip: 1
   binary: yt-dlp

@@ -1,7 +1,6 @@
 - system: ghc
 - repo: commercialhaskell/stack
   exclude: static
-  strip: 1
   binary: stack
 - repo: haskell/ghcup-hs
   exclude:
@@ -16,5 +15,4 @@
   raw: hindent
   raw_executable: true
 - repo: haskell/stylish-haskell
-  strip: 1
   binary: stylish-haskell
