@@ -153,7 +153,7 @@ then
 elif [ $HOST = liushu ]
 then
     PROMPT_HOST=💽柳树
-elif [[ $HOST =~ atlassian ]]
+elif [[ $HOST =~ atlassian ]] || [[ $HOST =~ DQ94 ]]
 then
     if supports_images
     then
