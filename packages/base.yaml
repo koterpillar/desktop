@@ -43,7 +43,9 @@
   binary: difft
 - repo: eza-community/eza
   binary: eza
-  exclude: static
+  exclude:
+    - static
+    - zip
 - repo: sharkdp/hexyl
   binary: hexyl
 - system: g++
@@ -55,7 +57,6 @@
 - system: git-lfs
 - repo: tummychow/git-absorb
   binary: git-absorb
-  exclude: arm
 - repo: dandavison/delta
   binary: delta
 - repo: ndmitchell/hlint
@@ -95,11 +96,6 @@
 - system: unrar-free
   os: linux
 - repo: BurntSushi/ripgrep
-  exclude:
-    - aarch64
-    - i686
-    - powerpc64
-    - s390x
   binary: rg
 - system: rlwrap
 - system: rsync

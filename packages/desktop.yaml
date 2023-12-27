@@ -42,3 +42,4 @@
 - system: wl-clipboard
 - repo: yt-dlp/yt-dlp
   binary: yt-dlp
+  suffix: tar.gz

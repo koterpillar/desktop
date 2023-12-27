@@ -4,7 +4,5 @@
     - prusa-slicer
     - prusa-gcodeviewer
   exclude:
-    - aarch64
-    - arm
     - GTK2
     - AppImage

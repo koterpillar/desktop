@@ -1,6 +1,6 @@
 - system: ghc
 - repo: commercialhaskell/stack
-  exclude: static
+  exclude: bin
   binary: stack
 - repo: haskell/ghcup-hs
   exclude:
