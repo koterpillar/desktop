@@ -114,3 +114,11 @@
 - shell: /bin/zsh
 - clone: z-shell/zi
   destination: .zi/bin
+- clone: zsh-users/zsh-autosuggestions
+  destination: .zsh-plugins/zsh-autosuggestions
+- clone: popstas/zsh-command-time
+  destination: .zsh-plugins/zsh-command-time
+- clone: zsh-users/zsh-syntax-highlighting
+  destination: .zsh-plugins/zsh-syntax-highlighting
+- clone: agkozak/zsh-z
+  destination: .zsh-plugins/zsh-z
