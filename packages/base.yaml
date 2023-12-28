@@ -46,6 +46,9 @@
   exclude:
     - static
     - zip
+  os: linux
+- system: eza
+  os: darwin
 - repo: sharkdp/hexyl
   binary: hexyl
 - system: g++

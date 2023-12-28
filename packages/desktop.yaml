@@ -21,6 +21,8 @@
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
   os: linux
   distribution: fedora
+- system: homebrew/cask/bitwarden
+  os: darwin
 - system: code
   os: linux
 - system: homebrew/cask/visual-studio-code
@@ -42,6 +44,10 @@
   os: linux
 - system: fcitx5-configtool
   os: linux
+- system: firefox
+  os: linux
+- system: homebrew/cask/firefox
+  os: darwin
 - system: google-chrome-stable
   os: linux
 - system: homebrew/cask/google-chrome
@@ -54,6 +60,9 @@
   binary: kitty
   app: kitty
   exclude: 'kitten'
+  os: linux
+- system: homebrew/cask/kitty
+  os: darwin
 - system: perl-Image-ExifTool
   os: linux
 - system: exiftool
