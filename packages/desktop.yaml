@@ -21,6 +21,8 @@
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
   os: linux
   distribution: fedora
+- system: homebrew/cask/alt-tab
+  os: darwin
 - system: homebrew/cask/bitwarden
   os: darwin
 - system: code
@@ -79,6 +81,8 @@
   service: sshd
   os: linux
 - system: openssh
+  os: darwin
+- system: homebrew/cask/rectangle
   os: darwin
 - system: tcpdump
 - pipx: torrt
