@@ -39,6 +39,9 @@
   binary: bat
 - system: colordiff
 - system: curl
+- repo: dhall-lang/dhall-haskell
+  prefix: dhall-json
+  binary: dhall-to-json
 - repo: Wilfred/difftastic
   binary: difft
 - repo: eza-community/eza
