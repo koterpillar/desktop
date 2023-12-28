@@ -21,6 +21,8 @@
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
   os: linux
   distribution: fedora
+- brew_tap: homebrew/cask-fonts
+  os: darwin
 - system: homebrew/cask/alt-tab
   os: darwin
 - system: homebrew/cask/bitwarden
@@ -46,6 +48,10 @@
   os: linux
 - system: fcitx5-configtool
   os: linux
+- system: mozilla-fira-mono-fonts
+  os: linux
+- system: homebrew/cask-fonts/font-fira-code
+  os: darwin
 - system: firefox
   os: linux
 - system: homebrew/cask/firefox
@@ -75,8 +81,6 @@
   os: linux
 - system: homebrew/cask/meld
   os: darwin
-- system: mozilla-fira-mono-fonts
-  os: linux
 - system: openssh-server
   service: sshd
   os: linux
