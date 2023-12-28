@@ -335,10 +335,6 @@ then
     eval "$(atuin init zsh --disable-up-arrow)"
 fi
 
-# global /etc/zshprofile overrides $PATH
-# oh-my-zsh overrides $PAGER
-source $HOME/.zshenv
-
 ZSHRC_LOCAL=$HOME/.zshrc.local
 if [ -f $ZSHRC_LOCAL ]
 then
