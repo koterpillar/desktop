@@ -1,45 +1,82 @@
 - system: rpmfusion-free-release
   url: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-39.noarch.rpm
+  os: linux
   distribution: fedora
 - system: rpmfusion-nonfree-release
   url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-39.noarch.rpm
+  os: linux
   distribution: fedora
 - yum_name: vscode
   yum_url: https://packages.microsoft.com/yumrepos/vscode
   gpg_key: https://packages.microsoft.com/keys/microsoft.asc
+  os: linux
   distribution: fedora
 - yum_name: docker
   yum_url: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
   gpg_key: https://download.docker.com/linux/fedora/gpg
+  os: linux
   distribution: fedora
 - yum_name: google-chrome
   yum_url: https://dl.google.com/linux/chrome/rpm/stable/x86_64
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
+  os: linux
   distribution: fedora
 - system: code
+  os: linux
+- system: homebrew/cask/visual-studio-code
+  os: darwin
 - system: docker-ce
   service: docker
+  os: linux
 - system: docker-compose-plugin
+  os: linux
+- system: homebrew/cask/docker
+  os: darwin
 - system: fcitx5
+  os: linux
 - system: fcitx5-chinese-addons
+  os: linux
 - system: fcitx5-m17n
+  os: linux
 - system: fcitx5-mozc
+  os: linux
 - system: fcitx5-configtool
+  os: linux
 - system: google-chrome-stable
+  os: linux
+- system: homebrew/cask/google-chrome
+  os: darwin
 - system: ImageMagick
+  os: linux
+- system: imagemagick
+  os: darwin
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
   exclude: 'kitten'
 - system: perl-Image-ExifTool
+  os: linux
+- system: exiftool
+  os: darwin
 - system: meld
+  os: linux
+- system: homebrew/cask/meld
+  os: darwin
 - system: mozilla-fira-mono-fonts
+  os: linux
 - system: openssh-server
   service: sshd
+  os: linux
+- system: openssh
+  os: darwin
 - system: tcpdump
 - pipx: torrt
 - system: vlc
+  os: linux
+- system: homebrew/cask/vlc
+  os: darwin
 - system: wl-clipboard
+  os: linux
 - repo: yt-dlp/yt-dlp
   binary: yt-dlp
   suffix: tar.gz
