@@ -1,11 +1,3 @@
-typeset -U path
-if [ -d /opt/homebrew ]
-then
-    path=(/opt/homebrew/bin $path)
-fi
-path=(~/.local/bin $path)
-export PATH
-
 export PAGER=less
 export LESS='-RFX'
 export EDITOR=nvim
