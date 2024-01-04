@@ -48,10 +48,14 @@
   os: linux
 - system: fcitx5-configtool
   os: linux
-- system: mozilla-fira-mono-fonts
-  os: linux
-- system: homebrew/cask-fonts/font-fira-code
-  os: darwin
+- repo: tonsky/FiraCode
+  font:
+    - FiraCode-Bold
+    - FiraCode-Light
+    - FiraCode-Medium
+    - FiraCode-Regular
+    - FiraCode-Retina
+    - FiraCode-SemiBold
 - system: firefox
   os: linux
 - system: homebrew/cask/firefox
