@@ -98,6 +98,10 @@
   os: linux
 - system: homebrew/cask/vlc
   os: darwin
+- system: homebrew/cask/wechat
+  os: darwin
+- system: homebrew/cask/whatsapp
+  os: darwin
 - system: wl-clipboard
   os: linux
 - repo: yt-dlp/yt-dlp
