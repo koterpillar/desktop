@@ -1,10 +1,10 @@
-let optionFold = https://prelude.dhall-lang.org/Optional/fold
+let optionFold = https://prelude.dhall-lang.org/Optional/fold.dhall
 
 let showOptional = \(t: Type) -> \(show: t -> Text) -> \(value: Optional t) -> optionFold t value Text show ""
 
 let Modifiers = List Text
 
-let concatSep = https://prelude.dhall-lang.org/Text/concatSep
+let concatSep = https://prelude.dhall-lang.org/Text/concatSep.dhall
 
 let showModifiers = \(m: Modifiers) -> concatSep " " m
 
@@ -53,9 +53,11 @@ let To = {
     modifiers: Optional Modifiers
 }
 
+let to = \(key_code: Text) -> { key_code = key_code, modifiers = None Modifiers }: To
+
 let showTo = \(f: To) -> showOptional Modifiers showModifiers f.modifiers ++ " " ++ f.key_code
 
-let concatMapSep = https://prelude.dhall-lang.org/Text/concatMapSep
+let concatMapSep = https://prelude.dhall-lang.org/Text/concatMapSep.dhall
 
 let showListTo = concatMapSep " " To showTo
 
@@ -90,7 +92,7 @@ let ifApp = \(apps: List Text) -> {
     type = "frontmost_application_if"
 }
 
-let concat = https://prelude.dhall-lang.org/List/concat
+let concat = https://prelude.dhall-lang.org/List/concat.dhall
 
 let terminalApps = [
     "^com\\.apple\\.Terminal$",
@@ -129,12 +131,12 @@ let Manipulator = {
 
 let showManip = \(m: Manipulator) -> showFrom m.from ++ " -> " ++ showOptional (List To) showListTo m.to
 
-let manipulatorForConditions = \(conditions: Optional (List Condition)) -> \(from: From) -> \(to: To) -> {
+let manipulatorForConditions = \(conditions: Optional (List Condition)) -> \(from: From) -> \(to: List To) -> {
     type = "basic",
     conditions = conditions,
     from = from,
     to_if_alone = None (List To),
-    to = Some [to]
+    to = Some to
 }: Manipulator
 
 let manipulatorFor = \(condition: Condition) -> manipulatorForConditions (Some [condition])
@@ -143,9 +145,9 @@ let manipulatorForAll = manipulatorForConditions (None (List Condition))
 
 let manipulator = manipulatorFor unlessNiceAppOrTerminal
 
-let controlToCommand = \(key_code: Text) -> manipulator (fromCtrl key_code) (toCommand key_code)
+let controlToCommand = \(key_code: Text) -> manipulator (fromCtrl key_code) [toCommand key_code]
 
-let controlToOption = \(key_code: Text) -> manipulator (fromCtrl key_code) (toOption key_code)
+let controlToOption = \(key_code: Text) -> manipulator (fromCtrl key_code) [toOption key_code]
 
 let Rule = {
     description: Text,
@@ -154,7 +156,88 @@ let Rule = {
 
 let rule = \(manipulator: Manipulator) -> { description = showManip manipulator, manipulators = [manipulator] }: Rule
 
-let map = https://prelude.dhall-lang.org/List/map
+let map = https://prelude.dhall-lang.org/List/map.dhall
+
+let manipulators1 = [
+    -- Insert
+    manipulator (fromCtrl "insert") [toCommand "c"],
+    manipulator (fromModifier "shift" "insert") [toCommand "v"],
+    -- Home
+    manipulator (fromKeyCode "home") [toCommand "left_arrow"],  -- TODO: Exclude Firefox
+    manipulator (fromCtrl "home") [toCommand "up_arrow"],
+    manipulator (fromModifier "shift" "home") [toModifiers ["command", "shift"] "left_arrow"], -- TODO: above with shift
+    manipulator (fromCtrlShift "home") [toModifiers ["command", "shift"] "up_arrow"], -- TODO: above with shift
+    -- End
+    manipulator (fromKeyCode "end") [toCommand "right_arrow"],  -- TODO: Exclude Firefox
+    manipulator (fromCtrl "end") [toCommand "down_arrow"],
+    manipulator (fromModifier "shift" "end") [toModifiers ["command", "shift"] "right_arrow"], -- TODO: above with shift
+    manipulator (fromCtrlShift "end") [toModifiers ["command", "shift"] "down_arrow"], -- TODO: above with shift
+    -- Left arrow
+    manipulator (fromCtrl "left_arrow") [toOption "left_arrow"],
+    manipulator (fromCtrlShift "left_arrow") [toModifiers ["option", "shift"] "left_arrow"],
+    -- Right arrow
+    manipulator (fromCtrl "right_arrow") [toOption "right_arrow"],
+    manipulator (fromCtrlShift "right_arrow") [toModifiers ["option", "shift"] "right_arrow"],
+    -- Backspace
+    controlToOption "delete_or_backspace",
+    -- Delete
+    controlToOption "delete_forward",
+    -- Page Up/Down
+    manipulatorFor terminals (fromCtrl "page_up") [toCommand "left_arrow"],
+    manipulatorFor terminals (fromCtrl "page_down") [toCommand "right_arrow"],
+    --
+    controlToCommand "a",
+    controlToCommand "b",
+    controlToCommand "c",
+    manipulatorFor terminals (fromCtrlShift "c") [toCommand "c"],
+    manipulatorFor unlessNiceApp (fromCtrl "f") [toCommand "f"],
+    controlToCommand "i",
+    controlToCommand "k",
+    controlToCommand "n",
+    controlToCommand "o",
+    controlToCommand "p",
+    manipulatorFor unlessVim (fromCtrl "r") [toCommand "r"],
+    controlToCommand "s",
+    controlToCommand "t",
+    manipulatorFor terminals (fromCtrlShift "t") [toCommand "t"],
+    manipulatorFor browser (fromCtrl "l") [toCommand "l"],
+    manipulatorFor browser (fromCtrlShift "p") [toModifiers ["command", "shift"] "p"],
+    controlToCommand "u",
+    manipulatorFor unlessVim (fromCtrl "v") [toCommand "v"],
+    manipulatorFor terminals (fromCtrlShift "v") [toCommand "v"],
+    controlToCommand "w",
+    controlToCommand "x",
+    controlToCommand "y",
+    controlToCommand "z",
+    manipulatorFor unlessNiceApp (fromCtrl "hyphen") [toCommand "hyphen"],
+    manipulatorFor unlessNiceApp (fromCtrl "equal_sign") [toCommand "equal_sign"],
+    manipulatorFor unlessNiceApp (fromCtrl "0") [toCommand "0"],
+    manipulatorForAll (fromModifier "option" "f4") [toCommand "q"],
+    manipulatorForAll (fromModifier "option" "grave_accent_and_tilde") [toModifier "left_command" "grave_accent_and_tilde"],
+    manipulatorForAll (fromModifier "command" "l") [toModifiers ["control", "command"] "q"]
+]
+
+let enumerate = https://prelude.dhall-lang.org/Natural/enumerate.dhall
+
+let drop = https://prelude.dhall-lang.org/List/drop.dhall
+
+let showNatural = https://prelude.dhall-lang.org/Natural/show.dhall
+
+let replicate = https://prelude.dhall-lang.org/List/replicate.dhall
+
+let dockSwitch = \(i: Natural) ->
+    manipulatorForAll
+        (fromModifier "command" (showNatural i))
+        (concat To [
+            [toModifier "control" "f3"],
+            [to "home"],
+            (replicate i To (to "right_arrow")),
+            [to "return_or_enter"]
+        ])
+
+let manipulators2 = map Natural Manipulator dockSwitch (drop 1 Natural (enumerate 10)) : List Manipulator
+
+let manipulators = concat Manipulator [manipulators1, manipulators2]
 
 in
 {
@@ -173,64 +256,7 @@ in
                     `basic.to_if_held_down_threshold_milliseconds` = 500,
                     `mouse_motion_to_scroll.speed` = 100
                 },
-                rules = map Manipulator Rule rule [
-                    -- Insert
-                    manipulator (fromCtrl "insert") (toCommand "c"),
-                    manipulator (fromModifier "shift" "insert") (toCommand "v"),
-                    -- Home
-                    manipulator (fromKeyCode "home") (toCommand "left_arrow"),  -- TODO: Exclude Firefox
-                    manipulator (fromCtrl "home") (toCommand "up_arrow"),
-                    manipulator (fromModifier "shift" "home") (toModifiers ["command", "shift"] "left_arrow"), -- TODO: above with shift
-                    manipulator (fromCtrlShift "home") (toModifiers ["command", "shift"] "up_arrow"), -- TODO: above with shift
-                    -- End
-                    manipulator (fromKeyCode "end") (toCommand "right_arrow"),  -- TODO: Exclude Firefox
-                    manipulator (fromCtrl "end") (toCommand "down_arrow"),
-                    manipulator (fromModifier "shift" "end") (toModifiers ["command", "shift"] "right_arrow"), -- TODO: above with shift
-                    manipulator (fromCtrlShift "end") (toModifiers ["command", "shift"] "down_arrow"), -- TODO: above with shift
-                    -- Left arrow
-                    manipulator (fromCtrl "left_arrow") (toOption "left_arrow"),
-                    manipulator (fromCtrlShift "left_arrow") (toModifiers ["option", "shift"] "left_arrow"),
-                    -- Right arrow
-                    manipulator (fromCtrl "right_arrow") (toOption "right_arrow"),
-                    manipulator (fromCtrlShift "right_arrow") (toModifiers ["option", "shift"] "right_arrow"),
-                    -- Backspace
-                    controlToOption "delete_or_backspace",
-                    -- Delete
-                    controlToOption "delete_forward",
-                    -- Page Up/Down
-                    manipulatorFor terminals (fromCtrl "page_up") (toCommand "left_arrow"),
-                    manipulatorFor terminals (fromCtrl "page_down") (toCommand "right_arrow"),
-                    --
-                    controlToCommand "a",
-                    controlToCommand "b",
-                    controlToCommand "c",
-                    manipulatorFor terminals (fromCtrlShift "c") (toCommand "c"),
-                    manipulatorFor unlessNiceApp (fromCtrl "f") (toCommand "f"),
-                    controlToCommand "i",
-                    controlToCommand "k",
-                    controlToCommand "n",
-                    controlToCommand "o",
-                    controlToCommand "p",
-                    manipulatorFor unlessVim (fromCtrl "r") (toCommand "r"),
-                    controlToCommand "s",
-                    controlToCommand "t",
-                    manipulatorFor terminals (fromCtrlShift "t") (toCommand "t"),
-                    manipulatorFor browser (fromCtrl "l") (toCommand "l"),
-                    manipulatorFor browser (fromCtrlShift "p") (toModifiers ["command", "shift"] "p"),
-                    controlToCommand "u",
-                    manipulatorFor unlessVim (fromCtrl "v") (toCommand "v"),
-                    manipulatorFor terminals (fromCtrlShift "v") (toCommand "v"),
-                    controlToCommand "w",
-                    controlToCommand "x",
-                    controlToCommand "y",
-                    controlToCommand "z",
-                    manipulatorFor unlessNiceApp (fromCtrl "hyphen") (toCommand "hyphen"),
-                    manipulatorFor unlessNiceApp (fromCtrl "equal_sign") (toCommand "equal_sign"),
-                    manipulatorFor unlessNiceApp (fromCtrl "0") (toCommand "0"),
-                    manipulatorForAll (fromModifier "option" "f4") (toCommand "q"),
-                    manipulatorForAll (fromModifier "option" "grave_accent_and_tilde") (toModifier "left_command" "grave_accent_and_tilde"),
-                    manipulatorForAll (fromModifier "command" "l") (toModifiers ["control", "command"] "q")
-                ]: List Rule
+                rules = map Manipulator Rule rule manipulators
             },
             devices = [
                 {
