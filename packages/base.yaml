@@ -42,6 +42,9 @@
 - repo: dhall-lang/dhall-haskell
   prefix: dhall-json
   binary: dhall-to-json
+- repo: dhall-lang/dhall-haskell
+  prefix: dhall-lsp-server
+  binary: dhall-lsp-server
 - repo: Wilfred/difftastic
   binary: difft
 - repo: eza-community/eza
