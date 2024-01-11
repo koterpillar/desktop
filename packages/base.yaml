@@ -33,7 +33,7 @@
   destination: .asdf/plugins/nodejs
 - repo: ast-grep/ast-grep
   binary: sg
-- repo: ellie/atuin
+- repo: atuinsh/atuin
   binary: atuin
 - repo: sharkdp/bat
   binary: bat
