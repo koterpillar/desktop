@@ -86,7 +86,7 @@
   os: darwin
 - system: meld
   os: linux
-- system: homebrew/cask/meld
+- system: homebrew/cask/kdiff3
   os: darwin
 - system: openssh-server
   service: sshd
