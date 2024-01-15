@@ -105,9 +105,6 @@ zi snippet OMZ::plugins/gradle/gradle.plugin.zsh
 zi snippet OMZ::plugins/npm/npm.plugin.zsh
 zi snippet OMZ::plugins/yarn/yarn.plugin.zsh
 
-export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_available
-. "$HOME/.asdf/asdf.sh"
-
 # Theme
 autoload -U colors
 colors

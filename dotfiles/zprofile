@@ -1,8 +1,15 @@
 typeset -U path
+
 if [ -d /opt/homebrew ]
 then
     path=(/opt/homebrew/bin $path)
 fi
-path=(~/.local/bin $path)
-export PATH
 
+if [ -d ~/.local/share/mise/shims ]
+then
+    path=(~/.local/share/mise/shims $path)
+fi
+
+path=(~/.local/bin $path)
+
+export PATH

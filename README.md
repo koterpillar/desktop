@@ -19,9 +19,9 @@ This is my desktop environment configuration repository.
 
 FIXME: Might need to re-run because of the ordering between dependencies.
 
-FIXME: Cloning repositories into nested directories (e.g. `asdf` and its
-plugins) keeps failing even when re-running. Remove the destination directory,
-remove nested entries, re-run and then reinstate the nested entries.
+FIXME: Cloning repositories into nested directories keeps failing even when
+re-running. Remove the destination directory, remove nested entries, re-run and
+then reinstate the nested entries.
 
 ### Configuration
 

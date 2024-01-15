@@ -23,14 +23,6 @@
     - bat
     - nvim
     - git
-- clone: asdf-vm/asdf
-  destination: .asdf
-- clone: andrewthauer/asdf-alias
-  destination: .asdf/plugins/alias
-- clone: halcyon/asdf-java
-  destination: .asdf/plugins/java
-- clone: asdf-vm/asdf-nodejs
-  destination: .asdf/plugins/nodejs
 - repo: ast-grep/ast-grep
   binary: sg
 - repo: atuinsh/atuin
@@ -77,6 +69,9 @@
 - system: lftp
 - system: lsof
 - system: make
+- repo: jdx/mise
+  suffix: .tar.xz
+  binary: mise
 - system: moreutils
 - repo: neovim/neovim
   binary: nvim
