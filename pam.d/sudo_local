@@ -1,0 +1,3 @@
+# Enable Touch ID for sudo
+# https://apple.stackexchange.com/questions/259093/can-touch-id-on-mac-authenticate-sudo-in-terminal
+auth       sufficient     pam_tid.so
