@@ -94,6 +94,8 @@
 - system: node
   os: darwin
 - pipx: poetry
+- system: pkg-config
+  os: darwin
 - system: pv
 - system: pwgen
 - system: python3-ipython
