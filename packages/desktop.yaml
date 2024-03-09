@@ -81,8 +81,7 @@
   os: linux
 - system: exiftool
   os: darwin
-- repo: p0deje/Maccy
-  app: Maccy
+- system: homebrew/cask/maccy
   os: darwin
 - system: meld
   os: linux
