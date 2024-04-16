@@ -53,6 +53,9 @@
   os: linux
 - system: eza
   os: darwin
+- repo: fastfetch-cli/fastfetch
+  binary: fastfetch
+  exclude: zip
 - repo: sharkdp/hexyl
   binary: hexyl
 - system: g++
