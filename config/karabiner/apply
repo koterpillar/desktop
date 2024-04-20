@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# find where this script is
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
+
+dhall-to-json < "${SCRIPT_DIR}/karabiner.dhall" > "${SCRIPT_DIR}/karabiner.json"

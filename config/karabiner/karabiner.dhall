@@ -1,4 +1,5 @@
 let optionFold = https://prelude.dhall-lang.org/Optional/fold.dhall
+let optionDefault = https://prelude.dhall-lang.org/Optional/default.dhall
 
 let showOptional = \(t: Type) -> \(show: t -> Text) -> \(value: Optional t) -> optionFold t value Text show ""
 
@@ -23,23 +24,21 @@ let modifiers: FromModifiers = {
 }
 
 let From = {
-    key_code: Text,
+    key_code: Optional Text,
     modifiers: Optional FromModifiers
 }
 
-let showFrom = \(f: From) -> showOptional FromModifiers showFromModifiers f.modifiers ++ " " ++ f.key_code
+let nullFrom = { key_code = None Text, modifiers = None FromModifiers }: From
 
-let fromModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> {
-    key_code = key_code,
+let showFrom = \(f: From) -> showOptional FromModifiers showFromModifiers f.modifiers ++ " " ++ optionDefault Text "(no key)" f.key_code
+
+let fromKeyCode = \(key_code: Text) -> nullFrom // { key_code = Some key_code }
+
+let fromModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> fromKeyCode key_code // {
     modifiers = Some {
         mandatory = Some modifiers,
         optional = Some ["any"]
     }
-}
-
-let fromKeyCode = \(key_code: Text) -> {
-    key_code = key_code,
-    modifiers = None FromModifiers
 }
 
 let fromModifier = \(modifier: Text) -> fromModifiers [modifier]
@@ -49,26 +48,22 @@ let fromCtrl = fromModifier "control"
 let fromCtrlShift = fromModifiers ["control", "shift"]
 
 let To = {
-    key_code: Text,
+    key_code: Optional Text,
     modifiers: Optional Modifiers
 }
 
-let to = \(key_code: Text) -> { key_code = key_code, modifiers = None Modifiers }: To
+let nullTo = { key_code = None Text, modifiers = None Modifiers }: To
 
-let showTo = \(f: To) -> showOptional Modifiers showModifiers f.modifiers ++ " " ++ f.key_code
+let to = \(key_code: Text) -> nullTo // { key_code = Some key_code }: To
+
+let showTo = \(f: To) -> showOptional Modifiers showModifiers f.modifiers ++ " " ++ optionDefault Text "(no key)" f.key_code
 
 let concatMapSep = https://prelude.dhall-lang.org/Text/concatMapSep.dhall
 
 let showListTo = concatMapSep " " To showTo
 
-let toModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> {
-    key_code = key_code,
+let toModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> to key_code // {
     modifiers = Some modifiers
-}
-
-let toKeyCode = \(key_code: Text) -> {
-    key_code = key_code,
-    modifiers = None Modifiers
 }
 
 let toModifier = \(modifier: Text) -> toModifiers [modifier]
@@ -188,9 +183,11 @@ let manipulators1 = [
     --
     controlToCommand "a",
     controlToCommand "b",
-    controlToCommand "c",
+    manipulatorFor browser (fromCtrlShift "c") [toModifiers ["command", "option"] "c"],
     manipulatorFor terminals (fromCtrlShift "c") [toCommand "c"],
+    controlToCommand "c",
     manipulatorFor unlessNiceApp (fromCtrl "f") [toCommand "f"],
+    manipulatorFor browser (fromCtrlShift "i") [toModifiers ["command", "option"] "i"],
     controlToCommand "i",
     controlToCommand "k",
     controlToCommand "n",
