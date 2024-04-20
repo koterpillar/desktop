@@ -3,6 +3,8 @@ let optionDefault = https://prelude.dhall-lang.org/Optional/default.dhall
 
 let showOptional = \(t: Type) -> \(show: t -> Text) -> \(value: Optional t) -> optionFold t value Text show ""
 
+let showOptionalText = \(value: Optional Text) -> optionDefault Text "(-)" value
+
 let Modifiers = List Text
 
 let concatSep = https://prelude.dhall-lang.org/Text/concatSep.dhall
@@ -25,12 +27,13 @@ let modifiers: FromModifiers = {
 
 let From = {
     key_code: Optional Text,
+    pointing_button: Optional Text,
     modifiers: Optional FromModifiers
 }
 
-let nullFrom = { key_code = None Text, modifiers = None FromModifiers }: From
+let nullFrom = { key_code = None Text, pointing_button = None Text, modifiers = None FromModifiers }: From
 
-let showFrom = \(f: From) -> showOptional FromModifiers showFromModifiers f.modifiers ++ " " ++ optionDefault Text "(no key)" f.key_code
+let showFrom = \(f: From) -> showOptional FromModifiers showFromModifiers f.modifiers ++ " " ++ showOptionalText f.key_code ++ " " ++ showOptionalText f.pointing_button
 
 let fromKeyCode = \(key_code: Text) -> nullFrom // { key_code = Some key_code }
 
@@ -49,20 +52,21 @@ let fromCtrlShift = fromModifiers ["control", "shift"]
 
 let To = {
     key_code: Optional Text,
+    pointing_button: Optional Text,
     modifiers: Optional Modifiers
 }
 
-let nullTo = { key_code = None Text, modifiers = None Modifiers }: To
+let nullTo = { key_code = None Text, pointing_button = None Text, modifiers = None Modifiers }: To
 
-let to = \(key_code: Text) -> nullTo // { key_code = Some key_code }: To
+let toKeyCode = \(key_code: Text) -> nullTo // { key_code = Some key_code }: To
 
-let showTo = \(f: To) -> showOptional Modifiers showModifiers f.modifiers ++ " " ++ optionDefault Text "(no key)" f.key_code
+let showTo = \(f: To) -> showOptional Modifiers showModifiers f.modifiers ++ " " ++ showOptionalText f.key_code ++ " " ++ showOptionalText f.pointing_button
 
 let concatMapSep = https://prelude.dhall-lang.org/Text/concatMapSep.dhall
 
 let showListTo = concatMapSep " " To showTo
 
-let toModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> to key_code // {
+let toModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> toKeyCode key_code // {
     modifiers = Some modifiers
 }
 
@@ -154,6 +158,10 @@ let rule = \(manipulator: Manipulator) -> { description = showManip manipulator,
 let map = https://prelude.dhall-lang.org/List/map.dhall
 
 let manipulators1 = [
+    -- Mouse
+    manipulator
+        (nullFrom // { pointing_button = Some "button1", modifiers = Some { mandatory = Some ["control"], optional = None (List Text) } })
+        [nullTo // { pointing_button = Some "button1", modifiers = Some ["command"]}],
     -- Insert
     manipulator (fromCtrl "insert") [toCommand "c"],
     manipulator (fromModifier "shift" "insert") [toCommand "v"],
@@ -227,9 +235,9 @@ let dockSwitch = \(i: Natural) ->
         (fromModifier "command" (showNatural i))
         (concat To [
             [toModifier "control" "f3"],
-            [to "home"],
-            (replicate i To (to "right_arrow")),
-            [to "return_or_enter"]
+            [toKeyCode "home"],
+            (replicate i To (toKeyCode "right_arrow")),
+            [toKeyCode "return_or_enter"]
         ])
 
 let manipulators2 = map Natural Manipulator dockSwitch (drop 1 Natural (enumerate 10)) : List Manipulator
