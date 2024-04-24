@@ -1,9 +1,9 @@
 - system: rpmfusion-free-release
-  url: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-39.noarch.rpm
+  url: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-40.noarch.rpm
   os: linux
   distribution: fedora
 - system: rpmfusion-nonfree-release
-  url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-39.noarch.rpm
+  url: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-40.noarch.rpm
   os: linux
   distribution: fedora
 - yum_name: vscode
