@@ -116,15 +116,7 @@ else
     PROMPT_HOST_COLOR=$fg[green]
 fi
 
-print_image_resource () {
-    resource=$1
-    width=$2
-    outvar=$3
-
-    builtin printf -v $outvar "%%{\e_Gf=100,a=T,r=1,c=${width},q=1,t=f;$(echo -n "$DESKTOP_PATH/resources/$resource" | base64)\e\\%%${width}G%%}"
-}
-
-supports_images () {
+fancy_terminal () {
     [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ] && [[ ${TERM:-} = xterm-kitty ]]
 }
 
@@ -141,25 +133,25 @@ then
     PROMPT_HOST=💽柳树
 elif [[ $HOST =~ atlassian ]] || [[ $HOST =~ DQ94 ]]
 then
-    if supports_images
+    if fancy_terminal
     then
-        print_image_resource atlassian.png 2 PROMPT_HOST
+        PROMPT_HOST=$'\UEF32'
     else
         PROMPT_HOST=▲
-        if [ $UID != 0 ]
-        then
-            # https://atlassian.design/foundations/color
-            PROMPT_HOST_COLOR=$'\e[38;2;0;82;204m'
-        fi
+    fi
+    if [ $UID != 0 ]
+    then
+        # https://atlassian.design/foundations/color
+        PROMPT_HOST_COLOR=$'\e[38;2;0;82;204m'
     fi
 else
     PROMPT_HOST=$HOST
 fi
 
 PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
-if supports_images
+if fancy_terminal
 then
-    print_image_resource arrow.png 1 PROMPT_ARROW
+    PROMPT_ARROW=%{$'\e[38;2;251;240;255m'%}$'\UE0B0'%{$reset_color%}
 else
     PROMPT_ARROW=' '
 fi

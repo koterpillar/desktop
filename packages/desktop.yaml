@@ -48,6 +48,10 @@
   os: linux
 - system: fcitx5-configtool
   os: linux
+- repo: ryanoasis/nerd-fonts
+  prefix: NerdFontsSymbolsOnly
+  suffix: tar.xz
+  font: SymbolsNerdFontMono-Regular
 - repo: tonsky/FiraCode
   font:
     - FiraCode-Bold
