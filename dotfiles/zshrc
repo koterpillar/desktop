@@ -116,21 +116,12 @@ else
     PROMPT_HOST_COLOR=$fg[green]
 fi
 
-typeset -A PROMPT_IMAGE_INDICES
-
 print_image_resource () {
     resource=$1
     width=$2
     outvar=$3
 
-    if [ -z "${PROMPT_IMAGE_INDICES[$resource]:-}" ]
-    then
-        new_index=$RANDOM
-        builtin printf "\e_Gi=$new_index,f=100,a=t,q=1,t=f;$(echo -n "$DESKTOP_PATH/resources/$resource" | base64)\e\\"
-        PROMPT_IMAGE_INDICES[$resource]=$new_index
-    fi
-
-    builtin printf -v $outvar "%%{\e_Ga=p,i=$PROMPT_IMAGE_INDICES[$resource],q=2,c=$width,r=1\e\\%%${width}G%%}"
+    builtin printf -v $outvar "%%{\e_Gf=100,a=T,r=1,c=${width},q=1,t=f;$(echo -n "$DESKTOP_PATH/resources/$resource" | base64)\e\\%%${width}G%%}"
 }
 
 supports_images () {
