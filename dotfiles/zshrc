@@ -148,22 +148,27 @@ else
     PROMPT_HOST=$HOST
 fi
 
-PROMPT_BACKGROUND=%{$'\e[48;2;251;240;255m'%}
+PROMPT_BACKGROUND=
+PROMPT_ARROW=' '
 if fancy_terminal
 then
-    PROMPT_ARROW=%{$'\e[38;2;251;240;255m'%}$'\UE0B0'%{$reset_color%}
-else
-    PROMPT_ARROW=' '
+    mk_prompt_color () {
+        local RED GREEN
+        RED=$((RANDOM % 50 + 200))
+        GREEN=$((RANDOM % 50 + 200))
+        printf -v PROMPT_BACKGROUND "%%{\e[48;2;%d;%d;255m%%}" $RED $GREEN
+        printf -v PROMPT_ARROW "%%{$bg[default]\e[38;2;%d;%d;255m%%}%b" $RED $GREEN $'\UE0B0'
+    }
+    precmd_functions+=(mk_prompt_color)
 fi
-PROMPT_RESET=%{$reset_color%}$PROMPT_BACKGROUND
 
 setopt PROMPT_SUBST
 PROMPT='\
-$PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST$PROMPT_RESET \
+$PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST%{$fg[default]%} \
 $PROMPT_PWD \
-$(git_prompt_info)\
-%{$fg[red]%}%(!.#.»)%{$reset_color%}\
-$PROMPT_ARROW'
+$(git_prompt_info)%{$fg[default]%}\
+%{$fg[red]%}%(!.#.»)%{$fg[default]%}\
+$PROMPT_ARROW%{$reset_color%}'
 
 PROMPT2='$PROMPT_BACKGROUND%{$fg[red]%}\%{$reset_color%} '
 
@@ -241,7 +246,7 @@ exit_status_precmd() {
   then
     ZSH_RECORD_EXIT_STATUS=
     if [ "$_EXIT_STATUS_PRECMD" -gt 0 ]; then
-      echo "$fg[red]❌ ${_EXIT_STATUS_PRECMD}${reset_color}"
+      echo "$fg[red]❌ ${_EXIT_STATUS_PRECMD}$fg[default]"
     fi
   fi
 }
@@ -259,13 +264,13 @@ zsh_command_time() {
             min=$(($min%60))
             timer_show=$(printf '%d:%02d:%02d\n' $hours $min $sec)
         fi
-        echo "$fg[cyan]⌛ $timer_show$reset_color"
+        echo "$fg[cyan]⌛ $timer_show$fg[default]"
     fi
 }
 ZSH_COMMAND_TIME_EXCLUDE=(vim nvim)
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}±%{$fg[yellow]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="$PROMPT_RESET "
+ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_CUSTOM_GIT_PROMPT_STAGED=%{$fg[green]%}✦
 ZSH_CUSTOM_GIT_PROMPT_UNSTAGED=%{$fg[red]%}✧
 ZSH_CUSTOM_GIT_PROMPT_UNTRACKED=%{$fg[yellow]%}✧
@@ -295,7 +300,7 @@ function parse_git_dirty() {
   done
   if [ -n "$STAGED$UNSTAGED$UNTRACKED" ]
   then
-    echo "${STAGED:+$ZSH_CUSTOM_GIT_PROMPT_STAGED}${UNSTAGED:+$ZSH_CUSTOM_GIT_PROMPT_UNSTAGED}${UNTRACKED:+$ZSH_CUSTOM_GIT_PROMPT_UNTRACKED}$PROMPT_RESET"
+    echo "${STAGED:+$ZSH_CUSTOM_GIT_PROMPT_STAGED}${UNSTAGED:+$ZSH_CUSTOM_GIT_PROMPT_UNSTAGED}${UNTRACKED:+$ZSH_CUSTOM_GIT_PROMPT_UNTRACKED}"
   fi
 }
 
