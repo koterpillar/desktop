@@ -20,10 +20,16 @@ let FromModifiers = {
 
 let showFromModifiers = \(fm: FromModifiers) -> showOptionalModifiers fm.mandatory
 
-let modifiers: FromModifiers = {
+let nullFM: FromModifiers = {
     mandatory = None Modifiers,
     optional = None Modifiers
 }
+
+let fmAnyOptional = nullFM // { optional = Some ["any"] }
+
+let fmStrict = \(mandatory: Modifiers) -> nullFM // { mandatory = Some mandatory }
+
+let fmLax = \(mandatory: Modifiers) -> fmAnyOptional // { mandatory = Some mandatory }
 
 let From = {
     key_code: Optional Text,
@@ -38,12 +44,12 @@ let showFrom = \(f: From) -> showOptional FromModifiers showFromModifiers f.modi
 let fromKeyCode = \(key_code: Text) -> nullFrom // { key_code = Some key_code }
 
 let fromModifiers = \(modifiers: Modifiers) -> \(key_code: Text) -> fromKeyCode key_code // {
-    modifiers = Some {
-        mandatory = Some modifiers,
-        optional = Some ["any"]
-    }
+    modifiers = Some (fmLax modifiers)
 }
 
+let fromModifiersStrict = \(modifiers: Modifiers) -> \(key_code: Text) -> fromKeyCode key_code // {
+    modifiers = Some (fmStrict modifiers)
+}
 let fromModifier = \(modifier: Text) -> fromModifiers [modifier]
 
 let fromCtrl = fromModifier "control"
@@ -188,6 +194,12 @@ let manipulators1 = [
     -- Page Up/Down
     manipulatorFor terminals (fromCtrl "page_up") [toCommand "left_arrow"],
     manipulatorFor terminals (fromCtrl "page_down") [toCommand "right_arrow"],
+    -- Window manipulation (Gnome defaults to Rectangle defaults)
+    manipulatorForAll (fromModifiersStrict ["command"] "left_arrow") [toModifiers ["control", "option"] "left_arrow"],
+    manipulatorForAll (fromModifiersStrict ["command"] "right_arrow") [toModifiers ["control", "option"] "right_arrow"],
+    manipulatorForAll (fromModifiersStrict ["command"] "up_arrow") [toModifiers ["control", "option"] "return_or_enter"],
+    manipulatorForAll (fromModifiersStrict ["command", "shift"] "left_arrow") [toModifiers ["control", "option", "command"] "left_arrow"],
+    manipulatorForAll (fromModifiersStrict ["command", "shift"] "right_arrow") [toModifiers ["control", "option", "command"] "right_arrow"],
     --
     controlToCommand "a",
     controlToCommand "b",
