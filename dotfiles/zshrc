@@ -186,7 +186,7 @@ else
     fi
 fi
 
-DIR_DECORATIONS=("$HOME/projects" $'\UE702' "$HOME/desktop" $'\UF108' "$HOME/pictures" $'\UF03E' "$HOME/books" $'\UEAA4' "$HOME" '~')
+DIR_DECORATIONS=("$HOME/projects" '♦' "$HOME/desktop" '🗔' "$HOME/pictures" '🖼' "$HOME/books" '🕮' "$HOME" '~')
 
 desktop_func_join() {
     if [ -z "$1" ]
