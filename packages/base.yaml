@@ -126,8 +126,6 @@
   binary_wrapper: true
 - system: zsh
 - shell: /bin/zsh
-- clone: z-shell/zi
-  destination: .zi/bin
 - clone: zsh-users/zsh-autosuggestions
   destination: .zsh-plugins/zsh-autosuggestions
 - clone: popstas/zsh-command-time
@@ -136,3 +134,5 @@
   destination: .zsh-plugins/zsh-syntax-highlighting
 - clone: agkozak/zsh-z
   destination: .zsh-plugins/zsh-z
+- clone: ohmyzsh/ohmyzsh
+  destination: .zsh-plugins/oh-my-zsh

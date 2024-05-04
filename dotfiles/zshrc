@@ -90,20 +90,15 @@ source "${HOME}/.zsh-plugins/zsh-command-time/command-time.plugin.zsh"
 source "${HOME}/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "${HOME}/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-source "${HOME}/.zi/bin/zi.zsh"
-autoload -Uz _zi
-(( ${+_comps} )) && _comps[zi]=_zi
-# Disable oh-my-zsh autoupdate, rely on ZI
-DISABLE_AUTO_UPDATE=true
-
-zi snippet OMZ::lib/functions.zsh
-zi snippet OMZ::lib/git.zsh
-zi snippet OMZ::lib/termsupport.zsh
-zi snippet OMZ::plugins/docker/completions/_docker
-zi snippet OMZ::plugins/git/git.plugin.zsh
-zi snippet OMZ::plugins/gradle/gradle.plugin.zsh
-zi snippet OMZ::plugins/npm/npm.plugin.zsh
-zi snippet OMZ::plugins/yarn/yarn.plugin.zsh
+source "${HOME}/.zsh-plugins/oh-my-zsh/lib/async_prompt.zsh"
+source "${HOME}/.zsh-plugins/oh-my-zsh/lib/functions.zsh"
+source "${HOME}/.zsh-plugins/oh-my-zsh/lib/git.zsh"
+source "${HOME}/.zsh-plugins/oh-my-zsh/lib/termsupport.zsh"
+source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/docker/completions/_docker"
+source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/git/git.plugin.zsh"
+source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/gradle/gradle.plugin.zsh"
+source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/npm/npm.plugin.zsh"
+source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/yarn/yarn.plugin.zsh"
 
 # Theme
 autoload -U colors
