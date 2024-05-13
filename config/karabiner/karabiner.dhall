@@ -255,7 +255,14 @@ let dockSwitch = \(i: Natural) ->
 
 let manipulators2 = map Natural Manipulator dockSwitch (drop 1 Natural (enumerate 10)) : List Manipulator
 
-let manipulators = concat Manipulator [manipulators1, manipulators2]
+let tabSwitch = \(i: Natural) ->
+    manipulatorFor browser
+        (fromModifiersStrict ["option"] (showNatural i))
+        [toModifier "command" (showNatural i)]
+
+let manipulators3 = map Natural Manipulator tabSwitch (drop 1 Natural (enumerate 10)) : List Manipulator
+
+let manipulators = concat Manipulator [manipulators1, manipulators2, manipulators3]
 
 in
 {
