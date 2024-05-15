@@ -10,7 +10,7 @@ URL = f"http://{ADDRESS}:8080"
 
 
 def main():
-    for extension in ["epub", "mobi", "pdf"]:
+    for extension in ["epub", "fb2", "mobi", "pdf"]:
         for file_name in glob(f"*.{extension}"):
             print(file_name)
             response = requests.post(
