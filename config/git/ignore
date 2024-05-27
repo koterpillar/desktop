@@ -3,6 +3,7 @@
 .#*
 .~lock.*#
 ~$*
+*~
 .bloop
 .bsp
 .dir-locals.el
