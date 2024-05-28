@@ -83,8 +83,24 @@
 - repo: neovim/neovim
   binary: nvim
   root: true
-- clone: savq/paq-nvim
-  destination: .local/share/nvim/site/pack/paqs/start/paq-nvim
+- clone: numToStr/Comment.nvim
+  destination: .local/share/nvim/site/pack/mybox/start/Comment.nvim
+- clone: tpope/vim-sleuth
+  destination: .local/share/nvim/site/pack/mybox/start/vim-sleuth
+- clone: sgur/vim-editorconfig
+  destination: .local/share/nvim/site/pack/mybox/start/vim-editorconfig
+- clone: junegunn/vim-easy-align
+  destination: .local/share/nvim/site/pack/mybox/start/vim-easy-align
+- clone: nvim-lua/plenary.nvim
+  destination: .local/share/nvim/site/pack/mybox/start/plenary.nvim
+- clone: nvim-telescope/telescope.nvim
+  destination: .local/share/nvim/site/pack/mybox/start/telescope.nvim
+- clone: smartpde/telescope-recent-files
+  destination: .local/share/nvim/site/pack/mybox/start/telescope-recent-files
+- clone: nvim-treesitter/nvim-treesitter
+  destination: .local/share/nvim/site/pack/mybox/start/nvim-treesitter
+- clone: p00f/nvim-ts-rainbow
+  destination: .local/share/nvim/site/pack/mybox/start/nvim-ts-rainbow
 - system: nmap
 - system: nodejs
   os: linux

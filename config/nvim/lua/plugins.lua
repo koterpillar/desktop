@@ -1,21 +1,3 @@
-require "paq" {
-  "savq/paq-nvim";
-
-  "numToStr/Comment.nvim";
-
-  "tpope/vim-sleuth";
-  "sgur/vim-editorconfig";
-  "junegunn/vim-easy-align"; -- align e.g. text in Markdown tables
-
-  "nvim-lua/plenary.nvim";
-  "nvim-telescope/telescope.nvim";
-  "smartpde/telescope-recent-files";
-
-  {"nvim-treesitter/nvim-treesitter", build = ':TSUpdate' };
-
-  "p00f/nvim-ts-rainbow";
-}
-
 require("Comment").setup()
 
 require("nvim-treesitter.configs").setup {
