@@ -85,20 +85,24 @@ export MANROFFOPT="-c"
 
 # Plugins
 
-source "${HOME}/.zsh-plugins/zsh-z/zsh-z.plugin.zsh"
-source "${HOME}/.zsh-plugins/zsh-command-time/command-time.plugin.zsh"
-source "${HOME}/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "${HOME}/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# Find out the home directory where .zsh-plugins are installed, might be
+# different from HOME if run as root
+DESKTOP_HOME=$(echo $DESKTOP_PATH | grep -oE '/[^/]+/[^/]+')
 
-source "${HOME}/.zsh-plugins/oh-my-zsh/lib/async_prompt.zsh"
-source "${HOME}/.zsh-plugins/oh-my-zsh/lib/functions.zsh"
-source "${HOME}/.zsh-plugins/oh-my-zsh/lib/git.zsh"
-source "${HOME}/.zsh-plugins/oh-my-zsh/lib/termsupport.zsh"
-source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/docker/completions/_docker"
-source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/git/git.plugin.zsh"
-source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/gradle/gradle.plugin.zsh"
-source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/npm/npm.plugin.zsh"
-source "${HOME}/.zsh-plugins/oh-my-zsh/plugins/yarn/yarn.plugin.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/zsh-z/zsh-z.plugin.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/zsh-command-time/command-time.plugin.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/async_prompt.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/functions.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/git.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/termsupport.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/docker/completions/_docker"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/git/git.plugin.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/gradle/gradle.plugin.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/npm/npm.plugin.zsh"
+source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/yarn/yarn.plugin.zsh"
 
 # Theme
 autoload -U colors
