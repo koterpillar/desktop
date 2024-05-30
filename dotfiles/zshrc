@@ -87,7 +87,7 @@ export MANROFFOPT="-c"
 
 # Find out the home directory where .zsh-plugins are installed, might be
 # different from HOME if run as root
-DESKTOP_HOME=$(echo $DESKTOP_PATH | grep -oE '/[^/]+/[^/]+')
+DESKTOP_HOME=$(echo $DESKTOP_PATH | grep -oE '^/[^/]+/[^/]+')
 
 source "${DESKTOP_HOME}/.zsh-plugins/zsh-z/zsh-z.plugin.zsh"
 source "${DESKTOP_HOME}/.zsh-plugins/zsh-command-time/command-time.plugin.zsh"
