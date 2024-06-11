@@ -113,6 +113,8 @@
   distribution: debian
 - system: node
   os: darwin
+- npm: pnpm
+  binary: pnpm
 - pipx: poetry
 - system: pkg-config
   os: darwin
