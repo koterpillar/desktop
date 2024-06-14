@@ -23,10 +23,6 @@
     - bat
     - nvim
     - git
-- links: pam.d
-  destination: /etc/pam.d
-  root: true
-  os: darwin
 - repo: ast-grep/ast-grep
   binary: sg
 - repo: atuinsh/atuin
