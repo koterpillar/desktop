@@ -66,8 +66,6 @@
   binary: git-absorb
 - repo: dandavison/delta
   binary: delta
-- repo: ndmitchell/hlint
-  binary: hlint
 - system: jq
 - system: htop
 - system: lftp
@@ -99,18 +97,6 @@
 - clone: p00f/nvim-ts-rainbow
   destination: .local/share/nvim/site/pack/mybox/start/nvim-ts-rainbow
 - system: nmap
-- system: nodejs
-  os: linux
-- system: nodejs-npm
-  os: linux
-  distribution: fedora
-- system: npm
-  os: linux
-  distribution: debian
-- system: node
-  os: darwin
-- npm: pnpm
-  binary: pnpm
 - pipx: poetry
 - system: pkg-config
   os: darwin
@@ -136,9 +122,6 @@
 - repo: sachaos/viddy
   binary: viddy
 - system: wget
-- url: https://yarnpkg.com/latest.tar.gz
-  binary: yarn
-  binary_wrapper: true
 - system: zsh
 - shell: /bin/zsh
 - clone: zsh-users/zsh-autosuggestions

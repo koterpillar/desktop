@@ -14,5 +14,7 @@
   binary: hindent
   raw: hindent
   raw_executable: true
+- repo: ndmitchell/hlint
+  binary: hlint
 - repo: haskell/stylish-haskell
   binary: stylish-haskell

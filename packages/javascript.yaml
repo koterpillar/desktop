@@ -1,0 +1,15 @@
+- system: nodejs
+  os: linux
+- system: nodejs-npm
+  os: linux
+  distribution: fedora
+- system: npm
+  os: linux
+  distribution: debian
+- system: node
+  os: darwin
+- npm: pnpm
+  binary: pnpm
+- url: https://yarnpkg.com/latest.tar.gz
+  binary: yarn
+  binary_wrapper: true
