@@ -161,6 +161,11 @@ let Rule = {
 
 let rule = \(manipulator: Manipulator) -> { description = showManip manipulator, manipulators = [manipulator] }: Rule
 
+let SimpleModification = {
+    from: From,
+    to: List To
+}
+
 let map = https://prelude.dhall-lang.org/List/map.dhall
 
 let manipulators1 = [
@@ -295,7 +300,7 @@ in
                     },
                     ignore = False,
                     manipulate_caps_lock_led = True,
-                    simple_modifications = []: List Text
+                    simple_modifications = []: List SimpleModification
                 },
                 {
                     disable_built_in_keyboard_if_exists = False,
@@ -308,7 +313,29 @@ in
                     },
                     ignore = False,
                     manipulate_caps_lock_led = True,
-                    simple_modifications = []: List Text
+                    simple_modifications = []: List SimpleModification
+                },
+                {
+                    disable_built_in_keyboard_if_exists = False,
+                    fn_function_keys = []: List Text,
+                    identifiers = {
+                        is_keyboard = True,
+                        is_pointing_device = False,
+                        product_id = 0,
+                        vendor_id = 0
+                    },
+                    ignore = False,
+                    manipulate_caps_lock_led = True,
+                    simple_modifications = [
+                        {
+                            from = fromKeyCode "left_option",
+                            to = [ toKeyCode "left_command" ]
+                        },
+                        {
+                            from = fromKeyCode "left_command",
+                            to = [ toKeyCode "left_option" ]
+                        }
+                    ]
                 }
             ],
             fn_function_keys = []: List Text,
