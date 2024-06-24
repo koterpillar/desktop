@@ -10,6 +10,8 @@
   os: darwin
 - npm: pnpm
   binary: pnpm
+- npm: ts-node
+  binary: ts-node
 - url: https://yarnpkg.com/latest.tar.gz
   binary: yarn
   binary_wrapper: true
