@@ -79,6 +79,10 @@
   os: linux
 - system: homebrew/cask/kitty
   os: darwin
+- system: krita
+  os: linux
+- system: homebrew/cask/krita
+  os: darwin
 - system: perl-Image-ExifTool
   os: linux
 - system: exiftool
