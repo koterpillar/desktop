@@ -1,3 +1,5 @@
+vim.cmd.colorscheme "oxocarbon"
+
 require("Comment").setup()
 
 require("nvim-treesitter.configs").setup {
