@@ -20,7 +20,7 @@ weixin_add_dates() {
         do
             result_date="$(timestamp2date $(weixin_timestamp $f))"
             echo "$f -> $result_date"
-            exiftool -CreateDate="$result_date" "$f" -overwrite_original
+            exiftool -CreateDate="$result_date" -XMPToolkit= "$f" -overwrite_original
         done
     fi
 }
