@@ -36,6 +36,8 @@
   binary: idea.sh
   os: linux
 - system: homebrew/cask/amazon-workspaces
+- repo: cloudflare/cloudflared
+  binary: cloudflared
 - system: homebrew/cask/intellij-idea
   os: darwin
 - system: homebrew/cask/slack
