@@ -72,6 +72,12 @@
   os: darwin
 - system: homebrew/cask/karabiner-elements
   os: darwin
+- system: homebrew/cask/insomnia
+  os: darwin
+- repo: Kong/insomnia
+  exclude: sbom
+  binary: insomnia
+  os: linux
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
