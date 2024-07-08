@@ -75,7 +75,8 @@
 - system: homebrew/cask/insomnia
   os: darwin
 - repo: Kong/insomnia
-  exclude: sbom
+  prefix: Insomnia.Core
+  suffix: tar.gz
   binary: insomnia
   os: linux
 - repo: kovidgoyal/kitty
