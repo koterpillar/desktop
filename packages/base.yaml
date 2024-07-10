@@ -102,6 +102,10 @@
 - pipx: poetry
 - system: pkg-config
   os: darwin
+- system: psmisc
+  os: linux
+- system: pstree
+  os: darwin
 - system: pv
 - system: pwgen
 - system: python3-ipython
