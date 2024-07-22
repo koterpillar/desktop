@@ -35,14 +35,14 @@
     jsonpath: 'IIU[0].downloads.linux.link'
   binary: idea.sh
   os: linux
-- system: homebrew/cask/amazon-workspaces
+- system: amazon-workspaces
 - repo: cloudflare/cloudflared
   binary: cloudflared
-- system: homebrew/cask/intellij-idea
+- system: intellij-idea
   os: darwin
-- system: homebrew/cask/slack
+- system: slack
   os: darwin
-- system: homebrew/cask/loom
+- system: loom
   os: darwin
 - pipx: pgcli
 - repo: casey/just

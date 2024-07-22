@@ -112,7 +112,7 @@
   os: linux
 - system: ipython
   os: darwin
-- system: homebrew/cask/rar
+- system: rar
   os: darwin
 - system: unrar-free
   os: linux

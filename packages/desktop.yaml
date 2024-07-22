@@ -21,20 +21,20 @@
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
   os: linux
   distribution: fedora
-- system: homebrew/cask/alt-tab
+- system: alt-tab
   os: darwin
-- system: homebrew/cask/bitwarden
+- system: bitwarden
   os: darwin
 - system: code
   os: linux
-- system: homebrew/cask/visual-studio-code
+- system: visual-studio-code
   os: darwin
 - system: docker-ce
   service: docker
   os: linux
 - system: docker-compose-plugin
   os: linux
-- system: homebrew/cask/docker
+- system: docker
   os: darwin
 - system: fcitx5
   os: linux
@@ -59,20 +59,17 @@
     - FiraCode-Retina
     - FiraCode-SemiBold
 - system: firefox
-  os: linux
-- system: homebrew/cask/firefox
-  os: darwin
 - system: google-chrome-stable
   os: linux
-- system: homebrew/cask/google-chrome
+- system: google-chrome
   os: darwin
 - system: ImageMagick
   os: linux
 - system: imagemagick
   os: darwin
-- system: homebrew/cask/karabiner-elements
+- system: karabiner-elements
   os: darwin
-- system: homebrew/cask/insomnia
+- system: insomnia
   os: darwin
 - repo: Kong/insomnia
   prefix: Insomnia.Core
@@ -84,38 +81,32 @@
   app: kitty
   exclude: 'kitten'
   os: linux
-- system: homebrew/cask/kitty
+- system: kitty
   os: darwin
 - system: krita
-  os: linux
-- system: homebrew/cask/krita
-  os: darwin
 - system: perl-Image-ExifTool
   os: linux
 - system: exiftool
   os: darwin
-- system: homebrew/cask/maccy
+- system: maccy
   os: darwin
 - system: meld
   os: linux
-- system: homebrew/cask/kdiff3
+- system: kdiff3
   os: darwin
 - system: openssh-server
   service: sshd
   os: linux
 - system: openssh
   os: darwin
-- system: homebrew/cask/rectangle
+- system: rectangle
   os: darwin
 - system: tcpdump
 - pipx: torrt
 - system: vlc
-  os: linux
-- system: homebrew/cask/vlc
+- system: wechat
   os: darwin
-- system: homebrew/cask/wechat
-  os: darwin
-- system: homebrew/cask/whatsapp
+- system: whatsapp
   os: darwin
 - system: wl-clipboard
   os: linux
