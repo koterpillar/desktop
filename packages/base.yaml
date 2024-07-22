@@ -128,6 +128,11 @@
 - repo: sachaos/viddy
   binary: viddy
 - system: wget
+- repo: mikefarah/yq
+  exclude: .tar.gz
+  binary: yq
+  raw: yq
+  raw_executable: true
 - system: zsh
 - shell: /bin/zsh
 - clone: zsh-users/zsh-autosuggestions
