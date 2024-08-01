@@ -8,11 +8,8 @@
 - system: awscli
   os: darwin
 - system: maven
-- name: gradle
-  url:
-    base:
-      url: https://services.gradle.org/versions/current
-    jsonpath: downloadUrl
+- repo: gradle/gradle-distributions
+  suffix: bin.zip
   binary: gradle
 - name: chromedriver
   url:
