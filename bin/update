@@ -3,20 +3,24 @@
 set -e
 
 command_exists() {
-  type "$1" >/dev/null 2>&1
+    type "$1" >/dev/null 2>&1
 }
 
-if command_exists brew
-then
-    brew upgrade
-elif command_exists dnf
+if command_exists dnf
 then
     sudo dnf -y upgrade
+elif command_exists apt
+then
+    sudo apt update
+    sudo apt -y upgrade
+elif command_exists brew
+then
+    brew upgrade
 elif command_exists pkcon
 then
     pkcon refresh --noninteractive
     pkcon update --noninteractive
 else
-    echo "No PackageKit, don't know how to update." >&2
+    echo "No update command found." >&2
     exit 1
 fi
