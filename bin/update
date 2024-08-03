@@ -9,7 +9,7 @@ command_exists() {
 if command_exists dnf
 then
     sudo dnf -y upgrade
-elif command_exists apt
+elif command_exists apt-get
 then
     sudo apt update
     sudo apt -y upgrade
