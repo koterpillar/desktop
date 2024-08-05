@@ -4,7 +4,7 @@ set -euo pipefail
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/koterpillar/mybox/main/bootstrap)"
 
-if [[ $HOSTNAME =~ atlassian ]] || [[ $HOSTNAME =~ DQ94 ]]
+if [[ $HOSTNAME =~ DQ94 ]]
 then
   if ! [ -d local ]
   then
