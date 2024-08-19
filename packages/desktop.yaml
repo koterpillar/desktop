@@ -104,10 +104,6 @@
 - system: tcpdump
 - pipx: torrt
 - system: vlc
-- system: wechat
-  os: darwin
-- system: whatsapp
-  os: darwin
 - system: wl-clipboard
   os: linux
 - repo: yt-dlp/yt-dlp
