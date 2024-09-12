@@ -5,7 +5,10 @@ setopt share_history nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
 WORDCHARS=${WORDCHARS//[\/-]}
 
+# Path where dotfiles repository is installed
 DESKTOP_PATH=$(dirname $(dirname $(realpath ${(%):-%x})))
+# User's home directory, might be different from HOME if run as root
+USER_HOME=$(echo $DESKTOP_PATH | grep -oE '^/[^/]+/[^/]+')
 
 zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu yes select
@@ -93,25 +96,22 @@ export MANPAGER="less -R --use-color --color=d+c --color=u+b"
 export MANROFFOPT="-c"
 
 # Plugins
+ZSH_PLUGINS="$USER_HOME/.zsh-plugins"
 
-# Find out the home directory where .zsh-plugins are installed, might be
-# different from HOME if run as root
-DESKTOP_HOME=$(echo $DESKTOP_PATH | grep -oE '^/[^/]+/[^/]+')
+source "$ZSH_PLUGINS/zsh-z/zsh-z.plugin.zsh"
+source "$ZSH_PLUGINS/zsh-command-time/command-time.plugin.zsh"
+source "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-source "${DESKTOP_HOME}/.zsh-plugins/zsh-z/zsh-z.plugin.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/zsh-command-time/command-time.plugin.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/async_prompt.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/functions.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/git.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/lib/termsupport.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/docker/completions/_docker"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/git/git.plugin.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/gradle/gradle.plugin.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/npm/npm.plugin.zsh"
-source "${DESKTOP_HOME}/.zsh-plugins/oh-my-zsh/plugins/yarn/yarn.plugin.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/lib/async_prompt.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/lib/functions.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/lib/git.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/lib/termsupport.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/plugins/docker/completions/_docker"
+source "$ZSH_PLUGINS/oh-my-zsh/plugins/git/git.plugin.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/plugins/gradle/gradle.plugin.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/plugins/npm/npm.plugin.zsh"
+source "$ZSH_PLUGINS/oh-my-zsh/plugins/yarn/yarn.plugin.zsh"
 
 # Theme
 autoload -U colors
