@@ -1,22 +1,9 @@
-HISTFILE=$HOME/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
-setopt share_history nomatch hist_ignore_all_dups hist_ignore_space
 unsetopt autocd
-WORDCHARS=${WORDCHARS//[\/-]}
 
 # Path where dotfiles repository is installed
 DESKTOP_PATH=$(dirname $(dirname $(realpath ${(%):-%x})))
 # User's home directory, might be different from HOME if run as root
 USER_HOME=$(echo $DESKTOP_PATH | grep -oE '^/[^/]+/[^/]+')
-
-zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' menu yes select
-setopt complete_in_word
-autoload -Uz compinit
-compinit -u
-autoload -Uz bashcompinit
-bashcompinit
 
 bindkey -e
 
@@ -40,27 +27,47 @@ bindkey '^[^[[C' vi-forward-word
 bindkey '^[[H' beginning-of-line  # FIXME: same on X?
 bindkey '^[[F' end-of-line  # FIXME: same on X?
 
-# Edit the command line with Ctrl-V
-autoload edit-command-line
-zle -N edit-command-line
+# Plugins
+
+ZSH_PLUGINS="$USER_HOME/.zsh-plugins"
+
+export ZSH="$ZSH_PLUGINS/oh-my-zsh"
+ZSH_THEME=jreese
+CASE_SENSITIVE="true"
+zstyle ':omz:update' mode disabled
+DISABLE_AUTO_TITLE="true"
+COMPLETION_WAITING_DOTS="true"
+plugins=(
+    docker
+    git
+    gradle
+    npm
+    yarn  # requires Perl?!
+)
+source $ZSH/oh-my-zsh.sh
+
+source "$ZSH_PLUGINS/zsh-z/zsh-z.plugin.zsh"
+source "$ZSH_PLUGINS/zsh-command-time/command-time.plugin.zsh"
+source "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
 bindkey '^V' edit-command-line
 
-bindkey '^I' expand-or-complete-prefix
+export LESS='-RFX'
+# Colored man pages
+# https://wiki.archlinux.org/title/Color_output_in_console#man
+# https://man.archlinux.org/man/less.1#D
+# https://felipec.wordpress.com/2021/06/05/adventures-with-man-color/
+export MANPAGER="less -R --use-color --color=d+c --color=u+b"
+export MANROFFOPT="-c"
 
 command_exists() {
     type "$1" >/dev/null 2>&1
 }
 
-alias grep='grep --color=auto'
-
 if command_exists eza
 then
     alias ls=eza
-elif command_exists gls
-then
-    alias ls='gls --color=auto'
-else
-    alias ls='ls --color=auto'
 fi
 
 if ! command_exists open
@@ -85,33 +92,6 @@ then
 else
     export EDITOR=vim
 fi
-
-export PAGER=less
-export LESS='-RFX'
-# Colored man pages
-# https://wiki.archlinux.org/title/Color_output_in_console#man
-# https://man.archlinux.org/man/less.1#D
-# https://felipec.wordpress.com/2021/06/05/adventures-with-man-color/
-export MANPAGER="less -R --use-color --color=d+c --color=u+b"
-export MANROFFOPT="-c"
-
-# Plugins
-ZSH_PLUGINS="$USER_HOME/.zsh-plugins"
-
-source "$ZSH_PLUGINS/zsh-z/zsh-z.plugin.zsh"
-source "$ZSH_PLUGINS/zsh-command-time/command-time.plugin.zsh"
-source "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-source "$ZSH_PLUGINS/oh-my-zsh/lib/async_prompt.zsh"
-source "$ZSH_PLUGINS/oh-my-zsh/lib/functions.zsh"
-source "$ZSH_PLUGINS/oh-my-zsh/lib/git.zsh"
-source "$ZSH_PLUGINS/oh-my-zsh/lib/termsupport.zsh"
-source "$ZSH_PLUGINS/oh-my-zsh/plugins/docker/completions/_docker"
-source "$ZSH_PLUGINS/oh-my-zsh/plugins/git/git.plugin.zsh"
-source "$ZSH_PLUGINS/oh-my-zsh/plugins/gradle/gradle.plugin.zsh"
-source "$ZSH_PLUGINS/oh-my-zsh/plugins/npm/npm.plugin.zsh"
-source "$ZSH_PLUGINS/oh-my-zsh/plugins/yarn/yarn.plugin.zsh"
 
 # Theme
 autoload -U colors
