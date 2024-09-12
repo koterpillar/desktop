@@ -44,7 +44,6 @@ bindkey '^V' edit-command-line
 
 bindkey '^I' expand-or-complete-prefix
 
-# Handy and pretty aliases
 command_exists() {
     type "$1" >/dev/null 2>&1
 }
@@ -76,6 +75,16 @@ then
     alias unrar=unrar-free
 fi
 
+if command_exists nvim
+then
+    export EDITOR=nvim
+    alias vim=nvim
+else
+    export EDITOR=vim
+fi
+
+export PAGER=less
+export LESS='-RFX'
 # Colored man pages
 # https://wiki.archlinux.org/title/Color_output_in_console#man
 # https://man.archlinux.org/man/less.1#D
