@@ -2,5 +2,7 @@
 /config/karabiner/assets
 /config/karabiner/automatic_backups
 /config/karabiner/karabiner.json
+/config/kitty/kitty.conf.bak
+/config/kitty/current-theme.conf
 /local
 /state.sqlite
