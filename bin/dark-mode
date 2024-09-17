@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+THEME=light
+if [[ $(uname) == Darwin ]]
+then
+    if (defaults read -g AppleInterfaceStyle 2>/dev/null || true) | grep -q Dark
+    then
+        THEME=dark
+    fi
+fi
+
+if [ "$THEME" = dark ]; then
+    KITTY_THEME=NormalContrast-dark
+else
+    KITTY_THEME=NormalContrast
+fi
+
+KITTY_CONFIG_DIR="$HOME/.config/kitty"
+ln -s -f "$KITTY_CONFIG_DIR/themes/$KITTY_THEME.conf" "$KITTY_CONFIG_DIR/current-theme.conf"
+pkill -USR1 -a kitty  # reload config
