@@ -29,6 +29,13 @@
   os: linux
 - system: visual-studio-code
   os: darwin
+- repo: cormacrelf/dark-notify
+  binary: dark-notify
+  os: darwin
+- links: macos/launchagents
+  destination: Library/LaunchAgents
+  shallow: true
+  os: darwin
 - system: docker-ce
   service: docker
   os: linux
