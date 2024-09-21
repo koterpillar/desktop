@@ -3,9 +3,25 @@
 set -euo pipefail
 
 THEME=light
-if [[ $(uname) == Darwin ]]
+if [[ $OSTYPE == darwin* ]]
 then
     if (defaults read -g AppleInterfaceStyle 2>/dev/null || true) | grep -q Dark
+    then
+        THEME=dark
+    fi
+elif [[ "$OSTYPE" == linux* ]]
+then
+    # TODO: watching for changes:
+    # gdbus monitor --session --dest org.freedesktop.portal.Desktop \
+    #   --object-path /org/freedesktop/portal/desktop
+    # /org/freedesktop/portal/desktop: org.freedesktop.portal.Settings.SettingChanged ('org.freedesktop.appearance', 'color-scheme', <uint32 1>)
+    if gdbus call \
+        --session \
+        --dest org.freedesktop.portal.Desktop \
+        --object-path /org/freedesktop/portal/desktop \
+        --method org.freedesktop.portal.Settings.Read \
+        org.freedesktop.appearance color-scheme \
+        | grep -q 'uint32 1'
     then
         THEME=dark
     fi
@@ -19,4 +35,10 @@ fi
 
 KITTY_CONFIG_DIR="$HOME/.config/kitty"
 ln -s -f "$KITTY_CONFIG_DIR/themes/$KITTY_THEME.conf" "$KITTY_CONFIG_DIR/current-theme.conf"
-pkill -USR1 -a kitty  # reload config
+
+PKILL_FLAGS=
+if [[ $OSTYPE == darwin* ]]
+then
+    PKILL_FLAGS=-a  # pkill doesn't match parents of itself by default
+fi
+pkill -USR1 ${PKILL_FLAGS} kitty  # reload config
