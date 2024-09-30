@@ -37,6 +37,7 @@ CASE_SENSITIVE="true"
 zstyle ':omz:update' mode disabled
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
+ZSH_DISABLE_COMPFIX="true"
 plugins=(
     docker
     git
