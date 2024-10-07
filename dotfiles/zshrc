@@ -146,7 +146,7 @@ then
         then
             COLOR='82;34;119'
         else
-            COLOR='255;247;102'
+            COLOR='252;248;169'
         fi
         PROMPT_BACKGROUND="%{"$'\e'"[48;2;"${COLOR}"m%}"
         PROMPT_ARROW="%{$bg[default]"$'\e'"[38;2;${COLOR}m%}"$'\UE0B0'
