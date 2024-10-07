@@ -26,6 +26,7 @@ then
         THEME=dark
     fi
 fi
+echo $THEME > ~/.config/theme
 
 if [ "$THEME" = dark ]; then
     KITTY_THEME=NormalContrast-dark
