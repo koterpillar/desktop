@@ -32,9 +32,11 @@
 - repo: cormacrelf/dark-notify
   binary: dark-notify
   os: darwin
-- links: macos/launchagents
-  destination: Library/LaunchAgents
-  shallow: true
+- name: Dark Mode Notify
+  daemon:
+    - dark-notify
+    - '-c'
+    - dark-mode
   os: darwin
 - system: docker-ce
   service: docker
