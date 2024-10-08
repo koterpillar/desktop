@@ -271,85 +271,35 @@ let manipulators = concat Manipulator [manipulators1, manipulators2, manipulator
 
 in
 {
-    global = {
-        check_for_updates_on_startup = True,
-        show_in_menu_bar = True,
-        show_profile_name_in_menu_bar = False
-    },
     profiles = [
         {
             complex_modifications = {
-                parameters = {
-                    `basic.simultaneous_threshold_milliseconds` = 50,
-                    `basic.to_delayed_action_delay_milliseconds` = 500,
-                    `basic.to_if_alone_timeout_milliseconds` = 1000,
-                    `basic.to_if_held_down_threshold_milliseconds` = 500,
-                    `mouse_motion_to_scroll.speed` = 100
-                },
                 rules = map Manipulator Rule rule manipulators
             },
             devices = [
                 {
-                    disable_built_in_keyboard_if_exists = False,
-                    fn_function_keys = []: List Text,
                     identifiers = {
-                        is_keyboard = True,
-                        is_pointing_device = False,
-                        product_id = 632,
-                        vendor_id = 1452
+                        is_keyboard = True
                     },
-                    ignore = False,
-                    manipulate_caps_lock_led = True,
-                    simple_modifications = []: List SimpleModification
-                },
-                {
-                    disable_built_in_keyboard_if_exists = False,
-                    fn_function_keys = []: List Text,
-                    identifiers = {
-                        is_keyboard = True,
-                        is_pointing_device = False,
-                        product_id = 34304,
-                        vendor_id = 1452
-                    },
-                    ignore = False,
-                    manipulate_caps_lock_led = True,
-                    simple_modifications = []: List SimpleModification
-                },
-                {
-                    disable_built_in_keyboard_if_exists = False,
-                    fn_function_keys = []: List Text,
-                    identifiers = {
-                        is_keyboard = True,
-                        is_pointing_device = False,
-                        product_id = 0,
-                        vendor_id = 0
-                    },
-                    ignore = False,
-                    manipulate_caps_lock_led = True,
                     simple_modifications = [
-                        {
-                            from = fromKeyCode "left_option",
-                            to = [ toKeyCode "left_command" ]
-                        },
                         {
                             from = fromKeyCode "left_command",
                             to = [ toKeyCode "left_option" ]
+                        },
+                        {
+                            from = fromKeyCode "left_option",
+                            to = [ toKeyCode "left_command" ]
                         }
                     ]
                 }
             ],
-            fn_function_keys = []: List Text,
             name = "Default profile",
-            parameters = {
-                delay_milliseconds_before_open_device = 1000
-            },
             selected = True,
-            simple_modifications = []: List Text,
             virtual_hid_keyboard = {
                 caps_lock_delay_milliseconds = 0,
                 country_code = 0,
                 keyboard_type = "ansi",
-                mouse_key_xy_scale = 100
+                keyboard_type_v2 = "ansi"
             }
         }
     ]
