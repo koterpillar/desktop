@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+MAIN=$(git rev-parse --abbrev-ref HEAD)
+
+git branch -a --merged "$MAIN" | \
+  grep -v "$MAIN" | \
+  grep -v HEAD | \
+  sed 's!remotes/origin/!!' | \
+  xargs git push origin -d
