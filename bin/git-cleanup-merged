@@ -2,7 +2,7 @@
 
 set -e
 
-MAIN=$(git rev-parse --abbrev-ref HEAD)
+MAIN=$(git rev-parse --abbrev-ref origin/HEAD | sed 's!origin/!!')
 
 git branch -a --merged "$MAIN" | \
   grep -v "$MAIN" | \
