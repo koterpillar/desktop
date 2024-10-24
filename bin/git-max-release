@@ -1,6 +1,0 @@
-#!/bin/sh
-# Find the latest tag of the vX.Y.Z format
-
-set -e
-
-(echo v0.0.0 && git tag -l 'v*.*.*') | sed 's/v//g' | sort -s -t . -k 1,1n -k 2,2n -k 3,3n | tail -n 1
