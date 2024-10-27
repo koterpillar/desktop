@@ -37,4 +37,8 @@ fi
 advance_branch "$TARGET"
 
 git remote prune origin
-(git branch --merged "$TARGET" | grep -v "$TARGET" | grep -v "$MAIN" || true) | xargs git branch --delete
+MERGED=$(git branch --merged "$TARGET" | grep -v "$TARGET" | grep -v "$MAIN" || true)
+if [ -n "$MERGED" ]
+then
+    git branch --delete $MERGED
+fi
