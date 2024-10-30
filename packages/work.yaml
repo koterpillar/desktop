@@ -1,6 +1,10 @@
 - links: local/dotfiles
   destination: ''
   dot: true
+- repo: argoproj/argo-workflows
+  binary: argo
+  raw: argo
+  raw_executable: true
 - url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
   binary: aws
   binary_path: aws/dist
