@@ -47,6 +47,8 @@
 - pipx: pgcli
 - repo: casey/just
   binary: just
+- npm: envsub
+  binary: envsub
 - npm: '@forge/cli'
   binary: forge
 - pipx: keyring
