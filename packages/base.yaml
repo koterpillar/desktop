@@ -100,7 +100,7 @@
   destination: .local/share/nvim/site/pack/mybox/start/nvim-ts-rainbow
 - system: nmap
 - pipx: poetry
-- system: pkg-config
+- system: pkgconf
   os: darwin
 - system: psmisc
   os: linux
