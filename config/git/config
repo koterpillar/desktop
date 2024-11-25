@@ -22,7 +22,6 @@
 
 [init]
     defaultBranch = main
-    templateDir = ~/.config/git-templates
 
 [pull]
     ff = only
@@ -65,3 +64,9 @@
 
 [delta]
     syntax-theme = GitHub
+
+[includeIf "hasconfig:remote.*.url:git@bitbucket.org:atlassian/**"]
+    path = ~/.config/git/config-atlassian
+
+[includeIf "hasconfig:remote.*.url:git@bitbucket.org:akotlyarov-atlassian/**"]
+    path = ~/.config/git/config-atlassian
