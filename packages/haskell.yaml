@@ -8,11 +8,9 @@
     - src
   binary: ghcup
   raw: ghcup
-- repo: mihaimaruseac/hindent
-  suffix: hindent
+- repo: koterpillar/hindent-build
   binary: hindent
   raw: hindent
-  os: linux
 - repo: ndmitchell/hlint
   binary: hlint
 - repo: haskell/stylish-haskell
