@@ -12,6 +12,7 @@
   suffix: hindent
   binary: hindent
   raw: hindent
+  os: linux
 - repo: ndmitchell/hlint
   binary: hlint
 - repo: haskell/stylish-haskell
