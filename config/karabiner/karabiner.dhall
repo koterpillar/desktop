@@ -269,6 +269,43 @@ let manipulators3 = map Natural Manipulator tabSwitch (drop 1 Natural (enumerate
 
 let manipulators = concat Manipulator [manipulators1, manipulators2, manipulators3]
 
+let Identifiers = {
+    is_keyboard: Bool,
+    product_id: Optional Natural,
+    vendor_id: Optional Natural
+}
+
+let builtInKeyboard: Identifiers = {
+    is_keyboard = True,
+    product_id = None Natural,
+    vendor_id = None Natural
+}
+
+let sydneyOfficeKeyboard: Identifiers = {
+    is_keyboard = True,
+    product_id = Some 67,
+    vendor_id = Some 7247
+}
+
+let DeviceRules = {
+    identifiers: Identifiers,
+    simple_modifications: List SimpleModification
+}
+
+let macLikeKeyboardRules = \(device: Identifiers) -> {
+    identifiers = device,
+    simple_modifications = [
+        {
+            from = fromKeyCode "left_command",
+            to = [ toKeyCode "left_option" ]
+        },
+        {
+            from = fromKeyCode "left_option",
+            to = [ toKeyCode "left_command" ]
+        }
+    ]
+}
+
 in
 {
     profiles = [
@@ -276,23 +313,7 @@ in
             complex_modifications = {
                 rules = map Manipulator Rule rule manipulators
             },
-            devices = [
-                {
-                    identifiers = {
-                        is_keyboard = True
-                    },
-                    simple_modifications = [
-                        {
-                            from = fromKeyCode "left_command",
-                            to = [ toKeyCode "left_option" ]
-                        },
-                        {
-                            from = fromKeyCode "left_option",
-                            to = [ toKeyCode "left_command" ]
-                        }
-                    ]
-                }
-            ],
+            devices = map Identifiers DeviceRules macLikeKeyboardRules [builtInKeyboard, sydneyOfficeKeyboard],
             name = "Default profile",
             selected = True,
             virtual_hid_keyboard = {
