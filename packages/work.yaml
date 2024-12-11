@@ -38,6 +38,7 @@
 - system: amazon-workspaces
 - repo: cloudflare/cloudflared
   binary: cloudflared
+- system: cloudflare-warp
 - system: intellij-idea
   os: darwin
 - system: slack
