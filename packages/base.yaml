@@ -7,6 +7,7 @@
 - links: config
   destination: .config
   shallow: true
+  post: ~/.config/karabiner/apply
 - links: dotfiles
   destination: ''
   dot: true
@@ -96,6 +97,7 @@
   destination: .local/share/nvim/site/pack/mybox/start/telescope-recent-files
 - clone: nvim-treesitter/nvim-treesitter
   destination: .local/share/nvim/site/pack/mybox/start/nvim-treesitter
+  post: nvim +'set nomore' +TSUpdateSync +q
 - clone: p00f/nvim-ts-rainbow
   destination: .local/share/nvim/site/pack/mybox/start/nvim-ts-rainbow
 - system: nmap

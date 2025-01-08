@@ -16,9 +16,3 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 mybox "$@"
-
-# Config interpolation
-if [[ $(uname) == Darwin ]]
-then
-  ./config/karabiner/apply
-fi
