@@ -17,27 +17,17 @@ advance_branch() {
     fi
 }
 
-branch_exists() {
-    git rev-parse origin/$1 >/dev/null 2>&1
-}
-
-MAIN=$(git rev-parse --abbrev-ref origin/HEAD | sed 's!origin/!!')
-TARGET=$MAIN
-
-if branch_exists develop
+if !(git rev-parse origin/HEAD >/dev/null 2>&1)
 then
-    advance_branch "$MAIN"
-    TARGET=develop
-elif branch_exists dev
-then
-    advance_branch "$MAIN"
-    TARGET=dev
+    git fetch origin HEAD
 fi
 
-advance_branch "$TARGET"
+MAIN=$(git rev-parse --abbrev-ref origin/HEAD | sed 's!origin/!!')
+
+advance_branch "$MAIN"
 
 git remote prune origin
-MERGED=$(git branch --merged "$TARGET" | grep -v "$TARGET" | grep -v "$MAIN" || true)
+MERGED=$(git branch --merged "$MAIN" | grep -v "$MAIN" || true)
 if [ -n "$MERGED" ]
 then
     git branch --delete $MERGED
