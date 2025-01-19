@@ -34,11 +34,9 @@
 - system: colordiff
 - system: curl
 - repo: dhall-lang/dhall-haskell
-  skip_release: 1.42.1
   prefix: dhall-json
   binary: dhall-to-json
 - repo: dhall-lang/dhall-haskell
-  skip_release: 1.42.1
   prefix: dhall-lsp-server
   binary: dhall-lsp-server
 - repo: Wilfred/difftastic
