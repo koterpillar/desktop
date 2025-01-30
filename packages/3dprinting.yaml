@@ -1,8 +1,1 @@
 - system: openscad
-- repo: prusa3d/PrusaSlicer
-  binary:
-    - prusa-slicer
-    - prusa-gcodeviewer
-  exclude:
-    - GTK2
-    - AppImage
