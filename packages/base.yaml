@@ -59,17 +59,6 @@
 - system: gcc
 - repo: cli/cli
   binary: gh
-  skip_release:
-    - "v0.3.4"
-    - "v0.3.1"
-    - "v0.2.4"
-    - "v0.2.3"
-    - "v0.2.2"
-    - "v0.2.1"
-    - "v0.2.0"
-    - "v0.1.0"
-    - "v0.0.196"
-    - "v0.0.195"
 - system: git
 - system: git-lfs
 - repo: tummychow/git-absorb
