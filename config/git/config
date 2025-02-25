@@ -5,6 +5,8 @@
     diffFilter = delta --color-only
 
 [diff]
+    algorithm = histogram
+    renames = true
     tool = difftastic
 
 [difftool]
@@ -22,6 +24,9 @@
 
 [init]
     defaultBranch = main
+
+[rebase]
+    autosquash = true
 
 [pull]
     ff = only
