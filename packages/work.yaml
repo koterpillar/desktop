@@ -14,6 +14,8 @@
 - repo: gradle/gradle-distributions
   suffix: bin.zip
   binary: gradle
+- system: cursor
+  os: darwin
 - name: chromedriver
   url:
     base:
