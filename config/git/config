@@ -1,6 +1,9 @@
 [core]
     pager = delta
 
+[branch]
+    sort = -committerdate
+
 [interactive]
     diffFilter = delta --color-only
 
