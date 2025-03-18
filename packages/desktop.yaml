@@ -82,6 +82,7 @@
   os: linux
 - system: google-chrome
   os: darwin
+- system: graphviz
 - system: ImageMagick
   os: linux
 - system: imagemagick
