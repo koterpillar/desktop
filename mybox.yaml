@@ -6,8 +6,10 @@
   component:
     - desktop
     - haskell
+    - javascript
+- host: taohua
+  component: 3dprinting
 - host: DQ94*
   component:
-    - javascript
     - work
     - work-private
