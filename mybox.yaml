@@ -1,0 +1,13 @@
+- host: '*'
+  component: base
+- host:
+    - taohua
+    - DQ94*
+  component:
+    - desktop
+    - haskell
+- host: DQ94*
+  component:
+    - javascript
+    - work
+    - work-private
