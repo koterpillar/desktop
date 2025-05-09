@@ -47,6 +47,8 @@
   os: darwin
 - system: loom
   os: darwin
+- system: go
+  os: darwin
 - pipx: pgcli
 - repo: casey/just
   binary: just
