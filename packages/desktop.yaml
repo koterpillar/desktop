@@ -33,6 +33,8 @@
   distribution: fedora
 - system: alt-tab
   os: darwin
+- flatpak: com.bitwarden.desktop
+  os: linux
 - system: bitwarden
   os: darwin
 - system: code
