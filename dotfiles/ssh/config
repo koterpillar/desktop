@@ -1,7 +1,3 @@
 Host koterpillar.com
   User alex
 
-Host router
-  HostName koterpillar.com
-  User koterpillar
-  Port 31040
