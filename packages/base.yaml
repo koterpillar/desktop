@@ -130,6 +130,13 @@
 - repo: sachaos/viddy
   binary: viddy
 - system: wget
+  os: darwin
+- system: wget2
+  os: linux
+  distribution: debian
+- system: wget2-wget
+  os: linux
+  distribution: fedora
 - repo: mikefarah/yq
   exclude: .tar.gz
   binary: yq
