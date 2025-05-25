@@ -1,4 +1,7 @@
-- host: '*'
+- host:
+    - taohua
+    - liushu
+    - DQ94*
   component: base
 - host:
     - taohua
