@@ -1,7 +1,6 @@
 - repo: denoland/deno
   prefix: deno-
   binary: deno
-  raw: deno
 - system: nodejs
   os: linux
 - system: nodejs-npm
