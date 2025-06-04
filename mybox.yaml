@@ -12,6 +12,8 @@
     - javascript
 - host: taohua
   component: 3dprinting
+- host: shanmei
+  component: shanmei
 - host: DQ94*
   component:
     - work
