@@ -25,7 +25,7 @@
     - nvim
     - git
 - repo: ast-grep/ast-grep
-  binary: sg
+  binary: ast-grep
 - repo: atuinsh/atuin
   binary: atuin
   exclude: update
