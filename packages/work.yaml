@@ -58,3 +58,4 @@
 - npm: '@forge/cli'
   binary: forge
 - pipx: keyring
+- system: tfenv
