@@ -55,7 +55,7 @@
   os: linux
 - system: docker-compose-plugin
   os: linux
-- system: docker
+- system: docker-desktop
   os: darwin
 - system: fcitx5
   os: linux
