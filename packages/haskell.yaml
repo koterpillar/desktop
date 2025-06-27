@@ -8,10 +8,14 @@
     - src
   binary: ghcup
   raw: ghcup
+- repo: fourmolu/fourmolu
+  binary: fourmolu
 - repo: koterpillar/hindent-build
   binary: hindent
   raw: hindent
 - repo: ndmitchell/hlint
   binary: hlint
+- repo: tweag/ormolu
+  binary: ormolu
 - repo: haskell/stylish-haskell
   binary: stylish-haskell
