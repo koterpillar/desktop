@@ -10,6 +10,7 @@
   raw: ghcup
 - repo: fourmolu/fourmolu
   binary: fourmolu
+  raw: fourmolu
 - repo: koterpillar/hindent-build
   binary: hindent
   raw: hindent
