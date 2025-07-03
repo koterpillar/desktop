@@ -1,6 +1,10 @@
 - links: local/dotfiles
   destination: ''
   dot: true
+- name: acli
+  url: https://acli.atlassian.com/darwin/latest/acli_darwin_amd64/acli
+  raw: true
+  binary: acli
 - repo: argoproj/argo-workflows
   binary: argo
   raw: argo
