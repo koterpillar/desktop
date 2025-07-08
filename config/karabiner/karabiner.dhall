@@ -205,6 +205,7 @@ let manipulators1 = [
     manipulatorFor browser (fromCtrlShift "c") [toModifiers ["command", "option"] "c"],
     manipulatorFor terminals (fromCtrlShift "c") [toCommand "c"],
     controlToCommand "c",
+    controlToCommand "e",
     manipulatorFor unlessNiceApp (fromCtrl "f") [toCommand "f"],
     manipulatorFor browser (fromCtrlShift "i") [toModifiers ["command", "option"] "i"],
     controlToCommand "i",
