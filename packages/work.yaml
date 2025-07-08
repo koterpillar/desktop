@@ -15,6 +15,13 @@
   os: linux
 - system: awscli
   os: darwin
+- name: kubectl
+  url:
+    base:
+      url: https://dl.k8s.io/release/stable.txt
+    format: https://dl.k8s.io/release/{}/bin/darwin/arm64/kubectl
+  binary: kubectl
+  raw: kubectl
 - system: maven
 - repo: gradle/gradle-distributions
   suffix: bin.zip
