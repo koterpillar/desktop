@@ -117,7 +117,8 @@ let unlessNiceApp: Condition = unlessApp niceApps
 let unlessNiceAppOrTerminal: Condition = unlessApp (concat Text [terminalApps, niceApps])
 
 let vimApps = [
-    "^com\\.microsoft\\.VSCode$"
+    "^com\\.microsoft\\.VSCode$",
+    "^com\\.todesktop\\.230313mzl4w4u92$" -- Cursor
 ]
 
 let unlessVim: Condition = unlessApp (concat Text [terminalApps, niceApps, vimApps])
