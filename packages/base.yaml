@@ -67,6 +67,7 @@
   binary: delta
 - system: jq
 - system: htop
+- system: lcov
 - system: lftp
 - system: lsof
 - system: make
