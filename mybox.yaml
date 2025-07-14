@@ -10,6 +10,7 @@
     - desktop
     - haskell
     - javascript
+    - python
 - host: taohua
   component: 3dprinting
 - host: DQ94*

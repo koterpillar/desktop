@@ -1,0 +1,6 @@
+- system: python3-ipython
+  os: linux
+- system: ipython
+  os: darwin
+- pipx: poetry
+- pipx: uv

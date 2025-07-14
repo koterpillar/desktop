@@ -102,7 +102,6 @@
 - repo: pypa/pipx
   binary: pipx
   raw: pipx
-- pipx: poetry
 - system: pkgconf
   os: darwin
 - system: psmisc
@@ -111,10 +110,6 @@
   os: darwin
 - system: pv
 - system: pwgen
-- system: python3-ipython
-  os: linux
-- system: ipython
-  os: darwin
 - repo: claudiodangelis/qrcp
   binary: qrcp
 - system: rar
