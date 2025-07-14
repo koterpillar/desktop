@@ -1,3 +1,29 @@
+- name: cabal
+  url:
+    links: https://downloads.haskell.org/~cabal/cabal-install-latest/
+    include:
+      - aarch64
+      - darwin
+  binary: cabal
+  os: darwin
+- name: cabal
+  url:
+    links: https://downloads.haskell.org/~cabal/cabal-install-latest/
+    include:
+      - x86_64
+      - deb10
+  binary: cabal
+  os: linux
+  distribution: debian
+- name: cabal
+  url:
+    links: https://downloads.haskell.org/~cabal/cabal-install-latest/
+    include:
+      - x86_64
+      - fedora38
+  binary: cabal
+  os: linux
+  distribution: fedora
 - system: ghc
 - repo: commercialhaskell/stack
   exclude: bin
