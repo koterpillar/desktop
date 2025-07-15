@@ -1,3 +1,6 @@
+- repo: pypa/pipx
+  binary: pipx
+  raw: pipx
 - system: python3-ipython
   os: linux
 - system: ipython
