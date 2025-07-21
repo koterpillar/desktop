@@ -70,3 +70,6 @@
   binary: forge
 - pipx: keyring
 - system: tfenv
+- repo: air-verse/air
+  include: tar.gz
+  binary: air
