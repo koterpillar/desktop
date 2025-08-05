@@ -93,6 +93,8 @@ else
     export EDITOR=vim
 fi
 
+alias reset='tput reset'
+
 # Theme
 autoload -U colors
 colors
