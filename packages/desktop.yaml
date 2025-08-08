@@ -2,18 +2,18 @@
   url:
     base:
       base:
-        url: https://endoflife.date/api/fedora.json
-      jsonpath: '[0].latest'
-    format: 'https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{}.noarch.rpm'
+        $url: https://endoflife.date/api/fedora.json
+      $jsonpath: '[0].latest'
+    $format: 'https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{}.noarch.rpm'
   os: linux
   distribution: fedora
 - system: rpmfusion-nonfree-release
   url:
     base:
       base:
-        url: https://endoflife.date/api/fedora.json
-      jsonpath: '[0].latest'
-    format: 'https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{}.noarch.rpm'
+        $url: https://endoflife.date/api/fedora.json
+      $jsonpath: '[0].latest'
+    $format: 'https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{}.noarch.rpm'
   os: linux
   distribution: fedora
 - yum_name: vscode

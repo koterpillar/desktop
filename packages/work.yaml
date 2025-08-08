@@ -18,8 +18,8 @@
 - name: kubectl
   url:
     base:
-      url: https://dl.k8s.io/release/stable.txt
-    format: https://dl.k8s.io/release/{}/bin/darwin/arm64/kubectl
+      $url: https://dl.k8s.io/release/stable.txt
+    $format: https://dl.k8s.io/release/{}/bin/darwin/arm64/kubectl
   binary: kubectl
   raw: kubectl
 - system: maven
@@ -31,22 +31,22 @@
 - name: chromedriver
   url:
     base:
-      url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
+      $url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
     jsonpath: channels.Stable.downloads.chromedriver[?(@.platform='linux64')].url
   binary: chromedriver
   os: linux
 - name: chromedriver
   url:
     base:
-      url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
-    jsonpath: channels.Stable.downloads.chromedriver[?(@.platform='mac-arm64')].url
+      $url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
+    $jsonpath: channels.Stable.downloads.chromedriver[?(@.platform='mac-arm64')].url
   binary: chromedriver
   os: darwin
 - name: intellij-idea-ultimate
   url:
     base:
-      url: https://data.services.jetbrains.com/products/releases?code=IIU&latest=true&type=release
-    jsonpath: 'IIU[0].downloads.linux.link'
+      $url: https://data.services.jetbrains.com/products/releases?code=IIU&latest=true&type=release
+    $jsonpath: 'IIU[0].downloads.linux.link'
   binary: idea.sh
   os: linux
 - system: amazon-workspaces
