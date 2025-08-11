@@ -12,9 +12,11 @@
 - url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
   binary: aws
   binary_path: aws/dist
-  os: linux
+  $if:
+    os: linux
 - system: awscli
-  os: darwin
+  $if:
+    os: darwin
 - name: kubectl
   url:
     base:
@@ -27,40 +29,48 @@
   suffix: bin.zip
   binary: gradle
 - system: cursor
-  os: darwin
+  $if:
+    os: darwin
 - name: chromedriver
   url:
     base:
       $url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
     jsonpath: channels.Stable.downloads.chromedriver[?(@.platform='linux64')].url
   binary: chromedriver
-  os: linux
+  $if:
+    os: linux
 - name: chromedriver
   url:
     base:
       $url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
     $jsonpath: channels.Stable.downloads.chromedriver[?(@.platform='mac-arm64')].url
   binary: chromedriver
-  os: darwin
+  $if:
+    os: darwin
 - name: intellij-idea-ultimate
   url:
     base:
       $url: https://data.services.jetbrains.com/products/releases?code=IIU&latest=true&type=release
     $jsonpath: 'IIU[0].downloads.linux.link'
   binary: idea.sh
-  os: linux
+  $if:
+    os: linux
 - system: amazon-workspaces
 - repo: cloudflare/cloudflared
   binary: cloudflared
 - system: cloudflare-warp
 - system: intellij-idea
-  os: darwin
+  $if:
+    os: darwin
 - system: slack
-  os: darwin
+  $if:
+    os: darwin
 - system: loom
-  os: darwin
+  $if:
+    os: darwin
 - system: go
-  os: darwin
+  $if:
+    os: darwin
 - pipx: pgcli
 - repo: casey/just
   binary: just

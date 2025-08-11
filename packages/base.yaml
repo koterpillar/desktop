@@ -1,5 +1,5 @@
 - links: dotfiles
-  destination: ''
+  destination: ""
   dot: true
 - links: bin
   destination: .local/bin
@@ -9,7 +9,7 @@
   shallow: true
   post: ~/.config/karabiner/apply
 - links: dotfiles
-  destination: ''
+  destination: ""
   dot: true
   root: true
   only:
@@ -46,16 +46,19 @@
   exclude:
     - static
     - zip
-  os: linux
+  $if:
+    os: linux
 - system: eza
-  os: darwin
+  $if:
+    os: darwin
 - repo: fastfetch-cli/fastfetch
   binary: fastfetch
   exclude: zip
 - repo: sharkdp/hexyl
   binary: hexyl
 - system: g++
-  os: linux
+  $if:
+    os: linux
 - system: gcc
 - repo: cli/cli
   binary: gh
@@ -100,19 +103,24 @@
   destination: .local/share/nvim/site/pack/mybox/start/rainbow-delimiters.nvim
 - system: nmap
 - system: pkgconf
-  os: darwin
+  $if:
+    os: darwin
 - system: psmisc
-  os: linux
+  $if:
+    os: linux
 - system: pstree
-  os: darwin
+  $if:
+    os: darwin
 - system: pv
 - system: pwgen
 - repo: claudiodangelis/qrcp
   binary: qrcp
 - system: rar
-  os: darwin
+  $if:
+    os: darwin
 - system: unrar-free
-  os: linux
+  $if:
+    os: linux
 - repo: BurntSushi/ripgrep
   binary: rg
 - system: rlwrap
@@ -120,18 +128,20 @@
 - repo: koalaman/shellcheck
   binary: shellcheck
 - system: strace
-  os: linux
+  $if:
+    os: linux
 - system: tig
 - repo: sachaos/viddy
   binary: viddy
 - system: wget
-  os: darwin
+  $if:
+    os: darwin
 - system: wget2
-  os: linux
-  distribution: debian
+  $if:
+    os: debian
 - system: wget2-wget
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - repo: mikefarah/yq
   exclude: .tar.gz
   binary: yq

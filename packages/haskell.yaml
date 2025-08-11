@@ -5,7 +5,8 @@
       - aarch64
       - darwin
   binary: cabal
-  os: darwin
+  $if:
+    os: darwin
 - name: cabal
   url:
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
@@ -13,8 +14,8 @@
       - x86_64
       - deb10
   binary: cabal
-  os: linux
-  distribution: debian
+  $if:
+    os: debian
 - name: cabal
   url:
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
@@ -22,8 +23,8 @@
       - x86_64
       - fedora38
   binary: cabal
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - system: ghc
 - repo: commercialhaskell/stack
   exclude: bin

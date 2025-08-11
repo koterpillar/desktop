@@ -2,15 +2,17 @@
   prefix: deno-
   binary: deno
 - system: nodejs
-  os: linux
+  $if:
+    os: linux
 - system: nodejs-npm
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - system: npm
-  os: linux
-  distribution: debian
+  $if:
+    os: debian
 - system: node
-  os: darwin
+  $if:
+    os: darwin
 - npm: pnpm
   binary: pnpm
 - npm: ts-node

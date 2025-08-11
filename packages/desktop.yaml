@@ -5,8 +5,8 @@
         $url: https://endoflife.date/api/fedora.json
       $jsonpath: '[0].latest'
     $format: 'https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{}.noarch.rpm'
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - system: rpmfusion-nonfree-release
   url:
     base:
@@ -14,59 +14,74 @@
         $url: https://endoflife.date/api/fedora.json
       $jsonpath: '[0].latest'
     $format: 'https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{}.noarch.rpm'
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - yum_name: vscode
   yum_url: https://packages.microsoft.com/yumrepos/vscode
   gpg_key: https://packages.microsoft.com/keys/microsoft.asc
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - yum_name: docker
   yum_url: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
   gpg_key: https://download.docker.com/linux/fedora/gpg
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - yum_name: google-chrome
   yum_url: https://dl.google.com/linux/chrome/rpm/stable/x86_64
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
-  os: linux
-  distribution: fedora
+  $if:
+    os: fedora
 - system: alt-tab
-  os: darwin
+  $if:
+    os: darwin
 - flatpak: com.bitwarden.desktop
-  os: linux
+  $if:
+    os: linux
 - system: bitwarden
-  os: darwin
+  $if:
+    os: darwin
 - system: code
-  os: linux
+  $if:
+    os: linux
 - system: visual-studio-code
-  os: darwin
+  $if:
+    os: darwin
 - repo: cormacrelf/dark-notify
   binary: dark-notify
-  os: darwin
+  $if:
+    os: darwin
 - name: Dark Mode Notify
   daemon:
     - dark-notify
     - '-c'
     - dark-mode
-  os: darwin
+  $if:
+    os: darwin
 - system: docker-ce
   service: docker
-  os: linux
+  $if:
+    os: linux
 - system: docker-compose-plugin
-  os: linux
+  $if:
+    os: linux
 - system: docker-desktop
-  os: darwin
+  $if:
+    os: darwin
 - system: fcitx5
-  os: linux
+  $if:
+    os: linux
 - system: fcitx5-chinese-addons
-  os: linux
+  $if:
+    os: linux
 - system: fcitx5-m17n
-  os: linux
+  $if:
+    os: linux
 - system: fcitx5-mozc
-  os: linux
+  $if:
+    os: linux
 - system: fcitx5-configtool
-  os: linux
+  $if:
+    os: linux
 - repo: ryanoasis/nerd-fonts
   prefix: NerdFontsSymbolsOnly
   suffix: tar.xz
@@ -81,53 +96,71 @@
     - FiraCode-SemiBold
 - system: firefox
 - system: google-chrome-stable
-  os: linux
+  $if:
+    os: linux
 - system: google-chrome
-  os: darwin
+  $if:
+    os: darwin
 - system: graphviz
 - system: ImageMagick
-  os: linux
+  $if:
+    os: linux
 - system: imagemagick
-  os: darwin
+  $if:
+    os: darwin
 - system: karabiner-elements
-  os: darwin
+  $if:
+    os: darwin
 - system: insomnia
-  os: darwin
+  $if:
+    os: darwin
 - repo: Kong/insomnia
   prefix: Insomnia.Core
   suffix: tar.gz
   binary: insomnia
-  os: linux
+  $if:
+    os: linux
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
   exclude: 'kitten'
-  os: linux
+  $if:
+    os: linux
 - system: kitty
-  os: darwin
+  $if:
+    os: darwin
 - system: krita
 - system: perl-Image-ExifTool
-  os: linux
+  $if:
+    os: linux
 - system: exiftool
-  os: darwin
+  $if:
+    os: darwin
 - system: maccy
-  os: darwin
+  $if:
+    os: darwin
 - system: meld
-  os: linux
+  $if:
+    os: linux
 - system: kdiff3
-  os: darwin
+  $if:
+    os: darwin
 - system: openssh-server
   service: sshd
-  os: linux
+  $if:
+    os: linux
 - system: openssh
-  os: darwin
+  $if:
+    os: darwin
 - system: rectangle
-  os: darwin
+  $if:
+    os: darwin
 - system: tcpdump
 - pipx: torrt
 - system: vlc
 - system: wl-clipboard
-  os: linux
+  $if:
+    os: linux
 - repo: yt-dlp/yt-dlp
   binary: yt-dlp
   suffix: tar.gz

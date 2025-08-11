@@ -2,8 +2,10 @@
   binary: pipx
   raw: pipx
 - system: python3-ipython
-  os: linux
+  $if:
+    os: linux
 - system: ipython
-  os: darwin
+  $if:
+    os: darwin
 - pipx: poetry
 - pipx: uv
