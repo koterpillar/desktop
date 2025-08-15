@@ -1,8 +1,4 @@
-- host:
-    - taohua
-    - liushu
-    - DQ94*
-  component: base
+- component: base
 - host:
     - taohua
     - DQ94*
