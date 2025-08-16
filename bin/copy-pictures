@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# used in trap
+# shellcheck disable=SC2329
+umount_phone () {
+  findmnt --json -t fuse.aft-mtp-mount | \
+  jq -r '.filesystems[]|.target' | \
+  xargs --max-args=1 --no-run-if-empty umount
+}
+
+MOUNT=$(mktemp -d phone-mount-XXXXX -t)
+trap 'umount_phone; rm -rf "$MOUNT"' EXIT
+
+aft-mtp-mount "$MOUNT"
+for TARGET_NAME in DCIM WeChat; do
+  TARGET="$(find "$MOUNT" -maxdepth 3 -name "$TARGET_NAME" -type d)"
+  [ -z "$TARGET" ] && continue
+  echo $TARGET
+  find "$TARGET" -type f -exec mv -v {} "$MOUNT" \;
+done
+
+echo "Stop" >&2
+exit 2

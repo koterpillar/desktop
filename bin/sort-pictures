@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 weixin_timestamp() {
     echo "$1" | sed -r 's/[^0-9]//g;s/(^[0-9]{10}).+$/\1/g'
