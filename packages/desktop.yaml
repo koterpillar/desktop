@@ -37,6 +37,9 @@
 - flatpak: com.bitwarden.desktop
   $if:
     os: linux
+- system: android-file-transfer
+  $if:
+    os: linux
 - system: bitwarden
   $if:
     os: darwin
