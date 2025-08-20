@@ -15,4 +15,4 @@ fi
 # PATH for tools might not be picked up yet
 export PATH="$HOME/.local/bin:$PATH"
 
-mybox "$@"
+mybox-python "$@"
