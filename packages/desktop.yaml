@@ -114,6 +114,9 @@
 - system: karabiner-elements
   $if:
     os: darwin
+- system: hammerspoon
+  $if:
+    os: darwin
 - system: insomnia
   $if:
     os: darwin
