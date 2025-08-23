@@ -35,7 +35,7 @@
   url:
     base:
       $url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
-    jsonpath: channels.Stable.downloads.chromedriver[?(@.platform='linux64')].url
+    jsonpath: channels.Stable.downloads.chromedriver[?(@.platform=='linux64')].url
   binary: chromedriver
   $if:
     os: linux
@@ -43,7 +43,7 @@
   url:
     base:
       $url: https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json
-    $jsonpath: channels.Stable.downloads.chromedriver[?(@.platform='mac-arm64')].url
+    $jsonpath: channels.Stable.downloads.chromedriver[?(@.platform=='mac-arm64')].url
   binary: chromedriver
   $if:
     os: darwin
