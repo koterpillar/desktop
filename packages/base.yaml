@@ -41,6 +41,8 @@
   binary: dhall-lsp-server
 - repo: Wilfred/difftastic
   binary: difft
+- repo: Byron/dua-cli
+  binary: dua
 - repo: eza-community/eza
   binary: eza
   exclude:
@@ -77,6 +79,7 @@
   suffix: .tar.xz
   binary: mise
 - system: moreutils
+- system: ncdu
 - repo: neovim/neovim
   binary: nvim
   root: true
