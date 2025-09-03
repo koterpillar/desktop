@@ -1,4 +1,4 @@
-- links: local/dotfiles
+- links: work/dotfiles
   destination: ''
   dot: true
 - name: acli
@@ -59,6 +59,7 @@
 - repo: cloudflare/cloudflared
   binary: cloudflared
 - system: cloudflare-warp
+- system: secretive
 - system: intellij-idea
   $if:
     os: darwin
