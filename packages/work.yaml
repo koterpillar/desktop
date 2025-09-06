@@ -1,6 +1,3 @@
-- links: work/dotfiles
-  destination: ''
-  dot: true
 - name: acli
   url: https://acli.atlassian.com/darwin/latest/acli_darwin_amd64/acli
   raw: true
@@ -59,7 +56,6 @@
 - repo: cloudflare/cloudflared
   binary: cloudflared
 - system: cloudflare-warp
-- system: secretive
 - system: intellij-idea
   $if:
     os: darwin

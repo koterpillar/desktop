@@ -1,5 +1,3 @@
-Include config.local
-
 Host koterpillar.com
   User alex
 
