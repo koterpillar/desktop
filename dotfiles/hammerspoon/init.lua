@@ -24,7 +24,6 @@ widgetSizeX = 345
 
 function zoomWindowCreated(win, app, event)
   if win:title() == "Zoom Workplace" then
-    hs.alert.show("Main Zoom window created")
     target = secondaryScreen()
     if target then
       win:moveToScreen(target)
@@ -34,6 +33,18 @@ function zoomWindowCreated(win, app, event)
       newRect.y = screenFrame.y + widgetMarginY
       newRect.x2 = screenFrame.x2 - widgetMarginX
       newRect.y2 = screenFrame.y2 - widgetMarginY
+      win:setFrame(newRect)
+    end
+  elseif win:title() == "zoom floating video window" then
+    target = secondaryScreen()
+    if target then
+      win:moveToScreen(target)
+      local screenFrame = target:frame()
+      local newRect = hs.geometry.copy(screenFrame)
+      newRect.x = screenFrame.x2 - win:frame().w
+      newRect.y = screenFrame.y
+      newRect.w = win:frame().w
+      newRect.h = win:frame().h
       win:setFrame(newRect)
     end
   end
