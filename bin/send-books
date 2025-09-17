@@ -4,21 +4,37 @@ from glob import glob
 
 import requests
 
-ADDRESS = "192.168.0.251"
 
-URL = f"http://{ADDRESS}:8080"
+def discover_address():
+    for i in range(180, 255):
+        address = f"http://192.168.0.{i}:8080"
+        try:
+            response = requests.get(address, timeout=0.1)
+            if response.status_code == 200 and "<title>WiFi Book Transfer</title>" in response.text:
+                return address
+        except requests.RequestException:
+            continue
+
+
+def send(address: str, file_name: str):
+    response = requests.post(
+        f"{address}/files",
+        data={"fileName": file_name},
+        files={"newfile": open(file_name, "rb")},
+    )
+    response.raise_for_status()
 
 
 def main():
+    address = discover_address()
+    if not address:
+        print("No server found")
+        return
+
     for extension in ["epub", "fb2", "mobi", "pdf"]:
         for file_name in glob(f"*.{extension}"):
             print(file_name)
-            response = requests.post(
-                f"{URL}/files",
-                data={"fileName": file_name},
-                files={"newfile": open(file_name, "rb")},
-            )
-            response.raise_for_status()
+            send(address, file_name)
 
 
 if __name__ == "__main__":
