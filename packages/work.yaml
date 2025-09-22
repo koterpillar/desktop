@@ -80,3 +80,4 @@
 - repo: air-verse/air
   include: tar.gz
   binary: air
+- system: helm
