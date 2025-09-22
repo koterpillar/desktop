@@ -82,7 +82,6 @@
 - system: ncdu
 - repo: neovim/neovim
   binary: nvim
-  root: true
 - clone: nyoom-engineering/oxocarbon.nvim
   destination: .local/share/nvim/site/pack/mybox/start/oxocarbon
 - clone: numToStr/Comment.nvim
