@@ -55,7 +55,9 @@
     os: darwin
 - repo: fastfetch-cli/fastfetch
   binary: fastfetch
-  exclude: zip
+  exclude:
+    - polyfilled
+    - zip
 - repo: sharkdp/hexyl
   binary: hexyl
 - system: g++
