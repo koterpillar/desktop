@@ -58,6 +58,7 @@
   exclude:
     - polyfilled
     - zip
+  $implementation: haskell
 - repo: sharkdp/hexyl
   binary: hexyl
 - system: g++

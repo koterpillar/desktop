@@ -16,3 +16,4 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 mybox-python "$@"
+mybox "$@"
