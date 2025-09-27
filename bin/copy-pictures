@@ -18,8 +18,5 @@ for TARGET_NAME in DCIM WeChat; do
   TARGET="$(find "$MOUNT" -maxdepth 3 -name "$TARGET_NAME" -type d)"
   [ -z "$TARGET" ] && continue
   echo $TARGET
-  find "$TARGET" -type f -exec mv -v {} "$MOUNT" \;
+  find "$TARGET" -type f -exec mv -v {} "$PWD" \;
 done
-
-echo "Stop" >&2
-exit 2
