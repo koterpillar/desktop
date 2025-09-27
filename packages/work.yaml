@@ -5,7 +5,6 @@
 - repo: argoproj/argo-workflows
   binary: argo
   raw: argo
-  skip_release: v3.6.8
 - url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
   binary: aws
   binary_path: aws/dist
