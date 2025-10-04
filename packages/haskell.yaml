@@ -12,7 +12,7 @@
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
     include:
       - x86_64
-      - deb10
+      - deb12
   binary: cabal
   $if:
     os: debian
