@@ -1,5 +1,4 @@
-- name: cabal
-  url:
+- url:
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
     include:
       - aarch64
@@ -7,8 +6,7 @@
   binary: cabal
   $if:
     os: darwin
-- name: cabal
-  url:
+- url:
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
     include:
       - x86_64
@@ -16,8 +14,7 @@
   binary: cabal
   $if:
     os: debian
-- name: cabal
-  url:
+- url:
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
     include:
       - x86_64
