@@ -61,7 +61,9 @@
   $if:
     os: darwin
 - system: docker-ce
-  service: docker
+  post:
+    - sudo systemctl daemon-reload
+    - sudo systemctl enable docker
   $if:
     os: linux
 - system: docker-compose-plugin
@@ -152,7 +154,9 @@
   $if:
     os: darwin
 - system: openssh-server
-  service: sshd
+  post:
+    - sudo systemctl daemon-reload
+    - sudo systemctl enable sshd
   $if:
     os: linux
 - system: openssh
