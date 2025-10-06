@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-/bin/bash -c "$(curl -fsSL https://github.com/koterpillar/mybox/releases/latest/download/bootstrap)" bash --haskell
+/bin/bash -c "$(curl -fsSL https://github.com/koterpillar/mybox/releases/latest/download/bootstrap)"
 
 if [[ $HOSTNAME =~ DQ94 ]]
 then
