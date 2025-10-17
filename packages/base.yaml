@@ -75,6 +75,8 @@
 - system: jq
 - system: htop
 - system: lftp
+- repo: mazznoer/lolcrab
+  binary: lolcrab
 - system: lsof
 - system: make
 - repo: jdx/mise
