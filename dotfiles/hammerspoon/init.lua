@@ -52,3 +52,14 @@ end
 
 zoomFilter = hs.window.filter.new('zoom.us')
 zoomFilter:subscribe(hs.window.filter.windowCreated, zoomWindowCreated)
+
+function refresh()
+  local zoomApp = hs.application.find('zoom.us')
+  if not zoomApp then
+    return
+  end
+
+  for _, win in pairs(zoomApp:allWindows()) do
+    zoomWindowCreated(win, zoomApp, nil)
+  end
+end
