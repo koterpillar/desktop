@@ -78,3 +78,6 @@
 
 [includeIf "hasconfig:remote.*.url:git@bitbucket.org:akotlyarov-atlassian/**"]
     path = ~/.config/git/config-atlassian
+
+[includeIf "hasconfig:remote.*.url:git@bitbucket.org:bitbucket/**"]
+    path = ~/.config/git/config-atlassian
