@@ -289,7 +289,7 @@ let sydneyOfficeKeyboard: Identifiers = {
     product_id = Some 67
 }
 
-let melbourneHubKeyboard: Identifiers = {
+let melbourneOfficeKeyboard: Identifiers = {
     is_keyboard = True,
     vendor_id = Some 7247,
     product_id = Some 99
@@ -321,7 +321,7 @@ in
             complex_modifications = {
                 rules = map Manipulator Rule rule manipulators
             },
-            devices = map Identifiers DeviceRules macLikeKeyboardRules [builtInKeyboard, sydneyOfficeKeyboard, melbourneHubKeyboard],
+            devices = map Identifiers DeviceRules macLikeKeyboardRules [builtInKeyboard, sydneyOfficeKeyboard, melbourneOfficeKeyboard],
             name = "Default profile",
             selected = True,
             virtual_hid_keyboard = {
