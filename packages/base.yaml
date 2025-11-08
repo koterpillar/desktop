@@ -102,9 +102,13 @@
   destination: .local/share/nvim/site/pack/mybox/start/telescope.nvim
 - clone: smartpde/telescope-recent-files
   destination: .local/share/nvim/site/pack/mybox/start/telescope-recent-files
+- repo: tree-sitter/tree-sitter
+  raw: tree-sitter
+  binary: tree-sitter
 - clone: nvim-treesitter/nvim-treesitter
+  branch: main
   destination: .local/share/nvim/site/pack/mybox/start/nvim-treesitter
-  post: nvim +'set nomore' +TSUpdateSync +q
+  post: nvim +'set nomore' +TSParserInstall +q
 - clone: https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git
   destination: .local/share/nvim/site/pack/mybox/start/rainbow-delimiters.nvim
 - system: nmap
