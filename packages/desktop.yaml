@@ -34,7 +34,8 @@
 - system: alt-tab
   $if:
     os: darwin
-- flatpak: com.bitwarden.desktop
+- system: com.bitwarden.desktop
+  installer: flatpak
   $if:
     os: linux
 - system: android-file-transfer

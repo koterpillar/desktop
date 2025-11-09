@@ -1,4 +1,5 @@
 - system: openscad
-- flatpak: com.prusa3d.PrusaSlicer
+- system: com.prusa3d.PrusaSlicer
+  installer: flatpak
   $if:
     os: linux
