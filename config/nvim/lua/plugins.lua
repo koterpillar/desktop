@@ -17,6 +17,9 @@ vim.api.nvim_create_autocmd('FileType', {
       for _, available in ipairs(require 'nvim-treesitter'.get_available(lvl)) do
         if lang == available then
           vim.treesitter.start()
+          vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          vim.wo.foldtext = 'v:lua.vim.treesitter.foldtext()'
+          vim.opt.foldmethod = 'expr'
           return
         end
       end

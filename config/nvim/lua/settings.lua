@@ -13,6 +13,9 @@ opt.shiftwidth = 0
 opt.expandtab = true
 cmd [[autocmd FileType python setlocal tabstop=4]]
 
+opt.foldmethod = 'indent'
+opt.foldlevelstart = 99
+
 opt.ignorecase = true
 opt.smartcase = true
 
