@@ -19,3 +19,5 @@
   binary: ts-node
 - npm: tsx
   binary: tsx
+- npm: speedscope
+  binary: speedscope
