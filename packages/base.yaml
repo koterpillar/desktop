@@ -79,6 +79,8 @@
   binary: lolcrab
 - system: lsof
 - system: make
+- repo: codeberg.org/mergiraf/mergiraf
+  binary: mergiraf
 - repo: jdx/mise
   suffix: .tar.xz
   binary: mise
