@@ -74,6 +74,9 @@ def set_configuration(monitors: list[Monitor]) -> None:
     external = list(filter(attrgetter("external"), monitors))
     names = frozenset(map(attrgetter("name"), external))
 
+    if not names:
+        return
+
     if not names.symmetric_difference({"DELL U3223QE"}):
         # Melbourne office
         arrange(
