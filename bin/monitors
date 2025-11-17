@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+# pylint:disable=invalid-name,missing-function-docstring,missing-module-docstring,missing-class-docstring
+
+import json
+import subprocess
+from dataclasses import dataclass
+from operator import attrgetter
+
+
+@dataclass(frozen=True)
+class Monitor:
+    name: str
+    serial: str
+    external: bool
+
+    @property
+    def displayplacer_serial(self) -> str:
+        # "s" and decimal representation of the serial number
+        return f"s{int(self.serial, 16)}"
+
+
+def get_monitors() -> list[Monitor]:
+    result = subprocess.run(
+        ["system_profiler", "-json", "SPDisplaysDataType"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    displays_data = json.loads(result.stdout)
+
+    return [
+        Monitor(
+            name=display["_name"],
+            serial=display["_spdisplays_display-serial-number"],
+            external=display.get("spdisplays_connection_type") != "spdisplays_internal",
+        )
+        for display_data in displays_data["SPDisplaysDataType"]
+        for display in display_data["spdisplays_ndrvs"]
+    ]
+
+
+@dataclass(frozen=True)
+class MonitorConfig:
+    monitor: Monitor
+    resolution: tuple[int, int]
+    enabled: bool = True
+    scaling: bool = True
+    origin: tuple[int, int] = (0, 0)
+    degree: int = 0
+
+    @property
+    def displayplacer_argument(self) -> str:
+        return " ".join(
+            ":".join((k, v))
+            for k, v in {
+                "id": self.monitor.displayplacer_serial,
+                "res": f"{self.resolution[0]}x{self.resolution[1]}",
+                "enabled": str(self.enabled).lower(),
+                "scaling": "on" if self.scaling else "off",
+                "origin": f"({self.origin[0]},{self.origin[1]})",
+                "degree": str(self.degree),
+            }.items()
+        )
+
+
+def arrange(*config: MonitorConfig) -> None:
+    subprocess.run(
+        ["displayplacer", *(mc.displayplacer_argument for mc in config)], check=True
+    )
+
+
+def set_configuration(monitors: list[Monitor]) -> None:
+    internal = next(m for m in monitors if not m.external)
+    external = list(filter(attrgetter("external"), monitors))
+    names = frozenset(map(attrgetter("name"), external))
+
+    if not names.symmetric_difference({"DELL U3223QE"}):
+        # Melbourne office
+        arrange(
+            MonitorConfig(
+                monitor=next(iter(external)),
+                resolution=(2560, 1440),
+                origin=(0, 0),
+            ),
+            MonitorConfig(
+                monitor=internal,
+                resolution=(1728, 1117),
+                origin=(-1728, 323),
+            ),
+        )
+        return
+
+    print(f"Unknown configuration. External monitors: {names}.")
+
+
+def main():
+    monitors = get_monitors()
+
+    set_configuration(monitors)
+
+
+if __name__ == "__main__":
+    main()

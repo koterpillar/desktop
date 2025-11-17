@@ -61,6 +61,12 @@
     - dark-mode
   $if:
     os: darwin
+- repo: jakehilborn/displayplacer
+  exclude: intel
+  raw: displayplacer
+  binary: displayplacer
+  $if:
+    os: darwin
 - system: docker-ce
   post:
     - sudo systemctl daemon-reload
