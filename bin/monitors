@@ -90,6 +90,22 @@ def set_configuration(monitors: list[Monitor]) -> None:
         )
         return
 
+    if not names.symmetric_difference({'Studio Display'}):
+        # Collab Studio
+        arrange(
+            MonitorConfig(
+                monitor=next(iter(external)),
+                resolution=(2560, 1440),
+                origin=(0, 0),
+            ),
+            MonitorConfig(
+                monitor=internal,
+                resolution=(1728, 1117),
+                origin=(346, 1440),
+            ),
+        )
+        return
+
     print(f"Unknown configuration. External monitors: {names}.")
 
 
