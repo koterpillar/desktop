@@ -59,6 +59,10 @@
 [tig]
     line-graphics = utf-8
 
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+
 [url "ssh://git@github.com"]
     pushInsteadOf = https://github.com
     pushInsteadOf = git://github.com
