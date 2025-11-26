@@ -1,3 +1,5 @@
+require("hs.ipc")
+
 function realConfigPath()
   path = hs.configdir .. "/init.lua"
   return hs.fs.symlinkAttributes(path).target

@@ -67,6 +67,7 @@ def arrange(*config: MonitorConfig) -> None:
     subprocess.run(
         ["displayplacer", *(mc.displayplacer_argument for mc in config)], check=True
     )
+    subprocess.run(["hs", "-c", "refresh()"], check=True)
 
 
 def set_configuration(monitors: list[Monitor]) -> None:
