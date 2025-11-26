@@ -53,6 +53,9 @@
 - system: intellij-idea
   $if:
     os: darwin
+- system: jetbrains-toolbox
+  $if:
+    os: darwin
 - system: slack
   $if:
     os: darwin
