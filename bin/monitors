@@ -63,6 +63,9 @@ class MonitorConfig:
         )
 
 
+INTERNAL_RESOLUTION = (1728, 1117)
+
+
 def arrange(*config: MonitorConfig) -> None:
     subprocess.run(
         ["displayplacer", *(mc.displayplacer_argument for mc in config)], check=True
@@ -78,6 +81,22 @@ def set_configuration(monitors: list[Monitor]) -> None:
     if not names:
         return
 
+    if not names.symmetric_difference({"U2790B"}):
+        # Home
+        arrange(
+            MonitorConfig(
+                monitor=next(iter(external)),
+                resolution=(1920, 1080),
+                origin=(0, 0),
+            ),
+            MonitorConfig(
+                monitor=internal,
+                resolution=INTERNAL_RESOLUTION,
+                origin=(-1728, 469),
+            ),
+        )
+        return
+
     if not names.symmetric_difference({"DELL U3223QE"}):
         # Melbourne office
         arrange(
@@ -88,13 +107,13 @@ def set_configuration(monitors: list[Monitor]) -> None:
             ),
             MonitorConfig(
                 monitor=internal,
-                resolution=(1728, 1117),
+                resolution=INTERNAL_RESOLUTION,
                 origin=(-1728, 323),
             ),
         )
         return
 
-    if not names.symmetric_difference({'Studio Display'}):
+    if not names.symmetric_difference({"Studio Display"}):
         # Collab Studio
         arrange(
             MonitorConfig(
@@ -104,7 +123,7 @@ def set_configuration(monitors: list[Monitor]) -> None:
             ),
             MonitorConfig(
                 monitor=internal,
-                resolution=(1728, 1117),
+                resolution=INTERNAL_RESOLUTION,
                 origin=(346, 1440),
             ),
         )
