@@ -1,10 +1,11 @@
 [Hotkey]
 EnumerateWithTriggerKeys=True
+ActivateKeys=
+DeactivateKeys=
 EnumerateSkipFirst=True
 EnumerateGroupForwardKeys=
 EnumerateGroupBackwardKeys=
-ActivateKeys=
-DeactivateKeys=
+ModifierOnlyKeyTimeout=250
 
 [Hotkey/TriggerKeys]
 0=Control+space
@@ -35,6 +36,7 @@ DeactivateKeys=
 
 [Behavior]
 ActiveByDefault=False
+resetStateWhenFocusIn=No
 ShareInputState=No
 PreeditEnabledByDefault=True
 ShowInputMethodInformation=True
@@ -47,4 +49,7 @@ CustomXkbOption=
 EnabledAddons=
 DisabledAddons=
 PreloadInputMethod=True
+AllowInputMethodForPassword=False
+ShowPreeditForPassword=False
+AutoSavePeriod=30
 
