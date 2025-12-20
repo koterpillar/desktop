@@ -181,3 +181,12 @@
 - repo: yt-dlp/yt-dlp
   binary: yt-dlp
   suffix: tar.gz
+- system: zoom
+  url:
+    base:
+      base:
+        $url: https://zoom.us/rest/download?os=linux
+      $jsonpath: '.result.downloadVO.zoom.version'
+    $format: 'https://zoom.us/client/{}/zoom_x86_64.rpm'
+  $if:
+    os: fedora
