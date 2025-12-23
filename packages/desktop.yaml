@@ -160,6 +160,8 @@
 - system: kdiff3
   $if:
     os: darwin
+- repo: karol-broda/snitch
+  binary: snitch
 - system: openssh-server
   post:
     - sudo systemctl daemon-reload
