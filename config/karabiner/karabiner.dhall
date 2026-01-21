@@ -124,7 +124,8 @@ let vimApps = [
 let unlessVim: Condition = unlessApp (concat Text [terminalApps, niceApps, vimApps])
 
 let browser: Condition = ifApp [
-    "^org\\.mozilla\\.firefox$"
+    "^org\\.mozilla\\.firefox$",
+    "^com\\.brave\\.Browser$",
 ]
 
 let Manipulator = {
@@ -200,6 +201,8 @@ let manipulators1 = [
     -- Page Up/Down
     manipulatorFor terminals (fromCtrl "page_up") [toCommand "left_arrow"],
     manipulatorFor terminals (fromCtrl "page_down") [toCommand "right_arrow"],
+    -- F keys
+    manipulatorFor browser (fromKeyCode "f5") [toCommand "r"],
     -- A-Z
     controlToCommand "a",
     controlToCommand "b",

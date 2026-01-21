@@ -44,6 +44,12 @@
 - system: bitwarden
   $if:
     os: darwin
+- yum_name: brave_browser
+  yum_url: https://brave-browser-rpm-release.s3.brave.com/$basearch
+  gpg_key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+  $if:
+    os: fedora
+- system: brave-browser
 - system: code
   $if:
     os: linux
