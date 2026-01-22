@@ -140,6 +140,7 @@ fi
 
 PROMPT_BACKGROUND=
 PROMPT_ARROW=' '
+PROMPT_EXTRA=
 if fancy_terminal
 then
     mk_prompt_color () {
@@ -161,6 +162,7 @@ PROMPT='\
 $PROMPT_BACKGROUND%{$PROMPT_HOST_COLOR%}$PROMPT_HOST%{$fg[default]%} \
 $PROMPT_PWD \
 $(git_prompt_info)%{$fg[default]%}\
+$PROMPT_EXTRA\
 %{$fg[red]%}%(!.#.»)%{$fg[default]%}\
 $PROMPT_ARROW%{$reset_color%}'
 
