@@ -1,0 +1,5 @@
+- system: openjdk
+- system: maven
+- repo: gradle/gradle-distributions
+  suffix: bin.zip
+  binary: gradle

@@ -19,9 +19,6 @@
   binary: kubectl
   raw: kubectl
 - system: maven
-- repo: gradle/gradle-distributions
-  suffix: bin.zip
-  binary: gradle
 - system: cursor
   $if:
     os: darwin

@@ -11,5 +11,6 @@
   component: 3dprinting
 - host: DQ94*
   component:
+    - java
     - work
     - work-private
