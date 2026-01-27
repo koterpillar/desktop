@@ -3,3 +3,6 @@ Host koterpillar.com
 
 Host shanmei
   User root
+
+Host bitbucket.org
+  WarnWeakCrypto no
