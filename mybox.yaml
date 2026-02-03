@@ -9,6 +9,8 @@
     - python
 - host: taohua
   component: 3dprinting
+- host: liushu
+  component: smarthome
 - host: DQ94*
   component:
     - java
