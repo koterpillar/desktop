@@ -1,2 +1,5 @@
 [user]
     email = akotlyarov@atlassian.com
+
+[core]
+    sshCommand = ssh -o 'WarnWeakCrypto=no'
