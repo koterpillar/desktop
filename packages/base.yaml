@@ -138,6 +138,9 @@
 - system: rsync
 - repo: koalaman/shellcheck
   binary: shellcheck
+- repo: karol-broda/snitch
+  binary: snitch
+  exclude: apk
 - system: strace
   $if:
     os: linux
