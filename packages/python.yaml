@@ -8,4 +8,7 @@
   $if:
     os: darwin
 - pipx: poetry
-- pipx: uv
+- repo: astral-sh/uv
+  binary:
+    - uv
+    - uvx
