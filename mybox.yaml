@@ -8,7 +8,9 @@
     - javascript
     - python
 - host: taohua
-  component: 3dprinting
+  component:
+    - 3dprinting
+    - ai
 - host: liushu
   component: smarthome
 - host: DQ94*
