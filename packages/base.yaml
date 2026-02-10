@@ -28,7 +28,9 @@
   binary: ast-grep
 - repo: atuinsh/atuin
   binary: atuin
-  exclude: update
+  exclude:
+    - server
+    - update
 - repo: sharkdp/bat
   binary: bat
 - system: colordiff
