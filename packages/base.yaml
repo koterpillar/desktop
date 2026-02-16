@@ -140,6 +140,7 @@
 - system: rsync
 - repo: koalaman/shellcheck
   binary: shellcheck
+  exclude: tar.gz
 - repo: karol-broda/snitch
   binary: snitch
   exclude: apk
