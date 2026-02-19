@@ -14,7 +14,7 @@ This is my desktop environment configuration repository.
 ### Installation
 
 ```shell
-./install <roles>
+./install
 ```
 
 FIXME: Might need to re-run because of the ordering between dependencies.
