@@ -106,9 +106,11 @@ let terminalApps = [
 
 let terminals: Condition = ifApp terminalApps
 
+let kitty = "^net\\.kovidgoyal\\.kitty$"
+
 let niceApps = [
     "^com\\.jetbrains\\.intellij\\.ce$",
-    "^net\\.kovidgoyal\\.kitty$",
+    kitty,
     "^org\\.virtualbox\\.app\\.VirtualBoxVM$"
 ]
 
@@ -124,8 +126,9 @@ let vimApps = [
 let unlessVim: Condition = unlessApp (concat Text [terminalApps, niceApps, vimApps])
 
 let browser: Condition = ifApp [
-    "^org\\.mozilla\\.firefox$",
     "^com\\.brave\\.Browser$",
+    "^org\\.mozilla\\.firefox$",
+    "^com\\.google\\.Chrome$",
 ]
 
 let Manipulator = {
@@ -201,6 +204,10 @@ let manipulators1 = [
     -- Page Up/Down
     manipulatorFor terminals (fromCtrl "page_up") [toCommand "left_arrow"],
     manipulatorFor terminals (fromCtrl "page_down") [toCommand "right_arrow"],
+    -- Ctrl-Shift-Page Up/Down. FIXME: don't do their intended action, but at
+    -- least don't move windows.
+    manipulatorFor (ifApp [kitty]) (fromModifiers ["left_control", "left_shift", "fn"] "up_arrow") [toModifiers ["ctrl", "shift"] "page_up"],
+    manipulatorFor (ifApp [kitty]) (fromModifiers ["left_control", "left_shift", "fn"] "down_arrow") [toModifiers ["ctrl", "shift"] "comma"],
     -- F keys
     manipulatorFor browser (fromKeyCode "f5") [toCommand "r"],
     -- A-Z
@@ -233,10 +240,11 @@ let manipulators1 = [
     manipulatorFor unlessNiceApp (fromCtrl "hyphen") [toCommand "hyphen"],
     manipulatorFor unlessNiceApp (fromCtrl "equal_sign") [toCommand "equal_sign"],
     manipulatorFor unlessNiceApp (fromCtrl "0") [toCommand "0"],
+    -- Window manipulation
+    manipulatorForAll (fromModifiersStrict ["command"] "left_arrow") [toModifiers ["control", "fn"] "left_arrow"],
+    manipulatorForAll (fromModifiersStrict ["command"] "right_arrow") [toModifiers ["control", "fn"] "right_arrow"],
+    manipulatorForAll (fromModifiersStrict ["command"] "up_arrow") [toModifiers ["control", "fn"] "f"],
     -- Window manipulation (Gnome defaults to Rectangle defaults)
-    manipulatorForAll (fromModifiersStrict ["command"] "left_arrow") [toModifiers ["control", "option"] "left_arrow"],
-    manipulatorForAll (fromModifiersStrict ["command"] "right_arrow") [toModifiers ["control", "option"] "right_arrow"],
-    manipulatorForAll (fromModifiersStrict ["command"] "up_arrow") [toModifiers ["control", "option"] "return_or_enter"],
     manipulatorForAll (fromModifiersStrict ["command", "shift"] "left_arrow") [toModifiers ["control", "option", "command"] "left_arrow"],
     manipulatorForAll (fromModifiersStrict ["command", "shift"] "right_arrow") [toModifiers ["control", "option", "command"] "right_arrow"],
     -- Generic OS and windows management
