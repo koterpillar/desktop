@@ -65,6 +65,7 @@
 - pipx: pgcli
 - repo: casey/just
   binary: just
+- pipx: keeper-secrets-manager-cli
 - npm: envsub
   binary: envsub
 - npm: '@forge/cli'
