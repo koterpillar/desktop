@@ -72,3 +72,6 @@
   include: tar.gz
   binary: air
 - system: helm
+- repo: databricks/cli
+  include: tar.gz
+  binary: databricks
