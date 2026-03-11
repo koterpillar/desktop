@@ -12,15 +12,14 @@
   destination: ""
   dot: true
   root: true
-  only:
+  include:
     - dircolors
     - zshrc
-    - zshenv
 - links: config
   destination: .config
   root: true
   shallow: true
-  only:
+  include:
     - bat
     - nvim
     - git
