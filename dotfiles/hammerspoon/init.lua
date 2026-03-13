@@ -7,16 +7,21 @@ end
 
 configWatcher = hs.pathwatcher.new(realConfigPath(), hs.reload):start()
 
-function secondaryScreen()
-  screens = hs.screen.allScreens()
-  if #screens == 2 then
-    for _, screen in pairs(screens) do
-      if screen:name() == "Built-in Retina Display" then
-        return screen
-      end
-    end
+function orderedScreens()
+  local screens = hs.screen.allScreens()
+  local sorted = {}
+
+  for _, screen in pairs(screens) do
+    table.insert(sorted, screen)
   end
-  return nil
+
+  table.sort(sorted, function(a, b)
+    local af = a:fullFrame()
+    local bf = b:fullFrame()
+    return (af.w * af.h) > (bf.w * bf.h)
+  end)
+
+  return sorted
 end
 
 widgetMarginX = 78
@@ -26,7 +31,7 @@ widgetSizeX = 345
 
 function zoomWindowCreated(win, app, event)
   if win:title() == "Zoom Workplace" then
-    target = secondaryScreen()
+    target = orderedScreens()[2]
     if target then
       win:moveToScreen(target)
       local screenFrame = target:frame()
@@ -38,7 +43,7 @@ function zoomWindowCreated(win, app, event)
       win:setFrame(newRect)
     end
   elseif win:title() == "zoom floating video window" then
-    target = secondaryScreen()
+    target = orderedScreens()[2]
     if target then
       win:moveToScreen(target)
       local screenFrame = target:frame()
@@ -55,13 +60,33 @@ end
 zoomFilter = hs.window.filter.new('zoom.us')
 zoomFilter:subscribe(hs.window.filter.windowCreated, zoomWindowCreated)
 
+function mainFullScreen(win)
+  local target = orderedScreens()[1]
+  if target then
+    win:moveToScreen(target)
+    win:setFrame(target:frame())
+  end
+end
+
+function codeWindowCreated(win, app, event)
+  mainFullScreen(win)
+end
+
+codeFilter = hs.window.filter.new('Code')
+codeFilter:subscribe(hs.window.filter.windowCreated, codeWindowCreated)
+
 function refresh()
-  local zoomApp = hs.application.find('zoom.us')
-  if not zoomApp then
-    return
+  local zoomApp = hs.application.get('zoom.us')
+  if zoomApp then
+    for _, win in pairs(zoomApp:allWindows()) do
+      zoomWindowCreated(win, zoomApp, nil)
+    end
   end
 
-  for _, win in pairs(zoomApp:allWindows()) do
-    zoomWindowCreated(win, zoomApp, nil)
+  local codeApp = hs.application.get('Code')
+  if codeApp then
+    for _, win in pairs(codeApp:allWindows()) do
+      codeWindowCreated(win, codeApp, nil)
+    end
   end
 end

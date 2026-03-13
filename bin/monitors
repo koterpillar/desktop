@@ -79,6 +79,14 @@ def set_configuration(monitors: list[Monitor]) -> None:
     names = frozenset(map(attrgetter("name"), external))
 
     if not names:
+        # No external monitors
+        arrange(
+            MonitorConfig(
+                monitor=internal,
+                resolution=INTERNAL_RESOLUTION,
+                origin=(0, 0),
+            ),
+        )
         return
 
     if not names.symmetric_difference({"U2790B"}):
