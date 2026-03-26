@@ -76,6 +76,9 @@
 - system: jq
 - system: htop
 - system: lftp
+- system: iotop
+  $if:
+    os: linux
 - repo: mazznoer/lolcrab
   binary: lolcrab
 - system: lsof
