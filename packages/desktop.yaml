@@ -180,6 +180,9 @@
     os: darwin
 - system: tcpdump
 - pipx: torrt
+- system: vial
+  $if:
+    os: darwin
 - system: vlc
 - system: wl-clipboard
   $if:
