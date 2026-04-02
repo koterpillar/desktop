@@ -1,3 +1,9 @@
+- links: udev
+  destination: /etc/udev/rules.d
+  root: true
+  post: sudo udevadm control --reload-rules && sudo udevadm trigger
+  $if:
+    os: linux
 - system: rpmfusion-free-release
   url:
     base:
@@ -183,6 +189,12 @@
 - system: vial
   $if:
     os: darwin
+- repo: vial-kb/vial-gui
+  include: appimage
+  raw: vial
+  binary: vial
+  $if:
+    os: linux
 - system: vlc
 - system: wl-clipboard
   $if:
