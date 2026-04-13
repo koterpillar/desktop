@@ -21,3 +21,5 @@
   binary: tsx
 - npm: speedscope
   binary: speedscope
+- npm: yarn-deduplicate
+  binary: yarn-deduplicate
