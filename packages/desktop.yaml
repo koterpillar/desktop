@@ -187,6 +187,9 @@
 - system: rectangle
   $if:
     os: darwin
+- system: thaw
+  $if:
+    os: darwin
 - system: tcpdump
 - pipx: torrt
 - system: vial
