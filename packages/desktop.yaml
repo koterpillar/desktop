@@ -62,6 +62,9 @@
 - system: visual-studio-code
   $if:
     os: darwin
+- system: colemak-dh
+  $if:
+    os: darwin
 - repo: cormacrelf/dark-notify
   binary: dark-notify
   $if:
