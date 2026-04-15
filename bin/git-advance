@@ -27,7 +27,7 @@ MAIN=$(git rev-parse --abbrev-ref origin/HEAD | sed 's!origin/!!')
 advance_branch "$MAIN"
 
 git remote prune origin
-MERGED=$(git branch --merged "$MAIN" | grep -v "$MAIN" || true)
+MERGED=$(git branch --merged "$MAIN" | grep -E '^  ' | grep -v "$MAIN" || true)
 if [ -n "$MERGED" ]
 then
     git branch --delete $MERGED
