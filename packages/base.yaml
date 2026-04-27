@@ -132,12 +132,6 @@
 - system: pwgen
 - repo: claudiodangelis/qrcp
   binary: qrcp
-- system: rar
-  $if:
-    os: darwin
-- system: unrar-free
-  $if:
-    os: linux
 - repo: BurntSushi/ripgrep
   binary: rg
 - system: rlwrap
