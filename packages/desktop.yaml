@@ -126,6 +126,7 @@
   $if:
     os: linux
 - system: google-chrome
+  auto_updates: true
   $if:
     os: darwin
 - system: graphviz
