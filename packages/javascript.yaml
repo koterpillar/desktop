@@ -1,6 +1,7 @@
 - repo: denoland/deno
   prefix: deno-
   binary: deno
+  exclude: bsdiff
 - system: nodejs
   $if:
     os: linux
