@@ -1,10 +1,10 @@
 [Groups/0]
 Name="Group 1"
-Default Layout=us
+Default Layout=us-colemak_dh_ortho
 DefaultIM=keyboard-ru
 
 [Groups/0/Items/0]
-Name=keyboard-us
+Name=keyboard-us-colemak_dh_ortho
 Layout=
 
 [Groups/0/Items/1]
