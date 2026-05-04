@@ -8,7 +8,7 @@ if [[ $HOSTNAME =~ DQ94 ]]
 then
   if ! [ -d local ]
   then
-    git clone git@bitbucket.org:akotlyarov-atlassian/local.git
+    git clone git@bitbucket.org:atlassian/akotlyarov-local.git local
   fi
 fi
 
