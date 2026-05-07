@@ -250,7 +250,7 @@ let manipulators1 = [
     -- Generic OS and windows management
     manipulatorForAll (fromModifier "option" "f4") [toCommand "q"],
     manipulatorForAll (fromModifier "option" "grave_accent_and_tilde") [toModifier "left_command" "grave_accent_and_tilde"],
-    manipulatorForAll (fromModifier "command" "l") [toModifiers ["control", "command"] "q"]
+    manipulatorForAll (fromModifier "command" "u") [toModifiers ["control", "command"] "q"]  -- Win+L to lock screen
 ]
 
 let enumerate = https://prelude.dhall-lang.org/Natural/enumerate.dhall
