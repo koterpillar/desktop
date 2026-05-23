@@ -10,6 +10,11 @@ then
     path=(~/.local/share/mise/shims $path)
 fi
 
+if [ -d ~/.cargo/bin ]
+then
+    path=(~/.cargo/bin $path)
+fi
+
 path=(~/.local/bin $path)
 
 export PATH
