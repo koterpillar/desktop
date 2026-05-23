@@ -56,6 +56,10 @@
     clean = fcitx-config-clean
     smudge = cat
 
+[filter "raw-json"]
+    clean = jq --indent 2 -M
+    smudge = jq -c -M
+
 [tig]
     line-graphics = utf-8
 
