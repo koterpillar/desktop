@@ -22,16 +22,6 @@
     $format: 'https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{}.noarch.rpm'
   $if:
     os: fedora
-- yum_name: vscode
-  yum_url: https://packages.microsoft.com/yumrepos/vscode
-  gpg_key: https://packages.microsoft.com/keys/microsoft.asc
-  $if:
-    os: fedora
-- yum_name: docker
-  yum_url: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
-  gpg_key: https://download.docker.com/linux/fedora/gpg
-  $if:
-    os: fedora
 - yum_name: google-chrome
   yum_url: https://dl.google.com/linux/chrome/rpm/stable/x86_64
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
@@ -56,12 +46,6 @@
   $if:
     os: fedora
 - system: brave-browser
-- system: code
-  $if:
-    os: linux
-- system: visual-studio-code
-  $if:
-    os: darwin
 - system: colemak-dh
   $if:
     os: darwin
@@ -143,15 +127,6 @@
 - system: hammerspoon
   $if:
     os: darwin
-- system: insomnia
-  $if:
-    os: darwin
-- repo: Kong/insomnia
-  prefix: Insomnia.Core
-  suffix: tar.gz
-  binary: insomnia
-  $if:
-    os: linux
 - repo: kovidgoyal/kitty
   binary: kitty
   app: kitty
@@ -171,12 +146,6 @@
 - system: maccy
   $if:
     os: darwin
-- system: meld
-  $if:
-    os: linux
-- system: kdiff3
-  $if:
-    os: darwin
 - system: openssh-server
   post:
     - sudo systemctl daemon-reload
@@ -192,7 +161,6 @@
 - system: thaw
   $if:
     os: darwin
-- system: tcpdump
 - pipx: torrt
 - system: vial
   $if:

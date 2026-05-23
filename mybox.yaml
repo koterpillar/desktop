@@ -4,6 +4,7 @@
     - DQ94*
   component:
     - desktop
+    - dev
     - haskell
     - javascript
     - python

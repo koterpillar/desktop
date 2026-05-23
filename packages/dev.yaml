@@ -1,0 +1,32 @@
+- yum_name: vscode
+  yum_url: https://packages.microsoft.com/yumrepos/vscode
+  gpg_key: https://packages.microsoft.com/keys/microsoft.asc
+  $if:
+    os: fedora
+- yum_name: docker
+  yum_url: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
+  gpg_key: https://download.docker.com/linux/fedora/gpg
+  $if:
+    os: fedora
+- system: code
+  $if:
+    os: linux
+- system: visual-studio-code
+  $if:
+    os: darwin
+- system: insomnia
+  $if:
+    os: darwin
+- repo: Kong/insomnia
+  prefix: Insomnia.Core
+  suffix: tar.gz
+  binary: insomnia
+  $if:
+    os: linux
+- system: meld
+  $if:
+    os: linux
+- system: kdiff3
+  $if:
+    os: darwin
+- system: tcpdump
