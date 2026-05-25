@@ -75,3 +75,11 @@
 - repo: databricks/cli
   include: tar.gz
   binary: databricks
+- url: https://teamwork-graph.atlassian.com/cli/twg-darwin-arm64-v1.0.1
+  raw: twg
+  binary: twg
+  $if:
+    os: darwin
+- url: https://teamwork-graph.atlassian.com/cli/rovo-install
+  raw: true
+  binary: rovo-install
