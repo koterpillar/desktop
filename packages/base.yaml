@@ -142,6 +142,10 @@
 - repo: karol-broda/snitch
   binary: snitch
   exclude: apk
+- url: https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz
+  binary: speedtest
+  $if:
+    os: linux
 - system: strace
   $if:
     os: linux
