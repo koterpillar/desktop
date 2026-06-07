@@ -31,7 +31,7 @@
         "KC_RIGHT"
       ],
       [
-        "KC_LSHIFT",
+        "TD(0)",
         "KC_Z",
         "KC_X",
         "KC_C",
@@ -1084,9 +1084,9 @@
   "via_protocol": 9,
   "tap_dance": [
     [
-      "KC_NO",
-      "KC_NO",
-      "KC_NO",
+      "KC_LSHIFT",
+      "KC_LSHIFT",
+      "QK_CAPS_WORD_TOGGLE",
       "KC_NO",
       200
     ],
