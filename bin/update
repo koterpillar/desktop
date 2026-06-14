@@ -15,7 +15,7 @@ then
     sudo apt -y upgrade
 elif command_exists brew
 then
-    brew upgrade
+    brew upgrade --yes
 elif command_exists pkcon
 then
     pkcon refresh --noninteractive
