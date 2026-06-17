@@ -88,3 +88,4 @@
   binary: rovo-install
 - npm: '@openai/codex'
   binary: codex
+- system: claude-code
