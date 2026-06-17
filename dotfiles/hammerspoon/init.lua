@@ -75,6 +75,13 @@ end
 codeFilter = hs.window.filter.new('Code')
 codeFilter:subscribe(hs.window.filter.windowCreated, codeWindowCreated)
 
+function cursorWindowCreated(win, app, event)
+  mainFullScreen(win)
+end
+
+cursorFilter = hs.window.filter.new('Cursor')
+cursorFilter:subscribe(hs.window.filter.windowCreated, cursorWindowCreated)
+
 function refresh()
   local zoomApp = hs.application.get('zoom.us')
   if zoomApp then
@@ -87,6 +94,13 @@ function refresh()
   if codeApp then
     for _, win in pairs(codeApp:allWindows()) do
       codeWindowCreated(win, codeApp, nil)
+    end
+  end
+
+  local cursorApp = hs.application.get('Cursor')
+  if cursorApp then
+    for _, win in pairs(cursorApp:allWindows()) do
+      cursorWindowCreated(win, cursorApp, nil)
     end
   end
 end
