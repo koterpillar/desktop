@@ -219,6 +219,7 @@ let manipulators1 = [
     controlToCommand "e",
     controlToCommand "f",
     controlToCommand "i",
+    controlToCommand "j",
     controlToCommand "k",
     manipulatorFor browser (fromCtrlShift "l") [toModifiers ["command", "option"] "l"],
     controlToCommand "l",
