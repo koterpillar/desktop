@@ -57,7 +57,7 @@ function zoomWindowCreated(win, app, event)
   end
 end
 
-zoomFilter = hs.window.filter.new('zoom.us')
+zoomFilter = hs.window.filter.new('us.zoom.xos')
 zoomFilter:subscribe(hs.window.filter.windowCreated, zoomWindowCreated)
 
 function mainFullScreen(win)
@@ -83,7 +83,7 @@ cursorFilter = hs.window.filter.new('Cursor')
 cursorFilter:subscribe(hs.window.filter.windowCreated, cursorWindowCreated)
 
 function refresh()
-  local zoomApp = hs.application.get('zoom.us')
+  local zoomApp = hs.application.get('us.zoom.xos')
   if zoomApp then
     for _, win in pairs(zoomApp:allWindows()) do
       zoomWindowCreated(win, zoomApp, nil)
