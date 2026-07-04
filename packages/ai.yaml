@@ -1,2 +1,2 @@
-- npm: '@qwen-code/qwen-code'
-  binary: qwen
+- npm: '@kilocode/cli'
+  binary: kilo
