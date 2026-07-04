@@ -15,12 +15,7 @@
   $if:
     os: darwin
 - npm: pnpm
-  binary: pnpm
 - npm: ts-node
-  binary: ts-node
 - npm: tsx
-  binary: tsx
 - npm: speedscope
-  binary: speedscope
 - npm: yarn-deduplicate
-  binary: yarn-deduplicate

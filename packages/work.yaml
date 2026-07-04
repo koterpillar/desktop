@@ -67,9 +67,7 @@
   binary: just
 - pipx: keeper-secrets-manager-cli
 - npm: envsub
-  binary: envsub
 - npm: '@forge/cli'
-  binary: forge
 - pipx: keyring
 - repo: air-verse/air
   include: tar.gz
@@ -87,5 +85,4 @@
   raw: true
   binary: rovo-install
 - npm: '@openai/codex'
-  binary: codex
 - system: claude-code
