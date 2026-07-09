@@ -20,6 +20,7 @@
   raw: kubectl
 - system: maven
 - system: cursor
+  auto_updates: true
   $if:
     os: darwin
 - url:
@@ -57,6 +58,7 @@
   $if:
     os: darwin
 - system: loom
+  auto_updates: true
   $if:
     os: darwin
 - system: go

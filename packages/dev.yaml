@@ -12,6 +12,7 @@
   $if:
     os: linux
 - system: visual-studio-code
+  auto_updates: true
   $if:
     os: darwin
 - system: insomnia
