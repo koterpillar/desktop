@@ -2,6 +2,9 @@
 /config/karabiner/assets
 /config/karabiner/automatic_backups
 /config/karabiner/karabiner.json
+/config/kilo/node_modules
+/config/kilo/package.json
+/config/kilo/package-lock.json
 /config/kitty/kitty.conf.bak
 /config/kitty/current-theme.conf
 /local
