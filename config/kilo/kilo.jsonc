@@ -2,9 +2,19 @@
   "$schema": "https://app.kilo.ai/config.json",
   "permission": {
     "bash": {
+      "echo *": "allow",
+      "head *": "allow",
       "git status *": "allow",
       "git diff *": "allow",
-      "git log *": "allow"
+      "git log *": "allow",
+      "rg *": "allow",
+      "stack build *": "allow",
+      "stack test *": "allow",
+      "tail *": "allow",
+      "xargs grep *": "allow",
+      "yarn install": "allow",
+      "yarn lint": "allow",
+      "yarn typecheck": "allow",
     }
   }
 }
