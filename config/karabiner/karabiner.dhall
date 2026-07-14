@@ -118,12 +118,12 @@ let unlessNiceApp: Condition = unlessApp niceApps
 
 let unlessNiceAppOrTerminal: Condition = unlessApp (concat Text [terminalApps, niceApps])
 
-let vimApps = [
+let ides = [
     "^com\\.microsoft\\.VSCode$",
     "^com\\.todesktop\\.230313mzl4w4u92$" -- Cursor
 ]
 
-let unlessVim: Condition = unlessApp (concat Text [terminalApps, niceApps, vimApps])
+let unlessVim: Condition = unlessApp (concat Text [terminalApps, niceApps, ides])
 
 let browser: Condition = ifApp [
     "^com\\.brave\\.Browser$",
@@ -204,6 +204,9 @@ let manipulators1 = [
     -- Page Up/Down
     manipulatorFor terminals (fromCtrl "page_up") [toCommand "left_arrow"],
     manipulatorFor terminals (fromCtrl "page_down") [toCommand "right_arrow"],
+    -- Ctrl-Page Up/Down
+    manipulatorFor (ifApp ides) (fromCtrl "page_up") [toModifiers ["command", "option"] "left_arrow"],
+    manipulatorFor (ifApp ides) (fromCtrl "page_down") [toModifiers ["command", "option"] "right_arrow"],
     -- Ctrl-Shift-Page Up/Down. FIXME: don't do their intended action, but at
     -- least don't move windows.
     manipulatorFor (ifApp [kitty]) (fromModifiers ["left_control", "left_shift", "fn"] "up_arrow") [toModifiers ["ctrl", "shift"] "page_up"],
