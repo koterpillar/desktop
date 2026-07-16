@@ -23,3 +23,5 @@ metals.sbt
 /Session.vim
 /tags
 /yarn-error.log
+
+**/.claude/.cc-writes/
