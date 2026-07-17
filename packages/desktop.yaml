@@ -172,6 +172,12 @@
   $if:
     os: linux
 - system: vlc
+- brew_tap: jatinkrmalik/vocamac
+  $if:
+    os: darwin
+- system: jatinkrmalik/vocamac/vocamac
+  $if:
+    os: darwin
 - system: wl-clipboard
   $if:
     os: linux
