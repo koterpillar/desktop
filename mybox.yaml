@@ -8,10 +8,10 @@
     - haskell
     - javascript
     - python
+    - ai
 - host: taohua
   component:
     - 3dprinting
-    - ai
 - host: liushu
   component: smarthome
 - host: DQ94*

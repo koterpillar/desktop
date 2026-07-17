@@ -1,1 +1,5 @@
 - npm: '@kilocode/cli'
+  $unless:
+    hostname: DQ94*
+- repo: kenn-io/kata
+  binary: kata
