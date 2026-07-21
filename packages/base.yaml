@@ -23,8 +23,8 @@
     - bat
     - nvim
     - git
-- links: pam.d
-  destination: /etc/pam.d
+- links: etc
+  destination: /etc
   root: true
   $if:
     os: darwin
