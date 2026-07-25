@@ -3,10 +3,10 @@
   dot: true
 - links: bin
   destination: .local/bin
-  shallow: true
+  method: shallow
 - links: config
   destination: .config
-  shallow: true
+  method: shallow
   post: ~/.config/karabiner/apply
 - links: dotfiles
   destination: ""
@@ -18,7 +18,7 @@
 - links: config
   destination: .config
   root: true
-  shallow: true
+  method: shallow
   include:
     - bat
     - nvim
@@ -26,6 +26,7 @@
 - links: etc
   destination: /etc
   root: true
+  method: copy
   $if:
     os: darwin
 - repo: ast-grep/ast-grep
