@@ -57,7 +57,7 @@ function zoomWindowCreated(win, app, event)
   end
 end
 
-zoomFilter = hs.window.filter.new('us.zoom.xos')
+zoomFilter = hs.window.filter.new('Zoom')
 zoomFilter:subscribe(hs.window.filter.windowCreated, zoomWindowCreated)
 
 function mainFullScreen(win)
