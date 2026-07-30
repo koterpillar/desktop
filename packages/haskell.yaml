@@ -10,18 +10,10 @@
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
     include:
       - x86_64
-      - deb12
+      - linux
   binary: cabal
   $if:
-    os: debian
-- url:
-    $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
-    include:
-      - x86_64
-      - fedora38
-  binary: cabal
-  $if:
-    os: fedora
+    os: linux
 - system: ghc
 - repo: commercialhaskell/stack
   exclude: bin
