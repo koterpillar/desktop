@@ -50,6 +50,7 @@
   binary: difft
 - repo: Byron/dua-cli
   binary: dua
+  skip_release: 'dua-core-v2.41.1'
 - repo: eza-community/eza
   binary: eza
   exclude:
