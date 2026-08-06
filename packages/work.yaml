@@ -86,5 +86,18 @@
 - url: https://teamwork-graph.atlassian.com/cli/rovo-install
   raw: true
   binary: rovo-install
-- npm: '@openai/codex'
+- repo: openai/codex
+  include:
+    - codex
+    - tar.gz
+  exclude:
+    - app-server
+    - code-mode-host
+    - command-runner
+    - npm
+    - package
+    - responses
+    - symbols
+  raw: true
+  binary: codex
 - system: claude-code
