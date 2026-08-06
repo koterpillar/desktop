@@ -27,9 +27,6 @@
   gpg_key: https://dl.google.com/linux/linux_signing_key.pub
   $if:
     os: fedora
-- system: alt-tab
-  $if:
-    os: darwin
 - system: android-file-transfer
   $if:
     os: linux
@@ -64,6 +61,9 @@
   exclude: intel
   raw: displayplacer
   binary: displayplacer
+  $if:
+    os: darwin
+- system: dockdoor
   $if:
     os: darwin
 - system: docker-ce
