@@ -1,3 +1,23 @@
+- repo: openai/codex
+  include:
+    - codex
+    - tar.gz
+  exclude:
+    - app-server
+    - code-mode-host
+    - command-runner
+    - npm
+    - package
+    - responses
+    - symbols
+  raw: true
+  binary: codex
+- system: claude-code
+  $if:
+    os: darwin
+- npm: '@anthropic-ai/claude-code'
+  $unless:
+    os: darwin
 - npm: '@kilocode/cli'
   $unless:
     hostname: DQ94*

@@ -1,0 +1,15 @@
+{
+  "theme": "auto",
+  "sandbox": {
+    "enabled": true,
+    "filesystem": {
+      "allowRead": [
+        "/System/Library/OpenSSL",
+        "/System/Library/Perl"
+      ],
+      "allowWrite": [
+        "~/.stack"
+      ]
+    }
+  }
+}
