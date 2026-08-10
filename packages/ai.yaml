@@ -22,4 +22,6 @@
   $unless:
     hostname: DQ94*
 - repo: kenn-io/kata
+  exclude:
+    - homebrew
   binary: kata
