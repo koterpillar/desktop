@@ -78,7 +78,12 @@
 - repo: databricks/cli
   include: tar.gz
   binary: databricks
-- url: https://teamwork-graph.atlassian.com/cli/twg-darwin-arm64-v1.0.1
+- url:
+    base:
+      $regex: '^DEFAULT_VERSION="([^"]*)"'
+      base:
+        $url: https://teamwork-graph.atlassian.com/cli/install
+    $format: https://teamwork-graph.atlassian.com/cli/twg-darwin-arm64-v{}
   raw: twg
   binary: twg
   $if:
