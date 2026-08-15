@@ -106,43 +106,40 @@
     - FiraCode-Retina
     - FiraCode-SemiBold
 - system: firefox
-- system: google-chrome-stable
-  $if:
-    os: linux
 # asked to not self manage
-# - system: google-chrome
-#   auto_updates: true
-#   $if:
-#     os: darwin
+- $unless:
+    hostname: DQ94*
+  system:
+    $switch: os
+    linux: google-chrome-stable
+    macos: google-chrome
+  auto_updates:
+    $switch: os
+    macos: true
 - system: graphviz
-- system: ImageMagick
-  $if:
-    os: linux
-- system: imagemagick
-  $if:
-    os: darwin
+- system:
+    $switch: os
+    linux: ImageMagick
+    macos: imagemagick
 - system: karabiner-elements
   $if:
     os: darwin
 - system: hammerspoon
   $if:
     os: darwin
-- repo: kovidgoyal/kitty
-  binary: kitty
-  app: kitty
-  exclude: 'kitten'
-  $if:
-    os: linux
-- system: kitty
-  $if:
-    os: darwin
+- $switch: os
+  linux:
+    repo: kovidgoyal/kitty
+    binary: kitty
+    app: kitty
+    exclude: 'kitten'
+  macos:
+    system: kitty
 - system: krita
-- system: perl-Image-ExifTool
-  $if:
-    os: linux
-- system: exiftool
-  $if:
-    os: darwin
+- system:
+    $switch: os
+    linux: perl-Image-ExifTool
+    macos: exiftool
 - system: maccy
   $if:
     os: darwin

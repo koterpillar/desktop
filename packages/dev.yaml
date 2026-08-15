@@ -8,36 +8,31 @@
   gpg_key: https://download.docker.com/linux/fedora/gpg
   $if:
     os: fedora
-- system: code
-  $if:
-    os: linux
-- system: visual-studio-code
-  auto_updates: true
-  $if:
-    os: darwin
-- system: insomnia
-  $if:
-    os: darwin
-- repo: Kong/insomnia
-  prefix: Insomnia.Core
-  suffix: tar.gz
-  binary: insomnia
-  $if:
-    os: linux
+- system:
+    $switch: os
+    linux: code
+    macos: visual-studio-code
+  auto_updates:
+    $switch: os
+    macos: true
+- $switch: os
+  linux:
+    repo: Kong/insomnia
+    prefix: Insomnia.Core
+    suffix: tar.gz
+    binary: insomnia
+  macos:
+    system: insomnia
 - system: meld
   $if:
     os: linux
 - system: kdiff3
   $if:
     os: darwin
-- url: https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+- url:
+    $switch: os
+    linux: https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+    macos: https://static.rust-lang.org/rustup/dist/aarch64-apple-darwin/rustup-init
   raw: true
   binary: rustup-init
-  $if:
-    os: linux
-- url: https://static.rust-lang.org/rustup/dist/aarch64-apple-darwin/rustup-init
-  raw: true
-  binary: rustup-init
-  $if:
-    os: darwin
 - system: tcpdump

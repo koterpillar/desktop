@@ -2,18 +2,14 @@
   prefix: deno-
   binary: deno
   exclude: bsdiff
-- system: nodejs
-  $if:
-    os: linux
-- system: nodejs-npm
-  $if:
-    os: fedora
-- system: npm
-  $if:
-    os: debian
-- system: node
-  $if:
-    os: darwin
+- system:
+    $switch: os
+    linux: nodejs
+    macos: node
+- system:
+    $switch: os
+    fedora: nodejs-npm
+    debian: npm
 - npm: pnpm
 - npm: ts-node
 - npm: tsx

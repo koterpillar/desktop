@@ -1,19 +1,13 @@
 - url:
     $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
     include:
-      - aarch64
-      - darwin
+      - $switch: architecture
+        aarch64: aarch64
+        x86_64: x86_64
+      - $switch: os
+        macos: darwin
+        linux: linux
   binary: cabal
-  $if:
-    os: darwin
-- url:
-    $links: https://downloads.haskell.org/~cabal/cabal-install-latest/
-    include:
-      - x86_64
-      - linux
-  binary: cabal
-  $if:
-    os: linux
 - system: ghc
 - repo: commercialhaskell/stack
   exclude: bin

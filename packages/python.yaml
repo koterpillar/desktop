@@ -1,12 +1,10 @@
 - repo: pypa/pipx
   binary: pipx
   raw: pipx
-- system: python3-ipython
-  $if:
-    os: linux
-- system: ipython
-  $if:
-    os: darwin
+- system:
+    $switch: os
+    linux: python3-ipython
+    macos: ipython
 - pipx: poetry
 - repo: astral-sh/uv
   binary:

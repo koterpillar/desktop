@@ -51,16 +51,15 @@
 - repo: Byron/dua-cli
   binary: dua
   skip_release: 'dua-core-v2.41.1'
-- repo: eza-community/eza
-  binary: eza
-  exclude:
-    - static
-    - zip
-  $if:
-    os: linux
-- system: eza
-  $if:
-    os: darwin
+- $switch: os
+  linux:
+    repo: eza-community/eza
+    binary: eza
+    exclude:
+      - static
+      - zip
+  macos:
+    system: eza
 - repo: fastfetch-cli/fastfetch
   binary: fastfetch
   exclude:
@@ -159,15 +158,11 @@
 - system: tig
 - repo: sachaos/viddy
   binary: viddy
-- system: wget
-  $if:
-    os: darwin
-- system: wget2
-  $if:
-    os: debian
-- system: wget2-wget
-  $if:
-    os: fedora
+- system:
+    $switch: os
+    darwin: wget
+    debian: wget2
+    fedora: wget2-wget
 - repo: mikefarah/yq
   exclude: .tar.gz
   binary: yq
