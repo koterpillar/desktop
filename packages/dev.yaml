@@ -11,17 +11,17 @@
 - system:
     $switch: os
     linux: code
-    macos: visual-studio-code
+    darwin: visual-studio-code
   auto_updates:
     $switch: os
-    macos: true
+    darwin: true
 - $switch: os
   linux:
     repo: Kong/insomnia
     prefix: Insomnia.Core
     suffix: tar.gz
     binary: insomnia
-  macos:
+  darwin:
     system: insomnia
 - system: meld
   $if:
@@ -32,7 +32,7 @@
 - url:
     $switch: os
     linux: https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
-    macos: https://static.rust-lang.org/rustup/dist/aarch64-apple-darwin/rustup-init
+    darwin: https://static.rust-lang.org/rustup/dist/aarch64-apple-darwin/rustup-init
   raw: true
   binary: rustup-init
 - system: tcpdump

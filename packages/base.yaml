@@ -58,7 +58,7 @@
     exclude:
       - static
       - zip
-  macos:
+  darwin:
     system: eza
 - repo: fastfetch-cli/fastfetch
   binary: fastfetch

@@ -4,7 +4,7 @@
 - system:
     $switch: os
     linux: python3-ipython
-    macos: ipython
+    darwin: ipython
 - pipx: poetry
 - repo: astral-sh/uv
   binary:

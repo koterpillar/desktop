@@ -112,15 +112,16 @@
   system:
     $switch: os
     linux: google-chrome-stable
-    macos: google-chrome
+    darwin: google-chrome
   auto_updates:
     $switch: os
-    macos: true
+    darwin: true
 - system: graphviz
+# why?
 - system:
     $switch: os
     linux: ImageMagick
-    macos: imagemagick
+    darwin: imagemagick
 - system: karabiner-elements
   $if:
     os: darwin
@@ -133,13 +134,13 @@
     binary: kitty
     app: kitty
     exclude: 'kitten'
-  macos:
+  darwin:
     system: kitty
 - system: krita
 - system:
     $switch: os
     linux: perl-Image-ExifTool
-    macos: exiftool
+    darwin: exiftool
 - system: maccy
   $if:
     os: darwin

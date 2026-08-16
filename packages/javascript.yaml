@@ -5,11 +5,13 @@
 - system:
     $switch: os
     linux: nodejs
-    macos: node
+    darwin: node
 - system:
     $switch: os
     fedora: nodejs-npm
     debian: npm
+  $if:
+      os: linux
 - npm: pnpm
 - npm: ts-node
 - npm: tsx
