@@ -105,8 +105,8 @@ def set_configuration(monitors: list[Monitor]) -> None:
         )
         return
 
-    if not names.symmetric_difference({"DELL U3223QE"}):
-        # Melbourne office
+    if not names.symmetric_difference({"DELL U3223QE"}) or not names.symmetric_difference({"DELL U3225QE"}):
+        # Melbourne and Sydney offices
         arrange(
             MonitorConfig(
                 monitor=next(iter(external)),
