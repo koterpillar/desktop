@@ -121,6 +121,23 @@ def set_configuration(monitors: list[Monitor]) -> None:
         )
         return
 
+    if not names.symmetric_difference({"S34C65xT"}):
+        # Sydney office ultrawide - has no HiDPI modes
+        arrange(
+            MonitorConfig(
+                monitor=next(iter(external)),
+                resolution=(3440, 1440),
+                scaling=False,
+                origin=(0, 0),
+            ),
+            MonitorConfig(
+                monitor=internal,
+                resolution=INTERNAL_RESOLUTION,
+                origin=(-1728, 323),
+            ),
+        )
+        return
+
     if not names.symmetric_difference({"Studio Display"}):
         # Collab Studio
         arrange(
