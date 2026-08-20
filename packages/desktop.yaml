@@ -43,6 +43,10 @@
   $if:
     os: fedora
 - system: brave-browser
+  auto_updates:
+    $switch: os
+    darwin: true
+    linux: false
 - system: colemak-dh
   $if:
     os: darwin
