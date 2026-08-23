@@ -1,5 +1,7 @@
 Host koterpillar.com
   User alex
+  RequestTTY yes
+  RemoteCommand tmux new -As0
 
 Host shanmei
   User root
