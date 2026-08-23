@@ -3,3 +3,6 @@ Host koterpillar.com
 
 Host shanmei
   User root
+
+Host 192.168.0.99
+  User root
