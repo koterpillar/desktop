@@ -1,15 +1,16 @@
 {
-  "theme": "auto",
   "sandbox": {
     "enabled": true,
     "filesystem": {
+      "allowWrite": [
+        "~/.stack"
+      ],
       "allowRead": [
         "/System/Library/OpenSSL",
         "/System/Library/Perl"
-      ],
-      "allowWrite": [
-        "~/.stack"
       ]
     }
-  }
+  },
+  "theme": "auto",
+  "tui": "fullscreen"
 }
