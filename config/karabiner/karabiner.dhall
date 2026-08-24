@@ -56,17 +56,33 @@ let fromCtrl = fromModifier "control"
 
 let fromCtrlShift = fromModifiers ["control", "shift"]
 
+let OpenApplication = {
+    bundle_identifier: Text
+}
+
+let SoftwareFunction = {
+    open_application: OpenApplication
+}
+
+let showSoftwareFunction = \(sf: SoftwareFunction) -> "open " ++ sf.open_application.bundle_identifier
+
 let To = {
     key_code: Optional Text,
     pointing_button: Optional Text,
-    modifiers: Optional Modifiers
+    modifiers: Optional Modifiers,
+    software_function: Optional SoftwareFunction
 }
 
-let nullTo = { key_code = None Text, pointing_button = None Text, modifiers = None Modifiers }: To
+let nullTo = { key_code = None Text, pointing_button = None Text, modifiers = None Modifiers, software_function = None SoftwareFunction }: To
 
 let toKeyCode = \(key_code: Text) -> nullTo // { key_code = Some key_code }: To
 
-let showTo = \(f: To) -> showOptional Modifiers showModifiers f.modifiers ++ " " ++ showOptionalText f.key_code ++ " " ++ showOptionalText f.pointing_button
+let toApp = \(bundle_identifier: Text) -> nullTo // {
+    software_function = Some { open_application = { bundle_identifier = bundle_identifier } }
+}: To
+
+let showTo = \(f: To) -> optionFold SoftwareFunction f.software_function Text showSoftwareFunction
+    (showOptional Modifiers showModifiers f.modifiers ++ " " ++ showOptionalText f.key_code ++ " " ++ showOptionalText f.pointing_button)
 
 let concatMapSep = https://prelude.dhall-lang.org/Text/concatMapSep.dhall
 
@@ -263,19 +279,25 @@ let drop = https://prelude.dhall-lang.org/List/drop.dhall
 
 let showNatural = https://prelude.dhall-lang.org/Natural/show.dhall
 
-let replicate = https://prelude.dhall-lang.org/List/replicate.dhall
+let indexed = https://prelude.dhall-lang.org/List/indexed.dhall
 
-let dockSwitch = \(i: Natural) ->
+let IndexedText = { index: Natural, value: Text }
+
+-- Command-<n> opens the n-th app in this list
+let quickApps = [
+    "com.brave.Browser",              -- Brave
+    "net.kovidgoyal.kitty",           -- Kitty
+    "com.todesktop.230313mzl4w4u92",  -- Cursor
+    "com.tinyspeck.slackmacgap",      -- Slack
+    "us.zoom.xos"                     -- Zoom
+]
+
+let quickSwitch = \(app: IndexedText) ->
     manipulatorForAll
-        (fromModifier "command" (showNatural i))
-        (concat To [
-            [toModifier "control" "f3"],
-            [toKeyCode "home"],
-            (replicate i To (toKeyCode "right_arrow")),
-            [toKeyCode "return_or_enter"]
-        ])
+        (fromModifier "command" (showNatural (app.index + 1)))
+        [toApp app.value]
 
-let manipulators2 = map Natural Manipulator dockSwitch (drop 1 Natural (enumerate 10)) : List Manipulator
+let manipulators2 = map IndexedText Manipulator quickSwitch (indexed Text quickApps) : List Manipulator
 
 let tabSwitch = \(i: Natural) ->
     manipulatorFor browser
