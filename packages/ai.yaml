@@ -1,17 +1,4 @@
-- repo: openai/codex
-  include:
-    - codex
-    - tar.gz
-  exclude:
-    - app-server
-    - code-mode-host
-    - command-runner
-    - npm
-    - package
-    - responses
-    - symbols
-  raw: true
-  binary: codex
+- npm: '@openai/codex'
 - system: claude-code
   $if:
     os: darwin
