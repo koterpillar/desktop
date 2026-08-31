@@ -5,28 +5,6 @@ DESKTOP_PATH=$(dirname $(dirname $(realpath ${(%):-%x})))
 # User's home directory, might be different from HOME if run as root
 USER_HOME=$(echo $DESKTOP_PATH | grep -oE '^/[^/]+/[^/]+')
 
-bindkey -e
-
-# X terminal keys
-bindkey '^[[1;5D' vi-backward-word
-bindkey '^[[1;5C' vi-forward-word
-bindkey '^[OF' vi-end-of-line
-bindkey '^[OH' vi-beginning-of-line
-bindkey '^[[3~' delete-char
-bindkey '^[[3;5~' delete-word
-
-# Non-X terminal keys, where different
-# bindkey '^[[D' vi-backward-word  # FIXME: this is normal left arrow on macOS
-# bindkey '^[[C' vi-forward-word  # FIXME: this is normal right arrow on macOS
-bindkey '^[[4~' vi-end-of-line
-bindkey '^[[1~' vi-beginning-of-line
-
-# macOS terminal keys, where different
-bindkey '^[^[[D' vi-backward-word
-bindkey '^[^[[C' vi-forward-word
-bindkey '^[[H' beginning-of-line  # FIXME: same on X?
-bindkey '^[[F' end-of-line  # FIXME: same on X?
-
 # Plugins
 
 ZSH_PLUGINS="$USER_HOME/.zsh-plugins"
@@ -46,12 +24,54 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
+# Key bindings: motions as in Linux/Windows text editors (not macOS).
+#
+# Must come after oh-my-zsh.sh, whose lib/key-bindings.zsh rebinds Home, End,
+# Delete, Ctrl-Delete and Ctrl-arrows, and before zsh-autosuggestions, which
+# wraps forward-word at load time (select-word-style replaces that widget).
+bindkey -e
+
+# Break words on / . - instead of treating a whole path as one word, which is
+# what zsh's default $WORDCHARS does.
+autoload -Uz select-word-style
+select-word-style normal
+zstyle ':zle:*' word-chars '_'
+# Ctrl-Right lands after the current word, not before the next one.
+zstyle ':zle:forward-word*' skip-whitespace-first true
+
+# One logical key, every sequence a terminal might send for it. $terminfo only
+# describes the current $TERM in application keypad mode, which oh-my-zsh
+# enables via zle-line-init, so the literals cover everything else.
+zmodload zsh/terminfo
+
+bindkey_many () {
+    local widget=$1 seq
+    shift
+    for seq in "$@"
+    do
+        [ -n "$seq" ] && bindkey -- "$seq" $widget
+    done
+}
+
+#            widget               terminfo          normal   app      console
+bindkey_many vi-beginning-of-line $terminfo[khome]  '^[[H'   '^[OH'   '^[[1~'
+bindkey_many vi-end-of-line       $terminfo[kend]   '^[[F'   '^[OF'   '^[[4~'
+bindkey_many delete-char          $terminfo[kdch1]  '^[[3~'
+
+#            widget               ctrl       alt        alt (macOS meta)
+bindkey_many backward-word        '^[[1;5D'  '^[[1;3D'  '^[^[[D'
+bindkey_many forward-word         '^[[1;5C'  '^[[1;3C'  '^[^[[C'
+bindkey_many kill-word            '^[[3;5~'  '^[[3;3~'
+bindkey_many backward-kill-word   '^H'       '^[^?'
+
+unfunction bindkey_many
+
+bindkey '^V' edit-command-line
+
 source "$ZSH_PLUGINS/zsh-z/zsh-z.plugin.zsh"
 source "$ZSH_PLUGINS/zsh-command-time/command-time.plugin.zsh"
 source "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-bindkey '^V' edit-command-line
 
 export LESS='-RFX'
 # Colored man pages
