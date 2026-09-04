@@ -1,4 +1,16 @@
 {
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "ponytail@ponytail": true
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
   "sandbox": {
     "enabled": true,
     "filesystem": {
@@ -14,8 +26,5 @@
     }
   },
   "tui": "fullscreen",
-  "theme": "auto",
-  "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true
-  }
+  "theme": "auto"
 }
