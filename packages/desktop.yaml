@@ -39,7 +39,13 @@
     os: darwin
 - system: pinentry-mac
   $if:
-    os: darwin
+    hostname: DQ94*
+- repo: koterpillar/rbw
+  binary:
+    - rbw
+    - rbw-agent
+  $if:
+    hostname: DQ94*
 - yum_name: brave_browser
   yum_url: https://brave-browser-rpm-release.s3.brave.com/$basearch
   gpg_key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
