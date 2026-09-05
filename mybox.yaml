@@ -8,6 +8,7 @@
     - haskell
     - javascript
     - python
+    - rust
     - ai
 - host: taohua
   component:
