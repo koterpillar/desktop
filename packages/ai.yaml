@@ -8,3 +8,7 @@
 - npm: '@kilocode/cli'
   $unless:
     hostname: DQ94*
+- skill: DietrichGebert/ponytail
+  agents: claude-code
+- skill: AminBlg/SimpleEnglish
+  agents: claude-code
