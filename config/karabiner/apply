@@ -17,5 +17,10 @@ if $DRY_RUN; then
     dhall-to-json < "${SCRIPT_DIR}/karabiner.dhall" > /dev/null
     echo "karabiner.dhall compiles OK (nothing written)"
 else
-    dhall-to-json < "${SCRIPT_DIR}/karabiner.dhall" > "${SCRIPT_DIR}/karabiner.json"
+    # Compile to a temporary file first: redirecting straight into the live
+    # config leaves it empty when the dhall prelude fetch fails
+    TMP=$(mktemp)
+    trap 'rm -f "$TMP"' EXIT
+    dhall-to-json < "${SCRIPT_DIR}/karabiner.dhall" > "$TMP"
+    mv "$TMP" "${SCRIPT_DIR}/karabiner.json"
 fi
