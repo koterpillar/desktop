@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+# Type the stored password for the front browser tab. Meant to be bound to a
+# hotkey with the browser in front
+
+set -euo pipefail
+
+host_of () {
+    local host=${1#*://}
+    host=${host%%/*}
+    host=${host%%:*}
+    printf '%s\n' "${host#www.}"
+}
+
+# Only \ and " need escaping inside an AppleScript string literal
+applescript_string () {
+    local string=${1//\\/\\\\}
+    printf '%s\n' "${string//\"/\\\"}"
+}
+
+if [ "${1-}" = --check ]
+then
+    check () {
+        if [ "$2" != "$3" ]
+        then
+            echo "FAIL $1: got [$2], want [$3]" >&2
+            exit 1
+        fi
+    }
+
+    check host "$(host_of 'https://www.github.com/a/b?c=d')" github.com
+    check host "$(host_of 'http://localhost:3000/login')" localhost
+
+    # the awkward strings are the point, they must survive verbatim
+    # shellcheck disable=SC1003,SC2016
+    for PASSWORD in 'plain' 'a"b' 'back\slash' 'both\"together' '$(id) `whoami`' 'trailing\' '-n' 'ünïcøde ¬'
+    do
+        check "escape [$PASSWORD]" \
+            "$(printf 'return "%s"\n' "$(applescript_string "$PASSWORD")" | osascript -)" \
+            "$PASSWORD"
+    done
+
+    echo "rbw-fill: checks pass"
+    exit 0
+fi
+
+alert () {
+    osascript - "$1" >/dev/null <<'END'
+on run argv
+    activate
+    display alert "rbw-fill" message item 1 of argv as critical
+end run
+END
+}
+
+# Unexpected failure (no window, Accessibility not granted, locked vault) is
+# invisible when launched from a hotkey, so report it in a box too
+trap 'trap - ERR; alert "failed at line $LINENO, run rbw-fill in a terminal"' ERR
+
+APP=$(osascript -e 'tell application "System Events" to name of first application process whose frontmost is true')
+
+case $APP in
+    "Brave Browser" | "Google Chrome")
+        # the app name has to be a literal in the script: "active tab" comes
+        # from the browser's dictionary, which AppleScript looks up at compile
+        # time and cannot for a name computed at run time
+        URL=$(printf 'tell application "%s" to get URL of active tab of front window\n' "$APP" | osascript -)
+        ;;
+    *)
+        # Firefox would need the Cmd-L, Cmd-C, read clipboard dance, it exposes
+        # no URL to AppleScript
+        alert "$APP is not a supported browser"
+        exit 1
+        ;;
+esac
+
+HOST=$(host_of "$URL")
+
+MATCHES=$(rbw search --fields name,user "$HOST")
+
+if [ -z "$MATCHES" ]
+then
+    alert "No password for $HOST"
+    exit 1
+fi
+
+readarray -t ENTRIES <<< "$MATCHES"
+
+ENTRY=${ENTRIES[0]}
+if [ ${#ENTRIES[@]} -gt 1 ]
+then
+    ENTRY=$(osascript - "$HOST" "${ENTRIES[@]}" <<'END'
+on run argv
+    activate
+    set chosen to choose from list (items 2 thru -1 of argv) ¬
+        with title "rbw-fill" ¬
+        with prompt "Password for " & item 1 of argv
+    if chosen is false then return ""
+    return item 1 of chosen
+end run
+END
+    )
+    if [ -z "$ENTRY" ]
+    then
+        exit 0
+    fi
+fi
+
+# rbw search always prints name<TAB>user, with the user empty if it has none
+GET=(rbw get "${ENTRY%%$'\t'*}")
+if [ -n "${ENTRY#*$'\t'}" ]
+then
+    GET+=("${ENTRY#*$'\t'}")
+fi
+
+PASSWORD=$("${GET[@]}")
+
+# printf does not expand its arguments and osascript reads the script from the
+# pipe, so the password never passes through the shell or shows up in ps
+printf 'tell application "%s" to activate\ndelay 0.2\ntell application "System Events" to keystroke "%s"\n' \
+    "$APP" "$(applescript_string "$PASSWORD")" | osascript -

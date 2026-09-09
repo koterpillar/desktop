@@ -1,3 +1,6 @@
+-- Key codes are physical positions named after QWERTY, so under Colemak-DH
+-- they are not the letters they type: "u" types L, "l" types I, "e" types F
+
 let optionFold = https://prelude.dhall-lang.org/Optional/fold.dhall
 let optionDefault = https://prelude.dhall-lang.org/Optional/default.dhall
 
@@ -70,19 +73,27 @@ let To = {
     key_code: Optional Text,
     pointing_button: Optional Text,
     modifiers: Optional Modifiers,
-    software_function: Optional SoftwareFunction
+    software_function: Optional SoftwareFunction,
+    shell_command: Optional Text
 }
 
-let nullTo = { key_code = None Text, pointing_button = None Text, modifiers = None Modifiers, software_function = None SoftwareFunction }: To
+let nullTo = { key_code = None Text, pointing_button = None Text, modifiers = None Modifiers, software_function = None SoftwareFunction, shell_command = None Text }: To
 
 let toKeyCode = \(key_code: Text) -> nullTo // { key_code = Some key_code }: To
+
+-- Karabiner runs this with a bare PATH: ~/.local/bin has the scripts and rbw,
+-- Homebrew has the bash 5 their shebang picks up
+let toShell = \(command: Text) -> nullTo // {
+    shell_command = Some "PATH=\"$HOME/.local/bin:/opt/homebrew/bin:$PATH\" ${command}"
+}: To
 
 let toApp = \(bundle_identifier: Text) -> nullTo // {
     software_function = Some { open_application = { bundle_identifier = bundle_identifier } }
 }: To
 
-let showTo = \(f: To) -> optionFold SoftwareFunction f.software_function Text showSoftwareFunction
-    (showOptional Modifiers showModifiers f.modifiers ++ " " ++ showOptionalText f.key_code ++ " " ++ showOptionalText f.pointing_button)
+let showTo = \(f: To) -> optionFold Text f.shell_command Text (\(c: Text) -> "run " ++ c)
+    (optionFold SoftwareFunction f.software_function Text showSoftwareFunction
+    (showOptional Modifiers showModifiers f.modifiers ++ " " ++ showOptionalText f.key_code ++ " " ++ showOptionalText f.pointing_button))
 
 let concatMapSep = https://prelude.dhall-lang.org/Text/concatMapSep.dhall
 
@@ -250,6 +261,7 @@ let manipulators1 = [
     controlToCommand "t",
     manipulatorFor terminals (fromCtrlShift "t") [toCommand "t"],
     manipulatorFor browser (fromCtrlShift "p") [toModifiers ["command", "shift"] "p"],
+    manipulatorFor browser (fromCtrlShift "u") [toShell "rbw-fill"],
     controlToCommand "u",
     manipulatorFor unlessVim (fromCtrl "v") [toCommand "v"],
     manipulatorFor terminals (fromCtrlShift "v") [toCommand "v"],
