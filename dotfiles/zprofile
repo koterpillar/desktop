@@ -1,3 +1,8 @@
+# FIXME: Docker Desktop keeps re-adding its PATH here, but seems to leave the
+# file alone with just its comments:
+# The following lines were added by Docker Desktop to add commands to your PATH.
+# End of Docker Desktop section.
+
 typeset -U path
 
 if [ -d /opt/homebrew ]
