@@ -30,13 +30,15 @@
 - system: android-file-transfer
   $if:
     os: linux
-- system: com.bitwarden.desktop
-  installer: flatpak
-  $if:
-    os: linux
-- system: bitwarden
-  $if:
-    os: darwin
+- system:
+    $switch: os
+    darwin: bitwarden
+    linux: com.bitwarden.desktop
+  installer:
+    $switch: os
+    linux: flatpak
+  $unless:
+    hostname: DQ94*
 - system: pinentry-mac
   $if:
     hostname: DQ94*
