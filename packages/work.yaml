@@ -86,6 +86,7 @@
     $format: https://teamwork-graph.atlassian.com/cli/twg-darwin-arm64-v{}
   raw: twg
   binary: twg
+  post: twg skills install --global --agent claude --yes
   $if:
     os: darwin
 - url: https://teamwork-graph.atlassian.com/cli/rovo-install
