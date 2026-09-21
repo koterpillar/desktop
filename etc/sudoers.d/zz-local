@@ -1,2 +1,1 @@
-Defaults timestamp_timeout=180
-Defaults pwfeedback
+Defaults timestamp_timeout=180,pwfeedback
