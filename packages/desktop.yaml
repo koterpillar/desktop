@@ -185,6 +185,8 @@
   $if:
     os: linux
 - system: vlc
+  $unless:
+    hostname: DQ94*  # insecure redirects are blocked
 - brew_tap: vocahq/vocamac
   $if:
     os: darwin
