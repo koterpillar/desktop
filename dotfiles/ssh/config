@@ -1,6 +1,5 @@
 Host koterpillar.com
   User alex
-  RequestTTY yes
 
 Host shanmei
   User root
