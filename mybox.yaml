@@ -12,7 +12,7 @@
     - ai
 - host: taohua
   component:
-    - 3dprinting
+    - maker
 - host: liushu
   component: smarthome
 - host: DQ94*

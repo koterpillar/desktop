@@ -1,3 +1,4 @@
+- system: qcad
 - system: openscad
 - system: com.prusa3d.PrusaSlicer
   installer: flatpak
