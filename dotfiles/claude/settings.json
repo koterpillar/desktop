@@ -4,6 +4,7 @@
     "filesystem": {
       "allowWrite": [
         "~/.config/twg",
+        "~/.gradle",
         "~/.npm",
         "~/.stack"
       ],
