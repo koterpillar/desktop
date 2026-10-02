@@ -23,7 +23,13 @@
     - bat
     - nvim
     - git
-- links: etc
+- links: system/linux/etc
+  destination: /etc
+  root: true
+  method: copy
+  $if:
+    os: linux
+- links: system/macos/etc
   destination: /etc
   root: true
   method: copy
