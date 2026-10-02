@@ -3,11 +3,6 @@
   gpg_key: https://packages.microsoft.com/keys/microsoft.asc
   $if:
     os: fedora
-- yum_name: docker
-  yum_url: 'https://download.docker.com/linux/fedora/$releasever/$basearch/stable'
-  gpg_key: https://download.docker.com/linux/fedora/gpg
-  $if:
-    os: fedora
 - system:
     $switch: os
     linux: code
@@ -27,6 +22,15 @@
   $if:
     os: linux
 - system: kdiff3
+  $if:
+    os: darwin
+- system: podman
+  $if:
+    os: linux
+- system: podman-docker
+  $if:
+    os: linux
+- system: docker-desktop
   $if:
     os: darwin
 - system: tcpdump

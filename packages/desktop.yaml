@@ -81,18 +81,6 @@
 - system: dockdoor
   $if:
     os: darwin
-- system: docker-ce
-  post:
-    - sudo systemctl daemon-reload
-    - sudo systemctl enable docker
-  $if:
-    os: linux
-- system: docker-compose-plugin
-  $if:
-    os: linux
-- system: docker-desktop
-  $if:
-    os: darwin
 - system: fcitx5
   $if:
     os: linux
