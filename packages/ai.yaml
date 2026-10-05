@@ -12,3 +12,5 @@
   agents: claude-code
 - skill: AminBlg/SimpleEnglish
   agents: claude-code
+- skill: koterpillar/review-aid
+  agents: claude-code
