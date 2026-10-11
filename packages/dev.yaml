@@ -10,6 +10,17 @@
   auto_updates:
     $switch: os
     darwin: true
+- system: colordiff
+- repo: Wilfred/difftastic
+  binary: difft
+- repo: sharkdp/hexyl
+  binary: hexyl
+- repo: tummychow/git-absorb
+  binary: git-absorb
+- repo: dandavison/delta
+  binary: delta
+- repo: codeberg.org/mergiraf/mergiraf
+  binary: mergiraf
 - $switch: os
   linux:
     repo: Kong/insomnia
@@ -33,4 +44,7 @@
 - system: docker-desktop
   $if:
     os: darwin
+- repo: koalaman/shellcheck
+  binary: shellcheck
+  exclude: tar.gz
 - system: tcpdump
