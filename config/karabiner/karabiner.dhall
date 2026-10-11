@@ -306,7 +306,7 @@ let quickApps = [
 
 let quickSwitch = \(app: IndexedText) ->
     manipulatorForAll
-        (fromModifier "command" (showNatural (app.index + 1)))
+        (fromModifiersStrict ["command"] (showNatural (app.index + 1)))
         [toApp app.value]
 
 let manipulators2 = map IndexedText Manipulator quickSwitch (indexed Text quickApps) : List Manipulator
