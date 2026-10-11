@@ -11,6 +11,8 @@
     $switch: os
     darwin: true
 - system: colordiff
+- repo: moritzwilksch/diffle
+  binary: diffle
 - repo: Wilfred/difftastic
   binary: difft
 - repo: sharkdp/hexyl
