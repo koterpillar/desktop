@@ -64,13 +64,13 @@
 - system: go
   $if:
     os: darwin
-- pipx: pgcli
+- python: pgcli
 - repo: casey/just
   binary: just
-- pipx: keeper-secrets-manager-cli
+- python: keeper-secrets-manager-cli
 - npm: envsub
 - npm: '@forge/cli'
-- pipx: keyring
+- python: keyring
 - repo: air-verse/air
   include: tar.gz
   binary: air

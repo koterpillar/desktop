@@ -5,7 +5,7 @@
     $switch: os
     linux: python3-ipython
     darwin: ipython
-- pipx: poetry
+- python: poetry
 - repo: astral-sh/uv
   binary:
     - uv

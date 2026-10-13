@@ -162,7 +162,7 @@
 - system: thaw
   $if:
     os: darwin
-- pipx: torrt
+- python: torrt
 - system: vial
   $if:
     os: darwin
