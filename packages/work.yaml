@@ -70,7 +70,6 @@
 - python: keeper-secrets-manager-cli
 - npm: envsub
 - npm: '@forge/cli'
-- python: keyring
 - repo: air-verse/air
   include: tar.gz
   binary: air
