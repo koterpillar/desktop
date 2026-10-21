@@ -71,9 +71,13 @@
     pushInsteadOf = https://github.com
     pushInsteadOf = git://github.com
 
-[url "ssh://git@bitbucket.org"]
+[url "ssh://git@ssh.bitbucket.org"]
     pushInsteadOf = https://bitbucket.org
     pushInsteadOf = git://bitbucket.org
+    pushInsteadOf = ssh://git@bitbucket.org
+
+[url "git@ssh.bitbucket.org:"]
+    pushInsteadOf = git@bitbucket.org:
 
 [github]
     user = koterpillar
@@ -81,6 +85,7 @@
 [delta]
     syntax-theme = GitHub
 
+# Obsolete: remotes moved to ssh.bitbucket.org
 [includeIf "hasconfig:remote.*.url:git@bitbucket.org:atlassian/**"]
     path = ~/.config/git/config-atlassian
 
@@ -88,4 +93,13 @@
     path = ~/.config/git/config-atlassian
 
 [includeIf "hasconfig:remote.*.url:git@bitbucket.org:bitbucket/**"]
+    path = ~/.config/git/config-atlassian
+
+[includeIf "hasconfig:remote.*.url:git@ssh.bitbucket.org:atlassian/**"]
+    path = ~/.config/git/config-atlassian
+
+[includeIf "hasconfig:remote.*.url:git@ssh.bitbucket.org:akotlyarov-atlassian/**"]
+    path = ~/.config/git/config-atlassian
+
+[includeIf "hasconfig:remote.*.url:git@ssh.bitbucket.org:bitbucket/**"]
     path = ~/.config/git/config-atlassian

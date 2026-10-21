@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Rewrite bitbucket.org SSH remotes to ssh.bitbucket.org in every repo under DIR (default: .), up to 3 levels deep
+
+set -euo pipefail
+
+find "${1:-.}" -maxdepth 3 -name .git -prune -print0 | while IFS= read -r -d '' dotgit; do
+  repo=$(dirname "$dotgit")
+  git -C "$repo" config --get-regexp '^remote\..*\.(url|pushurl)$' | while read -r key url; do
+    case $url in
+      git@bitbucket.org:* | ssh://git@bitbucket.org/*)
+        new=${url/@bitbucket.org/@ssh.bitbucket.org}
+        git -C "$repo" config "$key" "$new"
+        echo "$repo: $key $url -> $new"
+        ;;
+    esac
+  done || true # no remotes: config exits 1
+done
