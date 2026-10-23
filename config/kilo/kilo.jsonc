@@ -56,5 +56,12 @@
       "./gradlew --dependencyInsight *": "allow",
       "./bin/lint *": "allow",
     }
+  },
+  "mcp": {
+    "Home Assistant": {
+      "type": "remote",
+      "url": "https://home.koterpillar.com/api/mcp",
+      "oauth": {}
+    }
   }
 }
