@@ -5,7 +5,15 @@
 - npm: '@anthropic-ai/claude-code'
   $unless:
     os: darwin
-- npm: '@kilocode/cli'
+- repo: Kilo-Org/kilocode
+  binary: kilo
+  exclude:
+  - evidence
+  - vscode
+  - SHA256SUMS
+  - oci
+  - cdx
+  - baseline
   $unless:
     hostname: DQ94*
 - skill: DietrichGebert/ponytail

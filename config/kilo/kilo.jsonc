@@ -44,6 +44,7 @@
       "node --run prettier *": "allow",
       "node --run test *": "allow",
       "node --run typecheck *": "allow",
+      "npm view *": "allow",
       "npx prettier *": "allow",
       "yarn build *": "allow",
       "yarn eslint *": "allow",
