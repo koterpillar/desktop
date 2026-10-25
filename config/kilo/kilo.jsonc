@@ -21,6 +21,8 @@
       "xargs cat": "allow",
       "xargs grep *": "allow",
 
+      "identify *": "allow",
+
       "git add *": "allow",
       "git branch": "allow",
       "git branch *": "allow",
