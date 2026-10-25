@@ -53,7 +53,7 @@
   binary: dhall-lsp-server
 - repo: Byron/dua-cli
   binary: dua
-  skip_release: 'dua-core-v4.2.0'
+  skip_release: 'dua-core-v5.0.1'
 - $switch: os
   linux:
     repo: eza-community/eza
