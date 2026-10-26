@@ -22,3 +22,6 @@
   agents: claude-code
 - skill: koterpillar/review-aid
   agents: claude-code
+- skill: mattpocock/skills
+  only: handoff
+  agents: claude-code
