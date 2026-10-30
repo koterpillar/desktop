@@ -299,7 +299,7 @@ let IndexedText = { index: Natural, value: Text }
 let quickApps = [
     "com.brave.Browser",              -- Brave
     "net.kovidgoyal.kitty",           -- Kitty
-    "com.todesktop.230313mzl4w4u92",  -- Cursor
+    "com.microsoft.VSCode",           -- Code
     "com.tinyspeck.slackmacgap",      -- Slack
     "us.zoom.xos"                     -- Zoom
 ]
