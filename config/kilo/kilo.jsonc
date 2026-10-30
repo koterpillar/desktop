@@ -34,6 +34,7 @@
       "git show *": "allow",
       "git status": "allow",
       "git status *": "allow",
+      "git grep *": "allow",
 
       "gh pr checks *": "allow",
       "gh pr list *": "allow",
