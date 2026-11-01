@@ -140,12 +140,7 @@
     binary: herdr-app
     binary_path: herdr-app
   darwin:
-    url:
-      $jsonpath: "$.targets['macos-aarch64'].url"
-      base:
-        $url: https://releases.herdr.dev/app/latest.json
-    binary: Herdr
-    binary_path: Herdr.app/Contents/MacOS
+    system: herdr-app
 - url:
     $jsonpath:
       $switch: os
