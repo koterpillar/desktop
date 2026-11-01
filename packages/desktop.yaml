@@ -133,6 +133,29 @@
     os: darwin
 - $switch: os
   linux:
+    url:
+      $jsonpath: "$.targets['linux-x86_64'].url"
+      base:
+        $url: https://releases.herdr.dev/app/latest.json
+    binary: herdr-app
+    binary_path: herdr-app
+  darwin:
+    url:
+      $jsonpath: "$.targets['macos-aarch64'].url"
+      base:
+        $url: https://releases.herdr.dev/app/latest.json
+    binary: Herdr
+    binary_path: Herdr.app/Contents/MacOS
+- url:
+    $jsonpath:
+      $switch: os
+      linux: "$.targets['linux-x86_64'].url"
+      darwin: "$.targets['macos-aarch64'].url"
+    base:
+      $url: https://releases.herdr.dev/core/latest.json
+  binary: herdr-core
+- $switch: os
+  linux:
     repo: kovidgoyal/kitty
     binary: kitty
     app: kitty
