@@ -18,6 +18,17 @@
     - src
   binary: ghcup
   raw: ghcup
+- repo: haskell/haskell-language-server
+  binary:
+    - haskell-language-server-wrapper
+    - haskell-language-server-9.10.3
+    - haskell-language-server-9.12.2
+    - haskell-language-server-9.12.4
+    - haskell-language-server-9.14.1
+  include:
+    $switch: os
+    debian: deb13
+    fedora: fedora40
 - repo: fourmolu/fourmolu
   binary: fourmolu
 - repo: koterpillar/hindent-build
