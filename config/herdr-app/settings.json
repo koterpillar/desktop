@@ -1,0 +1,9 @@
+{
+  "zoom": 1,
+  "sounds": {
+    "enabled": true
+  },
+  "minimum_contrast": 1,
+  "font": "Fira Code",
+  "font_size": 11
+}
