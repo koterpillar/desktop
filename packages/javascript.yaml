@@ -15,5 +15,6 @@
 - npm: pnpm
 - npm: ts-node
 - npm: tsx
+- npm: typescript-language-server
 - npm: speedscope
 - npm: yarn-deduplicate
