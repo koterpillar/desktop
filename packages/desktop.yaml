@@ -149,6 +149,8 @@
     base:
       $url: https://releases.herdr.dev/core/latest.json
   binary: herdr-core
+- links: config/herdr-app
+  destination: .config/herdr-app
 - $switch: os
   linux:
     repo: kovidgoyal/kitty

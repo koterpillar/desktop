@@ -114,48 +114,61 @@ let Condition = {
     type: Text
 }
 
+let map = https://prelude.dhall-lang.org/List/map.dhall
+
+-- Regex matching exactly one app by its bundle identifier
+let appRegex = \(bundle_identifier: Text) -> "^" ++ Text/replace "." "\\." bundle_identifier ++ "$"
+
+-- Conditions take plain bundle identifiers
 let unlessApp = \(apps: List Text) -> {
-    bundle_identifiers = apps,
+    bundle_identifiers = map Text Text appRegex apps,
     type = "frontmost_application_unless"
 }
 
 let ifApp = \(apps: List Text) -> {
-    bundle_identifiers = apps,
+    bundle_identifiers = map Text Text appRegex apps,
     type = "frontmost_application_if"
 }
 
 let concat = https://prelude.dhall-lang.org/List/concat.dhall
 
 let terminalApps = [
-    "^com\\.apple\\.Terminal$",
-    "^com\\.googlecode\\.iterm2$"
+    "com.apple.Terminal",
+    "com.googlecode.iterm2"
 ]
 
 let terminals: Condition = ifApp terminalApps
 
-let kitty = "^net\\.kovidgoyal\\.kitty$"
+let kitty = "net.kovidgoyal.kitty"
+
+let herdr = "dev.herdr.app"
 
 let niceApps = [
-    "^com\\.jetbrains\\.intellij\\.ce$",
+    "com.jetbrains.intellij.ce",
     kitty,
-    "^org\\.virtualbox\\.app\\.VirtualBoxVM$"
+    herdr,
+    "org.virtualbox.app.VirtualBoxVM"
 ]
 
 let unlessNiceApp: Condition = unlessApp niceApps
 
 let unlessNiceAppOrTerminal: Condition = unlessApp (concat Text [terminalApps, niceApps])
 
+let vscode = "com.microsoft.VSCode"
+
 let ides = [
-    "^com\\.microsoft\\.VSCode$",
-    "^com\\.todesktop\\.230313mzl4w4u92$" -- Cursor
+    vscode,
+    "com.todesktop.230313mzl4w4u92" -- Cursor
 ]
 
 let unlessVim: Condition = unlessApp (concat Text [terminalApps, niceApps, ides])
 
+let brave = "com.brave.Browser"
+
 let browser: Condition = ifApp [
-    "^com\\.brave\\.Browser$",
-    "^org\\.mozilla\\.firefox$",
-    "^com\\.google\\.Chrome$",
+    brave,
+    "org.mozilla.firefox",
+    "com.google.Chrome",
 ]
 
 let Manipulator = {
@@ -197,8 +210,6 @@ let SimpleModification = {
     from: From,
     to: List To
 }
-
-let map = https://prelude.dhall-lang.org/List/map.dhall
 
 let manipulators1 = [
     -- Mouse
@@ -297,9 +308,9 @@ let IndexedText = { index: Natural, value: Text }
 
 -- Command-<n> opens the n-th app in this list
 let quickApps = [
-    "com.brave.Browser",              -- Brave
-    "net.kovidgoyal.kitty",           -- Kitty
-    "com.microsoft.VSCode",           -- Code
+    brave,
+    herdr,
+    vscode,
     "com.tinyspeck.slackmacgap",      -- Slack
     "us.zoom.xos"                     -- Zoom
 ]
