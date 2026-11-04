@@ -68,6 +68,7 @@
     "ctrl-left": "send:\u001bb",
     "ctrl-right": "send:\u001bf",
     "ctrl-shift-c": "terminal.copy",
+    "cmd-v": "terminal.paste",
     "ctrl-shift-v": "terminal.paste",
     "ctrl-v": "terminal.paste_image"
   }
