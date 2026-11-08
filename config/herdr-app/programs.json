@@ -1,5 +1,13 @@
 {
   "programs": {
+    "haskell": {
+      "name": "Haskell",
+      "icon": "my-icons/haskell.svg",
+      "tint": true,
+      "color": "#FFFFFF",
+      "tile": "#5E5086",
+      "match": ["ghci", "ghc", "ghc-9.10.3", "stack", "cabal"]
+    },
     "kilo": {
       "name": "Kilo",
       "icon": "my-icons/kilo.svg",
