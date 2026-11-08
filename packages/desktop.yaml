@@ -139,6 +139,7 @@
         $url: https://releases.herdr.dev/app/latest.json
     binary: herdr-app
     binary_path: herdr-app
+    app: herdr-app
   darwin:
     system: herdr-app
 - url:
