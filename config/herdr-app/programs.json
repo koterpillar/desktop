@@ -8,6 +8,15 @@
       "tile": "#5E5086",
       "match": ["ghci", "ghc", "ghc-9.10.3", "stack", "cabal"]
     },
+    "rovo": {
+      "name": "Rovo",
+      "icon": "my-icons/rovo.svg",
+      "tint": false,
+      "color": "#101214",
+      "tile": "#94C748",
+      "match": ["atlassian_cli_rovodev"],
+      "run": ["rovo"]
+    },
     "kilo": {
       "name": "Kilo",
       "icon": "my-icons/kilo.svg",
