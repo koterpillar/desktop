@@ -1,0 +1,12 @@
+{
+  "programs": {
+    "kilo": {
+      "name": "Kilo",
+      "icon": "my-icons/kilo.svg",
+      "tint": true,
+      "color": "#FAF74F",
+      "tile": "#141414",
+      "run": ["kilo"]
+    }
+  }
+}

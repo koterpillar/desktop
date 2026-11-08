@@ -151,6 +151,13 @@
   binary: herdr-core
 - links: config/herdr-app
   destination: .config/herdr-app
+  exclude:
+    - my-icons
+- links: config/herdr-app
+  destination: .config/herdr-app
+  method: copy
+  include:
+    - my-icons
 - $switch: os
   linux:
     repo: kovidgoyal/kitty
