@@ -1,9 +1,3 @@
-- links: udev
-  destination: /etc/udev/rules.d
-  root: true
-  post: sudo udevadm control --reload-rules && sudo udevadm trigger
-  $if:
-    os: linux
 - system: rpmfusion-free-release
   url:
     base:

@@ -28,6 +28,7 @@
   destination: /etc
   root: true
   method: copy
+  post: sudo udevadm control --reload-rules && sudo udevadm trigger
   $if:
     os: linux
 - links: system/macos/etc
