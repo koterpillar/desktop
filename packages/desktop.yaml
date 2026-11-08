@@ -151,10 +151,12 @@
       $url: https://releases.herdr.dev/core/latest.json
   binary: herdr-core
 - links: config/herdr-app
+  name: herdr-links-symlink
   destination: .config/herdr-app
   exclude:
     - my-icons
 - links: config/herdr-app
+  name: herdr-links-copy
   destination: .config/herdr-app
   method: copy
   include:
