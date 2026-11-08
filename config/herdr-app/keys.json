@@ -60,6 +60,7 @@
     "ctrl-shift-x": "pane.close",
     "ctrl-shift-z": "pane.zoom",
     "ctrl-shift-l": "layout.switch",
+    "ctrl-n": "mod.open:new-menu",
     "f2": "tab.rename",
     "shift-f2": "space.rename"
   },
