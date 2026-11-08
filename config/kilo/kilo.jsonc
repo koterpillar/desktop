@@ -18,6 +18,9 @@
       "tail *": "allow",
       "true": "allow",
       "wc *": "allow",
+      "file *": "allow",
+      "strings *": "allow",
+      "seq *": "allow",
       "xargs cat": "allow",
       "xargs grep *": "allow",
 
@@ -77,6 +80,15 @@
       "./bin/lint *": "allow",
       "make test": "allow",
       "ssh-add -l": "allow",
+
+      "herdr-app check *": "allow",
+      "herdr-app commands": "allow",
+      "herdr-app status": "allow",
+      "herdr-app ls *": "allow",
+      "herdr-app shot *": "allow",
+    },
+    "external_directory": {
+      "~/.config/herdr-app/*": "allow"
     }
   },
   "mcp": {
