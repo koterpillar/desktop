@@ -52,6 +52,7 @@
     "ctrl-shift-t": "space.new",
     "ctrl-t": "tab.new",
     "ctrl-shift-k": "mod.open:my-picker",
+    "ctrl-shift-g": "my-tabs.toggle-changes",
     "ctrl-shift-p": "app.palette",
     "ctrl-,": "app.settings",
     "ctrl-shift-o": "pane.split:right",

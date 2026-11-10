@@ -1,6 +1,6 @@
 import { View, div, svg, image } from "gpui-kit";
 import { h_flex } from "gpui-base";
-import { spaces, panes, run, openOverlay, theme, window, shared, layout, settings } from "herdr";
+import { spaces, panes, run, openOverlay, theme, window, shared, layout, settings, nextCommand } from "herdr";
 
 function find(node, id) {
   if (node?.id === id) return node;
@@ -12,9 +12,19 @@ function find(node, id) {
 }
 
 export default class Tabs extends View {
-  init() {
+  init(_props, cx) {
     this.pressed = null;
     this.panels = JSON.parse(localStorage.getItem("panels") ?? "{}");
+    // Key commands (keys.json: "my-tabs.toggle-changes"): the Changes button, from the keyboard.
+    cx.spawn(async (cx) => {
+      for (;;) {
+        const c = await nextCommand();
+        if (c !== "toggle-changes") continue;
+        const root = layout(), panel = find(root, "panel"), body = find(root, "panel-body");
+        if (panel && !panel.hidden && body?.active === "changes") run("layout.hide", { id: "panel" });
+        else { run("layout.select", { stack: "panel-body", child: "changes" }); run("layout.show", { id: "panel" }); }
+      }
+    });
   }
 
   // The side panel is remembered per space: switching shows that space's choice
@@ -58,8 +68,13 @@ export default class Tabs extends View {
       // the first agent pane, else the first pane, names it.
       const lead = panes().find(p => p.tab === c.id && p.program?.agent) ?? panes().find(p => p.tab === c.id);
       const program = lead?.program;
+      // A tab called by its number or by its program ("Claude Code") shows the title the
+      // program set (a Claude session's title), unless that is only the program's name.
+      const live = (lead?.title ?? "").replace(/^[^\p{L}\p{N}~/]+/u, "").trim();
+      const bare = !live || [program?.name, program?.key, lead?.app].some(g => g && g.toLowerCase() === live.toLowerCase());
       const name = /^tb\d+$/.test(c.name) ? program?.name ?? "Terminal"
-        : /^\d+$/.test(c.name) ? lead?.title || c.name
+        : /^\d+$/.test(c.name) ? (bare ? lead?.title : live) || c.name
+        : program?.name && c.name === program.name && !bare ? live
         : c.name;
       return h_flex().id(`tab-${c.id}`).h(29).px(10).gap(7).rounded(7).items_center().flex_none().text_size(12.8)
         .border(1).border_color(c.active ? t.border : t.chrome).bg(c.active ? t.raised : t.chrome).text_color(c.active ? t.foreground : t.muted)

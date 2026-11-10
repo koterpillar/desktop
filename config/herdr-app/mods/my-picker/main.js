@@ -81,7 +81,11 @@ export default class Picker extends View {
     });
     const busy = groups.filter((p) => p.w.status && p.ctxs.length);
     const quiet = groups.filter((p) => !p.w.status && p.ctxs.length);
-    busy.sort((a, b) => (b.w.status === "blocked") - (a.w.status === "blocked"));
+    // Like the agents list's priority: needs you, then done, working, idle. Stable, so ties keep their order.
+    const RANK = { blocked: 4, done: 3, working: 2, idle: 1 };
+    const rank = (st) => RANK[st] ?? 0;
+    busy.sort((a, b) => rank(b.w.status) - rank(a.w.status));
+    busy.forEach((p) => p.ctxs.sort((a, b) => rank(b.ctx.status) - rank(a.ctx.status)));
     const out = [];
     const add = (p) => {
       out.push({ kind: "head", w: p.w });
