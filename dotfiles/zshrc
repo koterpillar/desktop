@@ -201,7 +201,7 @@ else
     fi
 fi
 
-DIR_DECORATIONS=("$HOME/.herdr/worktrees" '⎇' "$HOME/projects" '♦' "$HOME/desktop" '🗔' "$HOME/pictures" '🖼' "$HOME/books" '🕮' "$HOME" '~')
+DIR_DECORATIONS=("$HOME/.herdr/worktrees" '♦' "$HOME/projects" '♦' "$HOME/desktop" '🗔' "$HOME/pictures" '🖼' "$HOME/books" '🕮' "$HOME" '~')
 
 desktop_func_join() {
     if [ -z "$1" ]
@@ -245,6 +245,8 @@ pwd_precmd() {
                 ;;
         esac
     done
+    # Herdr worktree: "♦ repo ⎇ worktree"
+    [ "$THIS_DIR" = "$HOME/.herdr/worktrees" ] && PWD_DIR=${PWD_DIR/\// ⎇ }
     PROMPT_PWD=$(desktop_func_join "$PWD_SYMBOL" "$PWD_DIR")
     TITLE_DIR=$(desktop_func_ellipsis "$PWD_DIR" 25)
     TITLE_PWD=$(desktop_func_join "$PWD_SYMBOL" "$TITLE_DIR")
