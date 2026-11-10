@@ -201,7 +201,7 @@ else
     fi
 fi
 
-DIR_DECORATIONS=("$HOME/projects" '♦' "$HOME/desktop" '🗔' "$HOME/pictures" '🖼' "$HOME/books" '🕮' "$HOME" '~')
+DIR_DECORATIONS=("$HOME/.herdr/worktrees" '⎇' "$HOME/projects" '♦' "$HOME/desktop" '🗔' "$HOME/pictures" '🖼' "$HOME/books" '🕮' "$HOME" '~')
 
 desktop_func_join() {
     if [ -z "$1" ]
