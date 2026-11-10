@@ -19,6 +19,13 @@ export default class Tabs extends View {
     cx.spawn(async (cx) => {
       for (;;) {
         const c = await nextCommand();
+        if (c === "move-left" || c === "move-right") {
+          // The shown tab one place along (stays put at either end).
+          const tabs = spaces().find(x => x.active)?.tabs ?? [], at = tabs.findIndex(x => x.active);
+          const to = at + (c === "move-left" ? -1 : 1);
+          if (at >= 0 && to >= 0 && to < tabs.length) run("tab.move", { id: tabs[at].id, index: to + 1 });
+          continue;
+        }
         if (c !== "toggle-changes") continue;
         const root = layout(), panel = find(root, "panel"), body = find(root, "panel-body");
         if (panel && !panel.hidden && body?.active === "changes") run("layout.hide", { id: "panel" });
