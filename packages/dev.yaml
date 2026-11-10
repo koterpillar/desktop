@@ -15,6 +15,10 @@
   binary: diffle
 - repo: Wilfred/difftastic
   binary: difft
+- repo: evilmartians/lefthook
+  binary: lefthook
+  include: gz
+  raw: true
 - repo: sharkdp/hexyl
   binary: hexyl
 - repo: tummychow/git-absorb
