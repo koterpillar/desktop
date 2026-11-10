@@ -94,13 +94,13 @@ def set_configuration(monitors: list[Monitor]) -> None:
         arrange(
             MonitorConfig(
                 monitor=next(iter(external)),
-                resolution=(1920, 1080),
+                resolution=(2560, 1440),
                 origin=(0, 0),
             ),
             MonitorConfig(
                 monitor=internal,
                 resolution=INTERNAL_RESOLUTION,
-                origin=(-1728, 469),
+                origin=(-1728, 600),
             ),
         )
         return
