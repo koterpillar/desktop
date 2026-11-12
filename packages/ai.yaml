@@ -27,3 +27,6 @@
 - skill: mattpocock/skills
   only: handoff
   agents: claude-code
+- skill: janestreet/agent_skills
+  only: socratic-tutor
+  agents: claude-code
