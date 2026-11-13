@@ -194,6 +194,7 @@
   include: appimage
   raw: vial
   binary: vial
+  app: vial
   $if:
     os: linux
 - system: vlc
