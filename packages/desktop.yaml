@@ -136,6 +136,7 @@
     app: herdr-app
   darwin:
     system: herdr-app
+    auto_updates: true
 - url:
     $jsonpath:
       $switch: os
