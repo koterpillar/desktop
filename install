@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-bootstrap="$(curl -fsSL https://github.com/koterpillar/mybox/releases/latest/download/bootstrap)"
-/bin/sh -c "$bootstrap"
-
 if [[ $HOSTNAME =~ DQ94 ]]
 then
   if ! [ -d local ]
@@ -16,4 +13,4 @@ fi
 # PATH for tools might not be picked up yet
 export PATH="$HOME/.local/bin:$PATH"
 
-mybox "$@"
+mybox --self-update "$@"
