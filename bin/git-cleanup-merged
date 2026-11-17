@@ -5,6 +5,7 @@ set -euo pipefail
 MAIN=$(git rev-parse --abbrev-ref origin/HEAD | sed 's!origin/!!')
 
 git branch -a --merged "$MAIN" | \
+  grep -v '^[*+]' | \
   grep -v "$MAIN" | \
   grep -v HEAD | \
   sed 's!remotes/origin/!!' | \
