@@ -149,6 +149,7 @@
   name: herdr-links-symlink
   destination: .config/herdr-app
   exclude:
+    - AGENTS.md
     - my-icons
 - links: config/herdr-app
   name: herdr-links-copy
