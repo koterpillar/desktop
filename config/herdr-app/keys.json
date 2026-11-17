@@ -56,7 +56,7 @@
     "ctrl-shift-p": "app.palette",
     "ctrl-,": "app.settings",
     "ctrl-shift-o": "pane.split:right",
-    "ctrl-shift-e": "pane.split:down",
+    "ctrl-shift-e": "my-tabs.toggle-files",
     "ctrl-shift-w": "tab.close",
     "ctrl-shift-x": "pane.close",
     "ctrl-shift-z": "pane.zoom",

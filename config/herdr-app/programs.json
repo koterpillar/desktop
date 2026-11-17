@@ -24,6 +24,14 @@
       "color": "#FAF74F",
       "tile": "#141414",
       "run": ["kilo"]
+    },
+    "git": {
+      "name": "Git",
+      "icon": "my-icons/git.svg",
+      "tint": true,
+      "color": "#FFFFFF",
+      "tile": "#F05032",
+      "match": ["tig", "diffle"]
     }
   }
 }

@@ -15,7 +15,7 @@ export default class Tabs extends View {
   init(_props, cx) {
     this.pressed = null;
     this.panels = JSON.parse(localStorage.getItem("panels") ?? "{}");
-    // Key commands (keys.json: "my-tabs.toggle-changes"): the Changes button, from the keyboard.
+    // Key commands (keys.json: "my-tabs.toggle-changes" / "my-tabs.toggle-files"): the panel buttons, from the keyboard.
     cx.spawn(async (cx) => {
       for (;;) {
         const c = await nextCommand();
@@ -26,10 +26,11 @@ export default class Tabs extends View {
           if (at >= 0 && to >= 0 && to < tabs.length) run("tab.move", { id: tabs[at].id, index: to + 1 });
           continue;
         }
-        if (c !== "toggle-changes") continue;
+        const target = { "toggle-changes": "changes", "toggle-files": "files" }[c];
+        if (!target) continue;
         const root = layout(), panel = find(root, "panel"), body = find(root, "panel-body");
-        if (panel && !panel.hidden && body?.active === "changes") run("layout.hide", { id: "panel" });
-        else { run("layout.select", { stack: "panel-body", child: "changes" }); run("layout.show", { id: "panel" }); }
+        if (panel && !panel.hidden && body?.active === target) run("layout.hide", { id: "panel" });
+        else { run("layout.select", { stack: "panel-body", child: target }); run("layout.show", { id: "panel" }); }
       }
     });
   }
