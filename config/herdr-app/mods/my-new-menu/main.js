@@ -61,7 +61,7 @@ export default class NewMenu extends View {
     const folder = () => panes().find(p => p.focused)?.cwd;
     const terminal = { id: "terminal", icon: svg("icons/shell.svg").size(14), name: "Terminal", action: () => run("tab.new", { space: space?.id }), hint: shortcut("tab.new"), enabled: true };
     const agentRows = choices.map((a, i) => ({ id: a.key, icon: a.tint ? svg(a.icon).size(14).text_color(t.foreground) : image(a.icon).size(14), name: a.name,
-      action: () => run("tab.new", { name: a.name, space: space?.id, argv: a.run }), hint: a.installed ? (i < 9 ? String(i + 1) : "") : "not installed", enabled: a.installed }));
+      action: () => run("tab.new", { name: a.name, space: space?.id, argv: ["exec", ...a.run] }), hint: a.installed ? (i < 9 ? String(i + 1) : "") : "not installed", enabled: a.installed }));
     const tail = [
       { id: "space", icon: div().w(14).child("+"), name: "New space", action: () => run("space.new"), hint: shortcut("space.new"), enabled: true },
       { id: "worktree", icon: svg("mods/workspace-chrome/branch.svg").size(14), name: "New worktree\u2026", action: () => openOverlay({ mod: "worktree", kind: "dialog", width: 460, height: 280, props: { space: space?.id, folder: folder(), action: "new" } }), hint: "W", enabled: Boolean(space) },
@@ -82,9 +82,8 @@ export default class NewMenu extends View {
         else if (e.key === "enter" || e.key === "return") { cx.stop_propagation(); return this.pick(sel); }
         else if (e.key.toLowerCase() === "w") { cx.stop_propagation(); return this.pick(tail.find(it => it.id === "worktree")); }
         else if (/^[1-9]$/.test(e.key) && installed[Number(e.key) - 1]) {
-          const agent = installed[Number(e.key) - 1];
-          closeOverlay(props().overlay);
-          return run("tab.new", { name: agent.name, space: space?.id, argv: agent.run });
+          cx.stop_propagation();
+          return this.pick(agentRows[Number(e.key) - 1]);
         } else return;
         cx.stop_propagation();
         cx.notify();
