@@ -4,9 +4,29 @@ set -euo pipefail
 
 MAIN=$(git rev-parse --abbrev-ref origin/HEAD | sed 's!origin/!!')
 
-git branch -a --merged "$MAIN" | \
-  grep -v '^[*+]' | \
-  grep -v "$MAIN" | \
-  grep -v HEAD | \
-  sed 's!remotes/origin/!!' | \
-  xargs git push origin -d
+# Local branches checked out in any worktree (including this one) must stay.
+CHECKED_OUT=$(git for-each-ref --format='%(if)%(worktreepath)%(then)%(refname:short)%(end)' refs/heads | grep . || true)
+
+is_checked_out() {
+  grep -qxF -- "$1" <<<"$CHECKED_OUT"
+}
+
+# Merged remote branches -> delete on origin (exact-match main, skip worktree branches).
+remote=()
+while read -r b; do
+  b=${b#origin/}
+  [[ -z $b || $b == HEAD || $b == origin || $b == "$MAIN" ]] && continue
+  is_checked_out "$b" && continue
+  remote+=("$b")
+done < <(git for-each-ref --merged "$MAIN" --format='%(refname:short)' refs/remotes/origin)
+
+if ((${#remote[@]})); then
+  git push origin -d "${remote[@]}"
+fi
+
+# Merged local branches -> delete locally (never main, never worktree branches).
+while read -r b; do
+  [[ $b == "$MAIN" ]] && continue
+  is_checked_out "$b" && continue
+  git branch -d "$b"
+done < <(git for-each-ref --merged "$MAIN" --format='%(refname:short)' refs/heads)
