@@ -5,6 +5,7 @@
 /config/kilo/node_modules
 /config/kilo/package.json
 /config/kilo/package-lock.json
+/config/kilo/plugin/manifold-endpoint-collector.ts
 /config/kitty/kitty.conf.bak
 /config/kitty/current-theme.conf
 /local
