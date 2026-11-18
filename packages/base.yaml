@@ -78,7 +78,8 @@
 - repo: cli/cli
   binary: gh
 - system: git
-- system: git-lfs
+- repo: git-lfs/git-lfs
+  binary: git-lfs
 - system: jq
 - system: htop
 - system: lftp
