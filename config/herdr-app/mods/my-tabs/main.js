@@ -125,7 +125,7 @@ export default class Tabs extends View {
       .child(button("tab-new", "+", () => openOverlay({ mod: "my-new-menu", kind: "popup", width: 250, height: 512 })))
       .when(enabled.includes("files"), el => el.child(panelButton("files", "Files", "mods/files/file.svg")))
       .when(enabled.includes("changes"), el => el.child(panelButton("changes", "Changes", "mods/changes/changes.svg")))
-      .child(panelButton("processes", "Processes", "mods/workspace-chrome/branch.svg"))
+      .child(panelButton("processes", "Processes", "my-icons/cpu.svg"))
       .when(w?.buttons, el => el.child(button("close-window", svg("mods/pane/close.svg").size(13), () => run("window.close"))));
   }
 }
