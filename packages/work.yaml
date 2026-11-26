@@ -61,6 +61,8 @@
 - repo: casey/just
   binary: just
 - python: keeper-secrets-manager-cli
+- system: keeper
+  url: https://www.keepersecurity.com/desktop_electron/Darwin/KeeperSetup.dmg
 - npm: envsub
 - npm: '@forge/cli'
 - repo: air-verse/air
