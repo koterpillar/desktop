@@ -15,7 +15,7 @@ export default class Tabs extends View {
   init(_props, cx) {
     this.pressed = null;
     this.panels = JSON.parse(localStorage.getItem("panels") ?? "{}");
-    // Key commands (keys.json: "my-tabs.toggle-changes" / "my-tabs.toggle-files"): the panel buttons, from the keyboard.
+    // Key commands for the panel buttons (see keys.json).
     cx.spawn(async (cx) => {
       for (;;) {
         const c = await nextCommand();
@@ -106,7 +106,7 @@ export default class Tabs extends View {
       ? Math.max(10, (root.traffic_lights[0] + 64) / settings().zoom - (sidebar?.hidden ? 0 : sidebar?.size?.px ?? 0))
       : 10;
     const panel = find(root, "panel"), body = find(root, "panel-body");
-    const enabled = shared("workspace.panels") ?? ["files", "changes"];
+    const enabled = [...(shared("workspace.panels") ?? ["files", "changes"]), "processes"];
     this.syncPanel(space, panel, body, enabled);
     const panelButton = (id, label, icon) => {
       const on = panel && !panel.hidden && body?.active === id;
@@ -125,6 +125,7 @@ export default class Tabs extends View {
       .child(button("tab-new", "+", () => openOverlay({ mod: "my-new-menu", kind: "popup", width: 250, height: 512 })))
       .when(enabled.includes("files"), el => el.child(panelButton("files", "Files", "mods/files/file.svg")))
       .when(enabled.includes("changes"), el => el.child(panelButton("changes", "Changes", "mods/changes/changes.svg")))
+      .child(panelButton("processes", "Processes", "mods/workspace-chrome/branch.svg"))
       .when(w?.buttons, el => el.child(button("close-window", svg("mods/pane/close.svg").size(13), () => run("window.close"))));
   }
 }

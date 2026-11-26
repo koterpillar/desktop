@@ -140,6 +140,13 @@
                       "content": {
                         "mod": "changes"
                       }
+                    },
+                    {
+                      "id": "processes",
+                      "type": "block",
+                      "content": {
+                        "mod": "my-processes"
+                      }
                     }
                   ],
                   "active": "files"
